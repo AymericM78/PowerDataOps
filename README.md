@@ -1,5 +1,5 @@
 # PowerXrm
-Short story : PowerShell module for Xrm automation (Data Management and DevOps activities)
+Short story : PowerShell module for Xrm automation (Data Management, administration and DevOps activities)
 
 Long story : this PowerShell module was designed in 2014 for MS CRM 2013 ...
 Then for MS CRM 2015 and MS CRM Online
