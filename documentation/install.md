@@ -16,15 +16,14 @@ Register-PSRepository -Name "{{repository_name}}" -SourceLocation "{{folder_with
 
 ## Installing Module
 
-To install a module from the PowerShell Gallery, run the following command:
+To install PowerXrm module from the PowerShell Gallery, run the following command:
 
 ```
-Install-Module -Name "{{module_name}}"
+Install-Module -Name "PowerXrm"
 ```
 
 To install PowerXrm module from a specific repository, run the following command:
 
 ```
-Install-Module -Name "PowerXrm" -Repository "{{repository_name}}"
 Install-Module -Name "PowerXrm" -Repository "{{repository_name}}"
 ```
