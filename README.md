@@ -29,5 +29,5 @@ This module is open to community contributions in order to enrich this tooling a
 ## Well ? And now ?
 
 Check install and usage documentation :)
- - https://github.com/AymericM78/PowerDataOps/blob/main/documentation/install.md
- - https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
+ - [Install PowerDataOps] (https://github.com/AymericM78/PowerDataOps/blob/main/documentation/install.md)
+ - [PowerDataOps usage] https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
