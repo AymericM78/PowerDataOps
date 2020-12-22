@@ -1,4 +1,4 @@
-# Installing `PowerXrm` Module
+# Installing `PowerDataOps` Module
 
 ## Overview
 
@@ -16,14 +16,14 @@ Register-PSRepository -Name "{{repository_name}}" -SourceLocation "{{folder_with
 
 ## Installing Module
 
-To install PowerXrm module from the PowerShell Gallery, run the following command:
+To install PowerDataOps module from the PowerShell Gallery, run the following command:
 
 ```
-Install-Module -Name "PowerXrm"
+Install-Module -Name "PowerDataOps"
 ```
 
-To install PowerXrm module from a specific repository, run the following command:
+To install PowerDataOps module from a specific repository, run the following command:
 
 ```
-Install-Module -Name "PowerXrm" -Repository "{{repository_name}}"
+Install-Module -Name "PowerDataOps" -Repository "{{repository_name}}"
 ```

@@ -9,16 +9,16 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'PowerXrm'
+RootModule = 'PowerDataOps'
 
 # Version number of this module.
-ModuleVersion = '1.0.0.2'
+ModuleVersion = '1.0.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
 
 # ID used to uniquely identify this module
-GUID = '7974b368-0dad-43f7-ab94-35aea665b228'
+GUID = 'bfa11058-d4b5-4300-b74a-cdc3d9560389'
 
 # Author of this module
 Author = 'Aymeric Mouillé'
@@ -101,7 +101,7 @@ PrivateData = @{
         LicenseUri = 'https://licenses.nuget.org/MIT'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/AymericM78/PowerXrm'
+        ProjectUri = 'https://github.com/AymericM78/PowerDataOps'
 
         # A URL to an icon representing this module.
         # IconUri = ''

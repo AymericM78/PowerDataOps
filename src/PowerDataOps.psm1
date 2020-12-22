@@ -29,7 +29,7 @@ foreach ($module in $requiredModules) {
 }
 
 # Provision dedicate appdata folder
-$Global:PowerXrmModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerXrm");
+$Global:PowerXrmModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
 New-Item -ItemType Directory -Path $Global:PowerXrmModuleFolderPath -Force | Out-Null;
 
 Write-Verbose "Module folder initialized : $($Global:PowerXrmModuleFolderPath)";
