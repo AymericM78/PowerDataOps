@@ -25,3 +25,9 @@ Used in several customer productions to bring full automation for dev, packaging
 ## Community contributions
 
 This module is open to community contributions in order to enrich this tooling and helps everyone to bring more automation capabilities to Microsoft Dataverse implementations.
+
+## Well ? And now ?
+
+Check install and usage documentation :)
+ - https://github.com/AymericM78/PowerDataOps/blob/main/documentation/install.md
+ - https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
