@@ -11,7 +11,7 @@ PowerDataOps is a set of cmdlets dedicated to automation for Microsoft Dataverse
  - Environment Management : create, backup, restore, copy,  ...
  - DevOps CI/CD : export, import, upgrade solutions
 
-PowerDataOps is designed to simplify dev and ops operations by adding a confortable layer on top of PowerShell Connector (Microsoft.Xrm.Tooling.CrmConnector.PowerShell) and PowerApps admin cmdlet (Microsoft.PowerApps.Administration.PowerShell) provided by Microsoft.
+PowerDataOps is designed to simplify dev and ops operations by adding a confortable layer on top of [Microsoft.Xrm.Tooling.CrmConnector.PowerShell](https://docs.microsoft.com/en-us/powershell/module/microsoft.xrm.tooling.crmconnector.powershell/?view=pa-ps-latest) and PowerApps admin module [Microsoft.PowerApps.Administration.PowerShell](https://docs.microsoft.com/en-us/power-platform/admin/powerapps-powershell#power-apps-cmdlets-for-administrators) provided by Microsoft.
 
 ## History
 
