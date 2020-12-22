@@ -1,6 +1,6 @@
 
 # Discover and load function scripts
-$scriptFiles = @(Get-ChildItem -Path "$PSScriptRoot\Functions" -Include "*.ps1" -Recurse);
+$scriptFiles = @(Get-ChildItem -Path "$PSScriptRoot\src\" -Include "*.ps1" -Recurse);
 foreach ($scriptFile in $scriptFiles) {
     $scriptPath = $scriptFile.FullName;
     Write-Verbose " > Loading function file '$scriptPath'";
