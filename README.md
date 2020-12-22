@@ -1,6 +1,6 @@
 # PowerDataOps
 
-PowerShell module for Xrm automation (Data Management, administration and DevOps activities)
+PowerShell module for Microsoft Dataverse automation (Data Management, administration and DevOps activities)
 
 ## Purpose
 
