@@ -2,7 +2,26 @@
 
 PowerShell module for Microsoft Dataverse automation (Data Management, administration and DevOps activities)
 
-## Purpose
+
+<p align="center">
+    <a href="#repolicense" alt="Repository License">
+        <img src="https://img.shields.io/github/license/AymericM78/PowerDataOps?color=yellow&label=License" /></a>
+    <a href="#openissues" alt="Open Issues">
+        <img src="https://img.shields.io/github/issues-raw/AymericM78/PowerDataOps?label=Open%20Issues" /></a>
+    <a href="#openpr" alt="Open Pull Requests">
+        <img src="https://img.shields.io/github/issues-pr-raw/AymericM78/PowerDataOps?label=Open%20Pull%20Requests" /></a>
+</p>
+
+<p align="center">
+    <a href="#watchers" alt="Watchers">
+        <img src="https://img.shields.io/github/watchers/AymericM78/PowerDataOps?style=social" /></a>
+    <a href="#forks" alt="Forks">
+        <img src="https://img.shields.io/github/forks/AymericM78/PowerDataOps?style=social" /></a>
+    <a href="#stars" alt="Stars">
+        <img src="https://img.shields.io/github/stars/AymericM78/PowerDataOps?style=social" /></a>
+</p>
+
+## 🚀 Features
 
 PowerDataOps is a set of cmdlets dedicated to automation for Microsoft Dataverse implementations :
  - Data operations : CRUD
@@ -22,7 +41,7 @@ https://docs.microsoft.com/fr-fr/archive/blogs/aymerics_blog/crm-data-management
 Then my experience with PowerShell and Microsoft BizApps technologies contribute to enrich this tooling.
 Used in several customer productions to bring full automation for dev, packaging, deployment and configuration, this confirm that PowerShell scripting could be robust and flexible to answer recurrent problematics.
 
-## Community contributions
+## 👐 Community contributions
 
 This module is open to community contributions in order to enrich this tooling and helps everyone to bring more automation capabilities to Microsoft Dataverse implementations.
 
