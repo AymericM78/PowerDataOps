@@ -27,7 +27,10 @@ function Copy-XrmSolutionComponents {
     process {
         
         $sourceComponents = $XrmClient | Get-XrmSolutionComponents -SolutionUniqueName $SourceSolutionUniqueName;
-
+        if(-not $sourceComponents)
+        {
+            return;
+        }
         ForEach-ObjectWithProgress -Collection $sourceComponents -OperationName "Solution components copy from $SourceSolutionUniqueName to $TargetSolutionUniqueName" -ScriptBlock {
             param($component)
 
