@@ -59,6 +59,7 @@ Register-ArgumentCompleter -CommandName Get-XrmAttributeValue -ParameterName "Na
     $record = $null;
     if (-not ($FakeBoundParameters.ContainsKey("Record"))) {
         # TODO : Search record  for logicalname in Pipeline
+        # https://gist.github.com/rohnedwards/1a78c57936d773f2a541d7ac3124f921
         return @();
     }
     else {
