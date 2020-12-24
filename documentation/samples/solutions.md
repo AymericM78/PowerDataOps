@@ -1,4 +1,4 @@
-# Playing with solutions with `PowerDataOps` Module
+# Playing with solutions thanks to `PowerDataOps` Module
 
 ## Overview
 
