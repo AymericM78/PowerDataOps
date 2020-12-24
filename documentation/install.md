@@ -10,7 +10,7 @@ In some cases, users will need to install modules from a different repository th
 
 Below is an example of registering a new repository from a local folder containing `.nupkg` files:
 
-```
+```Powershell
 Register-PSRepository -Name "{{repository_name}}" -SourceLocation "{{folder_with_nupkg_files}}" -PackageManagementProvider NuGet -InstallationPolicy Trusted
 ```
 
@@ -18,12 +18,17 @@ Register-PSRepository -Name "{{repository_name}}" -SourceLocation "{{folder_with
 
 To install PowerDataOps module from the PowerShell Gallery, run the following command:
 
-```
+```Powershell
 Install-Module -Name "PowerDataOps"
 ```
 
 To install PowerDataOps module from a specific repository, run the following command:
 
-```
+```Powershell
 Install-Module -Name "PowerDataOps" -Repository "{{repository_name}}"
 ```
+
+## Next steps
+
+- [PowerDataOps usage](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md)
+- [Samples](https://github.com/AymericM78/PowerDataOps/tree/main/documentation/samples)
