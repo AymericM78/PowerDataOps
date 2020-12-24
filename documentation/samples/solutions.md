@@ -34,9 +34,9 @@ $newVersion = "{0}.{1}.{2}.{3}" -f $actualVersion.Major, $actualVersion.Minor, $
 
 # Update solution record with new version
 $solutionUpdate = $solution.Record | Set-XrmAttributeValue -Name "version" -Value $newVersion ;
-$solutionUpdate | Update-CdsRecord;
+$solutionUpdate | Update-XrmRecord;
 
 # Export solution as managed to local folder
-$solutionFilePath = Export-CdsSolution -SolutionUniqueName $mySolutionUniqueName -Managed $true -ExportPath $PSScriptRoot;
+$solutionFilePath = Export-XrmSolution -SolutionUniqueName $mySolutionUniqueName -Managed $true -ExportPath $PSScriptRoot;
 
 ```
