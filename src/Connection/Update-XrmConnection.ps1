@@ -15,7 +15,7 @@ function Update-XrmConnection {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        $XrmConnection.Instances = Get-XrmInstances -Region $XrmConnection.Region -AuthType $XrmConnection.AuthType -Credentials $Global:XrmContext.Credentials;
+        $XrmConnection.Instances = Get-XrmInstances;
         $XrmConnection | Export-XrmConnection;        
     }
     end {

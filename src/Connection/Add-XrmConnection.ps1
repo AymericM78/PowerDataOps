@@ -79,7 +79,7 @@ function Add-XrmConnection {
         $xrmConnection.Instances | ForEach-Object {
             $_.ParentConnection = $xrmConnection;
         }
-        $xrmConnection.FilePath = [IO.Path]::Combine($Global:PowerXrmModuleFolderPath, "$Name.xml");
+        $xrmConnection.FilePath = [IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, "$Name.xml");
 
         $xrmConnection.DevOpsSettings.OrganizationName = $AzDevOpsOrgName;
         $xrmConnection.DevOpsSettings.ProjectName = $AzDevOpsProjectName;

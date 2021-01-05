@@ -45,7 +45,7 @@ function Connect-XrmUser {
         $xrmConnection.Region = $Region;
 
         $Global:XrmContext.IsOnline = ($AuthType -eq "Office365");
-        $Global:XrmContext.IsOnPremise = ($AuthType -eq "Office365");
+        $Global:XrmContext.IsOnPremise = ($AuthType -ne "Office365");
 
         $Global:XrmContext.CurrentConnection = $xrmConnection;
         $Global:XrmContext.IsUserConnected = $true;

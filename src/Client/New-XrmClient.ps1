@@ -45,7 +45,6 @@ function New-XrmClient {
             $userName = $userId;
         }
         
-
         Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $url | User : $userName]" -ForegroundColor Yellow;        
         $XrmClient;
     }

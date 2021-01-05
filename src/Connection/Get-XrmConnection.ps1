@@ -44,7 +44,7 @@ function Get-XrmConnection {
         $instanceName = $PSBoundParameters.InstanceName;
                
         if ($name) {  
-            $targetFilePath = [IO.Path]::Combine($Global:PowerXrmModuleFolderPath, "$name.xml");
+            $targetFilePath = [IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, "$name.xml");
             
             $xrmConnection = Import-XrmConnection -FilePath $targetFilePath -DoNotDecryptPassword:$DoNotDecryptPassword;
             $Global:XrmContext.CurrentConnection = $xrmConnection;
@@ -62,7 +62,7 @@ function Get-XrmConnection {
             }
         }
         else {                          
-            $files = Get-ChildItem -Path $Global:PowerXrmModuleFolderPath -Include "*.xml" -Recurse;
+            $files = Get-ChildItem -Path $Global:PowerDataOpsModuleFolderPath -Include "*.xml" -Recurse;
             $connections = @();
             foreach ($file in $files) {
                 $xrmConnection = Import-XrmConnection -FilePath $file.FullName -DoNotDecryptPassword:$DoNotDecryptPassword;
@@ -83,7 +83,7 @@ Register-ArgumentCompleter -CommandName Get-XrmConnection -ParameterName "Name" 
 
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
-    $fileNames = @(Get-ChildItem -Path $Global:PowerXrmModuleFolderPath -Include "*.xml" -Recurse | Select-Object -Property BaseName);
+    $fileNames = @(Get-ChildItem -Path $Global:PowerDataOpsModuleFolderPath -Include "*.xml" -Recurse | Select-Object -Property BaseName);
     $validNames = @();
     $fileNames | Sort-Object -Property BaseName  | ForEach-Object {
         $validNames += $_.BaseName;
@@ -99,7 +99,7 @@ Register-ArgumentCompleter -CommandName Get-XrmConnection -ParameterName "Instan
         return @();
     }
     $fileName = "$($fakeBoundParameters.Name).xml"; 
-    $targetFilePath = [IO.Path]::Combine($Global:PowerXrmModuleFolderPath, $fileName);
+    $targetFilePath = [IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, $fileName);
     $xrmConnection = Import-XrmConnection -FilePath $targetFilePath;
 
     $validInstanceNames = @();

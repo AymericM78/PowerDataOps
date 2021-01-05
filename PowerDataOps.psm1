@@ -29,13 +29,13 @@ foreach ($module in $requiredModules) {
 }
 
 # Provision dedicate appdata folder
-$Global:PowerXrmModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
-New-Item -ItemType Directory -Path $Global:PowerXrmModuleFolderPath -Force | Out-Null;
+$Global:PowerDataOpsModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
+New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Force | Out-Null;
 
-Write-Verbose "Module folder initialized : $($Global:PowerXrmModuleFolderPath)";
+Write-Verbose "Module folder initialized : $($Global:PowerDataOpsModuleFolderPath)";
 
 # Initialize tracing file
 $timestamp = Get-date -format "yyyy-MM-dd -- HH-mm-ss";
-New-Item -ItemType Directory -Path $Global:PowerXrmModuleFolderPath -Name "Logs" -Force | Out-Null;
-$Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerXrmModuleFolderPath, "Logs");
+New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Name "Logs" -Force | Out-Null;
+$Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, "Logs");
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
