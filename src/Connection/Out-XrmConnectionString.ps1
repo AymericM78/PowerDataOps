@@ -38,6 +38,7 @@ function Out-XrmConnectionString {
             $connectionString += "ClientId=$($xrmConnection.ApplicationId);";
             $connectionString += "thumbprint=$($xrmConnection.CertificateThumbprint);";
         }
+        $connectionString += "SkipDiscovery=true;";
         $connectionString;
     }
     end {

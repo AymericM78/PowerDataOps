@@ -65,7 +65,7 @@ function Get-XrmInstances {
         else {
             throw "You are not connected! Please use Connect-XrmUser or Connect-XrmAdmin command before."
         }
-        $xrmInstances | Sort-Object -Property FriendlyName;
+        $xrmInstances | Sort-Object -Property DisplayName;
     }
     end {
         $StopWatch.Stop();
