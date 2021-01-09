@@ -20,6 +20,8 @@ Import-Module PowerDataOps
 
 # Initialize connection
 Connect-XrmUser -AuthType Office365 -UserName "user@contoso.fake" -Password "MyPass123"
+# If you have admin rights you can also use
+# Connect-XrmAdmin -UserName "user@contoso.fake" -Password "MyPass123"
 
 # Push connection data to XrmToolBox
 Export-XrmConnectionToXrmToolBox -Name "Contoso"
