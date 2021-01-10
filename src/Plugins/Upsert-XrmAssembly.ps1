@@ -53,12 +53,7 @@ function Upsert-XrmAssembly {
                 sourcetype = (New-XrmOptionSetValue -Value $SourceType)
                 isolationmode = (New-XrmOptionSetValue -Value $IsolationMode)
             };
-            $assemblyRecord.Id = $XrmClient | Add-XrmRecord -Record $assemblyRecord;
-
-            if($PSBoundParameters.SolutionUniqueName)
-            {
-                Add-XrmSolutionComponent -XrmClient $XrmClient -ComponentId $assemblyRecord.Id -ComponentType 91 -SolutionUniqueName $SolutionUniqueName;
-            }
+            $assemblyRecord.Id = $XrmClient | Add-XrmRecord -Record $assemblyRecord;            
         }
         else {
             $assemblyRecord = New-XrmEntity -LogicalName "pluginassembly" -Id $existingAssembly.Id -Attributes @{
@@ -68,6 +63,10 @@ function Upsert-XrmAssembly {
                 content = $assemblyContent
             };
             $XrmClient | Update-XrmRecord -Record $assemblyRecord;
+        }
+        if($PSBoundParameters.SolutionUniqueName)
+        {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -ComponentId $assemblyRecord.Id -ComponentType 91 -SolutionUniqueName $SolutionUniqueName;
         }
     }
     end {

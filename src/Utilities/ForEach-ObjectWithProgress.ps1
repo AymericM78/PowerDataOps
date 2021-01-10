@@ -6,8 +6,8 @@ function ForEach-ObjectWithProgress {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-        [Object[]]
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
+        [object[]]
         $Collection,
 
         [Parameter(Mandatory = $true)]
