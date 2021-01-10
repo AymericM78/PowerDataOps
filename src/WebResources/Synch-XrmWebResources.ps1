@@ -3,7 +3,7 @@
     Synchronize a webresource folder to Dataverse
 #>
 
-function Synch-XrmWebResources {
+function Sync-XrmWebResources {
     [CmdletBinding()]    
     param
     (        
@@ -96,4 +96,4 @@ function Synch-XrmWebResources {
     }    
 }
 
-Export-ModuleMember -Function Synch-XrmWebResources -Alias *;
+Export-ModuleMember -Function Sync-XrmWebResources -Alias *;
