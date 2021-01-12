@@ -34,14 +34,14 @@ function Join-XrmRecords {
     process {
 
         $relationShip = New-Object -TypeName "Microsoft.Xrm.Sdk.Relationship" -ArgumentList $RelationShipName;
-        $recordReferences = New-Object -TypeName "Microsoft.Xrm.Sdk.EntityReferenceCollection";
+        $recordReferenceCollection = New-Object -TypeName "Microsoft.Xrm.Sdk.EntityReferenceCollection";
         $RecordReferences | ForEach-Object {
-            $recordReferences.Add($_);
+            $recordReferenceCollection.Add($_);
         }
 
         try
         {
-            $XrmClient.Associate("systemuser", $UserId, $relationShip, $roleReferences);
+            $XrmClient.Associate($Record.LogicalName, $Record.Id, $relationShip, $recordReferenceCollection);
         }
         catch
         {
