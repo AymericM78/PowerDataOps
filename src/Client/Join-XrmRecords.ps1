@@ -4,7 +4,6 @@
 #>
 function Join-XrmRecords {
     [CmdletBinding()]
-    [OutputType([Guid])]
     param
     (    
         [Parameter(Mandatory=$false, ValueFromPipeline)]
@@ -45,14 +44,14 @@ function Join-XrmRecords {
         }
         catch
         {
-            if($_.Exception.Message.Contains("Cannot insert duplicate key"))
+            if($IgnoreExistings -and $_.Exception.Message.Contains("Cannot insert duplicate key"))
             {
-                if(-not $IgnoreExistings)
-                {
-                    throw $_.Exception;
-                }
+                return;
             }
-            throw $_.Exception;
+            else
+            {
+                throw $_.Exception;
+            }
         }
     }
     end {
