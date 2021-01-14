@@ -66,8 +66,8 @@ function Get-XrmSolutionComponentName {
         $componentTypeDefinitions[55] = "Ribbon Diff";
         $componentTypeDefinitions[59] = "SavedQueryVisualization";
         $componentTypeDefinitions[60] = "SystemForm";
-        $componentTypeDefinitions[61] = "Web Resource";
-        $componentTypeDefinitions[62] = "Site Map";
+        $componentTypeDefinitions[61] = "WebResource";
+        $componentTypeDefinitions[62] = "SiteMap";
         $componentTypeDefinitions[63] = "Connection Role";
         $componentTypeDefinitions[64] = "Complex Control";
         $componentTypeDefinitions[66] = "Custom Control";

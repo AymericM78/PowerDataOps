@@ -29,7 +29,13 @@ function Remove-XrmActiveCustomizations {
         $removeActiveCustomizationsRequest = New-XrmRequest -Name "RemoveActiveCustomizations";
         $removeActiveCustomizationsRequest = $removeActiveCustomizationsRequest | Add-XrmRequestParameter -Name "SolutionComponentName" -Value $SolutionComponentName;
         $removeActiveCustomizationsRequest = $removeActiveCustomizationsRequest | Add-XrmRequestParameter -Name "ComponentId" -Value $ComponentId;
-        $response = $XrmClient | Invoke-XrmRequest -Request $removeActiveCustomizationsRequest;
+
+        try {            
+            $response = $XrmClient | Invoke-XrmRequest -Request $removeActiveCustomizationsRequest;
+        }
+        catch {
+            Write-HostAndLog -Message $_.Exception.Message -MethodName "Remove-XrmActiveCustomizations" -Level WARN;
+        }
     }
     end {
         $StopWatch.Stop();
