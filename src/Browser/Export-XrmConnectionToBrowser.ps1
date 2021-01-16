@@ -236,7 +236,11 @@ function Get-XrmFavorites {
     param (
         [Parameter(Mandatory = $true)]
         [FolderBookMark]
-        $RootBookmark
+        $RootBookmark,
+
+        [Parameter(Mandatory = $false)]
+        [String]
+        $OverrideConnectionStringFormat
     )      
     Write-HostAndLog "Retrieving Dataverse links... " -ForegroundColor Gray;
     $d365Folder = $RootBookmark.GetChild("Dataverse");
@@ -255,6 +259,10 @@ function Get-XrmFavorites {
         Write-HostAndLog " instance..." -NoNewline -NoTimeStamp -ForegroundColor Gray;
 
         $crmConnectionString = $instance | Out-XrmConnectionString;
+        
+        if ($PSBoundParameters.ContainsKey('OverrideConnectionStringFormat')) {
+            $crmConnectionString = $OverrideConnectionStringFormat.Replace("[URL]", $instance.Url);
+        }
 
         try {
             $crmClient = Get-CrmConnection -ConnectionString $crmConnectionString;
@@ -305,7 +313,11 @@ function Export-XrmConnectionToBrowser {
            
         [Parameter(Mandatory = $false)]
         [bool]
-        $IsChrome = $true,
+        $IsChrome = $true,       
+
+        [Parameter(Mandatory = $false)]
+        [String]
+        $OverrideConnectionStringFormat,
 
         [Parameter(Mandatory = $false)]
         [string[]]
@@ -363,7 +375,12 @@ function Export-XrmConnectionToBrowser {
         $rootBookmark = Get-XrmFavorites -RootBookmark $rootBookmark;
           
         # Save favorites
-        Save-BookMark -ProfilePath $profilePath -RootBookmark $rootBookmark;
+        if ($PSBoundParameters.ContainsKey('OverrideConnectionStringFormat')) {
+            Save-BookMark -ProfilePath $profilePath -RootBookmark $rootBookmark -OverrideConnectionStringFormat $OverrideConnectionStringFormat;
+        }
+        else {
+            Save-BookMark -ProfilePath $profilePath -RootBookmark $rootBookmark;
+        }
     }
     end {
         $StopWatch.Stop();

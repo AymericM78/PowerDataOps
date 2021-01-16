@@ -59,6 +59,10 @@ function Export-XrmConnectionToXrmToolBox {
 
         [Parameter(Mandatory = $false)]
         [String]
+        $OverrideConnectionStringFormat,
+
+        [Parameter(Mandatory = $false)]
+        [String]
         $XtbConnectionPath = "$env:APPDATA\MscrmTools\XrmToolBox\Connections"
     )
     begin {   
@@ -85,7 +89,10 @@ function Export-XrmConnectionToXrmToolBox {
 
             $connectionString = $instance | Out-XrmConnectionString;
             $connectionString = $connectionString.Replace($XrmConnection.Password, $encryptedPassword);
-
+            if ($PSBoundParameters.ContainsKey('OverrideConnectionStringFormat')) {
+                $connectionString = $OverrideConnectionStringFormat.Replace("[URL]", $instance.Url);
+            }
+            
             $fileContent.AppendLine('     <ConnectionDetail>') | Out-Null;        
             $fileContent.AppendLine('       <ConnectionString>' + $connectionString + '</ConnectionString>') | Out-Null;
             $fileContent.AppendLine('       <UseConnectionString>true</UseConnectionString>') | Out-Null;
