@@ -26,15 +26,15 @@ function Write-XrmMessageToSlack {
         
         if($BotName -eq "DevOps")
         {
-            $projectName = $env:SYSTEM_TEAMPROJECT;
+            # $projectName = $env:SYSTEM_TEAMPROJECT;
             
             if($env:RELEASE_DEFINITIONNAME)
             {
-                $BotName = "DevOps $projectName : Release $($env:RELEASE_DEFINITIONNAME)";
+                $BotName = "Release $($env:RELEASE_DEFINITIONNAME)";
             }
             elseif($env:BUILD_DEFINITIONNAME)
             {
-                $BotName = "DevOps $projectName : Build $($env:BUILD_DEFINITIONNAME)";
+                $BotName = "Build $($env:BUILD_DEFINITIONNAME)";
             }
         }        
         
