@@ -5,16 +5,20 @@ function Add-BrowserShortcut {
         [Parameter(Mandatory = $true)]
         [string]
         $BrowserShortCutsPath,
+
         [Parameter(Mandatory = $true)]
         [string]
         $BrowserAppPath,
+
         [Parameter(Mandatory = $true)]
         [string]
         $ProfileName
     )    
-   
+
     Write-HostAndLog "Add browser shortcut to '$BrowserShortCutsPath'... " -NoNewline -ForegroundColor Gray;
-    $shortcutPath = "$($BrowserShortCutsPath)\$($ProfileName).lnk";
+    
+    $name = $ProfileName.Replace("Profile ", "");    
+    $shortcutPath = "$($BrowserShortCutsPath)\$($name).lnk";
     # TODO : Check if shortcut exists before
     $arguments = " --profile-directory=`"$($ProfileName)`" ";
 
@@ -31,6 +35,7 @@ function Set-BrowserFavoriteBarEnabled {
         [Parameter(Mandatory = $true)]
         [string]
         $ProfilePath,
+
         [Parameter(Mandatory = $true)]
         [string]
         $ProfileName
@@ -55,6 +60,7 @@ function Start-Browser {
         [Parameter(Mandatory = $true)]
         [string]
         $BrowserAppPath,
+
         [Parameter(Mandatory = $true)]
         [string]
         $ProfileName
@@ -62,7 +68,10 @@ function Start-Browser {
 
     Write-HostAndLog "Starting browser... " -NoNewline -ForegroundColor Gray;
     $arguments = " --profile-directory=`"$($ProfileName)`" ";
-    Start-Process -FilePath $BrowserAppPath -ArgumentList $arguments -PassThru -Wait | Out-Null;    
+    $proc = Start-Process -FilePath $BrowserAppPath -ArgumentList $arguments -PassThru;
+    # wait up to x seconds for normal termination
+    $proc | Wait-Process -Timeout 5 -ErrorAction SilentlyContinue;
+    $proc | Stop-Process;
     Write-HostAndLog "[OK]" -ForegroundColor Green -NoTimeStamp;
 }
 
@@ -93,14 +102,13 @@ function Add-EdgeExtension {
 }
 
 class BookMark {
- 
     [String]$date_added = "13244290348204144";
     #[String]$date_modified = "13244290348204144";
     [String]$guid = [guid]::NewGuid();
     [String]$id = [Random]::new().Next(1, 999).ToString();
     [String]$name;
     [String]$type;
-  
+
     BookMark () {
     }
 
@@ -153,7 +161,7 @@ function Get-DefaultBookmark {
     $o365Folder.AddChild("O365", "https://www.office.com");
     $o365Folder.AddChild("OWA", "https://outlook.office365.com/mail/inbox");
     $o365Folder.AddChild("Teams", "https://teams.microsoft.com");
-       
+
     $powerPlatformFolder = $mainFolder.AddChild("Power Platform");
     $powerPlatformFolder.AddChild("Power Platform Admin", "https://admin.powerplatform.microsoft.com");
     $powerPlatformFolder.AddChild("PowerApps Maker", "https://make.powerapps.com");
@@ -177,6 +185,7 @@ function Save-BookMark {
         [Parameter(Mandatory = $true)]
         [string]
         $ProfilePath,
+
         [Parameter(Mandatory = $true)]
         [FolderBookMark]
         $RootBookmark
@@ -221,7 +230,7 @@ function Save-BookMark {
             }';
         $bookmarkDefaultContent | Out-File -FilePath $bookmarksFilePath -Encoding utf8 -Force;
     }
-        
+
     $bookmarkContent = [IO.File]::ReadAllText($bookmarksFilePath);
     $bookmark = $bookmarkContent | ConvertFrom-Json;
 
@@ -240,8 +249,13 @@ function Get-XrmFavorites {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $OverrideConnectionStringFormat
+        $OverrideConnectionStringFormat = "",
+
+        [Parameter(Mandatory = $false)]
+        [String[]]
+        $AppIgnoredList = @()
     )      
+
     Write-HostAndLog "Retrieving Dataverse links... " -ForegroundColor Gray;
     $d365Folder = $RootBookmark.GetChild("Dataverse");
 
@@ -260,28 +274,25 @@ function Get-XrmFavorites {
 
         $crmConnectionString = $instance | Out-XrmConnectionString;
         
-        if ($PSBoundParameters.ContainsKey('OverrideConnectionStringFormat')) {
-            $crmConnectionString = $OverrideConnectionStringFormat.Replace("[URL]", $instance.Url);
+        if (-not [string]::IsNullOrWhiteSpace($OverrideConnectionStringFormat)) {
+            $crmConnectionString = $OverrideConnectionStringFormat.Replace("{Url}", $instance.Url);
         }
 
         try {
-            $crmClient = Get-CrmConnection -ConnectionString $crmConnectionString;
+            $xrmClient = New-XrmClient -ConnectionString $crmConnectionString;
             $url = $instance.Url;
             $instanceFolder = $d365Folder.AddChild($instance.DisplayName);
-                        
             $instanceFolder.AddChild("Admin", "$url/main.aspx?settingsonly=true");
 
-            $appIgnoredList = @();#("msdynce_saleshub", "msdyn_SolutionHealthHub", "Customerservicehub", "msdyn_TeamMember_Sales", "mobilecustom");
-
-            $apps = $crmClient.RetrieveMultiple($queryApps).Entities;
+            $apps = $xrmClient | Get-XrmMultipleRecords -Query $queryApps;
             foreach ($app in $apps) {
-                $appName = $app["uniquename"];
-                if ($appIgnoredList.Contains($appName)) {
+                $appName = $app.uniquename;
+                if ($AppIgnoredList.Contains($appName)) {
                     continue;
                 }
                 # https://*.dynamics.com/Apps/uniquename/*uniquename*
                 $appUrl = "$url/Apps/uniquename/$($appName)";
-                $instanceFolder.AddChild($app["name"], $appUrl);
+                $instanceFolder.AddChild($app.name, $appUrl);
             }
             Write-HostAndLog "[OK]" -NoTimeStamp -ForegroundColor Green;
         }
@@ -310,18 +321,43 @@ function Export-XrmConnectionToBrowser {
         [ValidateNotNullOrEmpty()]   
         [String]
         $BrowserShortCutsPath,
-           
+
         [Parameter(Mandatory = $false)]
         [bool]
         $IsChrome = $true,       
 
         [Parameter(Mandatory = $false)]
         [String]
-        $OverrideConnectionStringFormat,
+        $OverrideConnectionStringFormat = "",
 
         [Parameter(Mandatory = $false)]
         [string[]]
-        $Extensions = @("eadknamngiibbmjdfokmppfooolhdidc", "bjnkkhimoaclnddigpphpgkfgeggokam")
+        $Extensions = @("eadknamngiibbmjdfokmppfooolhdidc", "bjnkkhimoaclnddigpphpgkfgeggokam"),        
+
+        [Parameter(Mandatory = $false)]
+        [String[]]
+        $AppIgnoredList = @(),
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $ChromeDefaultProfilesPath = "$($env:LOCALAPPDATA)\Google\Chrome\User Data\",
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $ChromeX64AppPath = "C:\Program Files\Google\Chrome\Application\chrome.exe",
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $ChromeX32AppPath = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+        
+        [Parameter(Mandatory = $false)]
+        [string]
+        $EdgeDefaultProfilesPath = "$($env:LOCALAPPDATA)\Microsoft\Edge SxS\User Data\",
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $EdgeAppPath = "$($env:LOCALAPPDATA)\Microsoft\Edge SxS\Application\msedge.exe"
+
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -330,20 +366,28 @@ function Export-XrmConnectionToBrowser {
     process {
 
         if ($isChrome) {
-            $browserProfilesPath = "$($env:LOCALAPPDATA)\Google\Chrome\User Data\";
-            $browserAppPath = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            $browserProfilesPath = $ChromeDefaultProfilesPath;
+            if (Test-Path -Path $ChromeX64AppPath) {
+                $browserAppPath = $ChromeX64AppPath;
+            }
+            elseif (Test-Path -Path $ChromeX32AppPath) {
+                $browserAppPath = $ChromeX32AppPath;
+            }
+            else {
+                throw "Chrome application path not found!";
+            }
         }
         else {
-            $browserProfilesPath = "$($env:LOCALAPPDATA)\Microsoft\Edge SxS\User Data\";
-            $browserAppPath = "$($env:LOCALAPPDATA)\Microsoft\Edge SxS\Application\msedge.exe";
+            $browserProfilesPath = $EdgeDefaultProfilesPath;
+            $browserAppPath = $EdgeAppPath;
         }
 
-        if (-not($profileName.StartsWith("Profile"))) {
-            $profileName = "Profile $profileName";
-        }
-        
+        $profileFolderName = $profileName;
+        if (-not($profileFolderName.StartsWith("Profile"))) {
+            $profileFolderName = "Profile $profileName";
+        }       
         # Provision profile folder
-        $profilePath = [IO.Path]::Combine($browserProfilesPath, $profileName);
+        $profilePath = [IO.Path]::Combine($browserProfilesPath, $profileFolderName);
         if (-not(Test-Path -Path $profilePath)) {
             New-Item -ItemType Directory -Path $browserProfilesPath -Name $profileName -Force -ErrorAction Ignore | Out-Null;
         }
@@ -371,16 +415,17 @@ function Export-XrmConnectionToBrowser {
         # Configure chrome : Add favorites
         $rootBookmark = Get-DefaultBookmark;
         
-        # Retrieve CDS instances and add links to bookmark
-        $rootBookmark = Get-XrmFavorites -RootBookmark $rootBookmark;
-          
+        # Retrieve CDS instances and add links to bookmark        
+        $rootBookmark = Get-XrmFavorites -RootBookmark $rootBookmark -OverrideConnectionStringFormat $OverrideConnectionStringFormat -AppIgnoredList $AppIgnoredList;
+
         # Save favorites
-        if ($PSBoundParameters.ContainsKey('OverrideConnectionStringFormat')) {
-            Save-BookMark -ProfilePath $profilePath -RootBookmark $rootBookmark -OverrideConnectionStringFormat $OverrideConnectionStringFormat;
-        }
-        else {
-            Save-BookMark -ProfilePath $profilePath -RootBookmark $rootBookmark;
-        }
+        Save-BookMark -ProfilePath $profilePath -RootBookmark $rootBookmark;
+
+        # Fix profile name
+        $browserStateFilePath = "$browserProfilesPath\Local State";
+        $localState = [IO.File]::ReadAllText($browserStateFilePath) | ConvertFrom-Json;
+        $localState.profile.info_cache.$profileName.name = $profileName;
+        $localState | ConvertTo-Json -Depth 32 | Out-File -FilePath $browserStateFilePath -Encoding utf8 -Force;
     }
     end {
         $StopWatch.Stop();
