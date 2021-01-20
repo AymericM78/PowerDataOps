@@ -31,14 +31,15 @@ function Out-XrmConnectionStringParameter {
             return $null;
         }
 
-        $startIndex = $ConnectionString.IndexOf($ParameterName);
+        $startIndex = $ConnectionString.IndexOf("$($ParameterName)=");
         $stopIndex = $ConnectionString.IndexOf(";", $startIndex);
-        if ($stopIndex -eq -1) {
-            $stopIndex = $ConnectionString.Length - 1;
+        
+        $value = $ConnectionString;
+        if ($stopIndex -ne -1) {
+            $value = $value.Remove($stopIndex);
         }
-        $value = $ConnectionString.Remove($stopIndex);
         $value = $value.Substring($startIndex);
-        $value = $value.Replace("$ParameterName=", "");
+        $value = $value.Replace("$($ParameterName)=", "");
         
         $value;
     }

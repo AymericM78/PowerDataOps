@@ -59,7 +59,7 @@ function Export-XrmConnectionToXrmToolBox {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $OverrideConnectionStringFormat,
+        $OverrideConnectionStringFormat = "",
 
         [Parameter(Mandatory = $false)]
         [String]
@@ -78,8 +78,8 @@ function Export-XrmConnectionToXrmToolBox {
         $fileContent = New-Object "System.Text.Stringbuilder";
         $fileContent.AppendLine('<?xml version="1.0" encoding="utf-8"?>') | Out-Null;
         $fileContent.AppendLine('<CrmConnections>') | Out-Null;
+        $fileContent.AppendLine('   <ByPassProxyOnLocal>false</ByPassProxyOnLocal>') | Out-Null;
         $fileContent.AppendLine('   <Connections>') | Out-Null;
-        $fileContent.AppendLine('     <ByPassProxyOnLocal>false</ByPassProxyOnLocal>') | Out-Null;
 
         foreach($instance in $instances)
         {
@@ -89,8 +89,15 @@ function Export-XrmConnectionToXrmToolBox {
 
             $connectionString = $instance | Out-XrmConnectionString;
             $connectionString = $connectionString.Replace($XrmConnection.Password, $encryptedPassword);
-            if ($PSBoundParameters.ContainsKey('OverrideConnectionStringFormat')) {
-                $connectionString = $OverrideConnectionStringFormat.Replace("[URL]", $instance.Url);
+            if (([string]::IsNullOrWhiteSpace($OverrideConnectionStringFormat)) -eq $false) {
+                $connectionString = $OverrideConnectionStringFormat.Replace("{Url}", $instance.Url);
+
+                if($connectionString.Contains("ClientSecret="))
+                {
+                    $clientSecret = $connectionString | Out-XrmConnectionStringParameter -ParameterName "ClientSecret";
+                    $encryptedClientSecret = Protect-XrmToolBoxPassword -Password $clientSecret;
+                    $connectionString = $connectionString.Replace($clientSecret, $encryptedClientSecret);
+                }
             }
             
             $fileContent.AppendLine('     <ConnectionDetail>') | Out-Null;        
@@ -98,7 +105,6 @@ function Export-XrmConnectionToXrmToolBox {
             $fileContent.AppendLine('       <UseConnectionString>true</UseConnectionString>') | Out-Null;
             $fileContent.AppendLine('       <WebApplicationUrl>' + $($instance.Url) + '</WebApplicationUrl>') | Out-Null;
             $fileContent.AppendLine('       <AuthType>OnlineFederation</AuthType>') | Out-Null;
-            $fileContent.AppendLine('       <AzureAdAppId>00000000-0000-0000-0000-000000000000</AzureAdAppId>') | Out-Null;
             $fileContent.AppendLine('       <ConnectionId>' + (New-Guid) + '</ConnectionId>') | Out-Null;
             $fileContent.AppendLine('       <ConnectionName>' + $($Name) + ' - ' + $instance.DisplayName +'</ConnectionName>') | Out-Null;
             $fileContent.AppendLine('       <ServerName>' + $($serverName) + '</ServerName>') | Out-Null;
@@ -108,13 +114,11 @@ function Export-XrmConnectionToXrmToolBox {
             $fileContent.AppendLine('       <OrganizationUrlName>' + $($organization.Name) + '</OrganizationUrlName>') | Out-Null;
             $fileContent.AppendLine('       <OrganizationServiceUrl>' + $($orgSvcUrl) + '</OrganizationServiceUrl>') | Out-Null;
             $fileContent.AppendLine('       <OrganizationDataServiceUrl>' + $($orgDataSvcUrl) + '</OrganizationDataServiceUrl>') | Out-Null;
-            $fileContent.AppendLine('       <OrganizationVersion>' + $($instance.Version) + '</OrganizationVersion>') | Out-Null;
             $fileContent.AppendLine('       <EnvironmentHighlightingInfo>') | Out-Null;
             $fileContent.AppendLine('          <Color>' + [string]::Format("#{0:X6}", [Random]::new().Next(0x1000000)) + '</Color>') | Out-Null;
             $fileContent.AppendLine('          <Text>' + $($instance.DisplayName) + '</Text>') | Out-Null;
             $fileContent.AppendLine('          <TextColor>#000000</TextColor>') | Out-Null;
-            $fileContent.AppendLine('       </EnvironmentHighlightingInfo>') | Out-Null;
-            $fileContent.AppendLine('       <LastUsedOn>14/01/1983 00:00:00</LastUsedOn>') | Out-Null;        
+            $fileContent.AppendLine('       </EnvironmentHighlightingInfo>') | Out-Null;       
             $fileContent.AppendLine('     </ConnectionDetail>') | Out-Null;
         }
 

@@ -69,9 +69,6 @@ function Start-Browser {
     Write-HostAndLog "Starting browser... " -NoNewline -ForegroundColor Gray;
     $arguments = " --profile-directory=`"$($ProfileName)`" ";
     $proc = Start-Process -FilePath $BrowserAppPath -ArgumentList $arguments -PassThru;
-    # wait up to x seconds for normal termination
-    $proc | Wait-Process -Timeout 5 -ErrorAction SilentlyContinue;
-    $proc | Stop-Process;
     Write-HostAndLog "[OK]" -ForegroundColor Green -NoTimeStamp;
 }
 
@@ -382,12 +379,8 @@ function Export-XrmConnectionToBrowser {
             $browserAppPath = $EdgeAppPath;
         }
 
-        $profileFolderName = $profileName;
-        if (-not($profileFolderName.StartsWith("Profile"))) {
-            $profileFolderName = "Profile $profileName";
-        }       
         # Provision profile folder
-        $profilePath = [IO.Path]::Combine($browserProfilesPath, $profileFolderName);
+        $profilePath = [IO.Path]::Combine($browserProfilesPath, $profileName);
         if (-not(Test-Path -Path $profilePath)) {
             New-Item -ItemType Directory -Path $browserProfilesPath -Name $profileName -Force -ErrorAction Ignore | Out-Null;
         }
