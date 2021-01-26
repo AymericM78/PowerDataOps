@@ -17,7 +17,7 @@ function Get-XrmInstances {
         
         if($Global:XrmContext.IsAdminConnected)
         {
-            $environments = Get-PowerAppEnvironment;
+            $environments = Get-AdminPowerAppEnvironment;
             $environments | ForEach-Object {          
                 $internalProperties = $_.Internal.properties;
                 $metadata = $_.Internal.properties.linkedEnvironmentMetadata;
