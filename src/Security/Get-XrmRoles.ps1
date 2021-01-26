@@ -35,7 +35,7 @@ function Get-XrmRoles {
     }    
     process {
        $queryRoles = New-XrmQueryExpression -LogicalName "role" -Columns $Columns;
-       if ($PSBoundParameters.ContainsKey('$BusinessUnitId'))
+       if ($PSBoundParameters.ContainsKey('BusinessUnitId'))
        {           
             $queryRoles = $queryRoles | Add-XrmQueryCondition -Field "businessunitid" -Condition Equal -Values $BusinessUnitId;
        }
