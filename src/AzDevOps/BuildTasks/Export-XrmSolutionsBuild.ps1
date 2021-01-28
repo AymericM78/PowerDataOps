@@ -64,7 +64,7 @@ function Export-XrmSolutionsBuild {
     }    
     process {
         
-        $XrmClient = New-XrmClient -ConnectionString $ConnectionString -MaxCrmConnectionTimeOutMinutes 15;
+        $XrmClient = New-XrmClient -ConnectionString $ConnectionString;
 
         Write-HostAndLog -Message " - Param : Export path = $ExportPath" -Level INFO;
         Write-HostAndLog -Message " - Param : Managed = $Managed" -Level INFO;
