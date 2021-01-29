@@ -39,8 +39,10 @@ function Backup-XrmSolutionsBuild {
             $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $_ -Managed $Managed -ExportPath $DefaultExportPath -ExportCalendarSettings $true -ExportCustomizationSettings $true -ExportEmailTrackingSettings $true  -ExportAutoNumberingSettings $true  -ExportIsvConfig $true  -ExportOutlookSynchronizationSettings $true  -ExportGeneralSettings $true  -ExportMarketingSettings $true  -ExportRelationshipRoles $true;                
             Write-HostAndLog -Message "Solution $($_) successfully exported to '$solutionFilePath' !" -Level SUCCESS;
 
-            $solutionUnpackPath = "$UnpackPath\$solutionName";
+            Write-HostAndLog -Message "Unpacking solution $($_)" -Level INFO;   
+            $solutionUnpackPath = "$UnpackPath\$_";
             Invoke-XrmSolutionPackager -Action Extract -SolutionFilePath $solutionFilePath -FolderPath $solutionUnpackPath;
+            Write-HostAndLog -Message "Solution $($_) successfully unpacked to '$solutionUnpackPath' !" -Level SUCCESS;
         }
     }
     end {
