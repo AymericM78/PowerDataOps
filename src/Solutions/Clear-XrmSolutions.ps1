@@ -25,8 +25,7 @@ function Clear-XrmSolutions {
     }    
     process {
         
-        $solutions = Get-XrmSolutions -XrmClient $XrmClient -Columns $Columns;
-        $solutionsToRemove = $solutions | Out-GridView -OutputMode Multiple;
+        $solutionsToRemove = Select-XrmSolutions -XrmClient $XrmClient -Columns $Columns -OutputMode Multiple;
                 
         $XrmClient | Set-XrmClientTimeout -DurationInMinutes $TimeOutInMinutes;
 

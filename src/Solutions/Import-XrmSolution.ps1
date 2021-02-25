@@ -6,7 +6,7 @@ function Import-XrmSolution {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -60,15 +60,13 @@ function Import-XrmSolution {
         $importSolutionRequest | Add-XrmRequestParameter -Name "OverwriteUnmanagedCustomizations" -Value $OverwriteUnmanagedCustomizations | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "ConvertToManaged" -Value $ConvertToManaged | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "SkipProductUpdateDependencies" -Value $SkipProductUpdateDependencies | Out-Null;
-        if($Upgrade)
-        {
+        if ($Upgrade) {
             $importSolutionRequest | Add-XrmRequestParameter -Name "HoldingSolution" -Value $Upgrade | Out-Null;
         }
 
-        try 
-        {            
+        try {            
             $importSolutionResponse = $XrmClient | Invoke-XrmRequest -Request $importSolutionRequest -Async;
-            $asyncOperationId =  $importSolutionResponse.AsyncJobId;
+            $asyncOperationId = $importSolutionResponse.AsyncJobId;
 
             $importJob = $null;
             $lastProgressValue = $null;
@@ -103,8 +101,7 @@ function Import-XrmSolution {
             throw $errorMessage;
         }  
 
-        if($Upgrade)
-        {
+        if ($Upgrade) {
             Start-XrmSolutionUpgrade -SolutionUniqueName $SolutionUniqueName;
         }
     }
@@ -115,3 +112,13 @@ function Import-XrmSolution {
 }
 
 Export-ModuleMember -Function Import-XrmSolution -Alias *;
+
+Register-ArgumentCompleter -CommandName Import-XrmSolution -ParameterName "SolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}

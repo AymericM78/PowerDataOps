@@ -2,15 +2,15 @@
     .SYNOPSIS
     Retrieve solutions history
 #>
-function Get-XrmSolutionHistory{
+function Get-XrmSolutionHistory {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [int]
         $Take = 50
     )
@@ -19,7 +19,6 @@ function Get-XrmSolutionHistory{
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-       
         $querySolutionHistory = New-XrmQueryExpression -LogicalName "msdyn_solutionhistory" -Columns *;
         $querySolutionHistory = $querySolutionHistory | Add-XrmQueryOrder -Field "msdyn_endtime" -OrderType Descending;
         $querySolutionHistory.TopCount = $Take;

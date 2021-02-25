@@ -1,11 +1,11 @@
 <#
     .SYNOPSIS
-    Get solution version.
+    Retrieve solution record
 #>
-function Get-XrmSolutionVersion {
+function Get-XrmSolution {
     [CmdletBinding()]
     param
-    (
+    (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
@@ -13,20 +13,22 @@ function Get-XrmSolutionVersion {
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String[]]
+        $Columns = @("solutionid", "uniquename","friendlyname","version","ismanaged","installedon","createdby","publisherid","modifiedon","modifiedby")
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        $solution = $XrmClient | Get-XrmRecord -LogicalName "solution" -AttributeName "uniquename" -Value $SolutionUniqueName -Columns "version";
-        if (-not $solution) {
-            Write-HostAndLog -Message "Solution $SolutionUniqueName not found" -Level WARN;
-            return $null;
-        }
-        $version = $solution.version;
-        $version;
+
+        $solution = Get-XrmRecord -LogicalName "solution" -AttributeName "uniquename" -Value $SolutionUniqueName -Columns $Columns;
+        $solution;
+
     }
     end {
         $StopWatch.Stop();
@@ -34,9 +36,9 @@ function Get-XrmSolutionVersion {
     }    
 }
 
-Export-ModuleMember -Function Get-XrmSolutionVersion -Alias *;
+Export-ModuleMember -Function Get-XrmSolution -Alias *;
 
-Register-ArgumentCompleter -CommandName Get-XrmSolutionVersion -ParameterName "SolutionUniqueName" -ScriptBlock {
+Register-ArgumentCompleter -CommandName Get-XrmSolution -ParameterName "SolutionUniqueName" -ScriptBlock {
 
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 

@@ -6,7 +6,7 @@ function Start-XrmSolutionUpgrade {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -24,10 +24,9 @@ function Start-XrmSolutionUpgrade {
         $deleteAndPromoteRequest = New-XrmRequest -Name "DeleteAndPromote ";
         $deleteAndPromoteRequest | Add-XrmRequestParameter -Name "UniqueName" -Value $SolutionUniqueName | Out-Null;
         
-        try 
-        {            
+        try {            
             $deleteAndPromoteResponse = $XrmClient | Invoke-XrmRequest -Request $deleteAndPromoteRequest -Async;
-            $asyncOperationId =  $deleteAndPromoteResponse.AsyncJobId;
+            $asyncOperationId = $deleteAndPromoteResponse.AsyncJobId;
             Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId;
         }
         catch {
@@ -44,3 +43,13 @@ function Start-XrmSolutionUpgrade {
 }
 
 Export-ModuleMember -Function Start-XrmSolutionUpgrade -Alias *;
+
+Register-ArgumentCompleter -CommandName Start-XrmSolutionUpgrade -ParameterName "SolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}

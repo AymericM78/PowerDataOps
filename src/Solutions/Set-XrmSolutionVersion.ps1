@@ -6,7 +6,7 @@ function Set-XrmSolutionVersion {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -28,8 +28,7 @@ function Set-XrmSolutionVersion {
     process {
         Write-HostAndLog -Message "Set version $Version to solution $($SolutionUniqueName)..." -Level INFO;
         $solution = $XrmClient | Get-XrmRecord -LogicalName "solution" -AttributeName "uniquename" -Value $SolutionUniqueName -Columns "version";
-        if(-not $solution)
-        {
+        if (-not $solution) {
             Write-HostAndLog -Message "Solution $SolutionUniqueName not found" -Level WARN;
             return $null;
         }
@@ -46,3 +45,13 @@ function Set-XrmSolutionVersion {
 }
 
 Export-ModuleMember -Function Set-XrmSolutionVersion -Alias *;
+
+Register-ArgumentCompleter -CommandName Set-XrmSolutionVersion -ParameterName "SolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}

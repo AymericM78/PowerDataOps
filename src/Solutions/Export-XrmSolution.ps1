@@ -142,3 +142,13 @@ function Export-XrmSolution {
 }
 
 Export-ModuleMember -Function Export-XrmSolution -Alias *;
+
+Register-ArgumentCompleter -CommandName Export-XrmSolution -ParameterName "SolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}

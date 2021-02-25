@@ -1,8 +1,8 @@
 <#
     .SYNOPSIS
-    Retrieve savedquery records
+    Display solutions selector
 #>
-function Get-XrmViews {
+function Select-XrmSolutions {
     [CmdletBinding()]
     param
     (        
@@ -10,27 +10,23 @@ function Get-XrmViews {
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
-        $EntityLogicalName,      
+        [Parameter(Mandatory = $false)]
+        [Microsoft.PowerShell.Commands.OutputModeOption]
+        $OutputMode = "Single",
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [String[]]
-        $Columns = @("*")
+        $Columns = @("solutionid", "uniquename","friendlyname","version","ismanaged","installedon","createdby","publisherid","modifiedon","modifiedby")
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        $queryViews = New-XrmQueryExpression -LogicalName "savedquery" -Columns $Columns;
-        if ($PSBoundParameters.ContainsKey('EntityLogicalName')) {           
-            $queryViews = $queryViews | Add-XrmQueryCondition -Field "returnedtypecode" -Condition Equal -Values $EntityLogicalName;
-        }
-        $views = $XrmClient | Get-XrmMultipleRecords -Query $queryViews;
-        $views;        
+        $solutions = Get-XrmSolutions -XrmClient $XrmClient -Columns $Columns;
+        $selectedSolutions = $solutions | Out-GridView -OutputMode $OutputMode;
+        $selectedSolutions;
     }
     end {
         $StopWatch.Stop();
@@ -38,4 +34,4 @@ function Get-XrmViews {
     }    
 }
 
-Export-ModuleMember -Function Get-XrmViews -Alias *;
+Export-ModuleMember -Function Select-XrmSolutions -Alias *;
