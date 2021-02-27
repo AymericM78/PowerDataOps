@@ -4,7 +4,7 @@
 #>
 function ConvertTo-XrmObjects {
     [CmdletBinding()]
-    [OutputType([PsObject])]
+    [OutputType([PsObject[]])]
     param
     (
         [Parameter(Mandatory, ValueFromPipeline)]
