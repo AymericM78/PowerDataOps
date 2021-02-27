@@ -27,8 +27,7 @@ function Trace-XrmFunction {
 
         # Performance tuning
         $verbose = $VerbosePreference -ne 'SilentlyContinue';
-        if(-not $verbose)
-        {
+        if (-not $verbose) {
             return;
         }
 

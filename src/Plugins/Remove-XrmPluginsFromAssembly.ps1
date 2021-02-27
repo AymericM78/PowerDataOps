@@ -6,7 +6,7 @@ function Remove-XrmPluginsFromAssembly {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -21,18 +21,16 @@ function Remove-XrmPluginsFromAssembly {
     }    
     process {
         $assembly = Get-XrmRecord -LogicalName "pluginassembly" -AttributeName "name" -Value $AssemblyName;
-        if(-not $assembly)
-        {
+        if (-not $assembly) {
             return;
         }
 
         $querySteps = New-XrmQueryExpression -LogicalName "sdkmessageprocessingstep";
         $link = $querySteps | Add-XrmQueryLink -ToEntityName "plugintype" -FromAttributeName "eventhandler" -ToAttributeName "plugintypeid"  `
-                            | Add-XrmQueryLinkCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id;
+            | Add-XrmQueryLinkCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id;
         $steps = $XrmClient | Get-XrmMultipleRecords -Query $querySteps;
 
-        if($steps)
-        {
+        if ($steps) {
             ForEach-ObjectWithProgress -Collection $steps -OperationName "Removing plugin steps from $AssemblyName" -ScriptBlock {
                 param($step)
 
@@ -41,12 +39,11 @@ function Remove-XrmPluginsFromAssembly {
         }
 
         $queryTypes = New-XrmQueryExpression -LogicalName "plugintype" `
-                    | Add-XrmQueryCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id `
-                    | Add-XrmQueryCondition -Field "isworkflowactivity" -Condition Equal -Values $false;
+            | Add-XrmQueryCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id `
+            | Add-XrmQueryCondition -Field "isworkflowactivity" -Condition Equal -Values $false;
         $types = $XrmClient | Get-XrmMultipleRecords -Query $queryTypes;
 
-        if($types)
-        {
+        if ($types) {
             ForEach-ObjectWithProgress -Collection $types -OperationName "Removing plugin types from $AssemblyName" -ScriptBlock {
                 param($type)
 

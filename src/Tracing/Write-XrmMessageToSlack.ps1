@@ -9,38 +9,35 @@ function Write-XrmMessageToSlack {
         [Parameter(Mandatory = $false)]
         [String]
         $SlackUrl = $env:SLACKURL,
-          
-        [Parameter(Mandatory=$false)]	
+        
+        [Parameter(Mandatory = $false)]	
         [String]
         $BotName = "DevOps",
 
-        [Parameter(Mandatory=$true)]	
+        [Parameter(Mandatory = $true)]	
         [String]
         $Message,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $Emoji
     )
     process {
         
-        if($BotName -eq "DevOps")
-        {
+        if ($BotName -eq "DevOps") {
             # $projectName = $env:SYSTEM_TEAMPROJECT;
             
-            if($env:RELEASE_DEFINITIONNAME)
-            {
+            if ($env:RELEASE_DEFINITIONNAME) {
                 $BotName = "Release $($env:RELEASE_DEFINITIONNAME)";
             }
-            elseif($env:BUILD_DEFINITIONNAME)
-            {
+            elseif ($env:BUILD_DEFINITIONNAME) {
                 $BotName = "Build $($env:BUILD_DEFINITIONNAME)";
             }
         }        
         
         $BodyTemplate = ConvertTo-Json @{
-            username = "$BotName"
-            text = "$Message"
+            username   = "$BotName"
+            text       = "$Message"
             icon_emoji = "$Emoji"
         }
 

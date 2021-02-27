@@ -3,8 +3,7 @@
     Retrieve user business unit
 #>
 function Get-XrmUserBusinessUnit {
-    [CmdletBinding()]    
-    [OutputType("Microsoft.Xrm.Sdk.Query.QueryExpression")]
+    [CmdletBinding()]
     param
     (        
         [Parameter(Mandatory = $true)]
@@ -22,9 +21,9 @@ function Get-XrmUserBusinessUnit {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-       $user = Get-XrmRecord -Logicalname "systemuser" -Id $UserId -Columns "businessunitid";
-       $businessUnit = Get-XrmRecord -Logicalname "businessunit" -Id $user.businessunitid_Value.Id -Columns $Columns;
-       $businessUnit;
+        $user = Get-XrmRecord -Logicalname "systemuser" -Id $UserId -Columns "businessunitid";
+        $businessUnit = Get-XrmRecord -Logicalname "businessunit" -Id $user.businessunitid_Value.Id -Columns $Columns;
+        $businessUnit;
     }
     end {
         $StopWatch.Stop();

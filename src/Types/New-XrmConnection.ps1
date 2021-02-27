@@ -4,7 +4,6 @@
 #>
 function New-XrmConnection {
     [CmdletBinding()]
-    [OutputType([PsObject])]
     param
     (
     )

@@ -6,7 +6,7 @@ function Get-XrmOrganizationFeatures {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -23,19 +23,16 @@ function Get-XrmOrganizationFeatures {
         $organization = $XrmClient | Get-XrmOrganization -Columns "featureset";
         $features = @{};
 
-        if($organization.featureset)
-        {
+        if ($organization.featureset) {
             $featuresXml = [xml] $organization.featureset;
-            if($Name)            {
+            if ($Name) {
                 $feature = $featuresXml.features.feature | where-object -Property name -eq $Name; 
-                if($feature)
-                {
+                if ($feature) {
                     $features[$feature.name] = $feature.value;
                 }
             }
             else {
-                foreach($feature in $featuresXml.features.feature)
-                {
+                foreach ($feature in $featuresXml.features.feature) {
                     $features[$feature.name] = $feature.value;
                 }                
             }

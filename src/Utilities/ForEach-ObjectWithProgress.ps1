@@ -24,23 +24,20 @@ function ForEach-ObjectWithProgress {
     }    
     process {
 
-        if(-not $Collection)
-        {
+        if (-not $Collection) {
             return;
         }
 
         $current = 0;
         $total = $Collection.Count;
 
-        if($total -eq 0)
-        {
+        if ($total -eq 0) {
             return;
         }
 
-        foreach($item in $Collection)
-        {
+        foreach ($item in $Collection) {
             $current++;
-            $percent = ($current/$total)*100;
+            $percent = ($current / $total) * 100;
 
             Write-Progress -Activity $OperationName -Status "Processing item $current of $total ($($percent.ToString('#.##')) %)..." -PercentComplete $percent;
 

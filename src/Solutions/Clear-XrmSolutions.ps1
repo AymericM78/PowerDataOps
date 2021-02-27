@@ -13,7 +13,7 @@ function Clear-XrmSolutions {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [String[]]
-        $Columns = @("solutionid", "uniquename","friendlyname","version","ismanaged","installedon","createdby","publisherid","modifiedon","modifiedby"),
+        $Columns = @("solutionid", "uniquename", "friendlyname", "version", "ismanaged", "installedon", "createdby", "publisherid", "modifiedon", "modifiedby"),
         
         [Parameter(Mandatory = $false)]
         [int]
@@ -37,16 +37,14 @@ function Clear-XrmSolutions {
             Write-HostAndLog " ..." -NoNewline -NoTimeStamp -ForegroundColor Gray;
 
             $stopWatch = [System.Diagnostics.Stopwatch]::StartNew();
-            try
-            {
+            try {
                 $solutionToDelete = New-XrmEntity -LogicalName "solution" -Id $solution.solutionid;
                 $XrmClient | Remove-XrmRecord -Record $solutionToDelete;
                 $stopWatch.Stop();
                 
                 Write-Host "[OK] (Duration = $($stopWatch.Elapsed.ToString("g")))" -ForegroundColor Green;
             }
-            catch
-            {
+            catch {
                 $stopWatch.Stop();
                 Write-Host "[KO : $($_.Exception.Message)] (Duration = $($stopWatch.Elapsed.ToString("g")))" -ForegroundColor Red;
             }

@@ -3,8 +3,7 @@
     Retrieve assigned security roles for all users
 #>
 function Get-XrmUsersRoles {
-    [CmdletBinding()]    
-    [OutputType("Microsoft.Xrm.Sdk.Query.QueryExpression")]
+    [CmdletBinding()]
     param
     (       
         [Parameter(Mandatory = $false)]
@@ -20,10 +19,8 @@ function Get-XrmUsersRoles {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-       
         $queryUsers = New-XrmQueryExpression -LogicalName "systemuser" -Columns $Columns;
-        foreach($condition in $UserQueryConditions)
-        {
+        foreach ($condition in $UserQueryConditions) {
             $queryUsers = $queryUsers.Criteria.AddCondition($condition);
         }
         $users = Get-XrmMultipleRecords -Query $queryUsers;
@@ -35,8 +32,8 @@ function Get-XrmUsersRoles {
             $userRoles = Get-XrmUserRoles -UserId $user.Id;
             $userRoles | ForEach-Object {
                 $Global:UsersRoles += [pscustomobject]@{
-                    UserName = $user.fullname;
-                    RoleName = $_.name;
+                    UserName   = $user.fullname;
+                    RoleName   = $_.name;
                     UserObject = $user
                     RoleObject = $_
                 }

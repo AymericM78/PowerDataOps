@@ -6,23 +6,23 @@ function Join-XrmRecords {
     [CmdletBinding()]
     param
     (    
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [Microsoft.Xrm.Sdk.Entity]
         $Record,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [Microsoft.Xrm.Sdk.EntityReference[]]
         $RecordReferences,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $RelationShipName,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [bool]
         $IgnoreExistings = $true        
     )
@@ -38,18 +38,14 @@ function Join-XrmRecords {
             $recordReferenceCollection.Add($_);
         }
 
-        try
-        {
+        try {
             $XrmClient.Associate($Record.LogicalName, $Record.Id, $relationShip, $recordReferenceCollection);
         }
-        catch
-        {
-            if($IgnoreExistings -and $_.Exception.Message.Contains("Cannot insert duplicate key"))
-            {
+        catch {
+            if ($IgnoreExistings -and $_.Exception.Message.Contains("Cannot insert duplicate key")) {
                 return;
             }
-            else
-            {
+            else {
                 throw $_.Exception;
             }
         }

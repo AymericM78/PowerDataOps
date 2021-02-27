@@ -27,7 +27,7 @@ function New-XrmQueryExpression {
     }    
     process {
         $query = New-Object -TypeName "Microsoft.Xrm.Sdk.Query.QueryExpression" -ArgumentList $LogicalName;
-        if($PSBoundParameters.ContainsKey('Columns')) {
+        if ($PSBoundParameters.ContainsKey('Columns')) {
             if ($Columns.Contains("*")) {
                 $query.ColumnSet.AllColumns = $true;
             }
@@ -56,7 +56,7 @@ Register-ArgumentCompleter -CommandName New-XrmQueryExpression -ParameterName "L
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
     $validLogicalNames = Get-XrmEntitiesLogicalName;
-    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
 }
 
 Register-ArgumentCompleter -CommandName New-XrmQueryExpression -ParameterName "Columns" -ScriptBlock {

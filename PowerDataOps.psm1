@@ -26,13 +26,22 @@ foreach ($module in $requiredModules) {
         #Update-Module -Name $module -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
     }
     Import-Module -Name $module -DisableNameChecking;
+    Write-Verbose " > Loading module : '$module' => OK !";
+}
+
+# Loading assemblies
+$binFolderPath = "$PSScriptRoot\src\Solutions\bin";
+$assemblies = @("$binFolderPath\Microsoft.Xrm.Sdk.dll", "$binFolderPath\Microsoft.Crm.Sdk.Proxy.dll", "$binFolderPath\Microsoft.Xrm.Tooling.Connector.dll");
+foreach ($assemblyPath in $assemblies) {
+    Add-Type -Path $assemblyPath;
+    Write-Verbose " > Loading assembly file '$assemblyPath' => OK !";
 }
 
 # Provision dedicate appdata folder
 $Global:PowerDataOpsModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
 New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Force | Out-Null;
 
-Write-Verbose "Module folder initialized : $($Global:PowerDataOpsModuleFolderPath)";
+Write-Verbose " > Initialize module folder '$($Global:PowerDataOpsModuleFolderPath)' => OK !";
 
 # Initialize tracing file
 $timestamp = Get-date -format "yyyy-MM-dd -- HH-mm-ss";

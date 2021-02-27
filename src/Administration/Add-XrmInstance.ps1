@@ -14,25 +14,25 @@ function Add-XrmInstance {
         [String]
         $InstanceDomainName,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ArgumentCompleter( { Get-XrmRegions })]
         [String]
         $Location,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet("Sandbox", "Production")]
         [String]
         $Sku,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [String]
         $CurrencyCodeName,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [int]
         $Lcid,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String[]]
         $Templates
     )
@@ -43,8 +43,7 @@ function Add-XrmInstance {
     }    
     process {    
         $response = New-AdminPowerAppEnvironment -DisplayName $InstanceDisplayName -DomainName $InstanceDomainName -Location $Location -EnvironmentSku $Sku -CurrencyName $CurrencyCodeName -LanguageName $Lcid -Templates $Templates -ProvisionDatabase -WaitUntilFinished $true;
-        if($response.Code)
-        {
+        if ($response.Code) {
             throw "$($response.Error.code) : $($response.Error.message)";
         }
         $response;

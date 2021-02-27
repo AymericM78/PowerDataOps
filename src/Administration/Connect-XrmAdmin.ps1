@@ -6,27 +6,27 @@ function Connect-XrmAdmin {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $UserName,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $Password,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $TenantId,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $ApplicationId,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $ClientSecret,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $CertificateThumbprint  
     )
@@ -60,7 +60,7 @@ function Connect-XrmAdmin {
             $xrmConnection.UserName = $UserName;
             $xrmConnection.Password = $Password;
             $xrmConnection.Credentials = $credentials;
-            $Global:XrmContext.CurrentConnection =  $xrmConnection;
+            $Global:XrmContext.CurrentConnection = $xrmConnection;
 
             $success = $true;
         }
@@ -72,7 +72,7 @@ function Connect-XrmAdmin {
             $xrmConnection.TenantId = $TenantId;
             $xrmConnection.ApplicationId = $ApplicationId;
             $xrmConnection.ClientSecret = $ClientSecret;
-            $Global:XrmContext.CurrentConnection =  $xrmConnection;
+            $Global:XrmContext.CurrentConnection = $xrmConnection;
 
             $success = $true;
         }
@@ -84,7 +84,7 @@ function Connect-XrmAdmin {
             $xrmConnection.TenantId = $TenantId;
             $xrmConnection.ApplicationId = $ApplicationId;
             $xrmConnection.CertificateThumbprint = $CertificateThumbprint;
-            $Global:XrmContext.CurrentConnection =  $xrmConnection;
+            $Global:XrmContext.CurrentConnection = $xrmConnection;
 
             $success = $true;
         }

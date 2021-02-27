@@ -6,11 +6,11 @@ function Connect-XrmUser {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $UserName,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $Password,        
 

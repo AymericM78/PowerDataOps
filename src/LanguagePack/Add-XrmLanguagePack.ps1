@@ -2,15 +2,15 @@
     .SYNOPSIS
     Activate given language 
 #>
-function Add-XrmLanguagePack{
+function Add-XrmLanguagePack {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [int]
         $Language 
     )

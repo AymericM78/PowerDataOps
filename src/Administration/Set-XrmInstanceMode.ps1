@@ -10,7 +10,7 @@ function Set-XrmInstanceMode {
         [String]
         $InstanceDomainName,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet("Normal", "AdminOnly")]
         [string]
         $Mode
@@ -24,8 +24,7 @@ function Set-XrmInstanceMode {
         $instance = Get-XrmInstance -Name $InstanceDomainName;
         
         $runtimeState = "Enabled";
-        switch ($Mode)
-        {
+        switch ($Mode) {
             "Normal" { $runtimeState = "Enabled" }
             "AdminOnly" { $runtimeState = "AdminMode" }
         }

@@ -6,7 +6,7 @@ function Publish-XrmCustomizations {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -26,9 +26,8 @@ function Publish-XrmCustomizations {
     }    
     process {
 
-        $publishRequest =  New-Object -TypeName Microsoft.Crm.Sdk.Messages.PublishAllXmlRequest;
-        if($ParameterXml)
-        {
+        $publishRequest = New-Object -TypeName Microsoft.Crm.Sdk.Messages.PublishAllXmlRequest;
+        if ($ParameterXml) {
             $publishRequest = New-Object -TypeName Microsoft.Crm.Sdk.Messages.PublishXmlRequest;
             $publishRequest.ParameterXml = $ParameterXml;
         }

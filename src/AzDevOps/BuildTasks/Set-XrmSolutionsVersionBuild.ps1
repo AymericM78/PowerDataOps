@@ -27,7 +27,6 @@ function Set-XrmSolutionsVersionBuild {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-               
         $XrmClient = New-XrmClient -ConnectionString $ConnectionString;
         
         Write-HostAndLog -Message " - Param : Build ID = $BuildId" -Level INFO;
@@ -40,7 +39,6 @@ function Set-XrmSolutionsVersionBuild {
 
         $solutionList = $Solutions.Split(",");
         $solutionList | ForEach-Object {
-            
             $XrmClient | Set-XrmSolutionVersion -SolutionUniqueName $_ -Version $Version;
         }
     }

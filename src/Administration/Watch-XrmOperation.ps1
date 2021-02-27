@@ -10,7 +10,7 @@ function Watch-XrmOperation {
         [string]
         $OperationUrl,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [int]
         $PollingIntervalSeconds = 5
     )
@@ -20,10 +20,8 @@ function Watch-XrmOperation {
         Assert-XrmAdminConnected;
     }    
     process {
-               
         $monitor = $true;
-        while($monitor)
-        {
+        while ($monitor) {
             Start-Sleep -Seconds $PollingIntervalSeconds;
                 
             $operationData = Get-AdminPowerAppOperationStatus -OperationStatusUrl $OperationUrl;
@@ -37,8 +35,7 @@ function Watch-XrmOperation {
             Write-HostAndLog $timestamp -NoNewline -ForegroundColor Gray;
             Write-HostAndLog " Operation $($operation.type.id): " -NoNewline -ForegroundColor White;
             $stateColor = "Gray";
-            switch ($state)
-            {
+            switch ($state) {
                 "Running" { $stateColor = "Yellow" }
                 "Completed" { $stateColor = "Green" }
                 "Succeeded" { $stateColor = "Green" }
@@ -47,13 +44,11 @@ function Watch-XrmOperation {
             Write-HostAndLog "$state" -NoNewline -ForegroundColor $stateColor;
 
             Write-HostAndLog " [" -NoNewline -ForegroundColor White;
-            foreach($stage in $operation.stages)
-            {
+            foreach ($stage in $operation.stages) {
                 Write-HostAndLog "$($stage.name) = " -NoNewline -ForegroundColor White;
                 $stageColor = "Gray";
                 $stageStatus = $stage.state.id;
-                switch ($stageStatus)
-                {
+                switch ($stageStatus) {
                     "Running" { $stageColor = "Yellow" }
                     "Succeeded" { $stageColor = "Green" }
                     "Completed" { $stageColor = "Green" }

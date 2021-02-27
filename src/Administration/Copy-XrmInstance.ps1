@@ -10,11 +10,11 @@ function Copy-XrmInstance {
         [String]
         $SourceInstanceDomainName,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [String]
         $TargetInstanceDomainName,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet("FullCopy", "MinimalCopy")]
         [String]
         $CopyType
@@ -29,14 +29,13 @@ function Copy-XrmInstance {
         $targetInstance = Get-XrmInstance -Name $TargetInstanceDomainName;
 
         $copyToRequest = [pscustomobject]@{
-                SourceEnvironmentId = $sourceInstance.Id
-                TargetEnvironmentName = $targetInstance.DisplayName
-                CopyType = $CopyType
+            SourceEnvironmentId   = $sourceInstance.Id
+            TargetEnvironmentName = $targetInstance.DisplayName
+            CopyType              = $CopyType
         }
 
         $response = Copy-PowerAppEnvironment -EnvironmentName $targetInstance.Id -CopyToRequestDefinition $copyToRequest;
-        if($response.Code)
-        {
+        if ($response.Code) {
             throw "$($response.Error.code) : $($response.Error.message)";
         }
         $operationStatusUrl = $response.Headers["Operation-Location"];

@@ -11,8 +11,7 @@ function Get-NonCustomizableEntities {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
-    process {
-       
+    process {        
         $entities = @();
         $entities += "accountleads";
         $entities += "aciviewmapper";

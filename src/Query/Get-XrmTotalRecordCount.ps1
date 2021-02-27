@@ -6,7 +6,7 @@ function Get-XrmTotalRecordCount {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -20,7 +20,6 @@ function Get-XrmTotalRecordCount {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-       
         $retrieveTotalRecordCountRequest = New-XrmRequest -Name "RetrieveTotalRecordCount";
         $retrieveTotalRecordCountRequest | Add-XrmRequestParameter -Name "EntityNames" -Value $LogicalNames | Out-Null;
 
@@ -41,5 +40,5 @@ Register-ArgumentCompleter -CommandName Get-XrmTotalRecordCount -ParameterName "
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
     $validLogicalNames = Get-XrmEntitiesLogicalName;
-    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
 }

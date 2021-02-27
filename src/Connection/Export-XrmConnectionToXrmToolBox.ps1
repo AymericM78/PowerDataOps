@@ -3,8 +3,7 @@
     Export instances collection to XML file with connection strings to XrmToolBox connection file.
 #>
 
-function Protect-XrmToolBoxPassword
-{
+function Protect-XrmToolBoxPassword {
     PARAM(
         [Parameter(Mandatory = $True)]
         [string]
@@ -30,7 +29,7 @@ function Protect-XrmToolBoxPassword
     $encryptor = $symmetricKey.CreateEncryptor($keyBytes, $initVectorBytes);
 
     $memoryStream = new-object "System.IO.MemoryStream";
-    $cryptoStreamMode = [System.Security.Cryptography.CryptoStreamMode]::Write;;
+    $cryptoStreamMode = [System.Security.Cryptography.CryptoStreamMode]::Write; ;
     $cryptoStream = new-object "System.Security.Cryptography.CryptoStream" -ArgumentList $memoryStream, $encryptor, $cryptoStreamMode;
     $cryptoStream.Write($plainTextBytes, 0, $plainTextBytes.Length);
     $cryptoStream.FlushFinalBlock() | Out-Null;
@@ -81,8 +80,7 @@ function Export-XrmConnectionToXrmToolBox {
         $fileContent.AppendLine('   <ByPassProxyOnLocal>false</ByPassProxyOnLocal>') | Out-Null;
         $fileContent.AppendLine('   <Connections>') | Out-Null;
 
-        foreach($instance in $instances)
-        {
+        foreach ($instance in $instances) {
             $serverName = $instance.Url.Replace("https://", "");
             $orgDataSvcUrl = "$($instance.Url)/XRMServices/2011/OrganizationData.svc";
             $orgSvcUrl = "$($instance.Url)/XRMServices/2011/Organization.svc";
@@ -92,8 +90,7 @@ function Export-XrmConnectionToXrmToolBox {
             if (([string]::IsNullOrWhiteSpace($OverrideConnectionStringFormat)) -eq $false) {
                 $connectionString = $OverrideConnectionStringFormat.Replace("{Url}", $instance.Url);
 
-                if($connectionString.Contains("ClientSecret="))
-                {
+                if ($connectionString.Contains("ClientSecret=")) {
                     $clientSecret = $connectionString | Out-XrmConnectionStringParameter -ParameterName "ClientSecret";
                     $encryptedClientSecret = Protect-XrmToolBoxPassword -Password $clientSecret;
                     $connectionString = $connectionString.Replace($clientSecret, $encryptedClientSecret);
@@ -106,7 +103,7 @@ function Export-XrmConnectionToXrmToolBox {
             $fileContent.AppendLine('       <WebApplicationUrl>' + $($instance.Url) + '</WebApplicationUrl>') | Out-Null;
             $fileContent.AppendLine('       <AuthType>OnlineFederation</AuthType>') | Out-Null;
             $fileContent.AppendLine('       <ConnectionId>' + (New-Guid) + '</ConnectionId>') | Out-Null;
-            $fileContent.AppendLine('       <ConnectionName>' + $($Name) + ' - ' + $instance.DisplayName +'</ConnectionName>') | Out-Null;
+            $fileContent.AppendLine('       <ConnectionName>' + $($Name) + ' - ' + $instance.DisplayName + '</ConnectionName>') | Out-Null;
             $fileContent.AppendLine('       <ServerName>' + $($serverName) + '</ServerName>') | Out-Null;
             $fileContent.AppendLine('       <ServerPort>443</ServerPort>') | Out-Null;
             $fileContent.AppendLine('       <OriginalUrl>' + $($instance.Url) + '</OriginalUrl>') | Out-Null
@@ -139,8 +136,7 @@ function Export-XrmConnectionToXrmToolBox {
         $xtbContent = [xml] [IO.File]::ReadAllText($xtbConnectionFilePath);
 
         $exist = $xtbContent.ConnectionsList.Files.ConnectionFile | Where-Object Name -eq $Name;
-        if($exist)
-        {
+        if ($exist) {
             return;
         }
         $lastUsedItem = $xtbContent.CreateElement("LastUsed");

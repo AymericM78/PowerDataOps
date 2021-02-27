@@ -50,12 +50,10 @@ function Invoke-XrmSolutionPackager {
     process {
         
         $solutionPackagerOuput = "";
-        if($Action -eq "Extract")
-        {
+        if ($Action -eq "Extract") {
             $solutionPackagerOuput = & "$SolutionPackagerExeFilePath" /action:$Action /zipfile:"$SolutionFilePath" /folder:"$FolderPath" /clobber /allowWrite:Yes /allowDelete:Yes /errorlevel:$ErrorLevel /nologo;
         }
-        elseif($Action -eq "Pack")
-        {
+        elseif ($Action -eq "Pack") {
             $solutionPackagerOuput = & "$SolutionPackagerExeFilePath" /action:$Action /zipfile:"$SolutionFilePath" /folder:"$FolderPath" /packagetype:$PackageType /errorlevel:$ErrorLevel /log:$LogFilePath /nologo;
         }
         $solutionPackagerOuput;

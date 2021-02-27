@@ -7,15 +7,15 @@ function Upsert-XrmRecord {
     [OutputType([Guid])]
     param
     (    
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline)]
+        [Parameter(Mandatory = $true, ValueFromPipeline)]
         [Microsoft.Xrm.Sdk.Entity]
         $Record,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]
         $BypassCustomPluginExecution = $false
     )
@@ -27,8 +27,7 @@ function Upsert-XrmRecord {
 
         $request = New-XrmRequest -Name "Upsert";
         $request | Add-XrmRequestParameter -Name "Target" -Value $Record | Out-Null;
-        if($BypassCustomPluginExecution)
-        {
+        if ($BypassCustomPluginExecution) {
             $request | Add-XrmRequestParameter -Name "BypassCustomPluginExecution" -Value $true | Out-Null;
         }
 

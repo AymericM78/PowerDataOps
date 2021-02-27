@@ -4,7 +4,7 @@
 #>
 function ConvertTo-XrmObject {
     [CmdletBinding()]
-    [OutputType([PsObject])]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory, ValueFromPipeline)]
@@ -28,10 +28,8 @@ function ConvertTo-XrmObject {
             }
             else {             
                 $value = $Record[$attribute.Key];
-                if($value)
-                {
-                    if($value.GetType().Name -eq "AliasedValue")
-                    {
+                if ($value) {
+                    if ($value.GetType().Name -eq "AliasedValue") {
                         $value = $value.Value;
                     }
                 }

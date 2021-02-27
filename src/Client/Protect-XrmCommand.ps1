@@ -36,12 +36,12 @@ function Protect-XrmCommand {
         #         $delay = [Random]::new().Next(50 * $retryCount);
         #         
         #         # TODO : Exit if error is not a API limit or lock issue
-# 
+        # 
         #         Write-Error $_.Exception.InnerException.Message -ErrorAction Continue;
         #         Start-Sleep -Seconds ($delay);
         #     }
         # } while ($retryCount -lt $Maximum)
-# 
+        # 
         # # Throw an error after $Maximum unsuccessful invocations. 
         # # Doesn't need a condition, since the function returns upon successful invocation.
         # throw "Execution failed.";

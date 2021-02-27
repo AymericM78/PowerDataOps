@@ -15,8 +15,7 @@ function Get-XrmInstances {
         
         $xrmInstances = @();
         
-        if($Global:XrmContext.IsAdminConnected)
-        {
+        if ($Global:XrmContext.IsAdminConnected) {
             $environments = Get-AdminPowerAppEnvironment;
             $environments | ForEach-Object {          
                 $internalProperties = $_.Internal.properties;
@@ -38,14 +37,14 @@ function Get-XrmInstances {
                 $xrmInstance.BaseLanguage = $metadata.baseLanguage;
                 $xrmInstance.State = $metadata.instanceState;
                 $xrmInstance.CreationTemplates = $metadata.creationTemplates;
-                $xrmInstance.ConnectionString =  [String]::Empty;
-                $xrmInstance.ParentConnection =  $null;
+                $xrmInstance.ConnectionString = [String]::Empty;
+                $xrmInstance.ParentConnection = $null;
 
                 $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString; # TODO : Handle connectionstring according to auth context
                 $xrmInstances += $xrmInstance;
             }            
         }
-        elseif($Global:XrmContext.IsUserConnected) {
+        elseif ($Global:XrmContext.IsUserConnected) {
             $instances = Get-CrmOrganizations -Credential $Global:XrmContext.CurrentConnection.Credentials -DeploymentRegion $Global:XrmContext.CurrentConnection.Region -OnLineType $Global:XrmContext.CurrentConnection.AuthType;
             
             $instances | ForEach-Object {
@@ -58,7 +57,7 @@ function Get-XrmInstances {
                 $xrmInstance.ApiUrl = $_.OrganizationWebAPIUrl;
                 $xrmInstance.TenantId = $_.TenantId;
 
-                $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString;  # TODO : Handle connectionstring according to auth context
+                $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString; # TODO : Handle connectionstring according to auth context
                 $xrmInstances += $xrmInstance;
             }
         }

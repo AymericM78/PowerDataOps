@@ -1,13 +1,13 @@
 <#
     .SYNOPSIS
-   Search for record with simple query.
+    Search for record with simple query.
 #>
 function Get-XrmRecord {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity])]
+    [OutputType([PSCustomObject])]
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -44,8 +44,7 @@ function Get-XrmRecord {
     process {
 
         $columnSet = New-Object -TypeName Microsoft.Xrm.Sdk.Query.ColumnSet;                     
-        if($PSBoundParameters.Columns)
-        {
+        if ($PSBoundParameters.Columns) {
             if ($Columns.Contains("*")) {
                 $columnSet.AllColumns = $true;
             }
@@ -56,16 +55,14 @@ function Get-XrmRecord {
             }
         }
         
-        if($PSBoundParameters.Key)
-        {
+        if ($PSBoundParameters.Key) {
             $request = New-Object -TypeName Microsoft.Xrm.Sdk.Messages.RetrieveRequest;
             $request.Target = New-XrmEntityReference -LogicalName $LogicalName -Key $Key -Value $Value;
             $request.ColumnSet = $columnSet;
             $response = $XrmClient.Execute($request);
             $response.Entity | ConvertTo-XrmObject;
         }
-        elseif($PSBoundParameters.AttributeName)
-        {
+        elseif ($PSBoundParameters.AttributeName) {
             $query = New-XrmQueryExpression -LogicalName $LogicalName -TopCount 1;
             $query.ColumnSet = $columnSet;
             $query | Add-XrmQueryCondition -Field $AttributeName -Condition Equal -Values $Value | Out-Null;
@@ -91,32 +88,30 @@ Register-ArgumentCompleter -CommandName Get-XrmRecord -ParameterName "LogicalNam
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
     $validLogicalNames = Get-XrmEntitiesLogicalName;
-    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
 }
 
 Register-ArgumentCompleter -CommandName Get-XrmRecord -ParameterName "AttributeName" -ScriptBlock {
 
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
-    if (-not ($fakeBoundParameters.ContainsKey("LogicalName")))
-    {
+    if (-not ($fakeBoundParameters.ContainsKey("LogicalName"))) {
         return @();
     }
 
     $validAttributeNames = Get-XrmAttributesLogicalName -EntityLogicalName $fakeBoundParameters.LogicalName;
-    return $validAttributeNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validAttributeNames | Where-Object { $_ -like "$wordToComplete*" };
 }
 
 Register-ArgumentCompleter -CommandName Get-XrmRecord -ParameterName "Columns" -ScriptBlock {
 
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
-    if (-not ($fakeBoundParameters.ContainsKey("LogicalName")))
-    {
+    if (-not ($fakeBoundParameters.ContainsKey("LogicalName"))) {
         return @();
     }
 
     $validAttributeNames = Get-XrmAttributesLogicalName -EntityLogicalName $fakeBoundParameters.LogicalName;
-    return $validAttributeNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validAttributeNames | Where-Object { $_ -like "$wordToComplete*" };
 }
 

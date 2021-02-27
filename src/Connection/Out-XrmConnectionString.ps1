@@ -23,18 +23,15 @@ function Out-XrmConnectionString {
         $connectionString = "AuthType=$($xrmConnection.AuthType);";
         $connectionString += "Url=$($XrmInstance.Url);";
 
-        if($xrmConnection.AuthType -eq "Office365" -or $xrmConnection.AuthType -eq "AD"-or $xrmConnection.AuthType -eq "Ifd")
-        {
+        if ($xrmConnection.AuthType -eq "Office365" -or $xrmConnection.AuthType -eq "AD" -or $xrmConnection.AuthType -eq "Ifd") {
             $connectionString += "Username=$($xrmConnection.Username);";
             $connectionString += "Password=$($xrmConnection.Password);";
         }
-        elseif($xrmConnection.AuthType -eq "ClientSecret")
-        {
+        elseif ($xrmConnection.AuthType -eq "ClientSecret") {
             $connectionString += "ClientId=$($xrmConnection.ApplicationId);";
             $connectionString += "ClientSecret=$($xrmConnection.ClientSecret);";
         }
-        elseif($xrmConnection.AuthType -eq "Certificate")
-        {
+        elseif ($xrmConnection.AuthType -eq "Certificate") {
             $connectionString += "ClientId=$($xrmConnection.ApplicationId);";
             $connectionString += "thumbprint=$($xrmConnection.CertificateThumbprint);";
         }

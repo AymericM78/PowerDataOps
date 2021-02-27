@@ -7,11 +7,11 @@ function Invoke-XrmRequest {
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [Microsoft.Xrm.Sdk.OrganizationRequest]
         $Request,
 
@@ -25,8 +25,7 @@ function Invoke-XrmRequest {
     }    
     process {
 
-        if($Async)
-        {
+        if ($Async) {
             $innerRequest = $Request
             $Request = New-Object -TypeName Microsoft.Xrm.Sdk.Messages.ExecuteAsyncRequest;
             $Request.Request = $innerRequest;

@@ -82,8 +82,7 @@ function Restore-XrmInstance {
         }
 
         $response = Restore-PowerAppEnvironment -EnvironmentName $targetInstance.Id -RestoreToRequestDefinition $restoreRequest -WaitUntilFinished $false;
-        if($response.Code)
-        {
+        if ($response.Code) {
             throw "$($response.Error.code) : $($response.Error.message)";
         }
         $operationStatusUrl = $response.Headers["Operation-Location"];

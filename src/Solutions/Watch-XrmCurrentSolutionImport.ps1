@@ -6,7 +6,7 @@ function Watch-XrmCurrentSolutionImport {
     [CmdletBinding()]
     param
     (  
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient
     )
@@ -21,14 +21,13 @@ function Watch-XrmCurrentSolutionImport {
         $importJobs = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $queryImportJobs;
 
         $importJob = $importJobs | Select-Object -First 1;
-        if(-not $importJob)
-        {
+        if (-not $importJob) {
             Write-HostAndLog -Message "Import job not found" -Level WARN;
             return;
         }
 
         $importJobId = $importJob.Id;
-        while($true) {
+        while ($true) {
             try {
                 $importJob = $XrmClient | Get-XrmRecord -LogicalName "importjob" -Id $importJobId -Columns "solutionname", "completedon", "data", "progress";                    
             }
@@ -40,8 +39,7 @@ function Watch-XrmCurrentSolutionImport {
                 Write-HostAndLog " > $($importJob.solutionname) import in progress... ($($importJob.progress) %)" -ForegroundColor Cyan;
                 Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Status "Importing solution $SolutionUniqueName...($($importJob.progress) %)" -PercentComplete $importJob.progress_Value;
             }
-            if($importJob.completedon)
-            {                
+            if ($importJob.completedon) {                
                 Write-HostAndLog " > $($importJob.solutionname) import completed!" -ForegroundColor Green;
                 break;
             }

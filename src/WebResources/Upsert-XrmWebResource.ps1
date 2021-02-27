@@ -7,7 +7,7 @@ function Upsert-XrmWebResource {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -33,8 +33,7 @@ function Upsert-XrmWebResource {
     }    
     process {
 
-        if(-not $PSBoundParameters.Prefix)
-        {
+        if (-not $PSBoundParameters.Prefix) {
             # Resolve publisher prefix for given solution
             $solution = $XrmClient | Get-XrmRecord -LogicalName "solution" -AttributeName "uniquename" -Value $SolutionUniqueName -Columns "publisherid";
             $publisher = $XrmClient | Get-XrmRecord -LogicalName "publisher" -Id $solution.publisherid_Value.Id -Columns "customizationprefix";
@@ -47,18 +46,15 @@ function Upsert-XrmWebResource {
         $webResourceName = $fileInfo.Name;
         $extension = $fileInfo.Extension;
 
-        if($webResourceName.StartsWith($Prefix) -eq $false)
-        {
+        if ($webResourceName.StartsWith($Prefix) -eq $false) {
             $position = $webResourcePath.LastIndexOf($Prefix);
-            if($position -gt 0)
-            {
+            if ($position -gt 0) {
                 $webResourceName = $webResourcePath.Substring($position);
                 $webResourceName = $webResourceName.Replace('\', '/');
             }
         }
 
-        if(!$webResourceName.StartsWith($Prefix))
-        {
+        if (!$webResourceName.StartsWith($Prefix)) {
             # Ignore this file
             return;
         } 
@@ -82,51 +78,49 @@ function Upsert-XrmWebResource {
         #   10	ICO format
         #   11	Vector format (SVG)
         #   12	String (RESX)
-        switch ($extension.ToLower())
-        {
-            ".htm"  { $webresourceType = 1; }
+        switch ($extension.ToLower()) {
+            ".htm" { $webresourceType = 1; }
             ".html" { $webresourceType = 1; }
-            ".css"  { $webresourceType = 2; }
-            ".js"   { $webresourceType = 3; }
-            ".xml"  { $webresourceType = 4; }
-            ".png"  { $webresourceType = 5; }
-            ".jpg"  { $webresourceType = 6; }
+            ".css" { $webresourceType = 2; }
+            ".js" { $webresourceType = 3; }
+            ".xml" { $webresourceType = 4; }
+            ".png" { $webresourceType = 5; }
+            ".jpg" { $webresourceType = 6; }
             ".jpeg" { $webresourceType = 6; }
-            ".gif"  { $webresourceType = 7; }
-            ".xap"  { $webresourceType = 8; }
-            ".xsl"  { $webresourceType = 9; }
-            ".ico"  { $webresourceType = 10;}
-            ".svg"  { $webresourceType = 11;}
-            ".resx"  { $webresourceType = 12;}
+            ".gif" { $webresourceType = 7; }
+            ".xap" { $webresourceType = 8; }
+            ".xsl" { $webresourceType = 9; }
+            ".ico" { $webresourceType = 10; }
+            ".svg" { $webresourceType = 11; }
+            ".resx" { $webresourceType = 12; }
             default { Write-HostAndLog "Unkown webresource extension : $extension" -ForegroundColor Red -NoTimeStamp; }
         }
         $webResourceContent = (Get-XrmBase64 -FilePath $filePath);
         $webresourceRecord = New-XrmEntity -LogicalName "webresource" -Attributes @{
-            name = $webResourceName
-            displayname = $webResourceDisplayName
-            content = $webResourceContent
+            name            = $webResourceName
+            displayname     = $webResourceDisplayName
+            content         = $webResourceContent
             webresourcetype = (New-XrmOptionSetValue -Value $webresourceType)
         };
         $ignore = $true;
         $existingWebResource = Get-XrmRecord -XrmClient $XrmClient -LogicalName "webresource" -AttributeName "name" -Value $webResourceName -Columns "content";
-        if(-not $existingWebResource)
-        {
+        if (-not $existingWebResource) {
             $webresourceRecord.Id = $XrmClient | Add-XrmRecord -Record $webresourceRecord;
             $ignore = $false;
         }
         else {
             $webresourceRecord.Id = $existingWebResource.Id;
-            if($webResourceContent -ne $existingWebResource.content)  {
+            if ($webResourceContent -ne $existingWebResource.content) {
                 $ignore = $false;
                 $XrmClient | Update-XrmRecord -Record $webresourceRecord;
             }
         }
 
-        if($PSBoundParameters.SolutionUniqueName)        {
+        if ($PSBoundParameters.SolutionUniqueName) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -ComponentId $webresourceRecord.Id -ComponentType 61 -SolutionUniqueName $SolutionUniqueName;
         }
 
-        if(-not $ignore)        {   
+        if (-not $ignore) {   
             # Return webresource id if created/updated in order to add it to a publish request
             $webresourceRecord.Id;
         }

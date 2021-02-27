@@ -1,12 +1,12 @@
 <#
     .SYNOPSIS
-   Add security roles to user
+    Add security roles to user
 #>
 function Add-XrmUserRoles {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -30,14 +30,11 @@ function Add-XrmUserRoles {
             $roleReference = New-XrmEntityReference -LogicalName "role" -Id $_;
             $roleReferences.Add($roleReference);
         }
-        try
-        {
+        try {
             $XrmClient.Associate("systemuser", $UserId, $relationShip, $roleReferences);
         }
-        catch
-        {
-            if(-not $_.Exception.Message.Contains("Cannot insert duplicate key"))
-            {
+        catch {
+            if (-not $_.Exception.Message.Contains("Cannot insert duplicate key")) {
                 throw $_.Exception;
             }
         }

@@ -6,7 +6,7 @@ function Watch-XrmAsynchOperation {
     [CmdletBinding()]
     param
     (  
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -14,7 +14,7 @@ function Watch-XrmAsynchOperation {
         [Guid]
         $AsyncOperationId,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [int]
         $PollingIntervalSeconds = 5,
             
@@ -33,27 +33,23 @@ function Watch-XrmAsynchOperation {
         $completedStatusValue = @(30, 31, 32);
         $completed = $false;
         
-        while(-not $completed)
-        {
+        while (-not $completed) {
             Start-Sleep -Seconds $PollingIntervalSeconds;
             try {
                 $asynchOperation = $XrmClient | Get-XrmRecord -LogicalName "asyncoperation" -Id $AsyncOperationId -Columns "statuscode", "message", "friendlymessage";                
             }
             catch {
                 $retryCount++;
-                if($retryCount -ge $maxRetries)
-                {
+                if ($retryCount -ge $maxRetries) {
                     throw "Asynch operation '$AsyncOperationId' not found!"
                 }
             }            
-            if($PSBoundParameters.ScriptBlock)
-            {
+            if ($PSBoundParameters.ScriptBlock) {
                 Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $asynchOperation;
             }
 
             $completed = $completedStatusValue.Contains($asynchOperation.statuscode_value.Value);
-            if(-not $completed)
-            {
+            if (-not $completed) {
                 $completed = (-not [string]::IsNullOrWhiteSpace($asynchOperation.friendlymessage));
             }
         }

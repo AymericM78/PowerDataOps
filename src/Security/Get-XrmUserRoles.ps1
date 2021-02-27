@@ -3,8 +3,7 @@
     Retrieve user assigned security roles
 #>
 function Get-XrmUserRoles {
-    [CmdletBinding()]    
-    [OutputType("Microsoft.Xrm.Sdk.Query.QueryExpression")]
+    [CmdletBinding()]
     param
     (        
         [Parameter(Mandatory = $true)]
@@ -22,7 +21,6 @@ function Get-XrmUserRoles {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-       
         $queryUserRoles = New-XrmQueryExpression -LogicalName "systemuserroles" -Columns "systemuserid", "roleid";
         $queryUserRoles = $queryUserRoles | Add-XrmQueryCondition -Field "systemuserid" -Condition Equal -Values $UserId;
         $queryUserRoles.TopCount = 100;

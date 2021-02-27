@@ -22,7 +22,7 @@ function Remove-XrmRecord {
         [Guid]
         $Id,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]
         $BypassCustomPluginExecution = $false
     )
@@ -32,14 +32,13 @@ function Remove-XrmRecord {
     }    
     process {
 
-        if(-not ($PSBoundParameters.ContainsKey('Record'))) {
+        if (-not ($PSBoundParameters.ContainsKey('Record'))) {
             $Record = New-XrmEntity -LogicalName $LogicalName -Id $Id;
         }
 
         $request = New-XrmRequest -Name "Delete";
         $request | Add-XrmRequestParameter -Name "Target" -Value $Record.ToEntityReference() | Out-Null;
-        if($BypassCustomPluginExecution)
-        {
+        if ($BypassCustomPluginExecution) {
             $request | Add-XrmRequestParameter -Name "BypassCustomPluginExecution" -Value $true | Out-Null;
         }
 

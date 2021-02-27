@@ -14,8 +14,7 @@ function Assert-XrmAdminConnected {
     process {
 
         # TODO : Handle admin connection with context info
-        if(-not $Global:XrmContext.IsAdminConnected)
-        {
+        if (-not $Global:XrmContext.IsAdminConnected) {
             throw "You are not connected as Admin! Please use Connect-XrmAdmin command before";           
         }
     }

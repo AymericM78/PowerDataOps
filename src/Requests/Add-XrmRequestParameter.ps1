@@ -1,21 +1,21 @@
 <#
     .SYNOPSIS
-   Add parameter to request.
+    Add parameter to request.
 #>
 function Add-XrmRequestParameter {
     [CmdletBinding()]
     [OutputType("Microsoft.Xrm.Sdk.OrganizationRequest")]
     param
     ( 
-        [Parameter(Mandatory=$true, ValueFromPipeline)]
+        [Parameter(Mandatory = $true, ValueFromPipeline)]
         [Microsoft.Xrm.Sdk.OrganizationRequest]
         $Request,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $Name,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [object]
         $Value
     )
@@ -24,8 +24,7 @@ function Add-XrmRequestParameter {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        if($Request.Parameters.Contains($Name))
-        {
+        if ($Request.Parameters.Contains($Name)) {
             throw "Request parameter '$Name' already added!"
         }
 

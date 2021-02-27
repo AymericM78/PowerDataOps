@@ -28,8 +28,7 @@ function New-XrmClient {
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
 	
         # Initialize CRM Client	
-        if($PSBoundParameters.ContainsKey('ConnectionString'))
-        {
+        if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $XrmClient = Get-CrmConnection -ConnectionString $ConnectionString -MaxCrmConnectionTimeOutMinutes $MaxCrmConnectionTimeOutMinutes -ErrorAction Stop;
         }
         else {
@@ -44,12 +43,10 @@ function New-XrmClient {
         $url = $XrmClient.ConnectedOrgPublishedEndpoints["WebApplication"];
         $userId = $XrmClient.GetMyCrmUserId();
         # Store current settings to context as connection could be initiated with a simple connectionstring and we need thoose parameters for admin operations
-        if($PSBoundParameters.ContainsKey('ConnectionString'))
-        {
+        if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $userName = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Username";
         }
-        if(-not $userName)
-        {
+        if (-not $userName) {
             $userName = $userId;
         }
         

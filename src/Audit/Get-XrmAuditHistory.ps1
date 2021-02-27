@@ -37,14 +37,12 @@ function Get-XrmAuditHistory {
             
             foreach ($attributeName in $attributes) {
 
-                if($null -eq $attributeName)
-                {
+                if ($null -eq $attributeName) {
                     # Weird case : sometimes $attributes collection contains only 1 $null value                    
                     continue;
                 }
 
-                if($AttributeFilter -and ($AttributeFilter.Contains($attributeName) -eq $false))
-                {
+                if ($AttributeFilter -and ($AttributeFilter.Contains($attributeName) -eq $false)) {
                     continue;
                 }
 
@@ -60,13 +58,11 @@ function Get-XrmAuditHistory {
                 $hash["Operation"] = $auditRecord.FormattedValues["operation"];
                 $hash["Action"] = $auditRecord.FormattedValues["action"];
                 $hash["OldValue"] = $null;
-                if($auditDetail.OldValue)
-                {
+                if ($auditDetail.OldValue) {
                     $hash["OldValue"] = $auditDetail.OldValue | Get-XrmAttributeValue -Name $attributeName -FormattedValue;
                 }
                 $hash["NewValue"] = $null;
-                if($auditDetail.NewValue)
-                {
+                if ($auditDetail.NewValue) {
                     $hash["NewValue"] = $auditDetail.NewValue | Get-XrmAttributeValue -Name $attributeName -FormattedValue;
                 }
                 

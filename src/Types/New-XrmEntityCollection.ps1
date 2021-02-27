@@ -18,8 +18,7 @@ function New-XrmEntityCollection {
     process {
 
         $entityCollection = New-Object -TypeName "Microsoft.Xrm.Sdk.EntityCollection";      
-        foreach($entity in $Entities)
-        {
+        foreach ($entity in $Entities) {
             $entityCollection.Entities.Add($entity) | Out-Null;
         }
 

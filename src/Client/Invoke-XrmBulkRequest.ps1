@@ -7,19 +7,19 @@ function Invoke-XrmBulkRequest {
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [Microsoft.Xrm.Sdk.OrganizationRequest[]]
         $Requests,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [bool]
         $ContinueOnError = $false,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [bool]
         $ReturnResponses = $false
     )
@@ -35,8 +35,7 @@ function Invoke-XrmBulkRequest {
         $multipleRequest.Settings.ReturnResponses = $ReturnResponses;
 
         $multipleRequest.Requests = New-Object "Microsoft.Xrm.Sdk.OrganizationRequestCollection";
-        foreach($request in $requests)
-        {
+        foreach ($request in $requests) {
             $multipleRequest.Requests.Add($request);
         }
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $multipleRequest;

@@ -43,8 +43,7 @@ Register-ArgumentCompleter -CommandName Set-XrmAttributeValue -ParameterName "Na
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
     $record = $null;
-    if (-not ($FakeBoundParameters.ContainsKey("Record")))
-    {
+    if (-not ($FakeBoundParameters.ContainsKey("Record"))) {
         # TODO : Search record  for logicalname in Pipeline
         return @();
     }
@@ -53,5 +52,5 @@ Register-ArgumentCompleter -CommandName Set-XrmAttributeValue -ParameterName "Na
     }
 
     $validAttributeNames = @($record.Attributes.Keys);
-    return $validAttributeNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validAttributeNames | Where-Object { $_ -like "$wordToComplete*" };
 }

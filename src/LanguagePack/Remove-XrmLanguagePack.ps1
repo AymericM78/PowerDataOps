@@ -2,15 +2,15 @@
     .SYNOPSIS
     Desactivate given language 
 #>
-function Remove-XrmLanguagePack{
+function Remove-XrmLanguagePack {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [int]
         $Language 
     )

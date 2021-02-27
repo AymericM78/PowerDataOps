@@ -86,8 +86,7 @@ function Export-XrmSolutionsBuild {
             $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $_ -Managed $Managed -ExportPath $ExportPath -ExportCalendarSettings $ExportCalendarSettings -ExportCustomizationSettings $ExportCustomizationSettings -ExportEmailTrackingSettings $ExportEmailTrackingSettings  -ExportAutoNumberingSettings $ExportAutoNumberingSettings  -ExportIsvConfig $ExportIsvConfig  -ExportOutlookSynchronizationSettings $ExportOutlookSynchronizationSettings  -ExportGeneralSettings $ExportGeneralSettings  -ExportMarketingSettings $ExportMarketingSettings  -ExportRelationshipRoles $ExportRelationshipRoles;                
             Write-HostAndLog -Message "Solution $($_) successfully exported to '$solutionFilePath' !" -Level SUCCESS;
 
-            if($env:SLACKURL)
-            {
+            if ($env:SLACKURL) {
                 Write-XrmMessageToSlack -Message "Solution $($_) successfully exported to '$solutionFilePath' !";
             }
         }        

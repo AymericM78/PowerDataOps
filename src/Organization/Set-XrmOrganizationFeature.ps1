@@ -6,7 +6,7 @@ function Set-XrmOrganizationFeature {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -28,12 +28,9 @@ function Set-XrmOrganizationFeature {
         $features = $XrmClient | Get-XrmOrganizationFeatures;
 
         $featuresXml = "<features>";
-        foreach($featureKey in $features.Keys)
-        {
-            if($featureKey -eq $Name)
-            {
-                if($features[$featureKey] -eq $Value)
-                {
+        foreach ($featureKey in $features.Keys) {
+            if ($featureKey -eq $Name) {
+                if ($features[$featureKey] -eq $Value) {
                     return;
                 }
                 continue;

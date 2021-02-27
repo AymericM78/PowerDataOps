@@ -37,7 +37,7 @@ function Add-XrmQueryCondition {
     process {
         
         if ($PSBoundParameters.ContainsKey('Values')) {
-            if($PSBoundParameters.ContainsKey('CompareFieldValue')) {
+            if ($PSBoundParameters.ContainsKey('CompareFieldValue')) {
                 $Query.Criteria.AddCondition($Field, $Condition, $true, $Values);
             }
             else {

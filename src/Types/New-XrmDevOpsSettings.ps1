@@ -4,7 +4,6 @@
 #>
 function New-XrmDevOpsSettings {
     [CmdletBinding()]
-    [OutputType([PsObject])]
     param
     (
     )

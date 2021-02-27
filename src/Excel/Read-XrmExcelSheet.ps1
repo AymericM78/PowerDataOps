@@ -23,34 +23,29 @@ function Read-XrmExcelSheet {
     process {
                     
         $excelApplication = New-Object -ComObject Excel.Application;
-        try
-        {    
+        try {    
             $excelApplication.Visible = $false;
             $excelApplication.ScreenUpdating = $false;
             $excelApplication.DisplayAlerts = 'False';
             $workbook = $excelApplication.Workbooks.Open($ExcelFilePath);
             
-            $sheet =  $workbook.Sheets | Where-Object -Property Name -EQ -Value $SheetName;
+            $sheet = $workbook.Sheets | Where-Object -Property Name -EQ -Value $SheetName;
             
             $sheetContentRange = $sheet.UsedRange;
             $sheetValuesArray = $sheetContentRange.Value([System.Type]::Missing);
 
-            return ,$sheetValuesArray;
+            return , $sheetValuesArray;
         }
-        finally
-        {
-            try
-            {
+        finally {
+            try {
                 $workbook.Close();
             }
-            catch
-            {
+            catch {
                 # Ignore
             }
-            try
-            {
+            try {
                 $excelApplication.DisplayAlerts = 'False';
-                $excelProcess = Get-Process Excel | Where-Object {$_.MainWindowHandle -eq $excelApplication.Hwnd}
+                $excelProcess = Get-Process Excel | Where-Object { $_.MainWindowHandle -eq $excelApplication.Hwnd }
                 $excelApplication.Quit();
 
                 [void][System.Runtime.Interopservices.Marshal]::ReleaseComObject($sheetContentRange);
@@ -62,8 +57,7 @@ function Read-XrmExcelSheet {
                 
                 Stop-Process -Id $excelProcess.Id;
             }
-            catch
-            {
+            catch {
                 # Ignore
             }
         }                

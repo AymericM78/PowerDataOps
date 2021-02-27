@@ -3,8 +3,7 @@
     Retrieve security roles
 #>
 function Get-XrmRoles {
-    [CmdletBinding()]    
-    [OutputType("Microsoft.Xrm.Sdk.Query.QueryExpression")]
+    [CmdletBinding()]
     param
     ( 
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -24,7 +23,7 @@ function Get-XrmRoles {
         [String[]]
         $Columns = @("roleid", "name", "parentrootroleid", "businessunitid"),
 
-        # TODO : A faire une fois la méthode Get-XrmPrivileges implémentée
+        # TODO : A faire une fois la méthode Get-XrmRolePrivileges implémentée
         [Parameter(Mandatory = $false)]
         [switch]
         $ExportPrivileges = $false

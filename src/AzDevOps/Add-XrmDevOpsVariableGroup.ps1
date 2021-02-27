@@ -17,7 +17,7 @@ function Add-XrmDevOpsVariableGroup {
         $body = '{
             "variables": {
                 "ConnectionString": {
-                  "value": "[#ConnectionString#]"
+                    "value": "[#ConnectionString#]"
                 }
             },
             "type": "Vsts",

@@ -10,11 +10,11 @@ function Backup-XrmInstance {
         [String]
         $InstanceDomainName,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [String]
         $BackupLabel,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
         $BackupDescription
     )

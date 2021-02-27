@@ -6,7 +6,7 @@ function Remove-XrmActiveCustomizations {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 

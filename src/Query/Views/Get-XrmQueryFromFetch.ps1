@@ -20,7 +20,7 @@ function Get-XrmQueryFromFetch {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        $conversionRequest =  New-Object "Microsoft.Crm.Sdk.Messages.FetchXmlToQueryExpressionRequest";
+        $conversionRequest = New-Object "Microsoft.Crm.Sdk.Messages.FetchXmlToQueryExpressionRequest";
         $conversionRequest.FetchXml = $FetchXml;
         $conversionResponse = $XrmClient.Execute($conversionRequest);
         $conversionResponse.Query;

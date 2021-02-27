@@ -1,40 +1,32 @@
 <#
     .SYNOPSIS
-    Retrieve user
+    Retrieve users
 #>
-function Get-XrmUser {
+function Get-XrmUsers {
     [CmdletBinding()]
     param
     ( 
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
-        
-        [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [Guid]
-        $UserId,
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [String[]]
-        $Columns = @("*")
+        $Columns = @("fullname", "internalemailaddress")
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        if (-not $PSBoundParameters.ContainsKey('UserId')) {
-            $UserId = $XrmClient.GetMyCrmUserId();
-        }
-
-        $user = Get-XrmRecord -Logicalname "systemuser" -Id $UserId -Columns $Columns;
-        $user;
+        $queryUsers = New-XrmQueryExpression -Logicalname "systemuser" -Columns $Columns;
+        $users = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $queryUsers;
+        $users;
     }
     end {
         $StopWatch.Stop();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
     }    
 }
-Export-ModuleMember -Function Get-XrmUser -Alias *;
+Export-ModuleMember -Function Get-XrmUsers -Alias *;

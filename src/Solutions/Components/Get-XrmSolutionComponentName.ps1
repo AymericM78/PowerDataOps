@@ -111,8 +111,7 @@ function Get-XrmSolutionComponentName {
         $componentTypeDefinitions[431] = "Attribute Image Configuration";
         $componentTypeDefinitions[432] = "Entity Image Configuration";
 
-        if(-not $componentTypeDefinitions.Contains($SolutionComponentType))
-        {
+        if (-not $componentTypeDefinitions.Contains($SolutionComponentType)) {
             throw "Unknown solution component type '$SolutionComponentType'!"
         }
 

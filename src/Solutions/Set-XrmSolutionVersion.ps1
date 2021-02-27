@@ -10,7 +10,6 @@ function Set-XrmSolutionVersion {
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        # TODO : Add argument completer with unmanaged solution unique names
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]

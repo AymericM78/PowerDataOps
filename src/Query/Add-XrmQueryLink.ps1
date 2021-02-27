@@ -62,7 +62,7 @@ Register-ArgumentCompleter -CommandName Add-XrmQueryLink -ParameterName "ToEntit
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
     $validLogicalNames = Get-XrmEntitiesLogicalName;
-    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
 }
 
 Register-ArgumentCompleter -CommandName Add-XrmQueryLink -ParameterName "ToAttributeName" -ScriptBlock {

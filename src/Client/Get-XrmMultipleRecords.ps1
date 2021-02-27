@@ -4,7 +4,7 @@
 #>
 function Get-XrmMultipleRecords {
     [CmdletBinding()]
-    [OutputType("Microsoft.Xrm.Sdk.Entity[]")]
+    [OutputType([PSCustomObject[]])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

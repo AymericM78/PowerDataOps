@@ -27,11 +27,11 @@ function New-XrmEntity {
     }    
     process {
         $record = New-Object -TypeName "Microsoft.Xrm.Sdk.Entity" -ArgumentList $LogicalName;
-        if($PSBoundParameters.ContainsKey('Id')) {
+        if ($PSBoundParameters.ContainsKey('Id')) {
             $record.Id = $Id;
         }
 
-        if($PSBoundParameters.ContainsKey('Attributes')) {
+        if ($PSBoundParameters.ContainsKey('Attributes')) {
             $Attributes.Keys | ForEach-Object {
                 $key = $_;
                 $value = $Attributes[$key];
@@ -54,5 +54,5 @@ Register-ArgumentCompleter -CommandName New-XrmEntity -ParameterName "LogicalNam
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
     $validLogicalNames = Get-XrmEntitiesLogicalName;
-    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
 }

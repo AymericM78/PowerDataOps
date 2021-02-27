@@ -17,7 +17,7 @@ function Select-XrmSolutions {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [String[]]
-        $Columns = @("solutionid", "uniquename","friendlyname","version","ismanaged","installedon","createdby","publisherid","modifiedon","modifiedby")
+        $Columns = @("solutionid", "uniquename", "friendlyname", "version", "ismanaged", "installedon", "createdby", "publisherid", "modifiedon", "modifiedby")
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 

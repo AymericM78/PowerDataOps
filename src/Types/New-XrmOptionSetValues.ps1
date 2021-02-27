@@ -18,8 +18,7 @@ function New-XrmOptionSetValues {
     process {
 
         $optionSetValues = New-Object System.Collections.Generic.List[Microsoft.Xrm.Sdk.OptionSetValue];        
-        foreach($value in $Values)
-        {
+        foreach ($value in $Values) {
             $optionSetValue = (New-XrmOptionSetValue -Value $value);
             $optionSetValues.Add($optionSetValue) | Out-Null;
         }

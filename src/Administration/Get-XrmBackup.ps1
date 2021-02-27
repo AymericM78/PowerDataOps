@@ -20,7 +20,6 @@ function Get-XrmBackup {
         Assert-XrmAdminConnected;
     }    
     process {
-       
         $instance = Get-XrmInstance -Name $InstanceDomainName;
 
         $backupData = Get-PowerAppEnvironmentBackups -EnvironmentName $instance.Id;

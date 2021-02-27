@@ -6,15 +6,15 @@ function Get-XrmPluginTraces {
     [CmdletBinding()]    
     param
     (        
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [bool]
         $ErrorsOnly = $false,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [int]
         $Take = 50
     )
@@ -23,11 +23,10 @@ function Get-XrmPluginTraces {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-       
+        
         $queryTraces = New-XrmQueryExpression -LogicalName "plugintracelog" -Columns *;
         $queryTraces = $queryTraces | Add-XrmQueryOrder -Field "performanceexecutionstarttime" -OrderType Descending;
-        if($ErrorsOnly)
-        {
+        if ($ErrorsOnly) {
             $queryTraces = $queryTraces | PowerXrm\Add-XrmQueryCondition -Field "exceptiondetails" -Condition NotNull;
         }
         $queryTraces.TopCount = $Take;

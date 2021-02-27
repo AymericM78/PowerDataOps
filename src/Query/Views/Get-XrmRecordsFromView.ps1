@@ -24,8 +24,7 @@ function Get-XrmRecordsFromView {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
-    process {
-          
+    process {        
         $selectedView = Get-XrmViews -EntityLogicalName $EntityLogicalName -Columns "name", "layoutxml", "fetchxml" | Where-Object -Property "name" -EQ $ViewName;
         $fetchQuery = Get-XrmQueryFromFetch -FetchXml $selectedView.fetchxml;
         $records = Get-XrmMultipleRecords -Query $fetchQuery;
@@ -44,7 +43,7 @@ Register-ArgumentCompleter -CommandName New-XrmQueryExpression -ParameterName "E
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
     $validLogicalNames = Get-XrmEntitiesLogicalName;
-    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*"};
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
 }
 
 Register-ArgumentCompleter -CommandName Get-XrmRecordsFromView -ParameterName "ViewName" -ScriptBlock {

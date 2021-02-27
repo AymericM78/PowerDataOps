@@ -67,31 +67,26 @@ function Write-HostAndLog {
         elseif ($level -eq "SUCCESS") {
             Write-Host $Message -ForegroundColor $ForegroundColor -NoNewline:$NoNewline;
             
-            if($env:SYSTEM_TEAMPROJECT)
-            {                
-		        Write-Host "##vso[task.complete result=Succeeded;] $Message";
+            if ($env:SYSTEM_TEAMPROJECT) {                
+                Write-Host "##vso[task.complete result=Succeeded;] $Message";
             }
         }
         elseif ($level -eq "WARN") {
             Write-Host $Message -ForegroundColor Yellow -NoNewline:$NoNewline;
-            if($env:SLACKURL)
-            {
+            if ($env:SLACKURL) {
                 Write-XrmMessageToSlack -Message "[$level] $Message";
             }
-            if($env:SYSTEM_TEAMPROJECT)
-            {                
-		        Write-Host "##vso[task.LogIssue type=warning;] $Message";
+            if ($env:SYSTEM_TEAMPROJECT) {                
+                Write-Host "##vso[task.LogIssue type=warning;] $Message";
             }
         }
         elseif ($level -eq "FAIL") {
             Write-Host $Message -ForegroundColor Red -NoNewline:$NoNewline;
-            if($env:SLACKURL)
-            {
+            if ($env:SLACKURL) {
                 Write-XrmMessageToSlack -Message "<!channel> [$level] $Message";
             }
-            if($env:SYSTEM_TEAMPROJECT)
-            {                
-		        Write-Host "##vso[task.LogIssue type=error;] $Message";
+            if ($env:SYSTEM_TEAMPROJECT) {                
+                Write-Host "##vso[task.LogIssue type=error;] $Message";
             }
         }
     }

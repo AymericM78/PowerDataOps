@@ -40,8 +40,7 @@ function Write-XrmExcelSheet {
     process {
                     
         $excelApplication = New-Object -ComObject Excel.Application;
-        try
-        {    
+        try {    
             $excelApplication.Visible = $false;
             $excelApplication.ScreenUpdating = $false;
             $excelApplication.DisplayAlerts = 'False';
@@ -49,8 +48,7 @@ function Write-XrmExcelSheet {
             
             Write-HostAndLog "Adding Excel Sheet '$SheetName' ..." -ForegroundColor Gray;
             $sheet = $workbook.Sheets.Add();
-            if($SheetName.Length -gt 30)
-            {
+            if ($SheetName.Length -gt 30) {
                 $SheetName = $SheetName.Remove(31);
             }
             $sheet.Name = $SheetName;
@@ -59,21 +57,19 @@ function Write-XrmExcelSheet {
             $rowCount = $Records.Count + 1;
             $columnCount = $HeaderMappings.Count;
         
-            $excelData = [string[,]]::new($rowCount, $columnCount);
+            $excelData = [string[, ]]::new($rowCount, $columnCount);
             $rowNumber = 0;
             $columnNumber = 0;
-            foreach($headerMappingKey in $HeaderMappings.Keys)
-            {
+            foreach ($headerMappingKey in $HeaderMappings.Keys) {
                 $excelData[$rowNumber, $columnNumber] = $HeaderMappings[$headerMappingKey];
                 $columnNumber++;
             }
             
             $current = 0;
             $total = $Records.Count;
-            foreach($object in $Records)
-            {
+            foreach ($object in $Records) {
                 $current++;
-                $percent = ($current/$total)*100;
+                $percent = ($current / $total) * 100;
         
                 Write-Progress -Activity "Provisioning Excel data" -Status "Processing record ...[$current/$total]" -PercentComplete $percent;
         
@@ -82,14 +78,11 @@ function Write-XrmExcelSheet {
 
                 $record = $object.Record;
         
-                foreach($headerMappingKey in $HeaderMappings.Keys)
-                {
-                    if($record.FormattedValues.ContainsKey($headerMappingKey))
-                    {
+                foreach ($headerMappingKey in $HeaderMappings.Keys) {
+                    if ($record.FormattedValues.ContainsKey($headerMappingKey)) {
                         $value = $record.FormattedValues[$headerMappingKey];
                     }
-                    else
-                    {
+                    else {
                         $value = $record[$headerMappingKey];
                     }
         
@@ -116,14 +109,11 @@ function Write-XrmExcelSheet {
             Write-HostAndLog "Formatting Excel table done!" -ForegroundColor Green;
         
             # Resize columns
-            if($ColumnsSize.Length -gt 0)
-            {
+            if ($ColumnsSize.Length -gt 0) {
                 Write-HostAndLog "Resizing columns ..." -ForegroundColor Gray;
-                for($i = 0; $i -lt $ColumnsSize.Count; $i++)
-                {
+                for ($i = 0; $i -lt $ColumnsSize.Count; $i++) {
                     $columnIndex = $i + 1;
-                    if($full)
-                    {
+                    if ($full) {
                         $columnIndex ++;
                     }
                     $sheet.Columns($columnIndex).ColumnWidth = $ColumnsSize[$i];
@@ -132,28 +122,23 @@ function Write-XrmExcelSheet {
             }
         
             Write-HostAndLog "Saving Excel file to '$ExcelFilePath' ..." -ForegroundColor Gray;
-            if(Test-Path -Path $ExcelFilePath)
-            {
+            if (Test-Path -Path $ExcelFilePath) {
                 Remove-Item -Path $ExcelFilePath -Force;
             }
             $workbook.SaveAs($ExcelFilePath);
             $workbook.Close();
             Write-HostAndLog "Saving Excel file to '$ExcelFilePath' done!" -ForegroundColor Green;
         }
-        finally
-        {
-            try
-            {
+        finally {
+            try {
                 $workbook.Close();
             }
-            catch
-            {
+            catch {
                 # Ignore
             }
-            try
-            {
+            try {
                 $excelApplication.DisplayAlerts = 'False';
-                $excelProcess = Get-Process Excel | Where-Object {$_.MainWindowHandle -eq $excelApplication.Hwnd}
+                $excelProcess = Get-Process Excel | Where-Object { $_.MainWindowHandle -eq $excelApplication.Hwnd }
                 $excelApplication.Quit();
 
                 [void][System.Runtime.Interopservices.Marshal]::ReleaseComObject($sheetContentRange);
@@ -165,8 +150,7 @@ function Write-XrmExcelSheet {
                 
                 Stop-Process -Id $excelProcess.Id;
             }
-            catch
-            {
+            catch {
                 # Ignore
             }
         }                

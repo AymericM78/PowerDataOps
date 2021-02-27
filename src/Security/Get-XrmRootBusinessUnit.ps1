@@ -3,11 +3,10 @@
     Retrieve root business unit
 #>
 function Get-XrmRootBusinessUnit {
-    [CmdletBinding()]    
-    [OutputType("Microsoft.Xrm.Sdk.Query.QueryExpression")]
+    [CmdletBinding()]
     param
     ( 
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,        
 
@@ -21,11 +20,11 @@ function Get-XrmRootBusinessUnit {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-       $queryBusinessUnit = New-XrmQueryExpression -LogicalName "businessunit" -Columns $Columns;
-       $queryBusinessUnit = $queryBusinessUnit | Add-XrmQueryCondition -Field "parentbusinessunitid" -Condition Null;
-       $businessUnits = $XrmClient | Get-XrmMultipleRecords -Query $queryBusinessUnit;
-       $businessUnit = $businessUnits | Select-Object -First 1;
-       $businessUnit;
+        $queryBusinessUnit = New-XrmQueryExpression -LogicalName "businessunit" -Columns $Columns;
+        $queryBusinessUnit = $queryBusinessUnit | Add-XrmQueryCondition -Field "parentbusinessunitid" -Condition Null;
+        $businessUnits = $XrmClient | Get-XrmMultipleRecords -Query $queryBusinessUnit;
+        $businessUnit = $businessUnits | Select-Object -First 1;
+        $businessUnit;
     }
     end {
         $StopWatch.Stop();

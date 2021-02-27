@@ -17,8 +17,7 @@ function Get-XrmInstance {
     process {
         $instances = Get-XrmInstances;
         $instance = $instances | Where-Object -Property "Name" -EQ -Value $Name;
-        if(-not $instance)
-        {
+        if (-not $instance) {
             throw "Instance $Name not found!";
         }
         $instance;
