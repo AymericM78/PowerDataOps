@@ -49,3 +49,13 @@ function Get-XrmSolutionComponents {
 }
 
 Export-ModuleMember -Function Get-XrmSolutionComponents -Alias *;
+
+Register-ArgumentCompleter -CommandName Get-XrmSolutionComponents -ParameterName "SolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}

@@ -6,7 +6,7 @@ function Copy-XrmSolutionComponents {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -27,8 +27,7 @@ function Copy-XrmSolutionComponents {
     process {
         
         $sourceComponents = $XrmClient | Get-XrmSolutionComponents -SolutionUniqueName $SourceSolutionUniqueName;
-        if(-not $sourceComponents)
-        {
+        if (-not $sourceComponents) {
             return;
         }
         ForEach-ObjectWithProgress -Collection $sourceComponents -OperationName "Solution components copy from $SourceSolutionUniqueName to $TargetSolutionUniqueName" -ScriptBlock {
@@ -44,3 +43,23 @@ function Copy-XrmSolutionComponents {
 }
 
 Export-ModuleMember -Function Copy-XrmSolutionComponents -Alias *;
+
+Register-ArgumentCompleter -CommandName Copy-XrmSolutionComponents -ParameterName "SourceSolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}
+
+Register-ArgumentCompleter -CommandName Copy-XrmSolutionComponents -ParameterName "TargetSolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}

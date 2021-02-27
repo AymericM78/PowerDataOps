@@ -32,7 +32,7 @@ function Import-XrmSolutionsBuild {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-               
+
         $XrmClient = New-XrmClient -ConnectionString $ConnectionString;
 
         Write-HostAndLog -Message " - Param : ArtifactsPath = $ArtifactsPath" -Level INFO;
@@ -42,19 +42,16 @@ function Import-XrmSolutionsBuild {
         $solutionFilePaths = Get-ChildItem -Path "$ArtifactsPath\*.zip" -recurse;
 
         $orderedSolutions = @();
-        foreach($solutionName in $solutionsToImport)
-        {	
+        foreach ($solutionName in $solutionsToImport) {	
             $solutionFilePath = $solutionFilePaths | Where-Object { $_.Name.Contains($solutionName); };
-            if(-not $solutionFilePath)
-            {
+            if (-not $solutionFilePath) {
                 throw "Solution '$solutionName' not found in $($ArtifactsPath)";
             }
             $orderedSolutions += "$solutionName;$solutionFilePath";
         }
 
         Write-HostAndLog -Message "Solutions will be deployed in the following order:" -Level INFO;
-        foreach($solution in $orderedSolutions)
-        {
+        foreach ($solution in $orderedSolutions) {
             $solutionName = $solution.ToString().Split(";")[0];
             Write-HostAndLog -Message " - $($solutionName)" -Level INFO;
         }
@@ -63,8 +60,7 @@ function Import-XrmSolutionsBuild {
         Remove-XrmPluginsFromAssembly -AssemblyName $PluginAssemblyName;
         Write-HostAndLog -Message "Plugin steps and types cleared!" -Level SUCCESS;
 
-        foreach($solution in $orderedSolutions)
-        {	    
+        foreach ($solution in $orderedSolutions) {	    
             $solutionUniqueName = $solution.ToString().Split(";")[0];
             $solutionFilePath = $solution.ToString().Split(";")[1];
             
@@ -72,8 +68,7 @@ function Import-XrmSolutionsBuild {
             $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath;
             Write-HostAndLog -Message "Solution $($solutionUniqueName) successfully imported" -Level SUCCESS;
 
-            if($env:SLACKURL)
-            {
+            if ($env:SLACKURL) {
                 Write-XrmMessageToSlack -Message "Solution $($solutionUniqueName) successfully imported!";
             }
         }

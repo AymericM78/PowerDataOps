@@ -6,7 +6,7 @@ function Add-XrmSolutionComponent {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -46,8 +46,7 @@ function Add-XrmSolutionComponent {
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "ComponentId" -Value $ComponentId;
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "ComponentType" -Value $ComponentType;
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "AddRequiredComponents" -Value $AddRequiredComponents;
-        if(-not $DoNotIncludeSubcomponents)
-        {
+        if (-not $DoNotIncludeSubcomponents) {
             $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "DoNotIncludeSubcomponents" -Value $DoNotIncludeSubcomponents;
         }
 
@@ -60,3 +59,13 @@ function Add-XrmSolutionComponent {
 }
 
 Export-ModuleMember -Function Add-XrmSolutionComponent -Alias *;
+
+Register-ArgumentCompleter -CommandName Add-XrmSolutionComponent -ParameterName "SolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}

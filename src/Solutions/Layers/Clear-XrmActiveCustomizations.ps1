@@ -6,7 +6,7 @@ function Clear-XrmActiveCustomizations {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false, ValueFromPipeline)]
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
         $XrmClient = $Global:XrmClient,
 
@@ -18,7 +18,7 @@ function Clear-XrmActiveCustomizations {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [int[]]
-        $ComponentTypes = @(26,59,60,61,62,300)
+        $ComponentTypes = @(26, 59, 60, 61, 62, 300)
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -40,3 +40,13 @@ function Clear-XrmActiveCustomizations {
 }
 
 Export-ModuleMember -Function Clear-XrmActiveCustomizations -Alias *;
+
+Register-ArgumentCompleter -CommandName Clear-XrmActiveCustomizations -ParameterName "SolutionUniqueName" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $solutionUniqueNames = @();
+    $solutions = Get-XrmSolutions -Columns "uniquename";
+    $solutions | ForEach-Object { $solutionUniqueNames += $_.uniquename };
+    return $solutionUniqueNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}
