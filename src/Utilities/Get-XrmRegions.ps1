@@ -13,21 +13,18 @@ function Get-XrmRegions {
     }    
     process {
         $regions = @();
-        $regions += "NorthAmerica";
-        $regions += "NorthAmerica2";
-        $regions += "EMEA";
-        $regions += "APAC";
-        $regions += "Oceania";
-        $regions += "JPN";
-        $regions += "SouthAmerica";
-        $regions += "IND";
-        $regions += "CAN";
-        $regions += "UK";
-        $regions += "FRANCE";
-        $regions += "UAE"; #  United Arab Emirates
-        $regions += "ZAF"; # South Africa
-        $regions += "GER "; # Germany (Go Local) 
-
+        $regions += "unitedstates";
+        $regions += "europe";
+        $regions += "asia";
+        $regions += "australia";
+        $regions += "india";
+        $regions += "japan";
+        $regions += "canada";
+        $regions += "unitedkingdom";
+        $regions += "unitedstatesfirstrelease";
+        $regions += "southamerica";
+        $regions += "france";
+        $regions += "switzerland";
         $regions;
     }
     end {

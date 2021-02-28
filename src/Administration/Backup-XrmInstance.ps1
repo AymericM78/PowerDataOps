@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Backup instance
+
+    .SYNOPSIS
+    Add a backup for given instance
+
+    .PARAMETER InstanceDomainName
+    Instance domain name (myinstance => myinstance.crm.dynamics1.com)
+
+    .PARAMETER BackupLabel
+    Name of the backup
+
+    .PARAMETER BackupDescription
+    Backup description
 #>
 function Backup-XrmInstance {
     [CmdletBinding()]

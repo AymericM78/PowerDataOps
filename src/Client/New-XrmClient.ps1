@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-    Initialize CrmserviceClient instance.
+    Initialize CrmServiceClient instance.
 #>
 function New-XrmClient {
     [CmdletBinding()]

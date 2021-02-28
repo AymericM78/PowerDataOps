@@ -1,6 +1,7 @@
 <#
     .SYNOPSIS
     Use Add-PowerAppsAccount cmdlet signs in the user or application account and saves the sign in information to cache.
+    
 #>
 function Connect-XrmAdmin {
     [CmdletBinding()]

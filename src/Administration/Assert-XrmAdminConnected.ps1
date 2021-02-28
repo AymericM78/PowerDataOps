@@ -1,6 +1,10 @@
 <#
     .SYNOPSIS
     Check if current user has D365 / Dataverse admin role.
+
+    .DESCRIPTION
+    This command is done each time we need to run admin operation. 
+    This mean that we need to proceed to Connect-XrmAdmin before.
 #>
 function Assert-XrmAdminConnected {
     [CmdletBinding()]
@@ -13,7 +17,6 @@ function Assert-XrmAdminConnected {
     }    
     process {
 
-        # TODO : Handle admin connection with context info
         if (-not $Global:XrmContext.IsAdminConnected) {
             throw "You are not connected as Admin! Please use Connect-XrmAdmin command before";           
         }

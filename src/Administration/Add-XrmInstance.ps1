@@ -1,6 +1,27 @@
 <#
     .SYNOPSIS
     Create new Dataverse instance.
+
+    .DESCRIPTION
+    Provision new dataverse instance with database.
+
+    .PARAMETER InstanceDisplayName
+    Instance friendly name
+
+    .PARAMETER InstanceDomainName
+    Instance domain name for instance url (myinstance => myinstance.crm.dynamics1.com)
+
+    .PARAMETER Location
+    DataCenter region (France, EMEA, UK, ...)
+
+    .PARAMETER Sku
+    Instance type (sandbox or production)
+
+    .PARAMETER CurrencyCodeName
+    Name of currency (EUR, ...)
+    
+    .PARAMETER LanguageName
+    Language name LCID (English = 1033, French = 1036, ...)
 #>
 function Add-XrmInstance {
     [CmdletBinding()]
@@ -25,16 +46,14 @@ function Add-XrmInstance {
         $Sku,
 
         [Parameter(Mandatory = $true)]
+        [ArgumentCompleter( { Get-AdminPowerAppCdsDatabaseCurrencies })]
         [String]
         $CurrencyCodeName,
 
         [Parameter(Mandatory = $true)]
-        [int]
-        $Lcid,
-
-        [Parameter(Mandatory = $false)]
-        [String[]]
-        $Templates
+        [ArgumentCompleter( { Get-AdminPowerAppCdsDatabaseLanguages  })]
+        [String]
+        $LanguageName
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -42,7 +61,7 @@ function Add-XrmInstance {
         Assert-XrmAdminConnected;
     }    
     process {    
-        $response = New-AdminPowerAppEnvironment -DisplayName $InstanceDisplayName -DomainName $InstanceDomainName -Location $Location -EnvironmentSku $Sku -CurrencyName $CurrencyCodeName -LanguageName $Lcid -Templates $Templates -ProvisionDatabase -WaitUntilFinished $true;
+        $response = New-AdminPowerAppEnvironment -DisplayName $InstanceDisplayName -DomainName $InstanceDomainName -Location $Location -EnvironmentSku $Sku -CurrencyName $CurrencyCodeName -LanguageName $LanguageName -ProvisionDatabase -WaitUntilFinished $true;
         if ($response.Code) {
             throw "$($response.Error.code) : $($response.Error.message)";
         }
