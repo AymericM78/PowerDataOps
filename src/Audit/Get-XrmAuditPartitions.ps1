@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
-    Retrieve audit partitions
+    Retrieve audit partitions   
+    
+    .DESCRIPTION
+    Get record audit logs with date range and size.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 #>
 function Get-XrmAuditPartitions {
     [CmdletBinding()]

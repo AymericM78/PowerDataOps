@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Retrieve audit for given record.
+    
+    .DESCRIPTION
+    Get record audit history for given fields changes
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER RecordReference
+    Lookup to target record. (EntityReference)
+
+    .PARAMETER AttributeFilter
+    Attributes logical names to filter.
 #>
 function Get-XrmAuditHistory {
     [CmdletBinding()]
