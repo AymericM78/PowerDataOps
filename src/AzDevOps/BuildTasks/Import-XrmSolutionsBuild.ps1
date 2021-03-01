@@ -1,6 +1,25 @@
 <#
     .SYNOPSIS
     Run build action to import solutions
+
+    .DESCRIPTION
+    This cmdlet is designed to be fully intergrated in Az DevOps pipeline. 
+    This cmdlet import given solutions from artifacts.
+
+    .PARAMETER ConnectionString
+    Target instance connection string, use variable 'ConnectionString' from associated variable group.
+
+    .PARAMETER ArtifactsPath
+    Folder path where solutions will be imported. (Default: Agent default working directory)
+
+    .PARAMETER SolutionsImportOrder
+    Solution uniquenames that will be imported in given order, use variable 'Solutions.ImportOrder' from associated variable group.
+
+    .PARAMETER ClearPluginStepsAndTypes
+    Indicates if plugins need to be unregistered prior solution import. (Default: true)
+
+    .PARAMETER PluginAssemblyName
+    Specify plugin assembly name for plugin removal operation. (Default: Plugins)
 #>
 function Import-XrmSolutionsBuild {
     [CmdletBinding()]

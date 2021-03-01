@@ -1,6 +1,23 @@
 <#
     .SYNOPSIS
     Run build action to upgrade solutions versions
+
+    .DESCRIPTION
+    This cmdlet is designed to be fully intergrated in Az DevOps pipeline. 
+    This cmdlet update solution version number.
+
+    .PARAMETER ConnectionString
+    Target instance connection string, use variable 'ConnectionString' from associated variable group.
+
+    .PARAMETER BuildId
+    Unique ID for current build. (Default : Azure DevOps BuildId variable)
+
+    .PARAMETER Version
+    Version number format. Use variable 'Version' from associated variable group. 
+    And replace 'X' by BuildId or DateTime format (like 'yyyy.MM.dd.hh' by '2021.02.28.17').
+
+    .PARAMETER Solutions
+    Solution uniquenames to update, use variable 'Solutions' from associated variable group.
 #>
 function Set-XrmSolutionsVersionBuild {
     [CmdletBinding()]

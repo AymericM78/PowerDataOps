@@ -2,6 +2,10 @@
     .SYNOPSIS
     Core function for Az DevOps API consumption.
 #>
+
+# TODO : To review
+
+<#
 function Invoke-XrmDevOpsApi {
     [CmdletBinding()]
     param
@@ -74,3 +78,5 @@ function Invoke-XrmDevOpsApi {
 }
 
 Export-ModuleMember -Function Invoke-XrmDevOpsApi -Alias *;
+
+#>

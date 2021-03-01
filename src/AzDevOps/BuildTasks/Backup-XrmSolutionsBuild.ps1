@@ -1,6 +1,25 @@
 <#
     .SYNOPSIS
     Run build action to unpack solutions
+
+    .DESCRIPTION
+    This cmdlet is designed to be fully intergrated in Az DevOps pipeline. 
+    This cmdlet export given solutions and then start SolutionPackager extract action to working directory.
+
+    .PARAMETER ConnectionString
+    Target instance connection string, use variable 'ConnectionString' from associated variable group.
+
+    .PARAMETER UnpackPath
+    Folder path where solutions will be extracted. (Default: Agent working directory)
+
+    .PARAMETER Solutions
+    Solution uniquenames that will be exported and then unpacked, use variable 'Solutions' from associated variable group.
+
+    .PARAMETER Managed
+    Specify if solution should be export as managed or unmanaged. (Default: false = unmanaged)
+
+    .PARAMETER DefaultExportPath
+    Folder path where solutions will be exported before unpacked. (Default: Agent temp directory)
 #>
 function Backup-XrmSolutionsBuild {
     [CmdletBinding()]

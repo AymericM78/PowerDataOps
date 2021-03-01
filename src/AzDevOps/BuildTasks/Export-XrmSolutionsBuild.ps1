@@ -1,6 +1,49 @@
 <#
     .SYNOPSIS
-    Run build action to export solutions
+    Run build action to export solutions.
+
+    .DESCRIPTION
+    This cmdlet is designed to be fully intergrated in Az DevOps pipeline. 
+    This cmdlet export given solutions in order to add them to build artifacts.
+
+    .PARAMETER ConnectionString
+    Target instance connection string, use variable 'ConnectionString' from associated variable group.
+
+    .PARAMETER ExportPath
+    Folder path where solutions will be exported. (Default: Agent Artifacts Staging directory)
+
+    .PARAMETER Solutions
+    Solution uniquenames that will be exported and then unpacked, use variable 'Solutions' from associated variable group.
+
+    .PARAMETER Managed
+    Specify if solution should be export as managed or unmanaged. (Default: true = managed)
+
+    .PARAMETER ExportCalendarSettings
+    Specify if exported solution should include Calendar settings (Default: false)
+
+    .PARAMETER ExportCustomizationSettings
+    Specify if exported solution should include Customization settings (Default: false)
+
+    .PARAMETER ExportEmailTrackingSettings
+    Specify if exported solution should include Email Tracking settings (Default: false)
+
+    .PARAMETER ExportAutoNumberingSettings
+    Specify if exported solution should include AutoNumbering settings (Default: false)
+
+    .PARAMETER ExportIsvConfig
+    Specify if exported solution should include Isv settings (Default: false)
+
+    .PARAMETER ExportOutlookSynchronizationSettings
+    Specify if exported solution should include Outlook Synchronization settings (Default: false)
+
+    .PARAMETER ExportGeneralSettings
+    Specify if exported solution should include General settings (Default: false)
+
+    .PARAMETER ExportMarketingSettings
+    Specify if exported solution should include Marketing settings (Default: false)
+
+    .PARAMETER ExportRelationshipRoles
+    Specify if exported solution should include RelationshipRoles (Default: false)
 #>
 function Export-XrmSolutionsBuild {
     [CmdletBinding()]

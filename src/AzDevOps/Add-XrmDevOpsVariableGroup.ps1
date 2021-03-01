@@ -2,6 +2,8 @@
     .SYNOPSIS
     Push Dataverse Instance data to a Az DevOps variable group.
 #>
+# TODO : To review
+<#
 function Add-XrmDevOpsVariableGroup {
     [CmdletBinding()]
     param
@@ -36,3 +38,4 @@ function Add-XrmDevOpsVariableGroup {
 }
 
 Export-ModuleMember -Function Add-XrmDevOpsVariableGroup -Alias *;
+#>

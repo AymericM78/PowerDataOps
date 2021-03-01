@@ -1,7 +1,3 @@
-<#
-    .SYNOPSIS
-    Export instances collection to XML file with connection strings to XrmToolBox connection file.
-#>
 
 function Protect-XrmToolBoxPassword {
     PARAM(
@@ -44,6 +40,10 @@ function Protect-XrmToolBoxPassword {
     return $cipherText;
 }
 
+<#
+    .SYNOPSIS
+    Export instances collection to XML file with connection strings to XrmToolBox connection file.
+#>
 function Export-XrmConnectionToXrmToolBox {
     [CmdletBinding()]
     param
