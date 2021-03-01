@@ -2,6 +2,29 @@
     .SYNOPSIS
     Use Add-PowerAppsAccount cmdlet signs in the user or application account and saves the sign in information to cache.
     
+    .DESCRIPTION
+    Use this command to embed Power Apps Admin cmdlets
+
+    .PARAMETER UserName
+    User login
+    
+    .PARAMETER Password
+    User password
+    
+    .PARAMETER TenantId
+    AAD tenant ID (use with Client ID / secret)
+
+    .PARAMETER TenantId
+    AAD tenant ID (use with ApplicationId / ClientSecret)
+
+    .PARAMETER ApplicationId
+    AAD Application ID
+
+    .PARAMETER ClientSecret
+    AAD Application secret
+
+    .PARAMETER CertificateThumbprint
+    AAD Application Certificate Thumbprint
 #>
 function Connect-XrmAdmin {
     [CmdletBinding()]

@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Monitor operation completion.
+
+    .DESCRIPTION
+    Poll operation status from given url until its done.
+
+    .PARAMETER OperationUrl
+    Operation Url provided when admin operation is invoked.
+
+    .PARAMETER PollingIntervalSeconds
+    Delay betwenn each status check.
 #>
 function Watch-XrmOperation {
     [CmdletBinding()]

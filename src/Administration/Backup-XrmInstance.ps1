@@ -2,7 +2,7 @@
     .SYNOPSIS
     Backup instance
 
-    .SYNOPSIS
+    .DESCRIPTION
     Add a backup for given instance
 
     .PARAMETER InstanceDomainName

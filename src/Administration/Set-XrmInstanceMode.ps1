@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Enable or disable admin mode on given instance
+
+    .DESCRIPTION
+    Administration mode will prevent users to access to instance.
+
+    .PARAMETER InstanceDomainName
+    Instance domain name (myinstance => myinstance.crm.dynamics1.com)
+
+    .PARAMETER Mode
+    Admin mode (Normal : users can access / AdminOnly : Only admins can access)
 #>
 function Set-XrmInstanceMode {
     [CmdletBinding()]

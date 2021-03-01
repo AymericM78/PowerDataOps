@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Retrieve backup infos 
+
+    .DESCRIPTION
+    Retrieve a backup from given instance
+
+    .PARAMETER InstanceDomainName
+    Instance domain name (myinstance => myinstance.crm.dynamics1.com)
+
+    .PARAMETER BackupLabel
+    Name of the backup
 #>
 function Get-XrmBackup {
     [CmdletBinding()]

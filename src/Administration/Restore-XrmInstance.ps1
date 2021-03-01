@@ -1,6 +1,24 @@
 <#
     .SYNOPSIS
     Restore instance at given time.
+
+    .DESCRIPTION
+    Restore a backup of given instance to itself or another instance.
+
+    .PARAMETER SourceInstanceDomainName
+    Instance domain name (myinstance => myinstance.crm.dynamics1.com) that you want to restore
+
+    .PARAMETER SourceInstanceDomainName
+    Instance domain name (myinstance => myinstance.crm.dynamics1.com) where you want to restore
+
+    .PARAMETER TargetInstanceSecurityGroupId
+    AAD Security Group ID to define on target instance to restrict users access
+
+    .PARAMETER RestoreTimeUtc
+    Date time in UTC of restore point
+
+    .PARAMETER BackupLabel
+    Name of the backup
 #>
 function Restore-XrmInstance {
     [CmdletBinding()]

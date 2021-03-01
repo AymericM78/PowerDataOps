@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Copy instance to another.
+
+    .DESCRIPTION
+    Copy given source instance to target source instance.
+
+    .PARAMETER SourceInstanceDomainName
+    Instance domain name (myinstance => myinstance.crm.dynamics1.com) that you want to copy
+
+    .PARAMETER TargetInstanceDomainName
+    Instance domain name (myinstance => myinstance.crm.dynamics1.com) that you want to overwrite
+
+    .PARAMETER CopyType
+    Copy type : MinimalCopy (schema only) / FullCopy (All)
 #>
 function Copy-XrmInstance {
     [CmdletBinding()]
