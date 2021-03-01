@@ -47,6 +47,17 @@ function New-XrmClient {
         # Initialize CRM Client	
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $XrmClient = Get-CrmConnection -ConnectionString $ConnectionString -MaxCrmConnectionTimeOutMinutes $MaxCrmConnectionTimeOutMinutes -ErrorAction Stop;
+
+            # Warn about Office365 authentication
+            $authType = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "AuthType";
+            if($authType -eq "Office365")
+            {
+                Write-HostAndLog -Message "============================================================================" -Level WARN;
+                Write-HostAndLog -Message "/!\ Office365 authentication type is deprecated!" -Level WARN;
+                Write-HostAndLog -Message "More info: " -Level WARN;
+                Write-HostAndLog -Message " - https://docs.microsoft.com/fr-fr/power-platform/important-changes-coming#deprecation-of-office365-authentication-type-and-organizationserviceproxy-class-for-connecting-to-dataverse" -Level WARN;
+                Write-HostAndLog -Message "============================================================================" -Level WARN;
+            }
         }
         else {
             $XrmClient = Get-CrmConnection -InteractiveMode;

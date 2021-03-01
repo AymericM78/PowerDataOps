@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
-Build Connection String from connection.
+    Build Connection String from instance object.
+
+    .DESCRIPTION
+    Output connection string from given Microsoft Dataverse instance object.
+
+    .PARAMETER XrmInstance
+    Microsoft Dataverse instance object.
 #>
 function Out-XrmConnectionString {
     [CmdletBinding()]

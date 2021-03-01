@@ -43,6 +43,25 @@ function Protect-XrmToolBoxPassword {
 <#
     .SYNOPSIS
     Export instances collection to XML file with connection strings to XrmToolBox connection file.
+
+    .DESCRIPTION
+    Populate XrmToolbox connections with available instance for given user.
+
+    .PARAMETER Name
+    XTB connection name.
+    
+    .PARAMETER OverrideConnectionStringFormat
+    Provide the ConnectionString template in order to access to instances with different credentials.
+
+    .PARAMETER XtbConnectionPath
+    XTB connections folder path. (Default: $env:APPDATA\MscrmTools\XrmToolBox\Connections)
+
+    .EXAMPLE
+    Connect-XrmUser -AuthType Office365 -UserName "user@contoso.fake" -Password "MyPass123"
+    Export-XrmConnectionToXrmToolBox -Name "Contoso"
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/XrmToolBox%20Connection%20Provisionning.md
 #>
 function Export-XrmConnectionToXrmToolBox {
     [CmdletBinding()]

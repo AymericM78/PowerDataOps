@@ -1,6 +1,22 @@
 <#
     .SYNOPSIS
-    Authenticate user to discovery service
+    Authenticate user to Microsoft Dataverse.
+
+    .DESCRIPTION
+    Prepare Microsoft Dataverse connection with user credentials in order to consume Discovery Service.
+
+    .PARAMETER UserName
+    User login.
+    
+    .PARAMETER Password
+    User password.
+
+    .PARAMETER AuthType
+    User authrentication type. (Office365, AD, Ifd)
+    => Warning : Office365 authentication is deprecated!    
+    
+    .PARAMETER Region
+    DataCenter region (France, EMEA, UK, ...) where target instances are located.
 #>
 function Connect-XrmUser {
     [CmdletBinding()]
