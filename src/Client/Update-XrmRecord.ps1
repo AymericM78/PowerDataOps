@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Update entity record in CRM.
+    Update entity record in Microsoft Dataverse.
+
+    .Description
+    Update row (entity record) from Microsoft Dataverse table.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Record
+    Record (row) to update.
+
+    .PARAMETER BypassCustomPluginExecution
+    Specify wether involved plugins should be triggered or not during this operation. (Default: False)
 #>
 function Update-XrmRecord {
     [CmdletBinding()]

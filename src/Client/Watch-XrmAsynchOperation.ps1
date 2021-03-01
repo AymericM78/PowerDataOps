@@ -1,6 +1,21 @@
 <#
     .SYNOPSIS
     Monitor async operation completion.
+
+    .DESCRIPTION
+    Poll status from asynchoperation id until its done.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER AsyncOperationId
+    System job unique identifier.
+
+    .PARAMETER PollingIntervalSeconds
+    Delay between each status check.
+
+    .PARAMETER ScriptBlock
+    Command to execute during each poll with asyncoperation info.
 #>
 function Watch-XrmAsynchOperation {
     [CmdletBinding()]

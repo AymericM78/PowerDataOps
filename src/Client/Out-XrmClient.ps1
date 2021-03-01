@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Initialize CrmserviceClient instance from connection.
+    Initialize CrmserviceClient instance from instance object.
+    
+    .Description
+    Create a new connection to Microsoft Dataverse from instance object.
+
+    .PARAMETER Instance
+    Microsoft Dataverse instance object.
+
+    .OUTPUTS
+    Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
 #>
 function Out-XrmClient {
     [CmdletBinding()]

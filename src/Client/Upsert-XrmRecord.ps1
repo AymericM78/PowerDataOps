@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Upsert entity record in Dataverse.
+
+    .Description
+    Upsert row (entity record) from Microsoft Dataverse table.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Record
+    Record (row) to Upsert.
+
+    .PARAMETER BypassCustomPluginExecution
+    Specify wether involved plugins should be triggered or not during this operation. (Default: False)
 #>
 function Upsert-XrmRecord {
     [CmdletBinding()]

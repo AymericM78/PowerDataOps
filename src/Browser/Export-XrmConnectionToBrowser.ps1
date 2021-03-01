@@ -303,7 +303,44 @@ function Get-XrmFavorites {
 
 <#
     .SYNOPSIS
-    Configure browser according to Dataverse environnements
+    Configure browser according to Dataverse environnements.
+
+    .DESCRIPTION
+    Provision or update Chrome or Edge (based on chromium) profile with all dataverse apps and Power Platform usefull links.
+
+    .PARAMETER ProfileName
+    Name of existing or new browser profile.
+    
+    .PARAMETER BrowserShortCutsPath
+    Folder path where to store profile shortcut (.lnk).
+    
+    .PARAMETER IsChrome
+    Indicates if browser is Google Chrome. (Default: true)
+    Use false to switch to Edge.
+    
+    .PARAMETER OverrideConnectionStringFormat
+    Provide the ConnectionString template in order to access to instances with different credentials.
+
+    .PARAMETER Extensions
+    Define chrome extensions identifiers to install.
+
+    .PARAMETER AppIgnoredList
+    Filter app list during favorite provisionning.
+
+    .PARAMETER ChromeDefaultProfilesPath
+    Folder path where to store Chrome profile folder.
+
+    .PARAMETER ChromeX64AppPath
+    Chrome executable path for 64 bits version.
+
+    .PARAMETER ChromeX32AppPath
+    Chrome executable path for 32 bits version.
+
+    .PARAMETER EdgeDefaultProfilesPath
+    Folder path where to store Edge profile folder.
+
+    .PARAMETER EdgeAppPath
+    Edge executable path.
 #>
 function Export-XrmConnectionToBrowser {
     [CmdletBinding()]

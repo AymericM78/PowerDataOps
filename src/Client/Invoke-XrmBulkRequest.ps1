@@ -1,6 +1,21 @@
 <#
     .SYNOPSIS
     Execute Multiple Organization Request.
+
+    .Description
+    Send requests to Microsoft Dataverse for bulk execution.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Requests
+    Array of organization requests to execute.
+
+    .PARAMETER ContinueOnError
+    Indicates wether to continue or stop execution if an error occured. (Default: false = Continue)
+
+    .PARAMETER ReturnResponses
+    Indicates if response are collected for each request execution. (Default: false = No response)
 #>
 function Invoke-XrmBulkRequest {
     [CmdletBinding()]

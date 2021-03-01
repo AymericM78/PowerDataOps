@@ -1,6 +1,33 @@
 <#
     .SYNOPSIS
-    Create entity record in Dataverse.
+    Create entity record in Microsoft Dataverse.
+
+    .Description
+    Add a new row in Microsoft Dataverse table and return created ID (Uniqueidentifier).
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Record
+    Record information to add. (Entity)
+
+    .PARAMETER BypassCustomPluginExecution
+    Specify wether involved plugins should be triggered or not during this operation. (Default: False)
+
+    .OUTPUTS
+    Guid. Newly created record identified.
+
+    .EXAMPLE
+    $xrmClient = New-XrmClient -ConnectionString $connectionString;
+    $account = New-XrmEntity -LogicalName "account" -Attributes @{
+        "name" = "Contoso";
+        "revenue" = New-XrmMoney -Value 123456.78;
+        "industrycode" = New-XrmOptionSetValue -Value 37;
+    }
+    $account.Id = Add-XrmRecord -XrmClient $xrmClient -Record $account;
+
+    .LINK
+    Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
 #>
 function Add-XrmRecord {
     [CmdletBinding()]

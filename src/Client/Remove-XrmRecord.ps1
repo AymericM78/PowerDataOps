@@ -1,6 +1,24 @@
 <#
     .SYNOPSIS
-    Remove entity record in CRM.
+    Remove record from Microsoft Dataverse.
+
+    .Description
+    Delete row (entity record) from Microsoft Dataverse table by logicalname + id or by Entity object.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Record
+    Record (row) to delete.
+    
+    .PARAMETER LogicalName
+    Table / Entity logical name..
+
+    .PARAMETER Id
+    Row (entity record) unique identifier
+
+    .PARAMETER BypassCustomPluginExecution
+    Specify wether involved plugins should be triggered or not during this operation. (Default: False)
 #>
 function Remove-XrmRecord {
     [CmdletBinding()]

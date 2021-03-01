@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Execute Organization Request.
+
+    .Description
+    Send request to Microsoft Dataverse for execution.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Request
+    Organization request to execute.
+
+    .PARAMETER Async
+    Indicates if request should be run in background. Request must supports asynchronous execution. (Default: false = run synchronously)
 #>
 function Invoke-XrmRequest {
     [CmdletBinding()]

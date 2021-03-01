@@ -1,6 +1,16 @@
 <#
     .SYNOPSIS
     Protect command from API Limit issues.
+    
+    .Description
+    This cmdlet provide a core method for all API calls to Microsoft Dataverse.
+    The aim is to provide a retry pattern to prevent technical issues as API Limits or network connectivity 
+    
+    .PARAMETER ScriptBlock
+    Command to run against Microsoft Dataverse API.
+
+    .PARAMETER Maximum
+    Maximum tries below raising an error.
 #>
 function Protect-XrmCommand {
     [CmdletBinding()]

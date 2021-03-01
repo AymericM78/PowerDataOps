@@ -9,7 +9,7 @@
     Operation Url provided when admin operation is invoked.
 
     .PARAMETER PollingIntervalSeconds
-    Delay betwenn each status check.
+    Delay between each status check.
 #>
 function Watch-XrmOperation {
     [CmdletBinding()]

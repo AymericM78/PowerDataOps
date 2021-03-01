@@ -1,6 +1,39 @@
 <#
     .SYNOPSIS
     Search for record with simple query.
+
+    .Description
+    Get specific row (Entity record) according to given id, key, or attribute.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER LogicalName
+    Table / Entity logical name.
+
+    .PARAMETER Key
+    Specify alternate key attribute name to search.
+
+    .PARAMETER AttributeName
+    Specify attribute name to search.
+
+    .PARAMETER Value
+    Specify key or attribute value to search.
+    Use Id to specify row (entity record) unique identifier
+
+    .PARAMETER Columns
+    Specify row (entity record) columns to return. (array)
+
+    .OUTPUTS
+    Custom Object. Row (= Entity record) is converted to custom object to simplify data operations.
+
+    .EXAMPLE
+    $xrmClient = New-XrmClient -ConnectionString $connectionString;
+    $contosoAccount = Get-XrmRecord -XrmClient $xrmClient -LogicalName "account" -AttributeName "name" -Value "Contoso" -Columns "revenue";
+    Write-Host $contosoAccount.revenue;
+
+    .LINK
+    Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
 #>
 function Get-XrmRecord {
     [CmdletBinding()]

@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Specify CrmserviceClient timeout.
+
+    .DESCRIPTION
+    Extend default CrmserviceClient timeout.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER DurationInMinutes
+    Timeout duration in minutes.
+
+    .PARAMETER Revert
+    Restore default timeout value.
 #>
 function Set-XrmClientTimeout {
     [CmdletBinding()]

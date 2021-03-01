@@ -1,13 +1,30 @@
 <#
     .SYNOPSIS
-    Initialize CrmServiceClient instance.
+    Initialize CrmServiceClient instance. 
+    
+    .Description
+    Create a new connection to Microsoft Dataverse with a connectionstring.
+
+    .PARAMETER ConnectionString
+    Connection String to Microsoft Dataverse instance (https://docs.microsoft.com/fr-fr/powerapps/developer/common-data-service/xrm-tooling/use-connection-strings-xrm-tooling-connect)
+    
+    .PARAMETER MaxCrmConnectionTimeOutMinutes
+    Specify timeout duration in minutes for connection.
+
+    .OUTPUTS
+    Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
+
+    .EXAMPLE
+    $xrmClient = New-XrmClient -ConnectionString $connectionString;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
 #>
 function New-XrmClient {
     [CmdletBinding()]
     [OutputType("Microsoft.Xrm.Tooling.Connector.CrmServiceClient")]
     param
-    (
-        # https://docs.microsoft.com/fr-fr/powerapps/developer/common-data-service/xrm-tooling/use-connection-strings-xrm-tooling-connect
+    (        
         [Parameter(Mandatory = $false)]
         [String]
         $ConnectionString,
