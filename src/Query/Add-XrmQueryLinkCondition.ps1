@@ -1,6 +1,21 @@
 <#
     .SYNOPSIS
-    Add filter to given link entity
+    Add filter to given link entity.
+
+    .DESCRIPTION
+    Add new condition criteria to given link entity.
+
+    .PARAMETER Link
+    LinkEntity where condition should be add..
+
+    .PARAMETER Field
+    Column / attribute logical name to filter.
+
+    .PARAMETER Condition
+    Condition operator to apply to column (ConditionOperator)
+
+    .PARAMETER Values
+    Value to apply in column filter (single object or array)
 #>
 function Add-XrmQueryLinkCondition {
     [CmdletBinding()]

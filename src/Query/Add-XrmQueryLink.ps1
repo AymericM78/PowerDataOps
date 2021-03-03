@@ -1,6 +1,21 @@
 <#
     .SYNOPSIS
-    Add link entity to given query expression
+    Add link entity to given query expression.
+
+    .DESCRIPTION
+    Add new link to given query expression to join to another table / entity.
+
+    .PARAMETER Query
+    QueryExpression where condition should be add.
+
+    .PARAMETER FromAttributeName
+    Gets or sets the logical name of the attribute of the entity that you are linking from.
+
+    .PARAMETER ToEntityName
+    Gets or sets the logical name of the entity that you are linking to.
+
+    .PARAMETER ToAttributeName
+    Gets or sets the logical name of the attribute of the entity that you are linking to.
 #>
 function Add-XrmQueryLink {
     [CmdletBinding()]

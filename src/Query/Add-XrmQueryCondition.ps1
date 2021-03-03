@@ -1,6 +1,24 @@
 <#
     .SYNOPSIS
-    Add filter to given query expression
+    Add filter to given query expression.
+
+    .DESCRIPTION
+    Add new condition criteria to given query expression.
+
+    .PARAMETER Query
+    QueryExpression where condition should be add.
+
+    .PARAMETER Field
+    Column / attribute logical name to filter.
+
+    .PARAMETER Condition
+    Condition operator to apply to column (ConditionOperator)
+
+    .PARAMETER CompareFieldValue
+    Specify if column filter should be evaluated according to another column.
+
+    .PARAMETER Values
+    Value to apply in column filter (single object or array)
 #>
 function Add-XrmQueryCondition {
     [CmdletBinding()]    
