@@ -1,6 +1,21 @@
 <#
     .SYNOPSIS
     Read entity attribute.
+
+    .DESCRIPTION
+    Extract entity attribute value from record / table row.
+
+    .PARAMETER Record
+    Entity record / table row (Entity).
+
+    .PARAMETER Name
+    Attribute (Column) name.
+
+    .PARAMETER FormattedValue
+    Specify if expected value should be provided from FormattedValues <> raw value.
+
+    .PARAMETER RaiseErrorIfMissing
+    If true, throws an exception if attribute/column is not present in row / record. Else, ignore.
 #>
 function Get-XrmAttributeValue {
     [CmdletBinding()]

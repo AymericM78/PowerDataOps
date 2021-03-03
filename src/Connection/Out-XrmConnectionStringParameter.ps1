@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Extract parameter value from connectionstring.
+    
+    .DESCRIPTION
+    Output connection string parameter value.
+
+    .PARAMETER ConnectionString
+    Connection string.
+
+    .PARAMETER ParameterName
+    Parameter name.
+
+    .PARAMETER RaiseErrorIfMising
+    If parameter is not found, throw an exception.
 #>
 function Out-XrmConnectionStringParameter {
     [CmdletBinding()]

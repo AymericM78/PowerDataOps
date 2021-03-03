@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Set entity attribute value.
+
+    .DESCRIPTION
+    Add or update attribute value.
+
+    .PARAMETER Record
+    Entity record / table row (Entity).
+
+    .PARAMETER Name
+    Attribute (Column) name.
+
+    .PARAMETER Name
+    Attribute value object.
 #>
 function Set-XrmAttributeValue {
     [CmdletBinding()]

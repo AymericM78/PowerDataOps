@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Initialize Entity object instance.
+
+    .DESCRIPTION
+    Create a new Microsoft Dataverse Entity object.
+
+    .PARAMETER LogicalName
+    Table / Entity logical name.
+
+    .PARAMETER Id
+    Record unique identifier.
+
+    .PARAMETER Attributes
+    Attributes array (Key value pair: logicalname = value).
 #>
 function New-XrmEntity {
     [CmdletBinding()]

@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Transform Entity to custom object.
+
+    .DESCRIPTION
+    Represent Entity object to custom object.
+
+    .PARAMETER Record
+    Entity record / table row (Entity).
 #>
 function ConvertTo-XrmObject {
     [CmdletBinding()]

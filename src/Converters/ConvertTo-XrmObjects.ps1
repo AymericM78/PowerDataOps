@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Transform Entity Collection to custom object collection.
+
+    .DESCRIPTION
+    Represent Entity objects to custom objects array.
+
+    .PARAMETER Record
+    Entity record / table rows (Entity array).
 #>
 function ConvertTo-XrmObjects {
     [CmdletBinding()]
