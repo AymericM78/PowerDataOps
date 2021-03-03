@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Initialize QueryExpression object instance.
+    Return QueryExpression object instance.
+
+    .DESCRIPTION
+    Initialize new query expression object.
+
+    .PARAMETER LogicalName
+    Gets or sets the entity name for the condition.
+
+    .PARAMETER Columns
+    Gets or sets the columns to return in the query results.
+
+    .PARAMETER TopCount
+    Gets or sets the number of rows to be returned.
 #>
 function New-XrmQueryExpression {
     [CmdletBinding()]

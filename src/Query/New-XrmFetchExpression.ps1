@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Return a fetch expression from fetch xml
+
+    .DESCRIPTION
+    Initialize new fetch expression object.
+
+    .PARAMETER FetchXml
+    FetchXML query string.
 #>
 function New-XrmFetchExpression {
     [CmdletBinding()]

@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Add order to query expression.
+
+    .DESCRIPTION
+    Set sort order to query expression.
+
+    .PARAMETER Query
+    QueryExpression where sort should be add.
+
+    .PARAMETER Field
+    Column / attribute logical name to sort.
+
+    .PARAMETER OrderType
+    Specify order on given column : ascending or descending.
 #>
 function Add-XrmQueryOrder {
     [CmdletBinding()]    

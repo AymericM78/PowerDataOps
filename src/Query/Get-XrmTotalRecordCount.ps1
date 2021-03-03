@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Returns total number of rows in given entity / table
+    Returns total number of rows in given entity / table.
+
+    .DESCRIPTION
+    Returns data on the total number of records for specific entities. (RetrieveTotalRecordCount)
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER LogicalNames
+    The logical names of the entities to include in the query.
 #>
 function Get-XrmTotalRecordCount {
     [CmdletBinding()]    
