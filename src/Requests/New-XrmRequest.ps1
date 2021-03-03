@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Initialize Request object instance.
+
+    .DESCRIPTION
+    Get a new Organization Request object instance.
+
+    .PARAMETER Name
+    Request name. (Microsoft Dataverse Web Api Function)
 #>
 function New-XrmRequest {
     [CmdletBinding()]

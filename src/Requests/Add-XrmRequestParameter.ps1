@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Add parameter to request.
+
+    .DESCRIPTION
+    Add parameter name and value to given request.
+
+    .PARAMETER Name
+    Parameter name.
+
+    .PARAMETER Value
+    Parameter value.
 #>
 function Add-XrmRequestParameter {
     [CmdletBinding()]

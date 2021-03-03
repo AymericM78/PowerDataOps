@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Retrieve security roles
+    Retrieve security role privileges.
+
+    .DESCRIPTION
+    Get role privileges from given role.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER RoleId
+    Role unique identifier.
 #>
 function Get-XrmRolePrivileges {
     [CmdletBinding()]
@@ -8,8 +17,11 @@ function Get-XrmRolePrivileges {
     ( 
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
-        $XrmClient = $Global:XrmClient
-        
+        $XrmClient = $Global:XrmClient,
+
+        [Parameter(Mandatory = $true)]
+        [Guid]
+        $RoleId        
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -17,8 +29,11 @@ function Get-XrmRolePrivileges {
     }    
     process {
         
-        #TODO : Get-XrmRolePrivileges
+        $request = New-XrmRequest -Name "RetrieveRolePrivilegesRole";
+        $request = $request | Add-XrmRequestParameter -Name "RoleId" -Value $RoleId;
+        $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
 
+        $response.Results["RolePrivileges"];
     }
     end {
         $StopWatch.Stop();

@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Add security roles to user
+    Add security roles to user.
+
+    .DESCRIPTION
+    Assign on or multiple roles to given user.
+
+    .PARAMETER UserId
+    System user unique identifier.
+    
+    .PARAMETER Roles
+    Roles unique identifier array to add.
 #>
 function Add-XrmUserRoles {
     [CmdletBinding()]    
