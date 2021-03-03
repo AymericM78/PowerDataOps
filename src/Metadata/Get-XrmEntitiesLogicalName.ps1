@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
-    Retrieve entities logicalname attribute
+    Retrieve entities logicalname
+
+    .DESCRIPTION
+    Get list of entity / table logical names.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 #>
 function Get-XrmEntitiesLogicalName {
     [CmdletBinding()]

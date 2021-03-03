@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Retrieve plugin traces
+    Retrieve plugin traces.
+
+    .DESCRIPTION
+    Get latest plugin trace log from target instance.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER ErrorOnly
+    If true, filter results to return only errors. (Default: false = all traces)
+
+    .PARAMETER Take
+    Specify number of items to retrieve. (Default : 50)
 #>
 function Get-XrmPluginTraces {
     [CmdletBinding()]    

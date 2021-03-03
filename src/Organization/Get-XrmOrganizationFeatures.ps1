@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Get Organization Features
+
+    .DESCRIPTION
+    Retrieve all or specified features from default organization (see : Get-XrmOrganization)
+
+    .PARAMETER Name
+    Feature name to retrieve.
 #>
 function Get-XrmOrganizationFeatures {
     [CmdletBinding()]

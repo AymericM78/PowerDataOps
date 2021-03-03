@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Desactivate given language 
+
+    .DESCRIPTION
+    Uninstall specify language pack from target instance.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    
+    .PARAMETER Language
+    Language name LCID (English = 1033, French = 1036, ...)
 #>
 function Remove-XrmLanguagePack {
     [CmdletBinding()]    

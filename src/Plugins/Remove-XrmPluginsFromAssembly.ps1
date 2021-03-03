@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Remove Plugins Steps and Types From Assembly
+    Remove Plugins Steps and Types From Assembly.
+
+    .DESCRIPTION
+    Uninstall all steps and types from plugin assembly.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER AssemblyName
+    Name of assembly where plugin will be removed. (Default : Plugins)
 #>
 function Remove-XrmPluginsFromAssembly {
     [CmdletBinding()]    

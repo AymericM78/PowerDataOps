@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Get Organization
+    Get Organization object.
+
+    .DESCRIPTION
+    Retrieve default organization record from target instance.    
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : all columns)
 #>
 function Get-XrmOrganization {
     [CmdletBinding()]

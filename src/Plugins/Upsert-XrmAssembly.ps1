@@ -1,6 +1,24 @@
 <#
     .SYNOPSIS
-    Create or update plugin / workflow assembly
+    Create or update plugin / workflow assembly.
+
+    .DESCRIPTION
+    Add new or update existing assembly content from local dll file.    
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER AssemblyPath
+    Full file path to dll.
+
+    .PARAMETER SolutionUniqueName
+    Microsoft Dataverse solution unique name where to add new assembly.
+
+    .PARAMETER IsolationMode
+    Specify if assembly will be deploy in sandbox or not. (Default = 2 | 1 = Not sandboxed, 2 = Sandbox)
+
+    .PARAMETER SourceType
+    Specify where assembly will be stored. (Default = 0 | 0 = Database, 1 = Disk, 2 = Normal (OnPremise), 3 = AzureWebApp)
 #>
 function Upsert-XrmAssembly {
     [CmdletBinding()]    

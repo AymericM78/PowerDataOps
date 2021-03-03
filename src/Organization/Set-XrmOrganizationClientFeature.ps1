@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Set Organization Client Feature
+    Set Organization Client Feature.
+
+    .DESCRIPTION
+    Define specific client feature for default organization (see : Get-XrmOrganization)
+
+    .PARAMETER Name
+    Client feature name to set.
+
+    .PARAMETER Value
+    Client feature value to set.
 #>
 function Set-XrmOrganizationClientFeature {
     [CmdletBinding()]

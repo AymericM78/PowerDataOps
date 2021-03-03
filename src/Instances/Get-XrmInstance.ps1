@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
-    Retrieve instance 
+    Retrieve instance by name
+
+    .DESCRIPTION
+    Get Microsoft Dataverse instance object by its domainname / urlhostname 
+    
+    .PARAMETER Name
+    Instance domain name for instance url (myinstance => myinstance.crm.dynamics1.com)
 #>
 function Get-XrmInstance {
     [CmdletBinding()]

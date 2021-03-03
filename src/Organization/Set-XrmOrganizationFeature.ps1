@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Set Organization Feature
+    Set Organization Feature.
+
+    .DESCRIPTION
+    Define specific feature for default organization (see : Get-XrmOrganization)
+
+    .PARAMETER Name
+    Feature name to set.
+
+    .PARAMETER Value
+    Feature value to set.
 #>
 function Set-XrmOrganizationFeature {
     [CmdletBinding()]

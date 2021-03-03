@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Read Excel Sheet.
+
+    .DESCRIPTION
+    Get Excel content from given sheet as bi-dimensional array.
+
+    .PARAMETER ExcelFilePath
+    Full path to Excel file.
+    
+    .PARAMETER SheetName
+    Excel sheet name.
 #>
 function Read-XrmExcelSheet {
     [CmdletBinding()]

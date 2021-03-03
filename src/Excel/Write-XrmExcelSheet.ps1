@@ -1,6 +1,28 @@
 <#
     .SYNOPSIS
     Write Excel Sheet.
+
+    .DESCRIPTION
+    Push Microsoft Dataverse rows / entity records to Excel file on a specific sheet.
+
+    .PARAMETER ExcelFilePath
+    Full path to Excel file.
+    
+    .PARAMETER SheetName
+    Excel sheet name.
+    
+    .PARAMETER Records
+    Rows / Entity records array.
+
+    .PARAMETER HeaderMappings
+    Key value pair collection that map Excel column name to record column (attribute logicalname)
+
+    .PARAMETER ColumnsSize
+    Array that specify columns width.
+
+    .PARAMETER TableStyle
+    Specify table template name. (Default: TableStyleMedium15)
+    More information : https://docs.devexpress.com/OfficeFileAPI/DevExpress.Spreadsheet.BuiltInTableStyleId
 #>
 function Write-XrmExcelSheet {
     [CmdletBinding()]

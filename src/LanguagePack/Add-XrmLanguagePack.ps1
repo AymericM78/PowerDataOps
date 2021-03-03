@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Activate given language 
+    Activate given language.
+
+    .DESCRIPTION
+    Install specify language pack to target instance.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    
+    .PARAMETER Language
+    Language name LCID (English = 1033, French = 1036, ...)
 #>
 function Add-XrmLanguagePack {
     [CmdletBinding()]    

@@ -1,6 +1,9 @@
 <#
     .SYNOPSIS
     Retrieve instances collection.
+
+    .DESCRIPTION
+    Get Microsoft Dataverse instance object collection according to current user rights.
 #>
 function Get-XrmInstances {
     [CmdletBinding()]
@@ -40,7 +43,7 @@ function Get-XrmInstances {
                 $xrmInstance.ConnectionString = [String]::Empty;
                 $xrmInstance.ParentConnection = $null;
 
-                $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString; # TODO : Handle connectionstring according to auth context
+                $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString;
                 $xrmInstances += $xrmInstance;
             }            
         }
@@ -57,7 +60,7 @@ function Get-XrmInstances {
                 $xrmInstance.ApiUrl = $_.OrganizationWebAPIUrl;
                 $xrmInstance.TenantId = $_.TenantId;
 
-                $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString; # TODO : Handle connectionstring according to auth context
+                $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString;
                 $xrmInstances += $xrmInstance;
             }
         }

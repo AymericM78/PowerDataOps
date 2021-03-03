@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
-    Get Organization Client Features
+    Get Organization Client Features.
+
+    .DESCRIPTION
+    Retrieve all or specified client features from default organization (see : Get-XrmOrganization)
+
+    .PARAMETER Name
+    Client feature name to retrieve.
 #>
 function Get-XrmOrganizationClientFeatures {
     [CmdletBinding()]
