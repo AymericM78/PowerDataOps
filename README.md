@@ -50,6 +50,7 @@ This module is open to community contributions in order to enrich this tooling a
 
 Check install and usage documentation :)
 
+- [PowerDataOps Commands](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/index.md)
 - [Install PowerDataOps](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/install.md)
 - [PowerDataOps usage](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md)
 - [Samples](https://github.com/AymericM78/PowerDataOps/tree/main/documentation/samples)
