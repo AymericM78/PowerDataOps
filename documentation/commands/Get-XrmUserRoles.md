@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 UserId|Guid|2|true||System user unique identifier.
 Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
 
-## Outputs
 
 ## Usage
 

@@ -13,7 +13,6 @@ BotName|String|2|false|DevOps|User name for message sender.
 Message|String|3|true||Message to send.
 Emoji|String|4|false||Emoji to use as the icon for this message.
 
-## Outputs
 
 ## Usage
 

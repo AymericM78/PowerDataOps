@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 EntityLogicalName|String|2|true||
 ViewName|String|3|true||Entity saved query name. Use auto completion to select proper one.
 
-## Outputs
 
 ## Usage
 

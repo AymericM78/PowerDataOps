@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 Columns|String[]|2|false|@("fullname", "internalemailaddress")|Specify expected columns to retrieve. (Default : all columns)
 UserQueryConditions|Object|3|false|@()|Query condition arrays used to filter user query.
 
-## Outputs
 
 ## Usage
 

@@ -22,7 +22,6 @@ When packing, this folder must already exist and contain previously extracted co
 ErrorLevel|String|6|false|Error|Indicates the level of logging information to output. (Default: Error)
 LogFilePath|String|7|false|"$($env:TEMP)\SolutionPackager.log"|Full path to log file. If the file already exists, new logging information is appended to the file.
 
-## Outputs
 
 ## Usage
 

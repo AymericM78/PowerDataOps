@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 OutputMode|OutputModeOption|2|false|Single|Specify if selector should allow single or multiple items selection. (Default : Single)
 Columns|String[]|3|false|@("solutionid", "uniquename", "friendlyname", "version", "ismanaged", "installedon", "createdby", "publisherid", "modifiedon", "modifiedby")|Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, version, ismanaged, installedon, createdby, publisherid, modifiedon, modifiedby)
 
-## Outputs
 
 ## Usage
 

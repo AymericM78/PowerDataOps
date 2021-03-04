@@ -23,7 +23,6 @@ ExportMarketingSettings|Boolean|12|false|False|Specify if exported solution shou
 ExportRelationshipRoles|Boolean|13|false|False|Specify if exported solution should include RelationshipRoles (Default: false)
 AddVersionToFileName|Boolean|14|false|False|Specify if solution version number should be added to file name. (Default: false)
 
-## Outputs
 
 ## Usage
 

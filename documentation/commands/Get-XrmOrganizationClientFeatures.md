@@ -11,7 +11,6 @@ Name|Type|Position|Required|Default|Description
 XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
 Name|String|2|false||Client feature name to retrieve.
 
-## Outputs
 
 ## Usage
 

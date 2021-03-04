@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 SourceSolutionUniqueName|String|2|true||Unmanaged solution unique name where to add components.
 TargetSolutionUniqueName|String|3|true||Unmanaged solution unique name where to get components.
 
-## Outputs
 
 ## Usage
 

@@ -14,7 +14,6 @@ FilePath|String|2|true||Local webresource file path.
 SolutionUniqueName|String|3|true||Microsoft Dataverse solution unique name where to add new webressource.
 Prefix|String|4|false||Publisher customization prefix for newly created webresource.
 
-## Outputs
 
 ## Usage
 

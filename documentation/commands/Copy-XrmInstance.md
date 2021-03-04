@@ -12,7 +12,6 @@ SourceInstanceDomainName|String|1|true||Instance domain name (myinstance => myin
 TargetInstanceDomainName|String|2|true||Instance domain name (myinstance => myinstance.crm.dynamics1.com) that you want to overwrite
 CopyType|String|3|true||Copy type : MinimalCopy (schema only) / FullCopy (All)
 
-## Outputs
 
 ## Usage
 

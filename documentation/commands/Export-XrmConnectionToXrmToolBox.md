@@ -13,7 +13,6 @@ Name|String|2|true||XTB connection name.
 OverrideConnectionStringFormat|String|3|false||Provide the ConnectionString template in order to access to instances with different credentials.
 XtbConnectionPath|String|4|false|"$env:APPDATA\MscrmTools\XrmToolBox\Connections"|XTB connections folder path. (Default: $env:APPDATA\MscrmTools\XrmToolBox\Connections)
 
-## Outputs
 
 ## Usage
 

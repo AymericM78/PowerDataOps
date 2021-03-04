@@ -13,7 +13,6 @@ Name|String|2|true||Attribute (Column) name.
 FormattedValue|SwitchParameter|named|false|False|Specify if expected value should be provided from FormattedValues <> raw value.
 RaiseErrorIfMissing|Boolean|3|false|False|If true, throws an exception if attribute/column is not present in row / record. Else, ignore.
 
-## Outputs
 
 ## Usage
 

@@ -13,7 +13,6 @@ Stage|String|2|true||Indicate when tracung is called from function : Start or St
 Parameters|Object[]|3|false||List of arguments provided to function.
 StopWatch|Stopwatch|4|false||StopWath object initialized during first function call in order to measure overall duration.
 
-## Outputs
 
 ## Usage
 

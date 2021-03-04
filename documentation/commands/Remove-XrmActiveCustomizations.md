@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 SolutionComponentName|String|2|true||
 ComponentId|Guid|3|true||Solution component unique identifier to clean.
 
-## Outputs
 
 ## Usage
 

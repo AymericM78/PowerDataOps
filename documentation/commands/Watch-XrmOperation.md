@@ -11,7 +11,6 @@ Name|Type|Position|Required|Default|Description
 OperationUrl|String|1|true||Operation Url provided when admin operation is invoked.
 PollingIntervalSeconds|Int32|2|false|5|Delay between each status check.
 
-## Outputs
 
 ## Usage
 

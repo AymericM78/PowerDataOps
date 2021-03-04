@@ -16,7 +16,6 @@ ColumnsSize|Int32[]|5|false|@()|Array that specify columns width.
 TableStyle|String|6|false|TableStyleMedium15|Specify table template name. (Default: TableStyleMedium15)
 More information : https://docs.devexpress.com/OfficeFileAPI/DevExpress.Spreadsheet.BuiltInTableStyleId
 
-## Outputs
 
 ## Usage
 

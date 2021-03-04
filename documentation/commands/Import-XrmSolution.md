@@ -17,7 +17,6 @@ ConvertToManaged|Boolean|6|false|False|Direct the system to convert any matching
 Upgrade|Boolean|7|false|False|Gets or sets whether to import the solution as a holding solution staged for upgrade. (Default : false)
 SkipProductUpdateDependencies|Boolean|8|false|True|Gets or sets whether enforcement of dependencies related to product updates should be skipped. (Default : false)
 
-## Outputs
 
 ## Usage
 

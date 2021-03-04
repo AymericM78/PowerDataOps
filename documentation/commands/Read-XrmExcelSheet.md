@@ -11,7 +11,6 @@ Name|Type|Position|Required|Default|Description
 ExcelFilePath|String|1|true||Full path to Excel file.
 SheetName|String|2|true||Excel sheet name.
 
-## Outputs
 
 ## Usage
 

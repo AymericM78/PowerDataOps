@@ -10,7 +10,6 @@ This mean that we need to proceed to Connect-XrmAdmin before.
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 
-## Outputs
 
 ## Usage
 

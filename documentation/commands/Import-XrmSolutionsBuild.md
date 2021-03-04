@@ -15,7 +15,6 @@ SolutionsImportOrder|String|3|false|$($env:SOLUTIONS_IMPORTORDER)|Solution uniqu
 ClearPluginStepsAndTypes|Boolean|4|false|True|Indicates if plugins need to be unregistered prior solution import. (Default: true)
 PluginAssemblyName|String|5|false|Plugins|Specify plugin assembly name for plugin removal operation. (Default: Plugins)
 
-## Outputs
 
 ## Usage
 

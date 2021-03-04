@@ -15,7 +15,6 @@ Solutions|String|3|false|$env:SOLUTIONS|Solution uniquenames that will be export
 Managed|Boolean|4|false|False|Specify if solution should be export as managed or unmanaged. (Default: false = unmanaged)
 DefaultExportPath|String|5|false|$env:TEMP|Folder path where solutions will be exported before unpacked. (Default: Agent temp directory)
 
-## Outputs
 
 ## Usage
 

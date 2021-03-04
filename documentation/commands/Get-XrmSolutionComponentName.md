@@ -10,7 +10,6 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 SolutionComponentType|Int32|1|true|0|Solution component type number.
 
-## Outputs
 
 ## Usage
 

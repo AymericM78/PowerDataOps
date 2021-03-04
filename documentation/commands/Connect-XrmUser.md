@@ -14,7 +14,6 @@ AuthType|String|3|true||User authrentication type. (Office365, AD, Ifd)
 => Warning : Office365 authentication is deprecated!
 Region|String|4|false||DataCenter region (France, EMEA, UK, ...) where target instances are located.
 
-## Outputs
 
 ## Usage
 

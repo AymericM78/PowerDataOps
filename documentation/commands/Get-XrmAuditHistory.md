@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 RecordReference|EntityReference|2|true||Lookup to target record. (EntityReference)
 AttributeFilter|String[]|3|false||Attributes logical names to filter.
 
-## Outputs
 
 ## Usage
 

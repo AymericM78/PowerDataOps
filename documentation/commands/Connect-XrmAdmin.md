@@ -15,7 +15,6 @@ ApplicationId|String|4|false||AAD Application ID
 ClientSecret|String|5|false||AAD Application secret
 CertificateThumbprint|String|6|false||AAD Application Certificate Thumbprint
 
-## Outputs
 
 ## Usage
 

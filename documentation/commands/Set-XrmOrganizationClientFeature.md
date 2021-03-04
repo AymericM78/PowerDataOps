@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
 Name|String|2|true||Client feature name to set.
 Value|String|3|true||Client feature value to set.
 
-## Outputs
 
 ## Usage
 

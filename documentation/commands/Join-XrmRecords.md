@@ -14,7 +14,6 @@ RecordReferences|EntityReference[]|3|true||Rows / Records references to link to 
 RelationShipName|String|4|true||RelationShip Logical name involve between these records.
 IgnoreExistings|Boolean|5|false|True|Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
 
-## Outputs
 
 ## Usage
 

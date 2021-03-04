@@ -10,7 +10,6 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 FilePath|String|1|true||Full file path.
 
-## Outputs
 
 ## Usage
 

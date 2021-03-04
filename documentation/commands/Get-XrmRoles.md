@@ -14,7 +14,6 @@ OnlyRoots|SwitchParameter|named|false|False|Specify if parent roles are retrieve
 Columns|String[]|3|false|@("roleid", "name", "parentrootroleid", "businessunitid")|Specify expected columns to retrieve. (Default : all columns)
 ExportPrivileges|SwitchParameter|named|false|False|Specify if privileges are retrieved or not. (Default : false = No privileges)
 
-## Outputs
 
 ## Usage
 

@@ -14,7 +14,6 @@ LogicalName|String|3|false||Table / Entity logical name..
 Id|Guid|4|false||Row (entity record) unique identifier
 BypassCustomPluginExecution|SwitchParameter|named|false|False|Specify wether involved plugins should be triggered or not during this operation. (Default: False)
 
-## Outputs
 
 ## Usage
 

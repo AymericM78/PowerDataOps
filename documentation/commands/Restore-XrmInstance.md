@@ -15,7 +15,6 @@ TargetInstanceSecurityGroupId|Guid|4|false||AAD Security Group ID to define on t
 RestoreTimeUtc|DateTime|5|false||Date time in UTC of restore point
 BackupLabel|String|6|false||Name of the backup
 
-## Outputs
 
 ## Usage
 

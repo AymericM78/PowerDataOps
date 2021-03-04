@@ -21,7 +21,6 @@ ChromeX32AppPath|String|9|false|C:\Program Files (x86)\Google\Chrome\Application
 EdgeDefaultProfilesPath|String|10|false|"$($env:LOCALAPPDATA)\Microsoft\Edge SxS\User Data\"|Folder path where to store Edge profile folder.
 EdgeAppPath|String|11|false|"$($env:LOCALAPPDATA)\Microsoft\Edge SxS\Application\msedge.exe"|Edge executable path.
 
-## Outputs
 
 ## Usage
 

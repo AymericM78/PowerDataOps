@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 ParameterXml|String|2|false||
 TimeOutInMinutes|Int32|3|false|10|Specify timeout duration in minute. (Default : 10 min)
 
-## Outputs
 
 ## Usage
 

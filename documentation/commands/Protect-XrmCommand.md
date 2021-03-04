@@ -12,7 +12,6 @@ Name|Type|Position|Required|Default|Description
 ScriptBlock|ScriptBlock|1|true||Command to run against Microsoft Dataverse API.
 Maximum|Int32|2|false|0|Maximum tries below raising an error.
 
-## Outputs
 
 ## Usage
 

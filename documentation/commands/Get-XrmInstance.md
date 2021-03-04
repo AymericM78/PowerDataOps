@@ -10,7 +10,6 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 Name|String|1|true||Instance domain name for instance url (myinstance => myinstance.crm.dynamics1.com)
 
-## Outputs
 
 ## Usage
 

@@ -11,7 +11,6 @@ Name|Type|Position|Required|Default|Description
 InstanceDomainName|String|1|true||Instance domain name (myinstance => myinstance.crm.dynamics1.com)
 Mode|String|2|true||Admin mode (Normal : users can access / AdminOnly : Only admins can access)
 
-## Outputs
 
 ## Usage
 

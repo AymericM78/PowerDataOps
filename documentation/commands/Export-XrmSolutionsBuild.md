@@ -23,7 +23,6 @@ ExportGeneralSettings|Boolean|11|false|False|Specify if exported solution should
 ExportMarketingSettings|Boolean|12|false|False|Specify if exported solution should include Marketing settings (Default: false)
 ExportRelationshipRoles|Boolean|13|false|False|Specify if exported solution should include RelationshipRoles (Default: false)
 
-## Outputs
 
 ## Usage
 

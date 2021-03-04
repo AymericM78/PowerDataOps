@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
 UserId|Guid|2|true||System user unique identifier.
 Roles|Guid[]|3|true|@()|Roles unique identifier array to add.
 
-## Outputs
 
 ## Usage
 

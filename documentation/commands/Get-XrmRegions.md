@@ -9,7 +9,6 @@
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 
-## Outputs
 
 ## Usage
 

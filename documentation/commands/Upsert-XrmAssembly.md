@@ -14,7 +14,6 @@ SolutionUniqueName|String|3|false||Microsoft Dataverse solution unique name wher
 IsolationMode|Int32|4|false|2|Specify if assembly will be deploy in sandbox or not. (Default = 2 | 1 = Not sandboxed, 2 = Sandbox)
 SourceType|Int32|5|false|0|Specify where assembly will be stored. (Default = 0 | 0 = Database, 1 = Disk, 2 = Normal (OnPremise), 3 = AzureWebApp)
 
-## Outputs
 
 ## Usage
 

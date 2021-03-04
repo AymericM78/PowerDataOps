@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 SolutionUniqueName|String|2|true||Solution unique name to update.
 Version|String|3|true||Version number to set.
 
-## Outputs
 
 ## Usage
 

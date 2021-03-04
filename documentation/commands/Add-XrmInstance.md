@@ -15,7 +15,6 @@ Sku|String|4|true||Instance type (sandbox or production)
 CurrencyCodeName|String|5|true||Name of currency (EUR, ...)
 LanguageName|String|6|true||Language name LCID (English = 1033, French = 1036, ...)
 
-## Outputs
 
 ## Usage
 

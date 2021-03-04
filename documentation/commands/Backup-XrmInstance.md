@@ -12,7 +12,6 @@ InstanceDomainName|String|1|true||Instance domain name (myinstance => myinstance
 BackupLabel|String|2|true||Name of the backup
 BackupDescription|String|3|false||Backup description
 
-## Outputs
 
 ## Usage
 

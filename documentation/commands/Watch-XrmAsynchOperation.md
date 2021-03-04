@@ -13,7 +13,6 @@ AsyncOperationId|Guid|2|true||System job unique identifier.
 PollingIntervalSeconds|Int32|3|false|5|Delay between each status check.
 ScriptBlock|ScriptBlock|4|false||Command to execute during each poll with asyncoperation info.
 
-## Outputs
 
 ## Usage
 

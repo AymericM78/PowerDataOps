@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 ErrorsOnly|Boolean|2|false|False|
 Take|Int32|3|false|50|Specify number of items to retrieve. (Default : 50)
 
-## Outputs
 
 ## Usage
 

@@ -12,7 +12,6 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 EntityLogicalName|String|2|true||
 Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
 
-## Outputs
 
 ## Usage
 
