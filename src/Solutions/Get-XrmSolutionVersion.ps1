@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Get solution version.
+
+    .DESCRIPTION
+    Get version number from given solution.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Solution unique name to retrieve.
 #>
 function Get-XrmSolutionVersion {
     [CmdletBinding()]

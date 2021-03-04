@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Select solutions to uninstall
+    Select solutions to uninstall.
+
+    .DESCRIPTION
+    Select solutions (managed or unmanaged) and delete them.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, version, ismanaged, installedon, createdby, publisherid, modifiedon, modifiedby)
+
+    .PARAMETER TimeOutInMinutes
+    Specify timeout duration in minute for each solution deletion. (Default : 45 min)
 #>
 function Clear-XrmSolutions {
     [CmdletBinding()]

@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Retrieve user
+    Retrieve user.
+
+    .DESCRIPTION
+    Get system user according to given ID with expected columns.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER UserId
+    System user unique identifier.
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : all columns)
 #>
 function Get-XrmUser {
     [CmdletBinding()]

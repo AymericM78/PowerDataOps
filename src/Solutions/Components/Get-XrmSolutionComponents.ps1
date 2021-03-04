@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Get Solution Components
+    Get Solution Components.
+
+    .DESCRIPTION
+    Retrieve components from given solution and expected types.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name where to get components.
+
+    .PARAMETER ComponentTypes
+    Array of component types number to retrieve. (Default: none = retrieve all components)
 #>
 function Get-XrmSolutionComponents {
     [CmdletBinding()]

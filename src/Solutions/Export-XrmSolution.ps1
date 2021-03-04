@@ -1,6 +1,48 @@
 <#
     .SYNOPSIS
     Export solution.
+
+    .DESCRIPTION
+    Export given solution with given settings.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Solution unique name to export.
+
+    .PARAMETER Managed
+    Specify if solution should be export as managed or unmanaged. (Default: true = managed)
+
+    .PARAMETER ExportCalendarSettings
+    Specify if exported solution should include Calendar settings (Default: false)
+
+    .PARAMETER ExportCustomizationSettings
+    Specify if exported solution should include Customization settings (Default: false)
+
+    .PARAMETER ExportEmailTrackingSettings
+    Specify if exported solution should include Email Tracking settings (Default: false)
+
+    .PARAMETER ExportAutoNumberingSettings
+    Specify if exported solution should include AutoNumbering settings (Default: false)
+
+    .PARAMETER ExportIsvConfig
+    Specify if exported solution should include Isv settings (Default: false)
+
+    .PARAMETER ExportOutlookSynchronizationSettings
+    Specify if exported solution should include Outlook Synchronization settings (Default: false)
+
+    .PARAMETER ExportGeneralSettings
+    Specify if exported solution should include General settings (Default: false)
+
+    .PARAMETER ExportMarketingSettings
+    Specify if exported solution should include Marketing settings (Default: false)
+
+    .PARAMETER ExportRelationshipRoles
+    Specify if exported solution should include RelationshipRoles (Default: false)
+
+    .PARAMETER AddVersionToFileName
+    Specify if solution version number should be added to file name. (Default: false)
 #>
 function Export-XrmSolution {
     [CmdletBinding()]

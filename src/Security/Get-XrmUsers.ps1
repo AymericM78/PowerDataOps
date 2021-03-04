@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Retrieve users
+    Retrieve users.
+
+    .DESCRIPTION
+    Get all system users from instance.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : all columns)
 #>
 function Get-XrmUsers {
     [CmdletBinding()]

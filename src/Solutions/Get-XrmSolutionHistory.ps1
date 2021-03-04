@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Retrieve solutions history
+    Retrieve solutions history.
+
+    .DESCRIPTION
+    Get solution operation logs.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Take
+    Number of logs to retrieve. (Default : 50)
 #>
 function Get-XrmSolutionHistory {
     [CmdletBinding()]    

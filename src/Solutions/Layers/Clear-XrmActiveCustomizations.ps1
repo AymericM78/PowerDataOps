@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Clear active customizations for given solution components
+    Clear active customizations for given solution components.
+
+    .DESCRIPTION
+    Performs a cleaning on Active Layer to remove unmanaged customizations for given component types.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Solution unique name where to get components to clean.
+
+    .PARAMETER ComponentTypes
+    Solution components types number to clean. (Default = 26, 59, 60, 61, 62, 300 = SavedQuery, SavedQueryVisualization, SystemForm, WebResource, SiteMap, Canvas App)
 #>
 function Clear-XrmActiveCustomizations {
     [CmdletBinding()]

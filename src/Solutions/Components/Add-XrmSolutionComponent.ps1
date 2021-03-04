@@ -1,6 +1,27 @@
 <#
     .SYNOPSIS
-    Add Solution Components
+    Add Solution Component.
+
+    .DESCRIPTION
+    Add given component to specified solution.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name where to add component.
+
+    .PARAMETER ComponentId
+    Component unique identifier.
+
+    .PARAMETER ComponentType
+    Component type number (see Get-XrmSolutionComponentName to get name from type number).
+
+    .PARAMETER DoNotIncludeSubcomponents
+    Indicates whether the subcomponents should be included. (Default : true = no subcomponents)
+    
+    .PARAMETER AddRequiredComponents
+    Gets or sets a value that indicates whether other solution components that are required by the solution component that you are adding should also be added to the unmanaged solution. Required. (Default : false = do not add required components)
 #>
 function Add-XrmSolutionComponent {
     [CmdletBinding()]

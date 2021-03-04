@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Retrieve solution record
+    Retrieve solution record.
+    
+    .DESCRIPTION
+    Get solution by its unique name with expected columns.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Solution unique name to retrieve.
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, version, ismanaged, installedon, createdby, publisherid, modifiedon, modifiedby)
 #>
 function Get-XrmSolution {
     [CmdletBinding()]

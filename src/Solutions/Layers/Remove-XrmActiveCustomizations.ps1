@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Remove active customizations
+    Remove active customizations.
+
+    .DESCRIPTION 
+    Performs a cleaning on Active Layer to remove unmanaged customizations for given component.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    
+    .PARAMETER SolutionUniqueName
+    Solution unique name where to get components to clean.
+    
+    .PARAMETER ComponentId
+    Solution component unique identifier to clean.
 #>
 function Remove-XrmActiveCustomizations {
     [CmdletBinding()]

@@ -1,6 +1,33 @@
 <#
     .SYNOPSIS
     Import solution.
+
+    .DESCRIPTION
+    Performs solution import to target instance.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Solution unique name to import.
+
+    .PARAMETER SolutionFilePath
+    Full path to solution file (.zip).
+
+    .PARAMETER PublishWorkflows
+    Gets or sets whether any processes (workflows) included in the solution should be activated after they are imported. (Default : true)
+
+    .PARAMETER OverwriteUnmanagedCustomizations
+    Gets or sets whether any unmanaged customizations that have been applied over existing managed solution components should be overwritten. (Default : true)
+
+    .PARAMETER ConvertToManaged
+    Direct the system to convert any matching unmanaged customizations into your managed solution. (Default : false)
+
+    .PARAMETER Upgrade
+    Gets or sets whether to import the solution as a holding solution staged for upgrade. (Default : false)
+
+    .PARAMETER SkipProductUpdateDependencies
+    Gets or sets whether enforcement of dependencies related to product updates should be skipped. (Default : false)
 #>
 function Import-XrmSolution {
     [CmdletBinding()]

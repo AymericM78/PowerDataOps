@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Retrieve root business unit
+    Retrieve root business unit.
+
+    .DESCRIPTION
+    Get top  business unit of organization.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : all columns)
 #>
 function Get-XrmRootBusinessUnit {
     [CmdletBinding()]

@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Get Solution Component name from Id
+    Get Solution Component name from Id.
+
+    .DESCRIPTION
+    Retrieve component name from its number. 
+
+    .PARAMETER SolutionComponentType
+    Solution component type number.
+
+    .LINK
+    https://docs.microsoft.com/en-us/dynamics365/customer-engagement/web-api/solutioncomponent?view=dynamics-ce-odata-9
 #>
 function Get-XrmSolutionComponentName {
     [CmdletBinding()]
@@ -17,7 +26,7 @@ function Get-XrmSolutionComponentName {
     }    
     process {
         
-        # https://docs.microsoft.com/en-us/dynamics365/customer-engagement/web-api/solutioncomponent?view=dynamics-ce-odata-9
+        
 
         $componentTypeDefinitions = @{};
         $componentTypeDefinitions[1] = "Entity";

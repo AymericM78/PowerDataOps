@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Copy Solution Components
+    Copy Solution Components.
+
+    .DESCRIPTION
+    Add all components from source solution to target one.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SourceSolutionUniqueName
+    Unmanaged solution unique name where to add components.
+
+    .PARAMETER TargetSolutionUniqueName
+    Unmanaged solution unique name where to get components.
 #>
 function Copy-XrmSolutionComponents {
     [CmdletBinding()]

@@ -1,6 +1,9 @@
 <#
     .SYNOPSIS
     Provide entity logical names that could not be customize (standard system entities (customization, relationship, non customizable tables))
+
+    .DESCRIPTION
+    Get list of non customizable entities.
 #>
 function Get-NonCustomizableEntities {
     [CmdletBinding()]

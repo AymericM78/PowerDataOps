@@ -1,6 +1,24 @@
 <#
     .SYNOPSIS
-    Retrieve security roles
+    Retrieve security roles.
+
+    .DESCRIPTION
+    Get security roles according to different criterias.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER BusinessUnitId
+    Business Unit unique identifier where roles are associated.
+
+    .PARAMETER OnlyRoots
+    Specify if parent roles are retrieved or not. (Default : false = All roles)
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : all columns)
+
+    .PARAMETER ExportPrivileges
+    Specify if privileges are retrieved or not. (Default : false = No privileges)
 #>
 function Get-XrmRoles {
     [CmdletBinding()]
@@ -23,7 +41,6 @@ function Get-XrmRoles {
         [String[]]
         $Columns = @("roleid", "name", "parentrootroleid", "businessunitid"),
 
-        # TODO : A faire une fois la méthode Get-XrmRolePrivileges implémentée
         [Parameter(Mandatory = $false)]
         [switch]
         $ExportPrivileges = $false
@@ -42,6 +59,14 @@ function Get-XrmRoles {
             $queryRoles = $queryRoles | Add-XrmQueryCondition -Field "businessunitid" -Condition Equal -Values  $parentBusinessUnit.Id;
         }
         $roles = $XrmClient | Get-XrmMultipleRecords -Query $queryRoles;
+
+        if ($ExportPrivileges) { 
+            $roles | ForEach-Object {
+                $privileges = Get-XrmRolePrivileges -XrmClient $XrmClient -RoleId $_.Id;
+                $_ | Add-Member -MemberType NoteProperty -Name "Privileges" -Value $privileges;
+            };
+        }
+
         $roles;
     }
     end {

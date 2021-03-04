@@ -1,11 +1,27 @@
 <#
     .SYNOPSIS
-    Retrieve user business unit
+    Retrieve user business unit.
+
+    .DESCRIPTION
+    Get user parent business unit.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER UserId
+    System user unique identifier.
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : all columns)
 #>
 function Get-XrmUserBusinessUnit {
     [CmdletBinding()]
     param
-    (        
+    (   
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        $XrmClient = $Global:XrmClient,
+
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [Guid]
@@ -21,8 +37,8 @@ function Get-XrmUserBusinessUnit {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        $user = Get-XrmRecord -Logicalname "systemuser" -Id $UserId -Columns "businessunitid";
-        $businessUnit = Get-XrmRecord -Logicalname "businessunit" -Id $user.businessunitid_Value.Id -Columns $Columns;
+        $user = Get-XrmRecord -XrmClient $XrmClient -Logicalname "systemuser" -Id $UserId -Columns "businessunitid";
+        $businessUnit = Get-XrmRecord -XrmClient $XrmClient -Logicalname "businessunit" -Id $user.businessunitid_Value.Id -Columns $Columns;
         $businessUnit;
     }
     end {

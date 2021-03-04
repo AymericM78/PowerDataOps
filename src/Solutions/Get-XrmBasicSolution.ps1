@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Retrieve basic solution record
+    Retrieve basic solution record.
+
+    .DESCRIPTION
+    Get basic solution with specified column.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, version, ismanaged, installedon, createdby, publisherid, modifiedon, modifiedby)
 #>
 function Get-XrmBasicSolution {
     [CmdletBinding()]
