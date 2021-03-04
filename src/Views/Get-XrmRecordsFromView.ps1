@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Retrieve records from a view    
+    Retrieve records from a view.
+
+    .DESCRIPTION
+    Get records according to given view name.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER LogicalName
+    Gets or sets the entity name in order to filter views name.
+
+    .PARAMETER ViewName
+    Entity saved query name. Use auto completion to select proper one.
 #>
 function Get-XrmRecordsFromView {
     [CmdletBinding()]

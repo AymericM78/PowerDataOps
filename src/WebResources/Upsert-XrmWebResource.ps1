@@ -1,6 +1,22 @@
 <#
     .SYNOPSIS
-    Create or update webresource
+    Create or update webresource.
+
+    .DESCRIPTION
+    Check if webresource exists or not. If not exists create it and add it to specified solution.
+    If webresource exists, compare content and update it if different.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER FilePath
+    Local webresource file path.
+
+    .PARAMETER SolutionUniqueName
+    Microsoft Dataverse solution unique name where to add new webressource.
+
+    .PARAMETER Prefix
+    Publisher customization prefix for newly created webresource.
 #>
 
 function Upsert-XrmWebResource {

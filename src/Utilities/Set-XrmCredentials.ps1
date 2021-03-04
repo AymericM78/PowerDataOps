@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Initialize PSCredential object from given login and password.
+    Initialize PSCredential object.
+
+    .DESCRIPTION
+    Create PSCredential from given login and password.
+
+    .PARAMETER Login
+    Username.
+
+    .PARAMETER Password
+    Password value in plain text.
 #>
 function Set-XrmCredentials {
     [CmdletBinding()]

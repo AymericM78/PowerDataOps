@@ -1,6 +1,9 @@
 <#
     .SYNOPSIS
     Initialize new object that represent a Xrm Context.
+
+    .DESCRIPTION
+    Core module cmdlet that create new object to store context information.
 #>
 function New-XrmContext {
     [CmdletBinding()]

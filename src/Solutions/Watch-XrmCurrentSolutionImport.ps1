@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Monitor current solution import.
+
+    .DESCRIPTION
+    Poll latest solution import status until its done and display progress.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 #>
 function Watch-XrmCurrentSolutionImport {
     [CmdletBinding()]

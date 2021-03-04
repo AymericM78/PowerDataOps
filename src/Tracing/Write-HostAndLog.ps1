@@ -1,6 +1,26 @@
 <#
     .SYNOPSIS
     Display message and output to file.
+
+    .DESCRIPTION 
+    Log given message to console with predefined color or level and output it to execution log.
+    Execution log is created at module load and is kept in module temp folder.
+
+    .PARAMETER Message
+    Message to display and log.
+
+    .PARAMETER ForegroundColor
+    Specify color to display in console.
+    
+    .PARAMETER NoNewline
+    Indicates if carriage return is added to current line. If no, following message will be display on same line. (default : false = add new line)
+    
+    .PARAMETER NoTimeStamp
+    Indicates if time stamp should not be displayed in output. (Default : false = add time stamp)
+
+    .PARAMETER Level
+    Indicates  log verbosity level. (Default : INFO)
+    Values : VERB, INFO, WARN, FAIL, SUCCESS
 #>
 function Write-HostAndLog {
     [CmdletBinding()]
@@ -9,10 +29,6 @@ function Write-HostAndLog {
         [Parameter(Mandatory = $true)]
         [String] 
         $Message,
-
-        [Parameter(Mandatory = $false)]
-        [String] 
-        $MethodName,
 
         [Parameter(Mandatory = $False)]
         [ConsoleColor] $ForegroundColor,
@@ -64,7 +80,7 @@ function Write-HostAndLog {
         elseif ($level -eq "INFO") {
             Write-Host $Message -ForegroundColor $ForegroundColor -NoNewline:$NoNewline;
         }
-        elseif ($level -eq "SUCCESS") {
+        elseif ($level -eq "SUCCESS") { # TODO : Display Success only is weird
             Write-Host $Message -ForegroundColor $ForegroundColor -NoNewline:$NoNewline;
             
             if ($env:SYSTEM_TEAMPROJECT) {                

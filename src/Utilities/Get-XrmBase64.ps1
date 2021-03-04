@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
-    Get base 64 from file content
+    Get base 64 from file content.
+
+    .DESCRIPTION
+    Read given file and return its content as base64 content.
+
+    .PARAMETER FilePath
+    Full file path.
 #>
 function Get-XrmBase64 {
     [CmdletBinding()]

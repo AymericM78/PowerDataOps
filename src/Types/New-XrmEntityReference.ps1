@@ -1,6 +1,21 @@
 <#
     .SYNOPSIS
     Initialize EntityReference object instance.
+
+    .DESCRIPTION
+    Get new EntityReference object from lookup information.
+
+    .PARAMETER LogicalName
+    Table / Entity logical name.
+
+    .PARAMETER Key
+    Lookup to alternate key name.
+
+    .PARAMETER Id
+    Record Unique identifier.
+
+    .PARAMETER Value
+    Key value.
 #>
 function New-XrmEntityReference {
     [CmdletBinding()]

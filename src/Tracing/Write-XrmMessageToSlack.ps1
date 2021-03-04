@@ -1,6 +1,24 @@
 <#
     .SYNOPSIS
     Push message to slack
+
+    .DESCRIPTION
+    Use Slack webhook to send current message in target channel.
+
+    .PARAMETER SlackUrl
+    Url to Slack webhook.
+
+    .PARAMETER BotName
+    User name for message sender.
+
+    .PARAMETER Message
+    Message to send.
+
+    .PARAMETER Emoji
+    Emoji to use as the icon for this message.
+    
+    .LINK
+    https://api.slack.com/methods/chat.postMessage
 #>
 function Write-XrmMessageToSlack {
     [CmdletBinding()]

@@ -1,6 +1,21 @@
 <#
     .SYNOPSIS
-    Output verbose information about function call
+    Output verbose information about function call.
+
+    .DESCRIPTION
+    Core module method to trace information and measure calls performance.
+
+    .PARAMETER Name
+    Called function name.
+
+    .PARAMETER Stage
+    Indicate when tracung is called from function : Start or Stop.
+
+    .PARAMETER Parameters
+    List of arguments provided to function.
+
+    .PARAMETER StopWatch
+    StopWath object initialized during first function call in order to measure overall duration.
 #>
 function Trace-XrmFunction {
     [CmdletBinding()]

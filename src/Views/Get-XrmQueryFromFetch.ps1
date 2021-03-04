@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Retrieve query expression from fetch Xml    
+    Retrieve query expression from fetch Xml.
+    
+    .DESCRIPTION
+    Convert FetchXml to QueryExpression.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER FetchXml
+    FetchXML query string.
 #>
 function Get-XrmQueryFromFetch {
     [CmdletBinding()]

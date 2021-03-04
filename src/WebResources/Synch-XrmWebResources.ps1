@@ -1,6 +1,29 @@
 <#
     .SYNOPSIS
-    Synchronize a webresource folder to Dataverse
+    Synchronize a webresource folder to Microsoft Dataverse.
+
+    .DESCRIPTION
+    Create or update each webresource content based on local directory.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER FolderPath
+    Full path to directory where webresources are stored.
+
+    .PARAMETER SolutionUniqueName
+    Microsoft Dataverse solution unique name where to add new webressource.
+
+    .PARAMETER SynchronizationMode
+    Specify synchronization pattern : full or delta.
+    Full will update all webresources.
+    Delta will only update changed webresource based on SynchronizationDeltaHours parameter.
+
+    .PARAMETER SynchronizationDeltaHours
+    Use this parameter with SynchronizationMode = Delta, take local files modified during last x hours. (Default : 4 hours)    
+
+    .PARAMETER SupportedExtensions
+    Specify file extensions to handle in synchronization process. (Default : htm, html, css, js, xml, png, jpg, jpeg, gif, xap, xsl, ico, svg, resx)
 #>
 
 function Sync-XrmWebResources {

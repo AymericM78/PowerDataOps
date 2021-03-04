@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Add folder in given path if it doesn't exists.
+
+    .DESCRIPTION
+    Create given folder if not exist and return sub folder full path.
+
+    .PARAMETER Path
+    Folder path where to add given folder.
+
+    .PARAMETER FolderName
+    Folder name.
+
+    .PARAMETER CleanIfExists
+    If folder already exists, remove existing content. (Default : False)
 #>
 function Add-XrmFolder {
     [CmdletBinding()]

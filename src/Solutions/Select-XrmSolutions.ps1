@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Display solutions selector
+    Display solutions selector.
+
+    .DESCRIPTION
+    Open gridview view all solutions and select one or many.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER OutputMode
+    Specify if selector should allow single or multiple items selection. (Default : Single)
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, version, ismanaged, installedon, createdby, publisherid, modifiedon, modifiedby)
 #>
 function Select-XrmSolutions {
     [CmdletBinding()]

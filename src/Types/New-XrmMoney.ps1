@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Initialize Money object instance.
+
+    .DESCRIPTION
+    Get new money object from given decimal value.
+
+    .PARAMETER Value
+    Decimal value.
 #>
 function New-XrmMoney {
     [CmdletBinding()]

@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Initialize EntityCollection object instance.
+
+    .DESCRIPTION
+    Get new Entity Collection object from entities array.
+
+    .PARAMETER Entities
+    Entities array.
 #>
 function New-XrmEntityCollection {
     [CmdletBinding()]

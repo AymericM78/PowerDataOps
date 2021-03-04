@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
     Set solution version.
+
+    .DESCRIPTION
+    Update specified solution by its uniquename with given version number.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Solution unique name to update.
+
+    .PARAMETER Version
+    Version number to set.
 #>
 function Set-XrmSolutionVersion {
     [CmdletBinding()]

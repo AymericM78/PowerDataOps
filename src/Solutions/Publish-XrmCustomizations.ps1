@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
-    Publish customizations
+    Publish customizations.
+
+    .DESCRIPTION
+    Apply unpublished customizations to active layer to promote UI changes.    
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER TimeOutInMinutes
+    Specify timeout duration in minute. (Default : 10 min)
 #>
 function Publish-XrmCustomizations {
     [CmdletBinding()]

@@ -1,6 +1,9 @@
 <#
     .SYNOPSIS
     Retrieve authentication type names.
+
+    .DESCRIPTION
+    Get available authentication types.
 #>
 function Get-XrmAuthTypes {
     [CmdletBinding()]

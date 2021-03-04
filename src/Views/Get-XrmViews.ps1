@@ -1,6 +1,18 @@
 <#
     .SYNOPSIS
-    Retrieve savedquery records
+    Retrieve savedquery records.
+
+    .DESCRIPTION
+    Get all saved query according to entity name and predefined columns.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER LogicalName
+    Gets or sets the entity name in order to filter views name.
+
+    .PARAMETER Columns
+    Specify expected columns to retrieve. (Default : all columns)
 #>
 function Get-XrmViews {
     [CmdletBinding()]

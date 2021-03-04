@@ -1,6 +1,15 @@
 <#
     .SYNOPSIS
     Start delete and promote operation for solution.
+
+    .DESCRIPTION 
+    Replace managed solution by new one after import.    
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
+    .PARAMETER SolutionUniqueName
+    Solution unique name to upgrade.
 #>
 function Start-XrmSolutionUpgrade {
     [CmdletBinding()]
@@ -21,7 +30,7 @@ function Start-XrmSolutionUpgrade {
     }    
     process {
 
-        $deleteAndPromoteRequest = New-XrmRequest -Name "DeleteAndPromote ";
+        $deleteAndPromoteRequest = New-XrmRequest -Name "DeleteAndPromote";
         $deleteAndPromoteRequest | Add-XrmRequestParameter -Name "UniqueName" -Value $SolutionUniqueName | Out-Null;
         
         try {            

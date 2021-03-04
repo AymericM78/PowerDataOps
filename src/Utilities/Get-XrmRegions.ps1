@@ -1,6 +1,9 @@
 <#
     .SYNOPSIS
     Retrieve region names.
+
+    .DESCRIPTION
+    Get available datacenter regions.
 #>
 function Get-XrmRegions {
     [CmdletBinding()]

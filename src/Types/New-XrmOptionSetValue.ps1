@@ -1,6 +1,12 @@
 <#
     .SYNOPSIS
     Initialize OptionSetValue object instance.
+
+    .DESCRIPTION
+    Get new OptionSetValue object from given int value.
+
+    .PARAMETER Value
+    Option integer value.
 #>
 function New-XrmOptionSetValue {
     [CmdletBinding()]

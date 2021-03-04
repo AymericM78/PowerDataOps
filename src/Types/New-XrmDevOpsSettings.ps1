@@ -1,6 +1,9 @@
 <#
     .SYNOPSIS
     Initialize new object that represent a DevOps Connection settings.
+
+    .DESCRIPTION
+    Core module cmdlet that create new object to store Azure DevOps information.
 #>
 function New-XrmDevOpsSettings {
     [CmdletBinding()]
