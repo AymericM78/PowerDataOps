@@ -29,6 +29,9 @@ function Add-XrmLanguagePack {
     }    
     process {
 
+        # TODO : Move to async 
+        # https://docs.microsoft.com/en-us/dynamics365/customer-engagement/web-api/provisionlanguageasync?view=dynamics-ce-odata-9
+
         $provisionLanguageRequest = New-XrmRequest -Name "ProvisionLanguage";
         $provisionLanguageRequest | Add-XrmRequestParameter -Name "Language" -Value $Language | Out-Null;
 
