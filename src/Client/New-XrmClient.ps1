@@ -1,3 +1,4 @@
+. "$PsScriptRoot\..\_Internals\CryptoManager.ps1"
 <#
     .SYNOPSIS
     Initialize CrmServiceClient instance. 
@@ -27,11 +28,16 @@ function New-XrmClient {
     (        
         [Parameter(Mandatory = $false)]
         [String]
+        [ValidateNotNullOrEmpty()]
         $ConnectionString,
 
         [Parameter(Mandatory = $false)]
         [int]
-        $MaxCrmConnectionTimeOutMinutes = 2
+        $MaxCrmConnectionTimeOutMinutes = 2,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsEncrypted = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -46,6 +52,12 @@ function New-XrmClient {
 	
         # Initialize CRM Client	
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
+
+            if($IsEncrypted)
+            {
+                $ConnectionString = Repair-XrbConnectionString -ConnectionString $ConnectionString;
+            }
+
             $XrmClient = Get-CrmConnection -ConnectionString $ConnectionString -MaxCrmConnectionTimeOutMinutes $MaxCrmConnectionTimeOutMinutes -ErrorAction Stop;
 
             # Warn about Office365 authentication
