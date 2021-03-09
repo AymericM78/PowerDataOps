@@ -26,6 +26,8 @@ function ConvertTo-XrmObject {
         $hash["Id"] = $Record.Id;
         $hash["LogicalName"] = $Record.LogicalName;
         $hash["Record"] = $Record;
+        $hash["Reference"] = $Record.ToEntityReference();
+        
         foreach ($attribute in $Record.Attributes) {
             $value = "";
             if ($Record.FormattedValues.ContainsKey($attribute.Key)) {
