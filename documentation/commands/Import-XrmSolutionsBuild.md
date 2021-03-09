@@ -19,7 +19,8 @@ PluginAssemblyName|String|5|false|Plugins|Specify plugin assembly name for plugi
 ## Usage
 
 ```Powershell 
-Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] [[-PluginAssemblyName] <String>] [<CommonParameters>]
+Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] [[-PluginAssemblyName] 
+<String>] [<CommonParameters>]
 ``` 
 
 

@@ -27,9 +27,10 @@ ExportRelationshipRoles|Boolean|13|false|False|Specify if exported solution shou
 ## Usage
 
 ```Powershell 
-Export-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ExportPath] <String>] [[-Solutions] <String>] [[-Managed] <Boolean>] [[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] 
-[[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] [[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] 
-[[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] <Boolean>] [<CommonParameters>]
+Export-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ExportPath] <String>] [[-Solutions] <String>] [[-Managed] <Boolean>] [[-ExportCalendarSettings] <Boolean>] 
+[[-ExportCustomizationSettings] <Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] 
+[[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] <Boolean>] 
+[<CommonParameters>]
 ``` 
 
 

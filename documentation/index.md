@@ -31,8 +31,8 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Add-XrmDevOpsVariableGroup](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDevOpsVariableGroup.md)|Push Dataverse Instance data to a Az DevOps variable group.<br/>
-[Invoke-XrmDevOpsApi](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmDevOpsApi.md)|Core function for Az DevOps API consumption.<br/>
+[Add-XrmDevOpsVariableGroup](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDevOpsVariableGroup.md)|<br/>
+[Invoke-XrmDevOpsApi](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmDevOpsApi.md)|<br/>
 # `Browser` commands
 
 Command|Synopsis
@@ -223,4 +223,11 @@ Command|Synopsis
 -------|-----------
 [Sync-XrmWebResources](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Sync-XrmWebResources.md)|Synchronize a webresource folder to Microsoft Dataverse.<br/>Create or update each webresource content based on local directory.
 [Upsert-XrmWebResource](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmWebResource.md)|Create or update webresource.<br/>Check if webresource exists or not. If not exists create it and add it to specified solution.<br/>If webresource exists, compare content and update it if different.
+# `Workflows` commands
+
+Command|Synopsis
+-------|-----------
+[Disable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmWorkflow.md)|Disable a workflow.<br/>Deactivate given workflow.
+[Enable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmWorkflow.md)|Enable a workflow.<br/>Activate given workflow.
+[Get-XrmWorkflows](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmWorkflows.md)|Retrieve workflows.<br/>Get workflows with expected columns.
 
