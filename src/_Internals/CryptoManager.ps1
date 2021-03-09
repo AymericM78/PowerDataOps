@@ -6,8 +6,7 @@ $CryptoPassPhrase = "MsCrmTools";
 $CryptoPasswordIterations = 2;
 $CryptoSaltValue = "Tanguy 92*";
 
-function Repair-XrbConnectionString
-{
+function Repair-XrbConnectionString {
     PARAM(
         [Parameter(Mandatory = $True)]
         [string]
@@ -15,27 +14,31 @@ function Repair-XrbConnectionString
         $ConnectionString
     )
 
-    $encryptedPassword = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Password";
-    if(-not [String]::IsNullOrWhiteSpace($encryptedPassword))
-    {
-        $password = Unprotect-XrmToolBoxPassword -EncryptedPassword $encryptedPassword;
-        $ConnectionString = $ConnectionString.Replace($encryptedPassword, $password);
-    }
-    else {
-        $encryptedClientSecret = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "ClientSecret";
-        if(-not [String]::IsNullOrWhiteSpace($encryptedClientSecret))
+    $ConnectionStringBackup = $ConnectionString;
+    $potentialEncryptedParameters = @("password", "Password", "clientsecret", "ClientSecret");
+    foreach ($parameter in  $potentialEncryptedParameters) {        
+        $encryptedText = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName $parameter;
+        if ([String]::IsNullOrWhiteSpace($encryptedText)) {
+            continue;
+        }
+
+        # Weird case : remove "..." added by XTB
+        if($encryptedText.StartsWith('"') -and $encryptedText.EndsWith('"'))
         {
-            $clientSecret = Unprotect-XrmToolBoxPassword -EncryptedPassword $encryptedClientSecret;
-            $ConnectionString = $ConnectionString.Replace($encryptedClientSecret, $clientSecret);
+            $encryptedText = $encryptedText.TrimStart('"');
+            $encryptedText = $encryptedText.TrimEnd('"');
         }
-        else {
-            throw "ConnectionString is not encrypted!";
-        }
+
+        $clearText = Unprotect-XrmToolBoxPassword -EncryptedPassword $encryptedText;
+        $ConnectionString = $ConnectionString.Replace($encryptedText, $clearText);
+    }
+
+    if ($ConnectionStringBackup -eq $ConnectionString) {
+        throw "ConnectionString is not encrypted!";
     }
 
     return $ConnectionString;
 }
-
 
 function Protect-XrmToolBoxPassword {
     PARAM(
@@ -90,11 +93,11 @@ function Unprotect-XrmToolBoxPassword {
     $symmetricKey.Mode = [System.Security.Cryptography.CipherMode]::CBC;
     $decryptor = $symmetricKey.CreateDecryptor($keyBytes, $initVectorBytes);
 
-    $memoryStream = new-object "System.IO.MemoryStream" -ArgumentList (,$cipherBytes);
+    $memoryStream = new-object "System.IO.MemoryStream" -ArgumentList (, $cipherBytes);
     $cryptoStreamMode = [System.Security.Cryptography.CryptoStreamMode]::Read;
     $cryptoStream = new-object "System.Security.Cryptography.CryptoStream" -ArgumentList $memoryStream, $decryptor, $cryptoStreamMode;
     
-    $decryptedBytes =  New-Object "System.Byte[]" -ArgumentList $cipherBytes.Length;
+    $decryptedBytes = New-Object "System.Byte[]" -ArgumentList $cipherBytes.Length;
     $decryptedBytesLength = $cryptoStream.Read($decryptedBytes, 0, $decryptedBytes.Length);
     
     $memoryStream.Close() | Out-Null;

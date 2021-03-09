@@ -44,6 +44,10 @@ function Out-XrmConnectionStringParameter {
         }
 
         $startIndex = $ConnectionString.IndexOf("$($ParameterName)=");
+        if($startIndex -lt 0)
+        {
+            return $null;
+        }
         $stopIndex = $ConnectionString.IndexOf(";", $startIndex);
         
         $value = $ConnectionString;
