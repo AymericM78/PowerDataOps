@@ -109,8 +109,10 @@ Command|Synopsis
 -------|-----------
 [Get-XrmOrganization](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmOrganization.md)|Get Organization object.<br/>Retrieve default organization record from target instance.
 [Get-XrmOrganizationClientFeatures](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmOrganizationClientFeatures.md)|Get Organization Client Features.<br/>Retrieve all or specified client features from default organization (see : Get-XrmOrganization)
+[Get-XrmOrganizationDbSetting](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmOrganizationDbSetting.md)|Get Organization setting.<br/>Retrieve organization setting (orgdbsetting) from target instance.
 [Get-XrmOrganizationFeatures](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmOrganizationFeatures.md)|Get Organization Features<br/>Retrieve all or specified features from default organization (see : Get-XrmOrganization)
 [Set-XrmOrganizationClientFeature](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOrganizationClientFeature.md)|Set Organization Client Feature.<br/>Define specific client feature for default organization (see : Get-XrmOrganization)
+[Set-XrmOrganizationDbSetting](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOrganizationDbSetting.md)|Set Organization setting.<br/>Add or update orgdbsetting value.
 [Set-XrmOrganizationFeature](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOrganizationFeature.md)|Set Organization Feature.<br/>Define specific feature for default organization (see : Get-XrmOrganization)
 # `Plugins` commands
 
@@ -182,6 +184,16 @@ Command|Synopsis
 [Set-XrmSolutionVersion](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSolutionVersion.md)|Set solution version.<br/>Update specified solution by its uniquename with given version number.
 [Start-XrmSolutionUpgrade](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Start-XrmSolutionUpgrade.md)|Start delete and promote operation for solution.<br/>Replace managed solution by new one after import.
 [Watch-XrmCurrentSolutionImport](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Watch-XrmCurrentSolutionImport.md)|Monitor current solution import.<br/>Poll latest solution import status until its done and display progress.
+# `SQL` commands
+
+Command|Synopsis
+-------|-----------
+[Assert-XrmTdsEndpointConnected](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Assert-XrmTdsEndpointConnected.md)|Check if TDS endpoint is enabled.<br/>Assert orgdbsettings EnableTDSEndpoint parameter is true to allow SQL commands thru TDS Endpoint.
+[Assert-XrmTdsEndpointEnabled](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Assert-XrmTdsEndpointEnabled.md)|Check if TDS endpoint is enabled.<br/>Assert orgdbsettings EnableTDSEndpoint parameter is true to allow SQL commands thru TDS Endpoint.
+[Connect-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Connect-XrmTdsEndpoint.md)|Connect to TDS endpoint.<br/>Specify connection parameters to run SQL commands thru TDS Endpoint.
+[Disable-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmTdsEndpoint.md)|Disable TDS endpoint.<br/>Configure orgdbsettings parameter to prevent SQL commands thru TDS Endpoint.
+[Enable-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmTdsEndpoint.md)|Enable TDS endpoint.<br/>Configure orgdbsettings parameter to allow SQL commands thru TDS Endpoint.
+[Invoke-XrmSqlCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmSqlCommand.md)|Connect to TDS endpoint.<br/>Specify connection parameters to run SQL commands thru TDS Endpoint.
 # `Tracing` commands
 
 Command|Synopsis
@@ -230,4 +242,10 @@ Command|Synopsis
 [Disable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmWorkflow.md)|Disable a workflow.<br/>Deactivate given workflow.
 [Enable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmWorkflow.md)|Enable a workflow.<br/>Activate given workflow.
 [Get-XrmWorkflows](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmWorkflows.md)|Retrieve workflows.<br/>Get workflows with expected columns.
+# `_Internals` commands
+
+Command|Synopsis
+-------|-----------
+[BrowserManager](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/BrowserManager.md)|<br/>
+[CryptoManager](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/CryptoManager.md)|<br/>
 
