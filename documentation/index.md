@@ -62,6 +62,8 @@ Command|Synopsis
 -------|-----------
 [Connect-XrmUser](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Connect-XrmUser.md)|Authenticate user to Microsoft Dataverse.<br/>Prepare Microsoft Dataverse connection with user credentials in order to consume Discovery Service.
 [Export-XrmConnectionToXrmToolBox](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmConnectionToXrmToolBox.md)|Export instances collection to XML file with connection strings to XrmToolBox connection file.<br/>Populate XrmToolbox connections with available instance for given user.
+[Get-XrmConnection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmConnection.md)|Get connections from XrmToolBox.<br/>Browse and retrieve information from XrmToolBox saved connections.
+[Import-XrmConnection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmConnection.md)|Import XrmToolBox connection from file.<br/>Populate XrmToolbox connection object from XML file.
 [New-XrmConnection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmConnection.md)|Initialize new object that represent a Dataverse Connection.<br/>
 [Out-XrmConnectionString](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Out-XrmConnectionString.md)|Build Connection String from instance object.<br/>Output connection string from given Microsoft Dataverse instance object.
 [Out-XrmConnectionStringParameter](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Out-XrmConnectionStringParameter.md)|Extract parameter value from connectionstring.<br/>Output connection string parameter value.
@@ -171,7 +173,6 @@ Command|Synopsis
 -------|-----------
 [Clear-XrmSolutions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Clear-XrmSolutions.md)|Select solutions to uninstall.<br/>Select solutions (managed or unmanaged) and delete them.
 [Export-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmSolution.md)|Export solution.<br/>Export given solution with given settings.
-[Get-NonCustomizableEntities](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-NonCustomizableEntities.md)|Provide entity logical names that could not be customize (standard system entities (customization, relationship, non customizable tables))<br/>Get list of non customizable entities.
 [Get-XrmBasicSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmBasicSolution.md)|Retrieve basic solution record.<br/>Get basic solution with specified column.
 [Get-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolution.md)|Retrieve solution record.<br/>Get solution by its unique name with expected columns.
 [Get-XrmSolutionHistory](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutionHistory.md)|Retrieve solutions history.<br/>Get solution operation logs.
@@ -199,7 +200,6 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [Trace-XrmFunction](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Trace-XrmFunction.md)|Output verbose information about function call.<br/>Core module method to trace information and measure calls performance.
-[Write-HostAndLog](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Write-HostAndLog.md)|Display message and output to file.<br/>Log given message to console with predefined color or level and output it to execution log.<br/>Execution log is created at module load and is kept in module temp folder.
 [Write-XrmMessageToSlack](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Write-XrmMessageToSlack.md)|Push message to slack<br/>Use Slack webhook to send current message in target channel.
 # `Types` commands
 
@@ -217,7 +217,6 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [Add-XrmFolder](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmFolder.md)|Add folder in given path if it doesn't exists.<br/>Create given folder if not exist and return sub folder full path.
-[ForEach-ObjectWithProgress](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ForEach-ObjectWithProgress.md)|Process each object and report progress<br/>Performs custom action on given collection with progress information.
 [Get-XrmAuthTypes](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAuthTypes.md)|Retrieve authentication type names.<br/>Get available authentication types.
 [Get-XrmBase64](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmBase64.md)|Get base 64 from file content.<br/>Read given file and return its content as base64 content.
 [Get-XrmRegions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRegions.md)|Retrieve region names.<br/>Get available datacenter regions.
@@ -246,6 +245,4 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[BrowserManager](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/BrowserManager.md)|<br/>
-[CryptoManager](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/CryptoManager.md)|<br/>
 
