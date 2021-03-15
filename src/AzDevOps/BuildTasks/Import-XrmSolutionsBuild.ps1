@@ -44,7 +44,11 @@ function Import-XrmSolutionsBuild {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $PluginAssemblyName = "Plugins"
+        $PluginAssemblyName = "Plugins",
+        
+        [Parameter(Mandatory = $false)]
+        [Boolean]
+        $Upgrade = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -84,7 +88,7 @@ function Import-XrmSolutionsBuild {
             $solutionFilePath = $solution.ToString().Split(";")[1];
             
             Write-HostAndLog -Message "Importing $solutionUniqueName from $solutionFilePath" -Level INFO;
-            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath;
+            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $Upgrade;
             Write-HostAndLog -Message "Solution $($solutionUniqueName) successfully imported" -Level SUCCESS;
 
             if ($env:SLACKURL) {

@@ -14,13 +14,14 @@ ArtifactsPath|String|2|false|"$($Env:SYSTEM_DEFAULTWORKINGDIRECTORY)\Solutions\d
 SolutionsImportOrder|String|3|false|$($env:SOLUTIONS_IMPORTORDER)|Solution uniquenames that will be imported in given order, use variable 'Solutions.ImportOrder' from associated variable group.
 ClearPluginStepsAndTypes|Boolean|4|false|True|Indicates if plugins need to be unregistered prior solution import. (Default: true)
 PluginAssemblyName|String|5|false|Plugins|Specify plugin assembly name for plugin removal operation. (Default: Plugins)
+Upgrade|Boolean|6|false|False|
 
 
 ## Usage
 
 ```Powershell 
 Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] [[-PluginAssemblyName] 
-<String>] [<CommonParameters>]
+<String>] [[-Upgrade] <Boolean>] [<CommonParameters>]
 ``` 
 
 
