@@ -42,3 +42,13 @@ function Publish-XrmTheme {
 }
 
 Export-ModuleMember -Function Publish-XrmTheme -Alias *;
+
+Register-ArgumentCompleter -CommandName Publish-XrmTheme -ParameterName "Name" -ScriptBlock {
+
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+    $themeNames = @();
+    $themes = Get-XrmThemes -Columns "name";
+    $themes | ForEach-Object { $themeNames += $_.name };
+    return $themeNames | Where-Object { $_ -like "$wordToComplete*" } | Sort-Object;
+}
