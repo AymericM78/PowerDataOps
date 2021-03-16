@@ -195,6 +195,14 @@ Command|Synopsis
 [Disable-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmTdsEndpoint.md)|Disable TDS endpoint.<br/>Configure orgdbsettings parameter to prevent SQL commands thru TDS Endpoint.
 [Enable-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmTdsEndpoint.md)|Enable TDS endpoint.<br/>Configure orgdbsettings parameter to allow SQL commands thru TDS Endpoint.
 [Invoke-XrmSqlCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmSqlCommand.md)|Connect to TDS endpoint.<br/>Specify connection parameters to run SQL commands thru TDS Endpoint.
+# `Themes` commands
+
+Command|Synopsis
+-------|-----------
+[Get-XrmTheme](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmTheme.md)|Retrieve theme record.<br/>Get theme by its name with expected columns.
+[Get-XrmThemes](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmThemes.md)|Retrieve theme records.<br/>Get themes with expected columns.
+[Publish-XrmTheme](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Publish-XrmTheme.md)|Publish theme.<br/>Apply theme to target instance
+[Set-XrmThemeColor](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmThemeColor.md)|Change theme color.<br/>Set theme accent color.
 # `Tracing` commands
 
 Command|Synopsis
