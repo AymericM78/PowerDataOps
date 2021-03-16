@@ -37,10 +37,8 @@ function Get-XrmSolution {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-
-        $solution = Get-XrmRecord -LogicalName "solution" -AttributeName "uniquename" -Value $SolutionUniqueName -Columns $Columns;
+        $solution = Get-XrmRecord -XrmClient $XrmClient -LogicalName "solution" -AttributeName "uniquename" -Value $SolutionUniqueName -Columns $Columns;
         $solution;
-
     }
     end {
         $StopWatch.Stop();
