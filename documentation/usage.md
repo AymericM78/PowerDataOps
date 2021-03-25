@@ -20,7 +20,7 @@ Asof today, Microsoft Dataverse authentication scenarios are not fully compatibl
 
 So I'm not able to define 1 way to connect.
 
-### Get-XrmClient
+### New-XrmClient
 
 This cmdlet initialize a CrmServiceClient object to interact with Microsoft Dataverse.
 You need to provide a connection string [`-ConnectionString`](https://docs.microsoft.com/fr-fr/powerapps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect)
