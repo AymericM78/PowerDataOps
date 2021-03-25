@@ -26,7 +26,7 @@ This cmdlet initialize a CrmServiceClient object to interact with Microsoft Data
 You need to provide a connection string [`-ConnectionString`](https://docs.microsoft.com/fr-fr/powerapps/developer/data-platform/xrm-tooling/use-connection-strings-xrm-tooling-connect)
 
 ```powershell
-Get-XrmClient -ConnectionString "AuthType=ClientSecret;url=https://contosotest.crm.dynamics.com;ClientId={AppId};ClientSecret={ClientSecret}"
+New-XrmClient -ConnectionString "AuthType=ClientSecret;url=https://contosotest.crm.dynamics.com;ClientId={AppId};ClientSecret={ClientSecret}"
 ```
 
 ### Connect-XrmUser
