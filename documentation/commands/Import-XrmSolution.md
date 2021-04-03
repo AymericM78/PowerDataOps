@@ -21,8 +21,9 @@ SkipProductUpdateDependencies|Boolean|8|false|True|Gets or sets whether enforcem
 ## Usage
 
 ```Powershell 
-Import-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] 
-<Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [<CommonParameters>]
+Import-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] 
+[[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] 
+[<CommonParameters>]
 ``` 
 
 

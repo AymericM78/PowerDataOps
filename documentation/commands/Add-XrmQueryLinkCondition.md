@@ -19,15 +19,15 @@ Microsoft.Xrm.Sdk.Query.LinkEntity
 ## Usage
 
 ```Powershell 
-Add-XrmQueryLinkCondition [-Link] <LinkEntity> [-Field] <String> [-Condition] {Equal | NotEqual | GreaterThan | LessThan | GreaterEqual | LessEqual | Like | NotLike | In | NotIn | 
-Between | NotBetween | Null | NotNull | Yesterday | Today | Tomorrow | Last7Days | Next7Days | LastWeek | ThisWeek | NextWeek | LastMonth | ThisMonth | NextMonth | On | OnOrBefore | 
-OnOrAfter | LastYear | ThisYear | NextYear | LastXHours | NextXHours | LastXDays | NextXDays | LastXWeeks | NextXWeeks | LastXMonths | NextXMonths | LastXYears | NextXYears | 
-EqualUserId | NotEqualUserId | EqualBusinessId | NotEqualBusinessId | ChildOf | Mask | NotMask | MasksSelect | Contains | DoesNotContain | EqualUserLanguage | NotOn | 
-OlderThanXMonths | BeginsWith | DoesNotBeginWith | EndsWith | DoesNotEndWith | ThisFiscalYear | ThisFiscalPeriod | NextFiscalYear | NextFiscalPeriod | LastFiscalYear | 
-LastFiscalPeriod | LastXFiscalYears | LastXFiscalPeriods | NextXFiscalYears | NextXFiscalPeriods | InFiscalYear | InFiscalPeriod | InFiscalPeriodAndYear | 
-InOrBeforeFiscalPeriodAndYear | InOrAfterFiscalPeriodAndYear | EqualUserTeams | EqualUserOrUserTeams | Under | NotUnder | UnderOrEqual | Above | AboveOrEqual | 
-EqualUserOrUserHierarchy | EqualUserOrUserHierarchyAndTeams | OlderThanXYears | OlderThanXWeeks | OlderThanXDays | OlderThanXHours | OlderThanXMinutes | ContainValues | 
-DoesNotContainValues} [[-Values] <Object[]>] [<CommonParameters>]
+Add-XrmQueryLinkCondition [-Link] <LinkEntity> [-Field] <String> [-Condition] {Equal | NotEqual | GreaterThan | LessThan | GreaterEqual | LessEqual | Like | NotLike | 
+In | NotIn | Between | NotBetween | Null | NotNull | Yesterday | Today | Tomorrow | Last7Days | Next7Days | LastWeek | ThisWeek | NextWeek | LastMonth | ThisMonth | 
+NextMonth | On | OnOrBefore | OnOrAfter | LastYear | ThisYear | NextYear | LastXHours | NextXHours | LastXDays | NextXDays | LastXWeeks | NextXWeeks | LastXMonths | 
+NextXMonths | LastXYears | NextXYears | EqualUserId | NotEqualUserId | EqualBusinessId | NotEqualBusinessId | ChildOf | Mask | NotMask | MasksSelect | Contains | 
+DoesNotContain | EqualUserLanguage | NotOn | OlderThanXMonths | BeginsWith | DoesNotBeginWith | EndsWith | DoesNotEndWith | ThisFiscalYear | ThisFiscalPeriod | 
+NextFiscalYear | NextFiscalPeriod | LastFiscalYear | LastFiscalPeriod | LastXFiscalYears | LastXFiscalPeriods | NextXFiscalYears | NextXFiscalPeriods | InFiscalYear | 
+InFiscalPeriod | InFiscalPeriodAndYear | InOrBeforeFiscalPeriodAndYear | InOrAfterFiscalPeriodAndYear | EqualUserTeams | EqualUserOrUserTeams | Under | NotUnder | 
+UnderOrEqual | Above | AboveOrEqual | EqualUserOrUserHierarchy | EqualUserOrUserHierarchyAndTeams | OlderThanXYears | OlderThanXWeeks | OlderThanXDays | 
+OlderThanXHours | OlderThanXMinutes | ContainValues | DoesNotContainValues} [[-Values] <Object[]>] [<CommonParameters>]
 ``` 
 
 

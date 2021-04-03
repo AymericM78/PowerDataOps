@@ -22,7 +22,8 @@ Custom Object. Row (= Entity record) is converted to custom object to simplify d
 ## Usage
 
 ```Powershell 
-Get-XrmRecord [[-XrmClient] <CrmServiceClient>] [-LogicalName] <String> [[-Key] <String>] [[-AttributeName] <String>] [-Value] <Object> [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmRecord [[-XrmClient] <CrmServiceClient>] [-LogicalName] <String> [[-Key] <String>] [[-AttributeName] <String>] [-Value] <Object> [[-Columns] <String[]>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

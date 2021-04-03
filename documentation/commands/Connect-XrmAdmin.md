@@ -19,8 +19,8 @@ CertificateThumbprint|String|6|false||AAD Application Certificate Thumbprint
 ## Usage
 
 ```Powershell 
-Connect-XrmAdmin [[-UserName] <String>] [[-Password] <String>] [[-TenantId] <String>] [[-ApplicationId] <String>] [[-ClientSecret] <String>] [[-CertificateThumbprint] <String>] 
-[<CommonParameters>]
+Connect-XrmAdmin [[-UserName] <String>] [[-Password] <String>] [[-TenantId] <String>] [[-ApplicationId] <String>] [[-ClientSecret] <String>] [[-CertificateThumbprint] 
+<String>] [<CommonParameters>]
 ``` 
 
 

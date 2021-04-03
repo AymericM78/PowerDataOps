@@ -27,10 +27,10 @@ AddVersionToFileName|Boolean|14|false|False|Specify if solution version number s
 ## Usage
 
 ```Powershell 
-Export-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] [[-ExportPath] <String>] [[-ExportCalendarSettings] <Boolean>] 
-[[-ExportCustomizationSettings] <Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] 
-[[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] <Boolean>] 
-[[-AddVersionToFileName] <Boolean>] [<CommonParameters>]
+Export-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] [[-ExportPath] <String>] [[-ExportCalendarSettings] 
+<Boolean>] [[-ExportCustomizationSettings] <Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] 
+<Boolean>] [[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] 
+<Boolean>] [[-AddVersionToFileName] <Boolean>] [<CommonParameters>]
 ``` 
 
 

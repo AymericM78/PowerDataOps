@@ -26,8 +26,8 @@ LogFilePath|String|7|false|"$($env:TEMP)\SolutionPackager.log"|Full path to log 
 ## Usage
 
 ```Powershell 
-Invoke-XrmSolutionPackager [-SolutionFilePath] <String> [[-SolutionPackagerExeFilePath] <String>] [-Action] <String> [[-PackageType] <String>] [[-FolderPath] <String>] 
-[[-ErrorLevel] <String>] [[-LogFilePath] <String>] [<CommonParameters>]
+Invoke-XrmSolutionPackager [-SolutionFilePath] <String> [[-SolutionPackagerExeFilePath] <String>] [-Action] <String> [[-PackageType] <String>] [[-FolderPath] 
+<String>] [[-ErrorLevel] <String>] [[-LogFilePath] <String>] [<CommonParameters>]
 ``` 
 
 

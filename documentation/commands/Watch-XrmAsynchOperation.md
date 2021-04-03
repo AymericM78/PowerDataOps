@@ -17,7 +17,8 @@ ScriptBlock|ScriptBlock|4|false||Command to execute during each poll with asynco
 ## Usage
 
 ```Powershell 
-Watch-XrmAsynchOperation [[-XrmClient] <CrmServiceClient>] [-AsyncOperationId] <Guid> [[-PollingIntervalSeconds] <Int32>] [[-ScriptBlock] <ScriptBlock>] [<CommonParameters>]
+Watch-XrmAsynchOperation [[-XrmClient] <CrmServiceClient>] [-AsyncOperationId] <Guid> [[-PollingIntervalSeconds] <Int32>] [[-ScriptBlock] <ScriptBlock>] 
+[<CommonParameters>]
 ``` 
 
 

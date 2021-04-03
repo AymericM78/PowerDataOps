@@ -54,6 +54,7 @@ Command|Synopsis
 [Remove-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmRecord.md)|Remove record from Microsoft Dataverse.<br/>Delete row (entity record) from Microsoft Dataverse table by logicalname + id or by Entity object.
 [Set-XrmClientTimeout](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmClientTimeout.md)|Specify CrmserviceClient timeout.<br/>Extend default CrmserviceClient timeout.
 [Update-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmRecord.md)|Update entity record in Microsoft Dataverse.<br/>Update row (entity record) from Microsoft Dataverse table.
+[Update-XrmRecordFileUpload](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmRecordFileUpload.md)|<br/>
 [Upsert-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmRecord.md)|Upsert entity record in Dataverse.<br/>Upsert row (entity record) from Microsoft Dataverse table.
 [Watch-XrmAsynchOperation](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Watch-XrmAsynchOperation.md)|Monitor async operation completion.<br/>Poll status from asynchoperation id until its done.
 # `Connection` commands

@@ -21,8 +21,8 @@ SupportedExtensions|String[]|6|false|@("*.htm", "*.html", "*.css", "*.js", "*.xm
 ## Usage
 
 ```Powershell 
-Sync-XrmWebResources [[-XrmClient] <CrmServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> [[-SynchronizationMode] <String>] [[-SynchronizationDeltaHours] <Int32>] 
-[[-SupportedExtensions] <String[]>] [<CommonParameters>]
+Sync-XrmWebResources [[-XrmClient] <CrmServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> [[-SynchronizationMode] <String>] 
+[[-SynchronizationDeltaHours] <Int32>] [[-SupportedExtensions] <String[]>] [<CommonParameters>]
 ``` 
 
 

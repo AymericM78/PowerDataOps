@@ -19,7 +19,8 @@ DefaultExportPath|String|5|false|$env:TEMP|Folder path where solutions will be e
 ## Usage
 
 ```Powershell 
-Backup-XrmSolutionsBuild [[-ConnectionString] <String>] [[-UnpackPath] <String>] [[-Solutions] <String>] [[-Managed] <Boolean>] [[-DefaultExportPath] <String>] [<CommonParameters>]
+Backup-XrmSolutionsBuild [[-ConnectionString] <String>] [[-UnpackPath] <String>] [[-Solutions] <String>] [[-Managed] <Boolean>] [[-DefaultExportPath] <String>] 
+[<CommonParameters>]
 ``` 
 
 

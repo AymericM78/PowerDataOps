@@ -20,8 +20,8 @@ Upgrade|Boolean|6|false|False|
 ## Usage
 
 ```Powershell 
-Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] [[-PluginAssemblyName] 
-<String>] [[-Upgrade] <Boolean>] [<CommonParameters>]
+Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] 
+[[-PluginAssemblyName] <String>] [[-Upgrade] <Boolean>] [<CommonParameters>]
 ``` 
 
 

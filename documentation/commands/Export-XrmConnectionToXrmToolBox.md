@@ -17,7 +17,8 @@ XtbConnectionPath|String|4|false|"$env:APPDATA\MscrmTools\XrmToolBox\Connections
 ## Usage
 
 ```Powershell 
-Export-XrmConnectionToXrmToolBox [[-XrmConnection] <Object>] [-Name] <String> [[-OverrideConnectionStringFormat] <String>] [[-XtbConnectionPath] <String>] [<CommonParameters>]
+Export-XrmConnectionToXrmToolBox [[-XrmConnection] <Object>] [-Name] <String> [[-OverrideConnectionStringFormat] <String>] [[-XtbConnectionPath] <String>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples
