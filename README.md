@@ -46,6 +46,10 @@ Used in several customer productions to bring full automation for dev, packaging
 
 This module is open to community contributions in order to enrich this tooling and helps everyone to bring more automation capabilities to Microsoft Dataverse implementations.
 
+Official contributors : 
+
+- [nrpieper](https://github.com/nrpieper)
+
 ## ✈️ Well ? And now ?
 
 Check install and usage documentation :)
