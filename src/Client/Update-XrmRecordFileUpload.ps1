@@ -1,14 +1,19 @@
 <#
     .SYNOPSIS
     Upload a file to an entity record's file attribute field in Microsoft Dataverse.
+
     .Description
     Upload a file to a date row's (entity record's) file field from Microsoft Dataverse table.
+
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+
     .PARAMETER Record
     Record (row) to update.
+
     .PARAMETER FileAttributeLogicalName
     Entity file attribute name.
+
     .PARAMETER FilePath
     Path to file on the OS file system.
 
@@ -133,3 +138,5 @@ function Update-XrmRecordFileUpload
         #Write-Output "Xrm File upload complete. File name: $fileName, File size: $($fileInfo.Length), Blocks uploaded: $fileBlockCounter, FileId: $($commitBlocksUploadResponse.FileId)"
     }
 }
+
+Export-ModuleMember -Function Update-XrmRecordFileUpload -Alias *;
