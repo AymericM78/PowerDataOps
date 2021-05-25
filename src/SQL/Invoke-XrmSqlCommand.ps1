@@ -34,7 +34,10 @@ function Invoke-XrmSqlCommand {
         $url = $Global:XrmContext.CurrentInstance.Url;
 
         $url = $url.Replace("https://", "");
-        $url = $url.Remove($url.IndexOf('/'));
+        if($url.Contains('/'))
+        {
+            $url = $url.Remove($url.IndexOf('/'));
+        }
 
         $connectionString = "Server=$url,5558;Authentication=Active Directory Password;Database=$url;User Id=$userName;Password=$password;";
         $connection = new-object System.Data.SqlClient.SQLConnection($connectionString);
