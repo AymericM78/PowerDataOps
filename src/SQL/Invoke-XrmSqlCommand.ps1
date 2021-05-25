@@ -43,9 +43,9 @@ function Invoke-XrmSqlCommand {
         $connection.Open();
         $reader = $cmd.ExecuteReader();
 
-        $results = @();
+        [System.Collections.ArrayList]$results = @();
         while ($reader.Read()) {
-            $hash = @{};
+            $hash = @{};            
             for ($i = 0; $i -lt $reader.FieldCount; $i++) {
                 $value = $reader.GetValue($i);
                 if ($IgnoreDbNull -and $value -eq [DBNull]::Value) {
@@ -53,7 +53,8 @@ function Invoke-XrmSqlCommand {
                 }
                 $hash[$reader.GetName($i)] = $value;
             }
-            $results += new-object psobject -property $hash;     
+            $object = [pscustomobject]$hash;
+            $results.Add($object) | Out-Null;
         }
         $connection.Close();
 

@@ -46,7 +46,7 @@ function ConvertTo-XrmObject {
             $hash[$attribute.Key] = $value;
         }
 
-        $object = New-Object PsObject -Property $hash;
+        $object = [pscustomobject]$hash;
         $object;
     }
     end {

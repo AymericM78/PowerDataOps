@@ -18,13 +18,14 @@ function ConvertTo-XrmObjects {
         $InputObject
     )
     begin {          
-        $records = @();
+        [System.Collections.ArrayList] $records = @();
 
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        $records += $InputObject | ConvertTo-XrmObject;
+        $object =  $InputObject | ConvertTo-XrmObject;
+        $records.Add($object) | Out-Null;
     }
     end {
         $records;
