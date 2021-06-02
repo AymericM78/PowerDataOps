@@ -36,6 +36,10 @@ function ForEach-ObjectWithProgress {
         $OperationName,
 
         [Parameter(Mandatory = $false)]
+        [int]
+        $Id,
+
+        [Parameter(Mandatory = $false)]
         [scriptblock] 
         $ScriptBlock
     )
@@ -60,7 +64,7 @@ function ForEach-ObjectWithProgress {
             $current++;
             $percent = ($current / $total) * 100;
 
-            Write-Progress -Activity $OperationName -Status "Processing item $current of $total ($($percent.ToString('#.##')) %)..." -PercentComplete $percent;
+            Write-Progress -Id $Id -Activity $OperationName -Status "Processing item $current of $total ($($percent.ToString('#.##')) %)..." -PercentComplete $percent;
 
             Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $item;
         } 
