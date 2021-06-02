@@ -11,6 +11,12 @@
     .PARAMETER OperationName
     Name of operation to display in progress bar.
 
+    .PARAMETER Id
+    Specifies an ID that distinguishes each progress bar from the others. Use this parameter when you are creating more than one progress bar in a single command. If the progress bars do not have different IDs, they are superimposed instead of being displayed in a series.
+
+    .PARAMETER ParentId
+    Specifies the parent activity of the current activity. Use the value -1 if the current activity has no parent activity.
+
     .PARAMETER ScriptBlock
     Custom script to apply for each object. Current object is provided as script block parameter.
 
@@ -31,13 +37,17 @@ function ForEach-ObjectWithProgress {
         [object[]]
         $Collection,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [string]
-        $OperationName,
+        $OperationName = "Processing data...",
 
         [Parameter(Mandatory = $false)]
         [int]
-        $Id,
+        $Id = 0,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $ParentId = -1,
 
         [Parameter(Mandatory = $false)]
         [scriptblock] 
@@ -64,14 +74,13 @@ function ForEach-ObjectWithProgress {
             $current++;
             $percent = ($current / $total) * 100;
 
-            Write-Progress -Id $Id -Activity $OperationName -Status "Processing item $current of $total ($($percent.ToString('#.##')) %)..." -PercentComplete $percent;
+            Write-Progress -Id $Id -ParentId $ParentId -Activity $OperationName -Status "Processing item $current of $total ($($percent.ToString('#.##')) %)..." -PercentComplete $percent;
 
             Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $item;
         } 
-        write-progress one one -completed;
     }
     end {
-        # $StopWatch.Stop();
+        $StopWatch.Stop();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
     }
 }
