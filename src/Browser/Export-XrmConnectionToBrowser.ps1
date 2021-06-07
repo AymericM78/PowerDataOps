@@ -118,25 +118,25 @@ function Export-XrmConnectionToBrowser {
         $profilePath = [IO.Path]::Combine($browserProfilesPath, $profileName);
         if (-not(Test-Path -Path $profilePath)) {
             New-Item -ItemType Directory -Path $browserProfilesPath -Name $profileName -Force -ErrorAction Ignore | Out-Null;
-        }
 
-        # Create shrotcut
-        Add-BrowserShortcut -BrowserShortCutsPath $BrowserShortCutsPath -BrowserAppPath $browserAppPath -ProfileName $profileName;
-
-        # Start browser for folder initialization
-        Start-Browser -BrowserAppPath $browserAppPath -ProfileName $profileName;
-        Start-Sleep -Seconds 5;
+            # Create shrotcut
+            Add-BrowserShortcut -BrowserShortCutsPath $BrowserShortCutsPath -BrowserAppPath $browserAppPath -ProfileName $profileName;
+    
+            # Start browser for folder initialization
+            Start-Browser -BrowserAppPath $browserAppPath -ProfileName $profileName;
+            Start-Sleep -Seconds 5;
+            
+            # Configure chrome : Favorite bar
+            Set-BrowserFavoriteBarEnabled -ProfileName $profileName -ProfilePath $profilePath;
         
-        # Configure chrome : Favorite bar
-        Set-BrowserFavoriteBarEnabled -ProfileName $profileName -ProfilePath $profilePath;
-        
-        # Configure chrome : Extensions
-        $Extensions | ForEach-Object {
-            if ($isChrome) {
-                Add-ChromeExtension -ExtensionName $_;
-            }
-            else {        
-                Add-EdgeExtension -ExtensionName $_;
+            # Configure chrome : Extensions
+            $Extensions | ForEach-Object {
+                if ($isChrome) {
+                    Add-ChromeExtension -ExtensionName $_;
+                }
+                else {        
+                    Add-EdgeExtension -ExtensionName $_;
+                }
             }
         }
 
