@@ -41,8 +41,8 @@ function Watch-XrmOperation {
             $monitor = ($state -eq "Running");
             $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss";
 
-            Write-HostAndLog $timestamp -NoNewline -ForegroundColor Gray;
-            Write-HostAndLog " Operation $($operation.type.id): " -NoNewline -ForegroundColor White;
+            Write-HostAndLog $timestamp -NoNewline -ForegroundColor Gray -NoTimeStamp;
+            Write-HostAndLog " Operation $($operation.type.id): " -NoNewline -ForegroundColor White -NoTimeStamp;
             $stateColor = "Gray";
             switch ($state) {
                 "Running" { $stateColor = "Yellow" }
@@ -50,11 +50,11 @@ function Watch-XrmOperation {
                 "Succeeded" { $stateColor = "Green" }
                 "Failed" { $stateColor = "Red" }
             }
-            Write-HostAndLog "$state" -NoNewline -ForegroundColor $stateColor;
+            Write-HostAndLog "$state" -NoNewline -ForegroundColor $stateColor -NoTimeStamp;
 
-            Write-HostAndLog " [" -NoNewline -ForegroundColor White;
+            Write-HostAndLog " [" -NoNewline -ForegroundColor White -NoTimeStamp;
             foreach ($stage in $operation.stages) {
-                Write-HostAndLog "$($stage.name) = " -NoNewline -ForegroundColor White;
+                Write-HostAndLog "$($stage.name) = " -NoNewline -ForegroundColor White -NoTimeStamp;
                 $stageColor = "Gray";
                 $stageStatus = $stage.state.id;
                 switch ($stageStatus) {
@@ -63,10 +63,10 @@ function Watch-XrmOperation {
                     "Completed" { $stageColor = "Green" }
                     "Failed" { $stageColor = "Red" }
                 }
-                Write-HostAndLog "$stageStatus" -NoNewline -ForegroundColor $stageColor;
-                Write-HostAndLog " | " -NoNewline -ForegroundColor White;
+                Write-HostAndLog "$stageStatus" -NoNewline -ForegroundColor $stageColor -NoTimeStamp;
+                Write-HostAndLog " | " -NoNewline -ForegroundColor White -NoTimeStamp;
             }
-            Write-HostAndLog "]" -ForegroundColor White;
+            Write-HostAndLog "]" -ForegroundColor White -NoTimeStamp;
         }
     }
     end {

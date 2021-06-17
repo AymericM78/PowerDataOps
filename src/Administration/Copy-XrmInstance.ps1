@@ -47,11 +47,13 @@ function Copy-XrmInstance {
         }
 
         $response = Copy-PowerAppEnvironment -EnvironmentName $targetInstance.Id -CopyToRequestDefinition $copyToRequest;
-        if ($response.Code) {
-            throw "$($response.Error.code) : $($response.Error.message)";
+        if ($response.Code -eq 202) {
+            $operationStatusUrl = $response.Headers["Operation-Location"];
+            Watch-XrmOperation -OperationUrl $operationStatusUrl;
+            return;
         }
-        $operationStatusUrl = $response.Headers["Operation-Location"];
-        Watch-XrmOperation -OperationUrl $operationStatusUrl;
+        
+        throw "$($response.Error.code) : $($response.Error.message)";
     }
     end {
         $StopWatch.Stop();
