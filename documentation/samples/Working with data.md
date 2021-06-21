@@ -50,7 +50,7 @@ $queryAccounts = New-XrmQueryExpression -LogicalName "account" -Columns "*" `
 $accounts = Get-XrmMultipleRecords -Query $queryAccounts;
 
 # Then output all accounts in a grid and select one
-$selectedAccount = $accounts | Select-Object name, createdon | Out-GridView -OutputMode Single;
+$selectedAccount = $accounts | Select-Object id, name, createdon | Out-GridView -OutputMode Single;
 
 # Update created account and set selected account as parent
 $accountUpdate = New-XrmEntity -LogicalName "account" -Id $account.Id -Attributes @{
