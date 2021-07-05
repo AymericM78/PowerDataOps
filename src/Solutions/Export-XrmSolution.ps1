@@ -43,6 +43,9 @@
 
     .PARAMETER AddVersionToFileName
     Specify if solution version number should be added to file name. (Default: false)
+
+    .PARAMETER ForceSyncExport
+    Specify if solution should be exported synchronously. (Default: false)
 #>
 function Export-XrmSolution {
     [CmdletBinding()]
@@ -104,7 +107,11 @@ function Export-XrmSolution {
 
         [Parameter(Mandatory = $false)]
         [Boolean]
-        $AddVersionToFileName = $false
+        $AddVersionToFileName = $false,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $ForceSyncExport = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -139,8 +146,13 @@ function Export-XrmSolution {
             Write-HostAndLog -Message "Unable to set FCB.AllowExportSolutionAsync flag" -Level WARN;
         }
         
-        # Build request        
-        $exportSolutionRequest = New-XrmRequest -Name "ExportSolutionAsync";
+        # Build request
+        if ($ForceSyncExport) {
+            $exportSolutionRequest = New-XrmRequest -Name "ExportSolution";
+        }
+        else {
+            $exportSolutionRequest = New-XrmRequest -Name "ExportSolutionAsync";
+        }
         $exportSolutionRequest | Add-XrmRequestParameter -Name "SolutionName" -Value $SolutionUniqueName | Out-Null;
         $exportSolutionRequest | Add-XrmRequestParameter -Name "Managed" -Value $Managed | Out-Null;    
         $exportSolutionRequest | Add-XrmRequestParameter -Name "ExportCalendarSettings" -Value $ExportCalendarSettings | Out-Null;
