@@ -172,22 +172,30 @@ function Export-XrmSolution {
         catch {
             throw $_.Exception.Message;
         }
-        $asyncOperationId = $exportSolutionResponse.Results["AsyncOperationId"];
-        $exportJobId = $exportSolutionResponse.Results["ExportJobId"];
 
-        # Monitor request execution
-        $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId;
 
-        # Retrieve solution file binary
-        $downloadSolutionExportDataRequest = New-XrmRequest -Name "DownloadSolutionExportData";
-        $downloadSolutionExportDataRequest | Add-XrmRequestParameter -Name "ExportJobId" -Value $exportJobId | Out-Null;
-        try {
-            $downloadSolutionExportDataResponse = $XrmClient | Invoke-XrmRequest -Request $downloadSolutionExportDataRequest;
+        if ($ForceSyncExport) {
+            $solutionBinaries = $exportSolutionResponse.Results["ExportSolutionFile"];
         }
-        catch {
-            throw $_.Exception.Message;
+        else {
+            
+            $asyncOperationId = $exportSolutionResponse.Results["AsyncOperationId"];
+            $exportJobId = $exportSolutionResponse.Results["ExportJobId"];
+
+            # Monitor request execution
+            $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId;
+
+            # Retrieve solution file binary
+            $downloadSolutionExportDataRequest = New-XrmRequest -Name "DownloadSolutionExportData";
+            $downloadSolutionExportDataRequest | Add-XrmRequestParameter -Name "ExportJobId" -Value $exportJobId | Out-Null;
+            try {
+                $downloadSolutionExportDataResponse = $XrmClient | Invoke-XrmRequest -Request $downloadSolutionExportDataRequest;
+            }
+            catch {
+                throw $_.Exception.Message;
+            }
+            $solutionBinaries = $downloadSolutionExportDataResponse.Results["ExportSolutionFile"];
         }
-        $solutionBinaries = $downloadSolutionExportDataResponse.Results["ExportSolutionFile"];
 
         # Save solution file
         [System.IO.File]::WriteAllBytes($solutionFilePath, $solutionBinaries);
