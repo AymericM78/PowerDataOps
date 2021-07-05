@@ -31,8 +31,6 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Add-XrmDevOpsVariableGroup](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDevOpsVariableGroup.md)|<br/>
-[Invoke-XrmDevOpsApi](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmDevOpsApi.md)|<br/>
 # `Browser` commands
 
 Command|Synopsis
@@ -215,7 +213,6 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [New-XrmContext](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmContext.md)|Initialize new object that represent a Xrm Context.<br/>Core module cmdlet that create new object to store context information.
-[New-XrmDevOpsSettings](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDevOpsSettings.md)|Initialize new object that represent a DevOps Connection settings.<br/>Core module cmdlet that create new object to store Azure DevOps information.
 [New-XrmEntityCollection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityCollection.md)|Initialize EntityCollection object instance.<br/>Get new Entity Collection object from entities array.
 [New-XrmEntityReference](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityReference.md)|Initialize EntityReference object instance.<br/>Get new EntityReference object from lookup information.
 [New-XrmMoney](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMoney.md)|Initialize Money object instance.<br/>Get new money object from given decimal value.
