@@ -22,11 +22,12 @@ function ConvertTo-XrmObject {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {               
-        $hash = @{};
-        $hash["Id"] = $Record.Id;
-        $hash["LogicalName"] = $Record.LogicalName;
-        $hash["Record"] = $Record;
-        $hash["Reference"] = $Record.ToEntityReference();
+        $hash = @{
+            "Id"          = $Record.Id
+            "LogicalName" = $Record.LogicalName
+            "Record"      = $Record
+            "Reference"   = $Record.ToEntityReference()
+        };
         
         foreach ($attribute in $Record.Attributes) {
             $value = "";

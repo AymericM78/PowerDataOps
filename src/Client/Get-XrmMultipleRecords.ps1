@@ -61,19 +61,15 @@ function Get-XrmMultipleRecords {
             $Query.PageInfo.PagingCookie = $null;
         }
 
-        $records = @();
+        [System.Collections.ArrayList] $records = @();
         while ($true) {
             $results = Protect-XrmCommand -ScriptBlock { $XrmClient.RetrieveMultiple($Query) };
             if ($enablePaging) {
                 Write-Progress -Activity "Retrieving data from CRM" -Status "Processing record page : $pageNumber" -PercentComplete -1;
             }
             if ($results.Entities.Count -gt 0) {
-                if ($null -eq $records) {
-                    $records = $results.Entities;
-                }
-                else {
-                    $records += $results.Entities;
-                }
+                $objects = $results.Entities | ConvertTo-XrmObjects;
+                $records.AddRange($objects);
             }
             if ($enablePaging -and $results.MoreRecords) {
                 $pageNumber++;
@@ -87,7 +83,7 @@ function Get-XrmMultipleRecords {
         if ($enablePaging) {
             Write-Progress one one -completed;
         }
-        $records | ConvertTo-XrmObjects;
+        $records;
     }
     end {
         $StopWatch.Stop();
