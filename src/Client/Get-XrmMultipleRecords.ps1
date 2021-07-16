@@ -69,7 +69,12 @@ function Get-XrmMultipleRecords {
             }
             if ($results.Entities.Count -gt 0) {
                 $objects = $results.Entities | ConvertTo-XrmObjects;
-                $records.AddRange($objects);
+                if((Measure-Object -InputObject $objects).Count -eq 1) {
+                    $records.Add($objects) | Out-Null;
+                }
+                else {
+                    $records.AddRange($objects);
+                }
             }
             if ($enablePaging -and $results.MoreRecords) {
                 $pageNumber++;
