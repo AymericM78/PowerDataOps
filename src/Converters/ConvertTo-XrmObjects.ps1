@@ -24,7 +24,7 @@ function ConvertTo-XrmObjects {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        $object =  $InputObject | ConvertTo-XrmObject;
+        $object = $InputObject | ConvertTo-XrmObject;
         $records.Add($object) | Out-Null;
     }
     end {

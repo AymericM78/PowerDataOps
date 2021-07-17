@@ -65,11 +65,11 @@ function Get-XrmMultipleRecords {
         while ($true) {
             $results = Protect-XrmCommand -ScriptBlock { $XrmClient.RetrieveMultiple($Query) };
             if ($enablePaging) {
-                Write-Progress -Activity "Retrieving data from CRM" -Status "Processing record page : $pageNumber" -PercentComplete -1;
+                Write-Progress -Activity "Retrieving data from Microsoft Dataverse" -Status "Processing record page : $pageNumber" -PercentComplete -1;
             }
-            if ($results.Entities.Count -gt 0) {
+            if ($results.Entities.Count -gt 0) {               
                 $objects = $results.Entities | ConvertTo-XrmObjects;
-                if((Measure-Object -InputObject $objects).Count -eq 1) {
+                if($results.Entities.Count -eq 1) {
                     $records.Add($objects) | Out-Null;
                 }
                 else {
