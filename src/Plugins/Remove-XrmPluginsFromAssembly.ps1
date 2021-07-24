@@ -34,7 +34,7 @@ function Remove-XrmPluginsFromAssembly {
             return;
         }
 
-        $querySteps = New-XrmQueryExpression -LogicalName "sdkmessageprocessingstep";
+        $querySteps = New-XrmQueryExpression -LogicalName "sdkmessageprocessingstep" -Columns "name";
         $link = $querySteps | Add-XrmQueryLink -ToEntityName "plugintype" -FromAttributeName "eventhandler" -ToAttributeName "plugintypeid"  `
             | Add-XrmQueryLinkCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id;
         $steps = $XrmClient | Get-XrmMultipleRecords -Query $querySteps;
@@ -43,11 +43,16 @@ function Remove-XrmPluginsFromAssembly {
             ForEach-ObjectWithProgress -Collection $steps -OperationName "Removing plugin steps from $AssemblyName" -ScriptBlock {
                 param($step)
 
-                Remove-XrmRecord -XrmClient $XrmClient -Record $step.Record;
+                try {
+                    Remove-XrmRecord -XrmClient $XrmClient -Record $step.Record;
+                }
+                catch {
+                    Write-HostAndLog -Message " > Unable to remove plugin step : $($step.name)" -Level WARN;
+                }
             }
         }
 
-        $queryTypes = New-XrmQueryExpression -LogicalName "plugintype" `
+        $queryTypes = New-XrmQueryExpression -LogicalName "plugintype" -Columns "name" `
             | Add-XrmQueryCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id `
             | Add-XrmQueryCondition -Field "isworkflowactivity" -Condition Equal -Values $false;
         $types = $XrmClient | Get-XrmMultipleRecords -Query $queryTypes;
@@ -56,7 +61,12 @@ function Remove-XrmPluginsFromAssembly {
             ForEach-ObjectWithProgress -Collection $types -OperationName "Removing plugin types from $AssemblyName" -ScriptBlock {
                 param($type)
 
-                Remove-XrmRecord -XrmClient $XrmClient -Record $type.Record;
+                try {
+                    Remove-XrmRecord -XrmClient $XrmClient -Record $type.Record; 
+                }
+                catch {
+                    Write-HostAndLog -Message " > Unable to remove plugin type : $($type.name)" -Level WARN;
+                }
             }
         }
     }

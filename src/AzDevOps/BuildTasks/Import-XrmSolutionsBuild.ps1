@@ -79,13 +79,15 @@ function Import-XrmSolutionsBuild {
             Write-HostAndLog -Message " - $($solutionName)" -Level INFO;
         }
 
-        Write-HostAndLog -Message "Clearing plugin steps and types:" -Level INFO;
-        Remove-XrmPluginsFromAssembly -AssemblyName $PluginAssemblyName;
-        Write-HostAndLog -Message "Plugin steps and types cleared!" -Level SUCCESS;
-
         foreach ($solution in $orderedSolutions) {	    
             $solutionUniqueName = $solution.ToString().Split(";")[0];
             $solutionFilePath = $solution.ToString().Split(";")[1];
+
+            if ($orderedSolutions.Length -eq 1 -or $solutionUniqueName.ToLower().Contains("plugin")) {                    
+                Write-HostAndLog -Message "Clearing plugin steps and types:" -Level INFO;
+                Remove-XrmPluginsFromAssembly -AssemblyName $PluginAssemblyName;
+                Write-HostAndLog -Message "Plugin steps and types cleared!" -Level SUCCESS;
+            }
             
             Write-HostAndLog -Message "Importing $solutionUniqueName from $solutionFilePath" -Level INFO;
             $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $Upgrade;
