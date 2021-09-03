@@ -37,7 +37,11 @@ function New-XrmClient {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $IsEncrypted = $false
+        $IsEncrypted = $false,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Quiet = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -62,7 +66,7 @@ function New-XrmClient {
 
             # Warn about Office365 authentication
             $authType = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "AuthType";
-            if($authType -eq "Office365")
+            if(-not $Quiet -and $authType -eq "Office365")
             {
                 Write-HostAndLog -Message "============================================================================" -Level WARN;
                 Write-HostAndLog -Message "/!\ Office365 authentication type is deprecated!" -Level WARN;
@@ -90,7 +94,9 @@ function New-XrmClient {
             $userName = $userId;
         }
         
-        Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $url | User : $userName]" -ForegroundColor Yellow;        
+        if(-not $Quiet) {
+            Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $url | User : $userName]" -ForegroundColor Yellow; 
+        }
         $XrmClient;
     }
     end {

@@ -232,8 +232,19 @@ function Save-BookMark {
     $bookmarkContent = [IO.File]::ReadAllText($bookmarksFilePath);
     $bookmark = $bookmarkContent | ConvertFrom-Json;
 
+    # Remove existing "!NEW FAVORITES!" nodes
+    $children = @();
+    foreach ($node in $bookmark.roots.bookmark_bar.children) {
+        if ($node.name -eq "!NEW FAVORITES!") {
+            continue;
+        }
+        $children += $node;
+    }
+    $bookmark.roots.bookmark_bar.children = $children;
+
     # Configure chrome : Add favorites
     $bookmark.roots.bookmark_bar.children += $RootBookmark;
+
     $bookmarkContent = $bookmark | ConvertTo-Json -Depth 32;
     $bookmarkContent | Out-File -FilePath $bookmarksFilePath -Encoding utf8 -Force;
     Write-HostAndLog "[OK]" -ForegroundColor Green -NoTimeStamp;
@@ -270,7 +281,7 @@ function Get-XrmFavorites {
         Write-HostAndLog $instance.DisplayName -NoNewline -NoTimeStamp -ForegroundColor Yellow;
         Write-HostAndLog " instance..." -NoNewline -NoTimeStamp -ForegroundColor Gray;
 
-        if(-not $instance.Url){
+        if (-not $instance.Url) {
             Write-HostAndLog "[Ignored]" -NoTimeStamp -ForegroundColor Gray;
             continue;
         }
@@ -282,7 +293,7 @@ function Get-XrmFavorites {
         }
 
         try {
-            $xrmClient = New-XrmClient -ConnectionString $crmConnectionString;
+            $xrmClient = New-XrmClient -ConnectionString $crmConnectionString -Quiet;
             $url = $instance.Url;
             $instanceFolder = $d365Folder.AddChild($instance.DisplayName);
             $instanceFolder.AddChild("Admin", "$url/main.aspx?settingsonly=true");
