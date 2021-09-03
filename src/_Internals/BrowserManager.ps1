@@ -270,6 +270,11 @@ function Get-XrmFavorites {
         Write-HostAndLog $instance.DisplayName -NoNewline -NoTimeStamp -ForegroundColor Yellow;
         Write-HostAndLog " instance..." -NoNewline -NoTimeStamp -ForegroundColor Gray;
 
+        if(-not $instance.Url){
+            Write-HostAndLog "[Ignored]" -NoTimeStamp -ForegroundColor Gray;
+            continue;
+        }
+
         $crmConnectionString = $instance | Out-XrmConnectionString;
         
         if (-not [string]::IsNullOrWhiteSpace($OverrideConnectionStringFormat)) {
