@@ -296,8 +296,17 @@ function Get-XrmFavorites {
             $xrmClient = New-XrmClient -ConnectionString $crmConnectionString -Quiet;
             $url = $instance.Url;
             $instanceFolder = $d365Folder.AddChild($instance.DisplayName);
+            $instanceFolder.AddChild("Home", "$url/main.aspx?forceUCI=1&pagetype=apps");
             $instanceFolder.AddChild("Admin", "$url/main.aspx?settingsonly=true");
-
+            
+            $adminFolder = $instanceFolder.AddChild("Admin Center");
+            $envId = $xrmClient.EnvironmentId;
+            $orgId = $xrmClient.ConnectedOrgId.Guid;
+            $adminFolder.AddChild("Admin Center", "https://admin.powerplatform.microsoft.com/environments/environment/$envId/hub");
+            $adminFolder.AddChild("Settings", "https://admin.powerplatform.microsoft.com/environments/$orgId/Settings");
+            $adminFolder.AddChild("Users", "https://admin.powerplatform.microsoft.com/environments/$orgId/$envId/users");
+            $adminFolder.AddChild("App Users", "https://admin.powerplatform.microsoft.com/environments/$orgId/appusers");
+            
             $apps = $xrmClient | Get-XrmMultipleRecords -Query $queryApps;
             foreach ($app in $apps) {
                 $appName = $app.uniquename;
