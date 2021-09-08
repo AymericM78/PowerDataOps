@@ -66,7 +66,7 @@ function Import-XrmSolutionsBuild {
 
         $orderedSolutions = @();
         foreach ($solutionName in $solutionsToImport) {	
-            $solutionFilePath = $solutionFilePaths | Where-Object { $_.Name.Contains($solutionName); };
+            $solutionFilePath = $solutionFilePaths | Where-Object { $_.Name.Contains($solutionName); } | Select-Object -First 1;
             if (-not $solutionFilePath) {
                 throw "Solution '$solutionName' not found in $($ArtifactsPath)";
             }
