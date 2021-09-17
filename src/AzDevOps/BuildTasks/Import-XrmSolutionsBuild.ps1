@@ -66,10 +66,23 @@ function Import-XrmSolutionsBuild {
 
         $orderedSolutions = @();
         foreach ($solutionName in $solutionsToImport) {	
-            $solutionFilePath = $solutionFilePaths | Where-Object { $_.Name.Contains($solutionName); } | Select-Object -First 1;
-            if (-not $solutionFilePath) {
-                throw "Solution '$solutionName' not found in $($ArtifactsPath)";
+
+            # Solution file name detection
+            # ----------------------------
+            # > Case 1 : managed solution
+            $solutionFilePath = $solutionFilePaths | Where-Object { $_.Name.EndsWith("$($solutionName)_managed.zip"); } | Select-Object -First 1;
+            if(-not $solutionFilePath) {
+                # > Case 2 : unmanaged solution
+                $solutionFilePath = $solutionFilePaths | Where-Object { $_.Name.EndsWith("$($solutionName).zip"); } | Select-Object -First 1;
+                if(-not $solutionFilePath) {
+                    # > Case 3 : other ?
+                    $solutionFilePath = $solutionFilePaths | Where-Object { $_.Name.Contains($solutionName); } | Select-Object -First 1;
+                    if (-not $solutionFilePath) {
+                        throw "Solution '$solutionName' not found in $($ArtifactsPath)";
+                    }
+                }
             }
+
             $orderedSolutions += "$solutionName;$solutionFilePath";
         }
 
