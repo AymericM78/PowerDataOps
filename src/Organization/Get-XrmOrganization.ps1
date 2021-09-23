@@ -29,7 +29,7 @@ function Get-XrmOrganization {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        $query = New-XrmQueryExpression -LogicalName "organization" -Columns $Columns;
+        $query = New-XrmQueryExpression -LogicalName "organization" -Columns $Columns -TopCount 1;
         $results = $XrmClient | Get-XrmMultipleRecords -Query $query;
 
         $organization = $results | Select-Object -First 1;
