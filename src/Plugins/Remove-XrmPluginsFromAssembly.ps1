@@ -32,9 +32,9 @@ function Remove-XrmPluginsFromAssembly {
         $assembly = Get-XrmRecord -LogicalName "pluginassembly" -AttributeName "name" -Value $AssemblyName;
         if (-not $assembly) {
             return;
-        }
+        }        
 
-        $querySteps = New-XrmQueryExpression -LogicalName "sdkmessageprocessingstep" -Columns "name";
+        $querySteps = New-XrmQueryExpression -LogicalName "sdkmessageprocessingstep" -Columns *  | Add-XrmQueryCondition -Field "rank" -Condition GreaterThan -Values 0 ;
         $link = $querySteps | Add-XrmQueryLink -ToEntityName "plugintype" -FromAttributeName "eventhandler" -ToAttributeName "plugintypeid"  `
             | Add-XrmQueryLinkCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id;
         $steps = $XrmClient | Get-XrmMultipleRecords -Query $querySteps;
