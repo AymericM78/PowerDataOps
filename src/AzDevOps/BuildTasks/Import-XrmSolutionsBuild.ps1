@@ -38,6 +38,14 @@ function Import-XrmSolutionsBuild {
         $SolutionsImportOrder = $($env:SOLUTIONS_IMPORTORDER),
 
         [Parameter(Mandatory = $false)]
+        [String]
+        $SolutionsImportIgnore = $($env:SOLUTIONS_IMPORTIGNORE),
+
+        [Parameter(Mandatory = $false)]
+        [String]
+        $SolutionsImportUpgrade = $($env:SOLUTIONS_IMPORTUPGRADE),
+
+        [Parameter(Mandatory = $false)]
         [bool]
         $ClearPluginStepsAndTypes = $true,
 
@@ -64,6 +72,9 @@ function Import-XrmSolutionsBuild {
         $solutionsToImport = $SolutionsImportOrder.Split(",");
         $solutionFilePaths = Get-ChildItem -Path "$ArtifactsPath\*.zip" -recurse;
 
+        $solutionsToIgnore = $SolutionsImportIgnore.Split(",");
+        $solutionsToUpgrade = $SolutionsImportUpgrade.Split(",");
+
         $orderedSolutions = @();
         foreach ($solutionName in $solutionsToImport) {	
 
@@ -89,12 +100,25 @@ function Import-XrmSolutionsBuild {
         Write-HostAndLog -Message "Solutions will be deployed in the following order:" -Level INFO;
         foreach ($solution in $orderedSolutions) {
             $solutionName = $solution.ToString().Split(";")[0];
-            Write-HostAndLog -Message " - $($solutionName)" -Level INFO;
+            $ignore = "";
+            if($solutionsToIgnore.Contains($solutionName)) {
+                $ignore = " [Ignored] "
+            }
+            $upgrade = "";
+            if($solutionsToUpgrade.Contains($solutionName)) {
+                $upgrade = " [Upgrade] "
+            }
+            Write-HostAndLog -Message " - $($solutionName) $ignore $upgrade" -Level INFO;
         }
 
         foreach ($solution in $orderedSolutions) {	    
             $solutionUniqueName = $solution.ToString().Split(";")[0];
             $solutionFilePath = $solution.ToString().Split(";")[1];
+
+            if($solutionsToIgnore.Contains($solutionUniqueName)) {
+                Write-HostAndLog -Message "Solution $solutionUniqueName will not be imported (ignored)" -Level INFO;
+                continue;
+            }
 
             if ($orderedSolutions.Length -eq 1 -or $solutionUniqueName.ToLower().Contains("plugin")) {                    
                 Write-HostAndLog -Message "Clearing plugin steps and types:" -Level INFO;
@@ -103,7 +127,11 @@ function Import-XrmSolutionsBuild {
             }
             
             Write-HostAndLog -Message "Importing $solutionUniqueName from $solutionFilePath" -Level INFO;
-            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $Upgrade;
+            $upgrade = $false;
+            if(-not $Upgrade) {
+                $upgrade = $solutionsToUpgrade.Contains($solutionUniqueName);
+            }
+            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $upgrade;
             Write-HostAndLog -Message "Solution $($solutionUniqueName) successfully imported" -Level SUCCESS;
 
             if ($env:SLACKURL) {
