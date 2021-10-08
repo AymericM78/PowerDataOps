@@ -12,7 +12,7 @@
 RootModule = 'PowerDataOps'
 
 # Version number of this module.
-ModuleVersion = '1.0.0.73'
+ModuleVersion = '1.0.0.74'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
