@@ -52,9 +52,21 @@ function Remove-XrmPluginsFromAssembly {
             }
         }
 
-        $queryTypes = New-XrmQueryExpression -LogicalName "plugintype" -Columns "name" `
-            | Add-XrmQueryCondition -Field "pluginassemblyid" -Condition Equal -Values $assembly.Id `
-            | Add-XrmQueryCondition -Field "isworkflowactivity" -Condition Equal -Values $false;
+        $fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+                        <entity name="plugintype">
+                            <attribute name="plugintypeid" />
+                            <filter type="and">
+                                <condition attribute="pluginassemblyid" operator="eq" uiname="Plugins" uitype="pluginassembly" value="[AssemblyId]" />
+                                <condition attribute="isworkflowactivity" operator="eq" value="0" />
+                            </filter>
+                            <link-entity name="sdkmessageprocessingstep" from="plugintypeid" to="plugintypeid" link-type="outer" alias="af" />
+                            <filter type="and">
+                                <condition entityname="af" attribute="plugintypeid" operator="null" />
+                            </filter>
+                        </entity>
+                    </fetch>';
+        $fetchXml = $fetchXml.Replace("[AssemblyId]", $assembly.Id);
+        $queryTypes = Get-XrmQueryFromFetch -FetchXml $fetchXml;
         $types = $XrmClient | Get-XrmMultipleRecords -Query $queryTypes;
 
         if ($types) {

@@ -40,7 +40,16 @@ function Add-XrmQueryLink {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [String]
-        $ToAttributeName
+        $ToAttributeName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $Alias,
+
+        [Parameter(Mandatory = $false)]
+        [Microsoft.Xrm.Sdk.Query.JoinOperator]
+        $JoinOperator =  [Microsoft.Xrm.Sdk.Query.JoinOperator]::Inner
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -48,7 +57,10 @@ function Add-XrmQueryLink {
     }    
     process {
 
-        $link = $Query.AddLink($ToEntityName, $FromAttributeName, $ToAttributeName);
+        $link = $Query.AddLink($ToEntityName, $FromAttributeName, $ToAttributeName, $JoinOperator);
+        if ($PSBoundParameters.ContainsKey('Alias')) {
+            $link.EntityAlias = $Alias;
+        }
         $link;
     }
     end {

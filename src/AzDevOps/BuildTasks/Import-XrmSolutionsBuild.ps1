@@ -100,15 +100,15 @@ function Import-XrmSolutionsBuild {
         Write-HostAndLog -Message "Solutions will be deployed in the following order:" -Level INFO;
         foreach ($solution in $orderedSolutions) {
             $solutionName = $solution.ToString().Split(";")[0];
-            $ignore = "";
+            $ignoreFlag = "";
             if($solutionsToIgnore.Contains($solutionName)) {
-                $ignore = " [Ignored] "
+                $ignoreFlag = " [Ignored] "
             }
-            $upgrade = "";
+            $upgradeFlag = "";
             if($solutionsToUpgrade.Contains($solutionName)) {
-                $upgrade = " [Upgrade] "
+                $upgradeFlag = " [Upgrade] "
             }
-            Write-HostAndLog -Message " - $($solutionName) $ignore $upgrade" -Level INFO;
+            Write-HostAndLog -Message " - $($solutionName) $ignoreFlag $upgradeFlag" -Level INFO;
         }
 
         foreach ($solution in $orderedSolutions) {	    
@@ -127,11 +127,11 @@ function Import-XrmSolutionsBuild {
             }
             
             Write-HostAndLog -Message "Importing $solutionUniqueName from $solutionFilePath" -Level INFO;
-            $upgrade = $false;
+            $upgradeRequired = $false;
             if(-not $Upgrade) {
-                $upgrade = $solutionsToUpgrade.Contains($solutionUniqueName);
+                $upgradeRequired = $solutionsToUpgrade.Contains($solutionUniqueName);
             }
-            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $upgrade;
+            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $upgradeRequired;
             Write-HostAndLog -Message "Solution $($solutionUniqueName) successfully imported" -Level SUCCESS;
 
             if ($env:SLACKURL) {
