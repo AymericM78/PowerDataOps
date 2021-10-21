@@ -49,6 +49,8 @@ New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Name "L
 $Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, "Logs");
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
 
-$module = Get-Module -Name PowerDataOps;
-$moduleVersion = $module.Version.ToString();
-Write-Host "PowerDataOps version = (v$moduleVersion)";
+$module = Get-Module -Name PowerDataOps -ListAvailable;
+if($module) {
+    $moduleVersion = $module.Version.ToString();
+    Write-Host "PowerDataOps version = (v$moduleVersion)";
+}
