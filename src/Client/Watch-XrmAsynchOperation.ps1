@@ -45,6 +45,7 @@ function Watch-XrmAsynchOperation {
 
         $retryCount = 0;
         $maxRetries = 10;
+        $waitingStatusValue = @(0, 10);
         $completedStatusValue = @(30, 31, 32);
         $completed = $false;
         
@@ -59,8 +60,15 @@ function Watch-XrmAsynchOperation {
                     throw "Asynch operation '$AsyncOperationId' not found!"
                 }
             }            
-            if ($PSBoundParameters.ScriptBlock) {
-                Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $asynchOperation;
+            
+            $waiting = $waitingStatusValue.Contains($asynchOperation.statuscode_value.Value);        
+            if($waiting){
+                Write-HostAndLog " > Asyncoperation $AsyncOperationId is waiting for execution..." -ForegroundColor Gray;
+            }
+            else {
+                if ($PSBoundParameters.ScriptBlock) {
+                    Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $asynchOperation;
+                }
             }
 
             $completed = $completedStatusValue.Contains($asynchOperation.statuscode_value.Value);
