@@ -48,3 +48,7 @@ $timestamp = Get-date -format "yyyy-MM-dd -- HH-mm-ss";
 New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Name "Logs" -Force | Out-Null;
 $Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, "Logs");
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
+
+$module = Get-Module -Name PowerDataOps;
+$moduleVersion = $module.Version.ToString();
+Write-Host "PowerDataOps version = (v$moduleVersion)";

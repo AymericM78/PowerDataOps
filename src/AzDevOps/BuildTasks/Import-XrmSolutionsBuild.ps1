@@ -68,6 +68,8 @@ function Import-XrmSolutionsBuild {
 
         Write-HostAndLog -Message " - Param : ArtifactsPath = $ArtifactsPath" -Level INFO;
         Write-HostAndLog -Message " - Param : SolutionsImportOrder = $SolutionsImportOrder" -Level INFO;
+        Write-HostAndLog -Message " - Param : SolutionsImportUpgrade = $SolutionsImportUpgrade" -Level INFO;
+        Write-HostAndLog -Message " - Param : SolutionsImportIgnore = $SolutionsImportIgnore" -Level INFO;
 
         $solutionsToImport = $SolutionsImportOrder.Split(",");
         $solutionFilePaths = Get-ChildItem -Path "$ArtifactsPath\*.zip" -recurse;
