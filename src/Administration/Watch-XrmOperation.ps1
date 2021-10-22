@@ -34,6 +34,9 @@ function Watch-XrmOperation {
             Start-Sleep -Seconds $PollingIntervalSeconds;
                 
             $operationData = Get-AdminPowerAppOperationStatus -OperationStatusUrl $OperationUrl;
+            if(-not $operationData) { 
+                continue;
+            }
             $operation = $operationData.Internal.Content | ConvertFrom-Json;
 
             $state = $operation.state.id;
