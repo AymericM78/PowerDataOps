@@ -54,7 +54,7 @@ function Import-XrmSolution {
         
         [Parameter(Mandatory = $false)]
         [Boolean]
-        $OverwriteUnmanagedCustomizations = $true,
+        $OverwriteUnmanagedCustomizations = $false,
 
         [Parameter(Mandatory = $false)]
         [Boolean]
