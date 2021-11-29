@@ -1,26 +1,26 @@
 <#
     .SYNOPSIS
-    Associate records in Dataverse.
+    Disassociate records in Dataverse.
 
     .Description
-    Add a link between 1 row (Entity record) and multiple rows in Microsoft Dataverse.
+    Remove a link between 1 row (Entity record) and multiple rows in Microsoft Dataverse.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 
     .PARAMETER Record
-    Row / Record to join. (Entity)
+    Row / Record to split. (Entity)
 
     .PARAMETER RecordReferences
-    Rows / Records references to link to Record. (EntityReference array)
+    Rows / Records references to split to Record. (EntityReference array)
 
     .PARAMETER RelationShipName
     RelationShip Logical name involve between these records.
 
     .PARAMETER IgnoreExistings
-    Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
+    Prevent exceptions if record associations doesn't exist.
 #>
-function Join-XrmRecords {
+function Split-XrmRecords {
     [CmdletBinding()]
     param
     (    
@@ -38,11 +38,7 @@ function Join-XrmRecords {
 
         [Parameter(Mandatory = $true)]
         [string]
-        $RelationShipName,
-
-        [Parameter(Mandatory = $false)]
-        [bool]
-        $IgnoreExistings = $true        
+        $RelationShipName
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -55,18 +51,8 @@ function Join-XrmRecords {
         $RecordReferences | ForEach-Object {
             $recordReferenceCollection.Add($_);
         }
-
-        try {
-            $XrmClient.Associate($RecordReference.LogicalName, $RecordReference.Id, $relationShip, $recordReferenceCollection);
-        }
-        catch {
-            if ($IgnoreExistings -and $_.Exception.Message.Contains("Cannot insert duplicate key")) {
-                return;
-            }
-            else {
-                throw $_.Exception;
-            }
-        }
+        
+        $XrmClient.Disassociate($RecordReference.LogicalName, $RecordReference.Id, $relationShip, $recordReferenceCollection);        
     }
     end {
         $StopWatch.Stop();
@@ -74,4 +60,4 @@ function Join-XrmRecords {
     }    
 }
 
-Export-ModuleMember -Function Join-XrmRecords -Alias *;
+Export-ModuleMember -Function Split-XrmRecords -Alias *;

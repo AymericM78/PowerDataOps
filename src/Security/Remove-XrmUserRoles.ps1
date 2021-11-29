@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Add security roles to user.
+    Remove security roles to user.
 
     .DESCRIPTION
-    Assign on or multiple roles to given user.
+    Unassign one or multiple roles to given user.
 
     .PARAMETER UserId
     System user unique identifier.
@@ -11,7 +11,7 @@
     .PARAMETER Roles
     Roles unique identifier array to add.
 #>
-function Add-XrmUserRoles {
+function Remove-XrmUserRoles {
     [CmdletBinding()]    
     param
     (        
@@ -37,11 +37,11 @@ function Add-XrmUserRoles {
             $roleReference = New-XrmEntityReference -LogicalName "role" -Id $_;
             $roleReferences.Add($roleReference);
         }
-        Join-XrmRecords -XrmClient $XrmClient -RecordReference $UserReference -RecordReferences $roleReferences  -RelationShipName "systemuserroles_association";
+        Split-XrmRecords -XrmClient $XrmClient -RecordReference $UserReference -RecordReferences $roleReferences -RelationShipName "systemuserroles_association";        
     }
     end {
         $StopWatch.Stop();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
     }    
 }
-Export-ModuleMember -Function Add-XrmUserRoles -Alias *;
+Export-ModuleMember -Function Remove-XrmUserRoles -Alias *;
