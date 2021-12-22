@@ -16,7 +16,8 @@ Columns|String[]|3|false|@("solutionid", "uniquename", "friendlyname", "version"
 ## Usage
 
 ```Powershell 
-Select-XrmSolutions [[-XrmClient] <CrmServiceClient>] [[-OutputMode] {None | Single | Multiple}] [[-Columns] <String[]>] [<CommonParameters>]
+Select-XrmSolutions [[-XrmClient] <CrmServiceClient>] [[-OutputMode] {None | Single | Multiple}] [[-Columns] 
+<String[]>] [<CommonParameters>]
 ``` 
 
 

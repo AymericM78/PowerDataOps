@@ -1,8 +1,8 @@
-﻿# Command : `Add-XrmUserRoles` 
+﻿# Command : `Remove-XrmUserRoles` 
 
 ## Description
 
-**Add security roles to user.** : Assign on or multiple roles to given user.
+**Remove security roles to user.** : Unassign one or multiple roles to given user.
 
 ## Inputs
 
@@ -16,7 +16,7 @@ Roles|Guid[]|3|true|@()|Roles unique identifier array to add.
 ## Usage
 
 ```Powershell 
-Add-XrmUserRoles [[-XrmClient] <CrmServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> 
+Remove-XrmUserRoles [[-XrmClient] <CrmServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> 
 [<CommonParameters>]
 ``` 
 

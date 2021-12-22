@@ -51,6 +51,7 @@ Command|Synopsis
 [Protect-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Protect-XrmCommand.md)|Protect command from API Limit issues.<br/>This cmdlet provide a core method for all API calls to Microsoft Dataverse.<br/>The aim is to provide a retry pattern to prevent technical issues as API Limits or network connectivity
 [Remove-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmRecord.md)|Remove record from Microsoft Dataverse.<br/>Delete row (entity record) from Microsoft Dataverse table by logicalname + id or by Entity object.
 [Set-XrmClientTimeout](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmClientTimeout.md)|Specify CrmserviceClient timeout.<br/>Extend default CrmserviceClient timeout.
+[Split-XrmRecords](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Split-XrmRecords.md)|Disassociate records in Dataverse.<br/>Remove a link between 1 row (Entity record) and multiple rows in Microsoft Dataverse.
 [Update-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmRecord.md)|Update entity record in Microsoft Dataverse.<br/>Update row (entity record) from Microsoft Dataverse table.
 [Update-XrmRecordFileUpload](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmRecordFileUpload.md)|Upload a file to an entity record's file attribute field in Microsoft Dataverse.<br/>Upload a file to a date row's (entity record's) file field from Microsoft Dataverse table.
 [Upsert-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmRecord.md)|Upsert entity record in Dataverse.<br/>Upsert row (entity record) from Microsoft Dataverse table.
@@ -152,6 +153,7 @@ Command|Synopsis
 [Get-XrmUserRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmUserRoles.md)|Retrieve user assigned security roles.<br/>Get security roles associated to given user.
 [Get-XrmUsers](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmUsers.md)|Retrieve users.<br/>Get all system users from instance.
 [Get-XrmUsersRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmUsersRoles.md)|Retrieve assigned security roles for all users.<br/>Get all users with associated roles. This could help to determine unused roles or bad configurations.
+[Remove-XrmUserRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmUserRoles.md)|Remove security roles to user.<br/>Unassign one or multiple roles to given user.
 # `Components` commands
 
 Command|Synopsis
