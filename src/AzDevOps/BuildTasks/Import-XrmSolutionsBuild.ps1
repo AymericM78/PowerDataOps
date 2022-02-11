@@ -128,10 +128,7 @@ function Import-XrmSolutionsBuild {
                 $upgradeRequired = $solutionsToUpgrade.Contains($solutionUniqueName);
             }
             
-            if ($orderedSolutions.Length -eq 1 -or $solutionUniqueName.ToLower().Contains("plugin")) {                    
-                # Write-HostAndLog -Message "Clearing plugin steps and types:" -Level INFO;
-                # Remove-XrmPluginsFromAssembly -AssemblyName $PluginAssemblyName;
-                # Write-HostAndLog -Message "Plugin steps and types cleared!" -Level SUCCESS;
+            if ($solutionUniqueName.ToLower().Contains("plugin")) {
                 Write-HostAndLog -Message "Solution $solutionUniqueName contains plugins : force upgrade." -Level INFO;
                 $upgradeRequired = $true;
             }
