@@ -50,7 +50,6 @@ function Export-XrmConnectionToXrmToolBox {
     }    
     process {
         
-        $encryptedPassword = Protect-XrmToolBoxPassword -Password $XrmConnection.Password;
         $filePath = "$XtbConnectionPath\$($Name).xml";
         $instances = Get-XrmInstances;
         
@@ -61,21 +60,29 @@ function Export-XrmConnectionToXrmToolBox {
         $fileContent.AppendLine('   <Connections>') | Out-Null;
 
         foreach ($instance in $instances) {
+            if(-not $instance.Url) {
+                continue;
+            }
+
             $serverName = $instance.Url.Replace("https://", "");
             $orgDataSvcUrl = "$($instance.Url)/XRMServices/2011/OrganizationData.svc";
             $orgSvcUrl = "$($instance.Url)/XRMServices/2011/Organization.svc";
 
             $connectionString = $instance | Out-XrmConnectionString;
-            $connectionString = $connectionString.Replace($XrmConnection.Password, $encryptedPassword);
-            if (([string]::IsNullOrWhiteSpace($OverrideConnectionStringFormat)) -eq $false) {
-                $connectionString = $OverrideConnectionStringFormat.Replace("{Url}", $instance.Url);
-
-                if ($connectionString.Contains("ClientSecret=")) {
-                    $clientSecret = $connectionString | Out-XrmConnectionStringParameter -ParameterName "ClientSecret";
-                    $encryptedClientSecret = Protect-XrmToolBoxPassword -Password $clientSecret;
-                    $connectionString = $connectionString.Replace($clientSecret, $encryptedClientSecret);
+            if($Global:XrmContext.CurrentConnection.AuthType -eq "Office365"){
+                $encryptedPassword = Protect-XrmToolBoxPassword -Password $XrmConnection.Password;
+                $connectionString = $connectionString.Replace($XrmConnection.Password, $encryptedPassword);
+            }
+            elseif($Global:XrmContext.CurrentConnection.AuthType -eq "OAuth"){
+                if($XrmConnection.Password){
+                    $encryptedPassword = Protect-XrmToolBoxPassword -Password $XrmConnection.Password;
+                    $connectionString = $connectionString.Replace($XrmConnection.Password, $encryptedPassword);
                 }
             }
+            elseif ($Global:XrmContext.CurrentConnection.AuthType -eq "ClientSecret"){
+                $encryptedClientSecret = Protect-XrmToolBoxPassword -Password $XrmConnection.ClientSecret;
+                $connectionString = $connectionString.Replace($XrmConnection.ClientSecret, $encryptedClientSecret);
+            }            
             
             $fileContent.AppendLine('     <ConnectionDetail>') | Out-Null;        
             $fileContent.AppendLine('       <ConnectionString>' + $connectionString + '</ConnectionString>') | Out-Null;
