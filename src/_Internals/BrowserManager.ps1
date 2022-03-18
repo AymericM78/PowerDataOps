@@ -162,12 +162,14 @@ function Get-DefaultBookmark {
     $powerPlatformFolder = $mainFolder.AddChild("Power Platform");
     $powerPlatformFolder.AddChild("Power Platform Admin", "https://admin.powerplatform.microsoft.com");
     $powerPlatformFolder.AddChild("Power Apps Maker", "https://make.powerapps.com");
+    $powerPlatformFolder.AddChild("Power Apps Maker (Preview)", "https://make.preview.powerapps.com");
     $powerPlatformFolder.AddChild("Power Automate (Flow)", "https://flow.microsoft.com/");
     $powerPlatformFolder.AddChild("Power BI", "https://app.powerbi.com");
     
     $cdsFolder = $mainFolder.AddChild("Dataverse");
     $cdsFolder.AddChild("Power Platform Admin", "https://admin.powerplatform.microsoft.com");
     $cdsFolder.AddChild("Power Apps Maker", "https://make.powerapps.com");
+    $powerPlatformFolder.AddChild("Power Apps Maker (Preview)", "https://make.preview.powerapps.com");
     $cdsFolder.AddChild("Customer Voice", "https://customervoice.microsoft.com/");
     
     $azureFolder = $mainFolder.AddChild("Azure");

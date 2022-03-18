@@ -113,9 +113,8 @@ function Connect-XrmAdmin {
             $success = $true;
         }
         else {
-            # Add-PowerAppsAccount;
-            # TODO : Handle manual auth scenario
-            $success = $false;
+            Add-PowerAppsAccount;
+            $success = $true;
         }
         $Global:XrmContext.IsAdminConnected = $success;
     }
