@@ -30,7 +30,7 @@ foreach ($module in $requiredModules) {
 }
 
 # Loading assemblies
-$binFolderPath = "$PSScriptRoot\src\Solutions\bin";
+$binFolderPath = "$PSScriptRoot\src\Assemblies";
 $assemblies = @("$binFolderPath\Microsoft.Xrm.Sdk.dll", "$binFolderPath\Microsoft.Crm.Sdk.Proxy.dll", "$binFolderPath\Microsoft.Xrm.Tooling.Connector.dll");
 foreach ($assemblyPath in $assemblies) {
     Add-Type -Path $assemblyPath;

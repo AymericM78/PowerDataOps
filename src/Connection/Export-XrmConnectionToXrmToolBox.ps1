@@ -63,6 +63,7 @@ function Export-XrmConnectionToXrmToolBox {
             if(-not $instance.Url) {
                 continue;
             }
+            $instance.Url = $instance.Url.TrimEnd('/');
 
             $serverName = $instance.Url.Replace("https://", "");
             $orgDataSvcUrl = "$($instance.Url)/XRMServices/2011/OrganizationData.svc";

@@ -297,6 +297,10 @@ function Get-XrmFavorites {
         try {
             $xrmClient = New-XrmClient -ConnectionString $crmConnectionString -Quiet;
             $url = $instance.Url;
+            if(-not $url){
+                continue;
+            }
+            $url = $url.TrimEnd('/');
             $instanceFolder = $d365Folder.AddChild($instance.DisplayName);
             $instanceFolder.AddChild("Home", "$url/main.aspx?forceUCI=1&pagetype=apps");
             $instanceFolder.AddChild("Admin", "$url/main.aspx?settingsonly=true");

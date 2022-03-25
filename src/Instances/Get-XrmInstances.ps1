@@ -17,7 +17,7 @@ function Get-XrmInstances {
     process {
         
         $xrmInstances = @();
-        
+      
         if ($Global:XrmContext.IsAdminConnected) {
             $environments = Get-AdminPowerAppEnvironment;
             $environments | ForEach-Object {          
@@ -28,8 +28,11 @@ function Get-XrmInstances {
                 $xrmInstance.Id = $_.EnvironmentName;
                 $xrmInstance.Name = $metadata.domainName;
                 $xrmInstance.UniqueName = $metadata.uniqueName;
-                $xrmInstance.DisplayName = $_.DisplayName;       
-                $xrmInstance.Url = $metadata.instanceUrl;
+                $xrmInstance.DisplayName = $_.DisplayName;
+                $url = $metadata.instanceUrl;
+                if($url){
+                    $xrmInstance.Url = $url.TrimEnd('/');
+                }
                 $xrmInstance.ApiUrl = $metadata.instanceApiUrl;
                 $xrmInstance.TenantId = [Guid]::Empty;
                 $xrmInstance.Location = $_.Location;
@@ -56,7 +59,10 @@ function Get-XrmInstances {
                 $xrmInstance.Name = $_.UrlHostName;
                 $xrmInstance.UniqueName = $_.UniqueName;
                 $xrmInstance.DisplayName = $_.FriendlyName;
-                $xrmInstance.Url = $_.WebApplicationUrl;
+                $url = $metadata.WebApplicationUrl;
+                if($url){
+                    $xrmInstance.Url = $url.TrimEnd('/');
+                }
                 $xrmInstance.ApiUrl = $_.OrganizationWebAPIUrl;
                 $xrmInstance.TenantId = $_.TenantId;
 
