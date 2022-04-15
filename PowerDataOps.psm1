@@ -50,6 +50,9 @@ $Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFold
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
 
 $module = Get-Module -Name PowerDataOps -ListAvailable;
+if(-not $module){
+    return;
+}
 if($module.Count -gt 1) {
     Write-Host "Multiple PowerDataOps modules installed!" -ForegroundColor Yellow;
     foreach($version in $module){
