@@ -9,7 +9,7 @@
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 SolutionFilePath|String|1|true||Full path to solution file (.zip).
-SolutionPackagerExeFilePath|String|2|false|"$PSScriptRoot\bin\SolutionPackager.exe"|Full path to solution packager executable. (Default : $PSScriptRoot\bin\SolutionPackager.exe)
+SolutionPackagerExeFilePath|String|2|false|"$PSScriptRoot\..\Assemblies\SolutionPackager.exe"|Full path to solution packager executable. (Default : $PSScriptRoot\bin\SolutionPackager.exe)
 Action|String|3|true||The action to perform.
 The action can be either to extract a solution .zip file to a folder, or to pack a folder into a .zip file.
 PackageType|String|4|false|Both|The type of package to process. (Default: Both)

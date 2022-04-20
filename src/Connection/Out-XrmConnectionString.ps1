@@ -27,6 +27,12 @@ function Out-XrmConnectionString {
         # TODO : Handle different auth type connection string formats
         #   => https://docs.microsoft.com/fr-fr/powerapps/developer/common-data-service/xrm-tooling/use-connection-strings-xrm-tooling-connect
         $connectionString = "AuthType=$($xrmConnection.AuthType);";
+
+        if($xrmConnection.AuthType -eq "Office365"){                
+            # Override O365
+            $ConnectionString = "AuthType=OAuth;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Auto;";
+        }
+
         $connectionString += "Url=$($XrmInstance.Url);";
 
         if ($xrmConnection.AuthType -eq "Office365" -or $xrmConnection.AuthType -eq "AD" -or $xrmConnection.AuthType -eq "Ifd") {
