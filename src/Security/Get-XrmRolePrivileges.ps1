@@ -28,23 +28,26 @@ function Get-XrmRolePrivileges {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        if(-not $Global:PrivilegesCache){
-            $queryPrivileges = New-XrmQueryExpression -LogicalName "privilege" -Columns "name";
-            $allPrivileges = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $queryPrivileges;
-                
-            $Global:PrivilegesCache = @{};
-            foreach($privilege in $allPrivileges){
-                $Global:PrivilegesCache.Add($privilege.Id, $privilege.name);
-            }
-        }
-
         $request = New-XrmRequest -Name "RetrieveRolePrivilegesRole";
         $request = $request | Add-XrmRequestParameter -Name "RoleId" -Value $RoleId;
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
 
         $privileges = $response.Results["RolePrivileges"];
+
+        # Fix issue with empty privilege names
+        $queryRolePrivileges = New-XrmQueryExpression -LogicalName "roleprivileges" -Columns * -top 1000;
+        $queryRolePrivileges = $queryRolePrivileges | Add-XrmQueryCondition -Field "roleid" -Condition Equal -Values $RoleId;
+        $link = Add-XrmQueryLink -Query $queryRolePrivileges -FromAttributeName "privilegeid" -ToEntityName "privilege" -ToAttributeName "privilegeid" -Alias "priv" -JoinOperator Inner;
+        $link.Columns.AddColumn("name");
+        $rolePrivileges = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $queryRolePrivileges;
+        # Use dictionnary for better performances
+        $privilegesCache = @{};
+        foreach($privilege in $rolePrivileges){
+            $privilegesCache.Add($privilege.privilegeid, $privilege.'priv.name');
+        }
+        # Fill missing privilege names
         foreach($privilege in $privileges) {
-            $privilege.PrivilegeName = $Global:PrivilegesCache[$privilege.PrivilegeId];   
+            $privilege.PrivilegeName = $privilegesCache[$privilege.PrivilegeId];   
         }
         $privileges;
     }
