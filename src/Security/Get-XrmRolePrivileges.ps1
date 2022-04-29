@@ -28,12 +28,25 @@ function Get-XrmRolePrivileges {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        
+        if(-not $Global:PrivilegesCache){
+            $queryPrivileges = New-XrmQueryExpression -LogicalName "privilege" -Columns "name";
+            $allPrivileges = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $queryPrivileges;
+                
+            $Global:PrivilegesCache = @{};
+            foreach($privilege in $allPrivileges){
+                $Global:PrivilegesCache.Add($privilege.Id, $privilege.name);
+            }
+        }
+
         $request = New-XrmRequest -Name "RetrieveRolePrivilegesRole";
         $request = $request | Add-XrmRequestParameter -Name "RoleId" -Value $RoleId;
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
 
-        $response.Results["RolePrivileges"];
+        $privileges = $response.Results["RolePrivileges"];
+        foreach($privilege in $privileges) {
+            $privilege.PrivilegeName = $Global:PrivilegesCache[$privilege.PrivilegeId];   
+        }
+        $privileges;
     }
     end {
         $StopWatch.Stop();

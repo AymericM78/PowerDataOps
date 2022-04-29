@@ -29,7 +29,8 @@ function ConvertTo-XrmObject {
             "Reference"   = $Record.ToEntityReference()
         };
         
-        foreach ($attribute in $Record.Attributes) {
+        $attributes = $Record.Attributes | Sort-Object -Property Key;
+        foreach ($attribute in $attributes) {
             $value = "";
             if ($Record.FormattedValues.ContainsKey($attribute.Key)) {
                 $value = $Record.FormattedValues[$attribute.Key];
