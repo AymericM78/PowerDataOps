@@ -12,14 +12,16 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 RecordReference|EntityReference|2|true||
 RecordReferences|EntityReference[]|3|true||Rows / Records references to link to Record. (EntityReference array)
 RelationShipName|String|4|true||RelationShip Logical name involve between these records.
-IgnoreExistings|Boolean|5|false|True|Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
+RelationShipRole|EntityRole|5|false|Referenced|
+IgnoreExistings|Boolean|6|false|True|Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
 
 
 ## Usage
 
 ```Powershell 
 Join-XrmRecords [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] 
-<EntityReference[]> [-RelationShipName] <String> [[-IgnoreExistings] <Boolean>] [<CommonParameters>]
+<EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] 
+<Boolean>] [<CommonParameters>]
 ``` 
 
 
