@@ -42,7 +42,7 @@ function Join-XrmRecords {
 
         [Parameter(Mandatory = $false)]
         [Microsoft.Xrm.Sdk.EntityRole]
-        $RelationShipRole = [Microsoft.Xrm.Sdk.EntityRole]::Referenced,
+        $RelationShipRole = [Microsoft.Xrm.Sdk.EntityRole]::Referencing,
 
         [Parameter(Mandatory = $false)]
         [bool]
