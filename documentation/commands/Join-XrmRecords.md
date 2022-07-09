@@ -12,7 +12,7 @@ XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized t
 RecordReference|EntityReference|2|true||
 RecordReferences|EntityReference[]|3|true||Rows / Records references to link to Record. (EntityReference array)
 RelationShipName|String|4|true||RelationShip Logical name involve between these records.
-RelationShipRole|EntityRole|5|false|Referenced|
+RelationShipRole|EntityRole|5|false|Referencing|
 IgnoreExistings|Boolean|6|false|True|Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
 
 
