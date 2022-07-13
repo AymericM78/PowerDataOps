@@ -80,7 +80,7 @@ function New-XrmClient {
                 }
             }
 
-            $XrmClient = Get-CrmConnection -ConnectionString $ConnectionString -MaxCrmConnectionTimeOutMinutes $MaxCrmConnectionTimeOutMinutes -ErrorAction Stop;            
+            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString);           
         }
         else {
             $XrmClient = Get-CrmConnection -InteractiveMode;
