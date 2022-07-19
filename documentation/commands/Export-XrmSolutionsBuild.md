@@ -22,6 +22,7 @@ ExportOutlookSynchronizationSettings|Boolean|10|false|False|Specify if exported 
 ExportGeneralSettings|Boolean|11|false|False|Specify if exported solution should include General settings (Default: false)
 ExportMarketingSettings|Boolean|12|false|False|Specify if exported solution should include Marketing settings (Default: false)
 ExportRelationshipRoles|Boolean|13|false|False|Specify if exported solution should include RelationshipRoles (Default: false)
+ForceSyncExport|SwitchParameter|named|false|False|
 
 
 ## Usage
@@ -31,7 +32,7 @@ Export-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ExportPath] <String>]
 <Boolean>] [[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] 
 [[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] 
 [[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] 
-<Boolean>] [[-ExportRelationshipRoles] <Boolean>] [<CommonParameters>]
+<Boolean>] [[-ExportRelationshipRoles] <Boolean>] [-ForceSyncExport] [<CommonParameters>]
 ``` 
 
 

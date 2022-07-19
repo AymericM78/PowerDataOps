@@ -99,7 +99,11 @@ function Export-XrmSolutionsBuild {
 
         [Parameter(Mandatory = $false)]
         [Boolean]
-        $ExportRelationshipRoles = $false       
+        $ExportRelationshipRoles = $false,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $ForceSyncExport = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -126,7 +130,7 @@ function Export-XrmSolutionsBuild {
         $solutionList | ForEach-Object {
             
             Write-HostAndLog -Message "Exporting solution $($_)" -Level INFO;           
-            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $_ -Managed $Managed -ExportPath $ExportPath -ExportCalendarSettings $ExportCalendarSettings -ExportCustomizationSettings $ExportCustomizationSettings -ExportEmailTrackingSettings $ExportEmailTrackingSettings  -ExportAutoNumberingSettings $ExportAutoNumberingSettings  -ExportIsvConfig $ExportIsvConfig  -ExportOutlookSynchronizationSettings $ExportOutlookSynchronizationSettings  -ExportGeneralSettings $ExportGeneralSettings  -ExportMarketingSettings $ExportMarketingSettings  -ExportRelationshipRoles $ExportRelationshipRoles;                
+            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $_ -Managed $Managed -ExportPath $ExportPath -ExportCalendarSettings $ExportCalendarSettings -ExportCustomizationSettings $ExportCustomizationSettings -ExportEmailTrackingSettings $ExportEmailTrackingSettings  -ExportAutoNumberingSettings $ExportAutoNumberingSettings  -ExportIsvConfig $ExportIsvConfig  -ExportOutlookSynchronizationSettings $ExportOutlookSynchronizationSettings  -ExportGeneralSettings $ExportGeneralSettings  -ExportMarketingSettings $ExportMarketingSettings  -ExportRelationshipRoles $ExportRelationshipRoles -ForceSyncExport $ForceSyncExport;
             Write-HostAndLog -Message "Solution $($_) successfully exported to '$solutionFilePath' !" -Level SUCCESS;
 
             if ($env:SLACKURL) {
