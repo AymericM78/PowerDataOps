@@ -38,7 +38,11 @@ function Split-XrmRecords {
 
         [Parameter(Mandatory = $true)]
         [string]
-        $RelationShipName
+        $RelationShipName,        
+
+        [Parameter(Mandatory = $false)]
+        [Microsoft.Xrm.Sdk.EntityRole]
+        $RelationShipRole = [Microsoft.Xrm.Sdk.EntityRole]::Referencing
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -47,6 +51,8 @@ function Split-XrmRecords {
     process {
 
         $relationShip = New-Object -TypeName "Microsoft.Xrm.Sdk.Relationship" -ArgumentList $RelationShipName;
+        $relationShip.PrimaryEntityRole = $RelationShipRole;
+        
         $recordReferenceCollection = New-Object -TypeName "Microsoft.Xrm.Sdk.EntityReferenceCollection";
         $RecordReferences | ForEach-Object {
             $recordReferenceCollection.Add($_);
