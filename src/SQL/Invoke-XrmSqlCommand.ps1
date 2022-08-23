@@ -24,23 +24,16 @@ function Invoke-XrmSqlCommand {
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);      
+        if(-not $Global:XrmClient){
+            throw "Not connected to Dataverse instance (New-XrmClient)";
+        }
         Assert-XrmTdsEndpointEnabled;  
-        Assert-XrmTdsEndpointConnected;
     }    
     process {            
+        $sqlConnectionString = "server=$($Global:XrmClient.CrmConnectOrgUriActual.Host)";
 
-        $userName = $Global:XrmContext.CurrentConnection.UserName;
-        $password = $Global:XrmContext.CurrentConnection.Password;
-        $url = $Global:XrmContext.CurrentInstance.Url;
-
-        $url = $url.Replace("https://", "");
-        if($url.Contains('/'))
-        {
-            $url = $url.Remove($url.IndexOf('/'));
-        }
-
-        $connectionString = "Server=$url,5558;Authentication=Active Directory Password;Database=$url;User Id=$userName;Password=$password;";
-        $connection = new-object System.Data.SqlClient.SQLConnection($connectionString);
+        $connection = new-object System.Data.SqlClient.SQLConnection($sqlConnectionString);
+        $connection.AccessToken = $Global:XrmClient.CurrentAccessToken;
         $cmd = new-object System.Data.SqlClient.SqlCommand($Command, $connection);
 
         $connection.Open();
