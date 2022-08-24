@@ -16,8 +16,7 @@ Version|String|3|true||Version number to set.
 ## Usage
 
 ```Powershell 
-Set-XrmSolutionVersion [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [-Version] <String> 
-[<CommonParameters>]
+Set-XrmSolutionVersion [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [-Version] <String> [<CommonParameters>]
 ``` 
 
 

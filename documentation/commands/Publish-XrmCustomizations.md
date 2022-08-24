@@ -16,8 +16,7 @@ TimeOutInMinutes|Int32|3|false|10|Specify timeout duration in minute. (Default :
 ## Usage
 
 ```Powershell 
-Publish-XrmCustomizations [[-XrmClient] <CrmServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] 
-[<CommonParameters>]
+Publish-XrmCustomizations [[-XrmClient] <CrmServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 

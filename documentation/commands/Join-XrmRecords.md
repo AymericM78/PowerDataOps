@@ -19,9 +19,8 @@ IgnoreExistings|Boolean|6|false|True|Prevent exceptions if record associations a
 ## Usage
 
 ```Powershell 
-Join-XrmRecords [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] 
-<EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] 
-<Boolean>] [<CommonParameters>]
+Join-XrmRecords [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> 
+[[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] <Boolean>] [<CommonParameters>]
 ``` 
 
 

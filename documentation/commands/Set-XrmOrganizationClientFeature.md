@@ -16,8 +16,7 @@ Value|String|3|true||Client feature value to set.
 ## Usage
 
 ```Powershell 
-Set-XrmOrganizationClientFeature [[-XrmClient] <CrmServiceClient>] [-Name] <String> [-Value] <String> 
-[<CommonParameters>]
+Set-XrmOrganizationClientFeature [[-XrmClient] <CrmServiceClient>] [-Name] <String> [-Value] <String> [<CommonParameters>]
 ``` 
 
 

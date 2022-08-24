@@ -18,8 +18,7 @@ System.Guid
 ## Usage
 
 ```Powershell 
-Upsert-XrmRecord [[-XrmClient] <CrmServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] 
-[<CommonParameters>]
+Upsert-XrmRecord [[-XrmClient] <CrmServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] [<CommonParameters>]
 ``` 
 
 

@@ -16,8 +16,7 @@ UserQueryConditions|Object|3|false|@()|Query condition arrays used to filter use
 ## Usage
 
 ```Powershell 
-Get-XrmUsersRoles [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [[-UserQueryConditions] <Object>] 
-[<CommonParameters>]
+Get-XrmUsersRoles [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [[-UserQueryConditions] <Object>] [<CommonParameters>]
 ``` 
 
 

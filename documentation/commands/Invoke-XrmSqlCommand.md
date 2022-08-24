@@ -8,14 +8,15 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-Command|String|1|true||SQL Statement
+XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
+Command|String|2|true||SQL Statement
 IgnoreDbNull|SwitchParameter|named|false|False|
 
 
 ## Usage
 
 ```Powershell 
-Invoke-XrmSqlCommand [-Command] <String> [-IgnoreDbNull] [<CommonParameters>]
+Invoke-XrmSqlCommand [[-XrmClient] <CrmServiceClient>] [-Command] <String> [-IgnoreDbNull] [<CommonParameters>]
 ``` 
 
 

@@ -16,8 +16,7 @@ ComponentId|Guid|3|true||Solution component unique identifier to clean.
 ## Usage
 
 ```Powershell 
-Remove-XrmActiveCustomizations [[-XrmClient] <CrmServiceClient>] [-SolutionComponentName] <String> [-ComponentId] 
-<Guid> [<CommonParameters>]
+Remove-XrmActiveCustomizations [[-XrmClient] <CrmServiceClient>] [-SolutionComponentName] <String> [-ComponentId] <Guid> [<CommonParameters>]
 ``` 
 
 

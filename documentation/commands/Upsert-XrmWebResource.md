@@ -18,8 +18,7 @@ Prefix|String|4|false||Publisher customization prefix for newly created webresou
 ## Usage
 
 ```Powershell 
-Upsert-XrmWebResource [[-XrmClient] <CrmServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] 
-<String>] [<CommonParameters>]
+Upsert-XrmWebResource [[-XrmClient] <CrmServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [<CommonParameters>]
 ``` 
 
 

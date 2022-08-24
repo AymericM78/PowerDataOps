@@ -12,6 +12,10 @@ function Invoke-XrmSqlCommand {
     [CmdletBinding()]
     param
     (
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        $XrmClient = $Global:XrmClient,
+
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
@@ -30,10 +34,10 @@ function Invoke-XrmSqlCommand {
         Assert-XrmTdsEndpointEnabled;  
     }    
     process {            
-        $sqlConnectionString = "server=$($Global:XrmClient.CrmConnectOrgUriActual.Host)";
+        $sqlConnectionString = "server=$($XrmClient.CrmConnectOrgUriActual.Host)";
 
         $connection = new-object System.Data.SqlClient.SQLConnection($sqlConnectionString);
-        $connection.AccessToken = $Global:XrmClient.CurrentAccessToken;
+        $connection.AccessToken = $XrmClient.CurrentAccessToken;
         $cmd = new-object System.Data.SqlClient.SqlCommand($Command, $connection);
 
         $connection.Open();

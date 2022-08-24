@@ -18,8 +18,7 @@ Region|String|4|false||DataCenter region (France, EMEA, UK, ...) where target in
 ## Usage
 
 ```Powershell 
-Connect-XrmUser [[-UserName] <String>] [[-Password] <String>] [-AuthType] <String> [[-Region] <String>] 
-[<CommonParameters>]
+Connect-XrmUser [[-UserName] <String>] [[-Password] <String>] [-AuthType] <String> [[-Region] <String>] [<CommonParameters>]
 ``` 
 
 

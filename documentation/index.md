@@ -190,9 +190,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Assert-XrmTdsEndpointConnected](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Assert-XrmTdsEndpointConnected.md)|Check if TDS endpoint is enabled.<br/>Assert orgdbsettings EnableTDSEndpoint parameter is true to allow SQL commands thru TDS Endpoint.
 [Assert-XrmTdsEndpointEnabled](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Assert-XrmTdsEndpointEnabled.md)|Check if TDS endpoint is enabled.<br/>Assert orgdbsettings EnableTDSEndpoint parameter is true to allow SQL commands thru TDS Endpoint.
-[Connect-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Connect-XrmTdsEndpoint.md)|Connect to TDS endpoint.<br/>Specify connection parameters to run SQL commands thru TDS Endpoint.
 [Disable-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmTdsEndpoint.md)|Disable TDS endpoint.<br/>Configure orgdbsettings parameter to prevent SQL commands thru TDS Endpoint.
 [Enable-XrmTdsEndpoint](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmTdsEndpoint.md)|Enable TDS endpoint.<br/>Configure orgdbsettings parameter to allow SQL commands thru TDS Endpoint.
 [Invoke-XrmSqlCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmSqlCommand.md)|Connect to TDS endpoint.<br/>Specify connection parameters to run SQL commands thru TDS Endpoint.

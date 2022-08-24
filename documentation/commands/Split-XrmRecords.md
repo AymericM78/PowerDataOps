@@ -18,8 +18,8 @@ RelationShipRole|EntityRole|5|false|Referencing|
 ## Usage
 
 ```Powershell 
-Split-XrmRecords [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] 
-<EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [<CommonParameters>]
+Split-XrmRecords [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> 
+[[-RelationShipRole] {Referencing | Referenced}] [<CommonParameters>]
 ``` 
 
 

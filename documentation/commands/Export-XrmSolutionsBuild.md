@@ -28,11 +28,10 @@ ForceSyncExport|SwitchParameter|named|false|False|
 ## Usage
 
 ```Powershell 
-Export-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ExportPath] <String>] [[-Solutions] <String>] [[-Managed] 
-<Boolean>] [[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] 
-[[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] 
-[[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] 
-<Boolean>] [[-ExportRelationshipRoles] <Boolean>] [-ForceSyncExport] [<CommonParameters>]
+Export-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ExportPath] <String>] [[-Solutions] <String>] [[-Managed] <Boolean>] [[-ExportCalendarSettings] 
+<Boolean>] [[-ExportCustomizationSettings] <Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] 
+[[-ExportIsvConfig] <Boolean>] [[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] <Boolean>] 
+[[-ExportRelationshipRoles] <Boolean>] [-ForceSyncExport] [<CommonParameters>]
 ``` 
 
 
