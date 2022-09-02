@@ -82,6 +82,7 @@ function ForEach-ObjectWithProgress {
     end {
         $StopWatch.Stop();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
+        Write-Progress -Activity "N/A" -Id $Id -Completed;
     }
 }
 

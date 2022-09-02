@@ -109,7 +109,7 @@ function Import-XrmSolution {
                 }
                 if ($importJob.progress -ne $lastProgressValue) {
                     Write-HostAndLog " > $SolutionUniqueName import in progress... ($($importJob.progress) %)" -ForegroundColor Cyan;
-                    Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Status "Importing solution $SolutionUniqueName...($($importJob.progress) %)" -PercentComplete $importJob.progress_Value;
+                    Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Status "Importing solution $SolutionUniqueName...($($importJob.progress) %)" -PercentComplete $importJob.progress_Value -Id 1052;
                 }
                 $lastProgressValue = $importJob.progress;
             }
@@ -124,7 +124,7 @@ function Import-XrmSolution {
         catch {
             $errorMessage = $_.Exception.Message;
             Write-HostAndLog "$($MyInvocation.MyCommand.Name) => KO : [Error: $errorMessage]" -ForegroundColor Red -Level FAIL;
-            write-progress one one -completed;
+            Write-Progress -Activity "N/A" -Id 1052 -Completed;
             throw $errorMessage;
         }  
 

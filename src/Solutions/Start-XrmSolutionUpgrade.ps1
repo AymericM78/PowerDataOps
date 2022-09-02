@@ -41,7 +41,6 @@ function Start-XrmSolutionUpgrade {
         catch {
             $errorMessage = $_.Exception.Message;
             Write-HostAndLog "$($MyInvocation.MyCommand.Name) => KO : [Error: $errorMessage]" -ForegroundColor Red -Level FAIL;
-            write-progress one one -completed;
             throw $errorMessage;
         }  
     }

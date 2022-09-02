@@ -93,7 +93,7 @@ function Write-XrmExcelSheet {
                 $current++;
                 $percent = ($current / $total) * 100;
         
-                Write-Progress -Activity "Provisioning Excel data" -Status "Processing record ...[$current/$total]" -PercentComplete $percent;
+                Write-Progress -Activity "Provisioning Excel data" -Status "Processing record ...[$current/$total]" -PercentComplete $percent -Id 1051;
         
                 $rowNumber ++;
                 $columnNumber = 0;
@@ -112,7 +112,7 @@ function Write-XrmExcelSheet {
                     $columnNumber++;
                 }
             }
-            Write-Progress -Activity "Provisioning Excel data" -Completed;
+            Write-Progress -Activity "Provisioning Excel data" -Id 1051 -Completed;
         
             # Push data to Excel
             Write-HostAndLog "Writing data to Excel ..." -ForegroundColor Gray;

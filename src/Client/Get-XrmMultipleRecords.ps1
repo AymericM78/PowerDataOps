@@ -65,7 +65,7 @@ function Get-XrmMultipleRecords {
         while ($true) {
             $results = Protect-XrmCommand -ScriptBlock { $XrmClient.RetrieveMultiple($Query) };
             if ($enablePaging) {
-                Write-Progress -Activity "Retrieving data from Microsoft Dataverse" -Status "Processing record page : $pageNumber" -PercentComplete -1;
+                Write-Progress -Activity "Retrieving data from Microsoft Dataverse" -Status "Processing record page : $pageNumber" -PercentComplete -1 -Id 1050;
             }
             if ($results.Entities.Count -gt 0) {               
                 $objects = $results.Entities | ConvertTo-XrmObjects;
@@ -86,7 +86,7 @@ function Get-XrmMultipleRecords {
             }
         }
         if ($enablePaging) {
-            Write-Progress one one -completed;
+            Write-Progress -Activity "N/A" -Id 1050 -Completed;
         }
         $records;
     }
