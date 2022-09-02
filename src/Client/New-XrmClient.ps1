@@ -85,6 +85,7 @@ function New-XrmClient {
             Connect-XrmAdmin;
         }
         else {
+            Install-Module -Name Microsoft.Xrm.Tooling.CrmConnector.PowerShell;
             $XrmClient = Get-CrmConnection -InteractiveMode;
             $Global:XrmContext.CurrentConnection.TenantId = $XrmClient.TenantId;
             Connect-XrmAdmin;
