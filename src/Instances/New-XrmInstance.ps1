@@ -20,7 +20,6 @@ function New-XrmInstance {
         $hash["DisplayName"] = [String]::Empty;        
         $hash["Url"] = [String]::Empty;
         $hash["ApiUrl"] = [String]::Empty;
-        $hash["TenantId"] = [Guid]::Empty;
         $hash["Location"] = [String]::Empty;
         $hash["DataCenter"] = [String]::Empty;
         $hash["Sku"] = [String]::Empty;

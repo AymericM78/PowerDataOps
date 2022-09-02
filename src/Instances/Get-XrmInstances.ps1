@@ -18,6 +18,10 @@ function Get-XrmInstances {
         
         $xrmInstances = @();
       
+        if (-not $Global:XrmContext.IsAdminConnected) {
+            throw "You are not connected! Please use Connect-XrmAdmin command before."
+        }
+
         if ($Global:XrmContext.IsAdminConnected) {
             $environments = Get-AdminPowerAppEnvironment;
             $environments | ForEach-Object {          
@@ -30,11 +34,10 @@ function Get-XrmInstances {
                 $xrmInstance.UniqueName = $metadata.uniqueName;
                 $xrmInstance.DisplayName = $_.DisplayName;
                 $url = $metadata.instanceUrl;
-                if($url){
+                if ($url) {
                     $xrmInstance.Url = $url.TrimEnd('/');
                 }
                 $xrmInstance.ApiUrl = $metadata.instanceApiUrl;
-                $xrmInstance.TenantId = [Guid]::Empty;
                 $xrmInstance.Location = $_.Location;
                 $xrmInstance.DataCenter = $internalProperties.azureRegionHint;
                 $xrmInstance.Sku = $internalProperties.environmentSku;
@@ -43,35 +46,11 @@ function Get-XrmInstances {
                 $xrmInstance.BaseLanguage = $metadata.baseLanguage;
                 $xrmInstance.State = $metadata.instanceState;
                 $xrmInstance.CreationTemplates = $metadata.creationTemplates;
-                $xrmInstance.ConnectionString = [String]::Empty;
                 $xrmInstance.ParentConnection = $null;
 
                 $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString;
                 $xrmInstances += $xrmInstance;
             }            
-        }
-        elseif ($Global:XrmContext.IsUserConnected) {
-            $instances = Get-CrmOrganizations -Credential $Global:XrmContext.CurrentConnection.Credentials -DeploymentRegion $Global:XrmContext.CurrentConnection.Region -OnLineType $Global:XrmContext.CurrentConnection.AuthType;
-            
-            $instances | ForEach-Object {
-                $xrmInstance = New-XrmInstance;
-                $xrmInstance.Id = $_.EnviromentId;
-                $xrmInstance.Name = $_.UrlHostName;
-                $xrmInstance.UniqueName = $_.UniqueName;
-                $xrmInstance.DisplayName = $_.FriendlyName;
-                $url = $metadata.WebApplicationUrl;
-                if($url){
-                    $xrmInstance.Url = $url.TrimEnd('/');
-                }
-                $xrmInstance.ApiUrl = $_.OrganizationWebAPIUrl;
-                $xrmInstance.TenantId = $_.TenantId;
-
-                $xrmInstance.ConnectionString = $xrmInstance | Out-XrmConnectionString;
-                $xrmInstances += $xrmInstance;
-            }
-        }
-        else {
-            throw "You are not connected! Please use Connect-XrmUser or Connect-XrmAdmin command before."
         }
         $xrmInstances | Sort-Object -Property DisplayName;
     }

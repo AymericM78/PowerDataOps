@@ -15,15 +15,11 @@ foreach ($scriptFile in $scriptFiles) {
 }
 
 # Install and Import required modules
-$requiredModules = @("Microsoft.Xrm.Tooling.CrmConnector.PowerShell", "Microsoft.PowerApps.Administration.PowerShell")
+$requiredModules = @("Microsoft.PowerApps.Administration.PowerShell")
 foreach ($module in $requiredModules) {
     if (-not(Get-Module -ListAvailable -Name $module)) {
         Write-Verbose "$module does not exist";
         Install-Module -Name $module -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
-    }
-    else {
-        # TODO : Update Module only if a newer version exist
-        #Update-Module -Name $module -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
     }
     Import-Module -Name $module -DisableNameChecking;
     Write-Verbose " > Loading module : '$module' => OK !";
@@ -40,7 +36,6 @@ foreach ($assemblyPath in $assemblies) {
 # Provision dedicate appdata folder
 $Global:PowerDataOpsModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
 New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Force | Out-Null;
-
 Write-Verbose " > Initialize module folder '$($Global:PowerDataOpsModuleFolderPath)' => OK !";
 
 # Initialize tracing file
@@ -50,17 +45,17 @@ $Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFold
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
 
 $module = Get-Module -Name PowerDataOps -ListAvailable;
-if(-not $module){
+if (-not $module) {
     return;
 }
-if($module.Count -gt 1) {
+if ($module.Count -gt 1) {
     Write-Host "Multiple PowerDataOps modules installed!" -ForegroundColor Yellow;
-    foreach($version in $module){
+    foreach ($version in $module) {
         $moduleVersion = $version.Version.ToString();
         Write-Host " - version $moduleVersion";
     }
 }
-else{
+else {
     $moduleVersion = $module.Version.ToString();
     Write-Host "PowerDataOps version = $moduleVersion";
 }
