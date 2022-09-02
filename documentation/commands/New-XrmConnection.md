@@ -8,12 +8,13 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
+ConnectionString|String|1|false||
 
 
 ## Usage
 
 ```Powershell 
-New-XrmConnection [<CommonParameters>]
+New-XrmConnection [[-ConnectionString] <String>] [<CommonParameters>]
 ``` 
 
 

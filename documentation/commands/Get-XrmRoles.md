@@ -18,7 +18,8 @@ ExportPrivileges|SwitchParameter|named|false|False|Specify if privileges are ret
 ## Usage
 
 ```Powershell 
-Get-XrmRoles [[-XrmClient] <CrmServiceClient>] [[-BusinessUnitId] <Guid>] [-OnlyRoots] [[-Columns] <String[]>] [-ExportPrivileges] [<CommonParameters>]
+Get-XrmRoles [[-XrmClient] <CrmServiceClient>] [[-BusinessUnitId] <Guid>] [-OnlyRoots] [[-Columns] <String[]>] 
+[-ExportPrivileges] [<CommonParameters>]
 ``` 
 
 

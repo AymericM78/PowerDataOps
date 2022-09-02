@@ -16,7 +16,8 @@ TimeOutInMinutes|Int32|3|false|45|Specify timeout duration in minute for each so
 ## Usage
 
 ```Powershell 
-Clear-XrmSolutions [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [[-TimeOutInMinutes] <Int32>] [<CommonParameters>]
+Clear-XrmSolutions [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [[-TimeOutInMinutes] <Int32>] 
+[<CommonParameters>]
 ``` 
 
 
