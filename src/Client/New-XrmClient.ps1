@@ -77,7 +77,11 @@ function New-XrmClient {
                 }
             }
 
-            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString);   
+            $StopWatchXrmClient = [System.Diagnostics.Stopwatch]::StartNew(); 
+            Trace-XrmFunction -Name 'NewCrmServiceClient' -Stage Start; 
+            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString); 
+            $StopWatch.Stop();
+            Trace-XrmFunction -Name 'NewCrmServiceClient' -Stage Stop -StopWatch $StopWatchXrmClient;  
         }
         else {
             # Interactive login => use legacy PowerShell connector
@@ -97,6 +101,8 @@ function New-XrmClient {
             throw $XrmClient.LastCrmError;
         }
 
+        $refreshAdminConnection = ($Global:XrmContext -and $XrmClient.TenantId -ne $Global:XrmContext.CurrentConnection.TenantId);
+
         # Store new context
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $Global:XrmContext = New-XrmContext -XrmClient $XrmClient -ConnectionString $ConnectionString;
@@ -108,8 +114,10 @@ function New-XrmClient {
         # Store client to simplify commands execution
         $Global:XrmClient = $XrmClient;
 
-        # Try to use admin commands
-        Connect-XrmAdmin -ErrorAction SilentlyContinue;
+        # Try to use admin commands    
+        if($refreshAdminConnection){    
+            Connect-XrmAdmin -ErrorAction SilentlyContinue;
+        }
 
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $userName = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Username";
