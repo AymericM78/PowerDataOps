@@ -47,7 +47,7 @@ function Watch-XrmCurrentSolutionImport {
             }
             if ($importJob.completedon) {                
                 Write-HostAndLog " > $($importJob.solutionname) import completed!" -ForegroundColor Green;
-                Write-Progress -Activity "N/A" -Id 1053 -Completed;
+                Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Id 1053 -Completed;
                 break;
             }
             $lastProgressValue = $importJob.progress;            

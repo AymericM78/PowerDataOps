@@ -124,7 +124,7 @@ function Import-XrmSolution {
         catch {
             $errorMessage = $_.Exception.Message;
             Write-HostAndLog "$($MyInvocation.MyCommand.Name) => KO : [Error: $errorMessage]" -ForegroundColor Red -Level FAIL;
-            Write-Progress -Activity "N/A" -Id 1052 -Completed;
+            Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Id 1052 -Completed;
             throw $errorMessage;
         }  
 

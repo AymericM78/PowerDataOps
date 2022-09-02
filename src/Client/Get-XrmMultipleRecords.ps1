@@ -86,7 +86,7 @@ function Get-XrmMultipleRecords {
             }
         }
         if ($enablePaging) {
-            Write-Progress -Activity "N/A" -Id 1050 -Completed;
+            Write-Progress -Activity "Retrieving data from Microsoft Dataverse" -Id 1050 -Completed;
         }
         $records;
     }
