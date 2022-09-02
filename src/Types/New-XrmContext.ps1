@@ -44,13 +44,12 @@ function New-XrmContext {
             $object.IsUserConnected = $XrmClient.IsReady;
             $object.CurrentInstance = $XrmClient.OrganizationDetail;
             $object.CurrentUrl = $XrmClient.ConnectedOrgPublishedEndpoints["WebApplication"];
+            $object.IsOnline = $object.CurrentUrl.Contains('.dynamics.com');        
+            $object.IsOnPremise = -not $object.IsOnline;
 
             $object.CurrentConnection.TenantId = $XrmClient.TenantId;
             $object.CurrentConnection.Name = $XrmClient.OrganizationDetail.UrlName;
             $object.CurrentConnection.Region = $XrmClient.OrganizationDetail.Geo;
-
-            $object.IsOnline = $url.Contains('.dynamics.com');        
-            $object.IsOnPremise = -not $object.IsOnline;
 
             $userId = $XrmClient.GetMyCrmUserId();
             $object.UserId = $userId;
