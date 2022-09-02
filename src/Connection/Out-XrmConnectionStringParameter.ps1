@@ -35,15 +35,32 @@ function Out-XrmConnectionStringParameter {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
+
+        $alternateParameters = @{
+            "UserName" = @("Username", "User Name", "UserId", "User Id")
+            "AuthType" = @("authtype", "Authtype", "Auth Type", "AuthenticationType")
+            "ClientId" = @("appid", "AppId", "ApplicationId")
+            "ClientSecret" = @("Secret")
+            "Thumbprint" = @("CertThumbprint")
+        };
         
-        if (-not $ConnectionString.Contains($ParameterName)) {
+        $ValidParameterName = $ParameterName;
+        if (-not $ConnectionString.Contains($ValidParameterName)) {
+            $alternateParameters[$ParameterName] | ForEach-Object {
+                if ($ConnectionString.Contains($_)) {
+                    $ValidParameterName = $_;
+                }
+            }
+        }
+        
+        if (-not $ConnectionString.Contains($ValidParameterName)) {
             if ($RaiseErrorIfMising) {
-                throw "Parameter '$ParameterName' is not in given connectionstring!";
+                throw "Parameter '$ValidParameterName' is not in given connectionstring!";
             }
             return $null;
         }
 
-        $startIndex = $ConnectionString.IndexOf("$($ParameterName)=");
+        $startIndex = $ConnectionString.IndexOf("$($ValidParameterName)=");
         if($startIndex -lt 0)
         {
             return $null;
@@ -55,7 +72,7 @@ function Out-XrmConnectionStringParameter {
             $value = $value.Remove($stopIndex);
         }
         $value = $value.Substring($startIndex);
-        $value = $value.Replace("$($ParameterName)=", "");
+        $value = $value.Replace("$($ValidParameterName)=", "");
         
         $value;
     }

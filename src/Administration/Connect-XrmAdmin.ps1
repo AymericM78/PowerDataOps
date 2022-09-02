@@ -52,7 +52,73 @@ function Connect-XrmAdmin {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $CertificateThumbprint  
+        $CertificateThumbprint
+    )
+    begin {   
+        $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);        
+    }    
+    process {    
+
+        if($Global:XrmContext -and $Global:XrmContext.CurrentConnection){
+            $xrmConnection = $Global:XrmContext.CurrentConnection;
+        }
+        
+        if ($PSBoundParameters.ContainsKey('UserName')) {
+                        
+            $xrmConnection = New-XrmConnection;   
+            $xrmConnection.AuthType = "Office365"; 
+            $xrmConnection.UserName = $UserName;
+            $xrmConnection.Password = $Password;
+            $xrmConnection.Credentials = $credentials;
+        }
+        elseif ($PSBoundParameters.ContainsKey('ClientSecret')) {
+            
+            $xrmConnection = New-XrmConnection;              
+            $xrmConnection.AuthType = "ClientSecret"; 
+            $xrmConnection.TenantId = $TenantId;
+            $xrmConnection.ApplicationId = $ApplicationId;
+            $xrmConnection.ClientSecret = $ClientSecret;
+        }
+        elseif ($PSBoundParameters.ContainsKey('CertificateThumbprint')) {
+            
+            $xrmConnection = New-XrmConnection;              
+            $xrmConnection.AuthType = "Certificate"; 
+            $xrmConnection.TenantId = $TenantId;
+            $xrmConnection.ApplicationId = $ApplicationId;
+            $xrmConnection.CertificateThumbprint = $CertificateThumbprint;
+        }
+        else {
+            if (-not $Global:XrmContext) {
+                Add-PowerAppsAccount;
+                $Global:XrmContext.IsAdminConnected = $true;
+                return;
+            }
+        }
+
+        if (-not $Global:XrmContext) {            
+            $Global:XrmContext = New-XrmContext; 
+            $Global:XrmContext.CurrentConnection = $xrmConnection;
+        }      
+        else {
+            if ($xrmConnection) {
+                $Global:XrmContext.CurrentConnection = $xrmConnection;
+            }
+        }
+
+        $Global:XrmContext.IsAdminConnected = Connect-XrmAdminInternal;
+    }
+    end {
+        $StopWatch.Stop();
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
+    }    
+}
+
+
+function Connect-XrmAdminInternal {
+    [CmdletBinding()]
+    param
+    (
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -64,64 +130,46 @@ function Connect-XrmAdmin {
         # I don't know if endpoint or audience are usefull here
         # https://docs.microsoft.com/en-us/powershell/module/microsoft.powerapps.administration.powershell/add-powerappsaccount?view=pa-ps-latest
         
-        # Force disconnect to refresh tocken
+        # Force disconnect to refresh token
+        $Global:currentSession = $null;
         Remove-PowerAppsAccount;
-          
-        $Global:XrmContext = New-XrmContext; 
-        $Global:XrmContext.IsOnline = $true;
-        $Global:XrmContext.IsOnPremise = $false;
 
-        $success = $false;
-        if ($PSBoundParameters.ContainsKey('UserName')) {
+        $xrmConnection = $Global:XrmContext.CurrentConnection;
+
+        $authType = $xrmConnection.AuthType.ToLower();
+        if ($authType -eq "oauth") {
+            if ($xrmConnection.Password) {
+                $authType = "office365";
+            }
+            elseif ($xrmConnection.ClientSecret) {
+                $authType = "clientsecret";
+            }
+        }
+        
+        if ($authType -eq "office365") {
             
             # Set Credential object required authentications
-            $credentials = Set-XrmCredentials -Login $UserName -Password $Password;        
-            $securePassword = ConvertTo-SecureString -String $Password -AsPlainText -Force;
-            Add-PowerAppsAccount -Username $UserName -Password $securePassword -Endpoint prod;
-            
-            $xrmConnection = New-XrmConnection;   
-            $xrmConnection.AuthType = "Office365"; # TODO : Ifd ?
-            $xrmConnection.UserName = $UserName;
-            $xrmConnection.Password = $Password;
-            $xrmConnection.Credentials = $credentials;
-            $Global:XrmContext.CurrentConnection = $xrmConnection;
+            $credentials = Set-XrmCredentials -Login $xrmConnection.UserName -Password $xrmConnection.Password;        
+            $securePassword = ConvertTo-SecureString -String $xrmConnection.Password -AsPlainText -Force;
+            Add-PowerAppsAccount -Username $xrmConnection.UserName -Password $securePassword -Endpoint prod;
 
-            $success = $true;
+            return $true;
         }
-        elseif ($PSBoundParameters.ContainsKey('ClientSecret')) {
-            Add-PowerAppsAccount -TenantID $TenantId -ApplicationId $ApplicationId -ClientSecret $ClientSecret -Endpoint prod;
+        elseif ($authType -eq "clientsecret") {
+            Add-PowerAppsAccount -TenantID  $xrmConnection.TenantId -ApplicationId $xrmConnection.ApplicationId -ClientSecret $xrmConnection.ClientSecret -Endpoint prod;
 
-            $xrmConnection = New-XrmConnection;              
-            $xrmConnection.AuthType = "ClientSecret"; 
-            $xrmConnection.TenantId = $TenantId;
-            $xrmConnection.ApplicationId = $ApplicationId;
-            $xrmConnection.ClientSecret = $ClientSecret;
-            $Global:XrmContext.CurrentConnection = $xrmConnection;
-
-            $success = $true;
+            return $true;
         }
-        elseif ($PSBoundParameters.ContainsKey('CertificateThumbprint')) {
-            Add-PowerAppsAccount -TenantID $TenantId -ApplicationId $ApplicationId -CertificateThumbprint $CertificateThumbprint -Endpoint prod;
+        elseif ($authType -eq "certificate") {
+            Add-PowerAppsAccount -TenantID  $xrmConnection.TenantId -ApplicationId $xrmConnection.ApplicationId -CertificateThumbprint $xrmConnection.CertificateThumbprint -Endpoint prod;
 
-            $xrmConnection = New-XrmConnection;              
-            $xrmConnection.AuthType = "Certificate"; 
-            $xrmConnection.TenantId = $TenantId;
-            $xrmConnection.ApplicationId = $ApplicationId;
-            $xrmConnection.CertificateThumbprint = $CertificateThumbprint;
-            $Global:XrmContext.CurrentConnection = $xrmConnection;
-
-            $success = $true;
+            return $true;
         }
-        else {
-            Add-PowerAppsAccount;
-            $success = $true;
-        }
-        $Global:XrmContext.IsAdminConnected = $success;
+        return $false;
     }
     end {
         $StopWatch.Stop();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
     }    
 }
-
 Export-ModuleMember -Function Connect-XrmAdmin -Alias *;

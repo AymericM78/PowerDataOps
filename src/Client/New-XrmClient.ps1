@@ -53,46 +53,63 @@ function New-XrmClient {
         [System.Net.ServicePointManager]::UseNagleAlgorithm = $false;
         [System.Net.ServicePointManager]::DefaultConnectionLimit = 1000;
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-	
+
+        $Global:XrmContext = New-XrmContext; 
+
         # Initialize CRM Client	
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
 
-            if($IsEncrypted)
-            {
+            if ($IsEncrypted) {
                 $ConnectionString = Repair-XrbConnectionString -ConnectionString $ConnectionString;
             }
 
             $authType = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "AuthType";
-            if($authType -eq "Office365"){
+            if ($authType -eq "Office365") {
                 
                 # Override O365
                 $ConnectionString = $ConnectionString.Replace("Office365", "OAuth");
                 $ConnectionString = "$ConnectionString;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Auto;";
 
                 # Warn about Office365 authentication
-                if(-not $Quiet) {
+                if (-not $Quiet) {
                     Write-HostAndLog -Message "============================================================================" -Level WARN;
                     Write-HostAndLog -Message "/!\ Office365 authentication type is deprecated!" -Level WARN;
                     Write-HostAndLog -Message "Connection string as been modified to force OAuth protocol"  -Level WARN;
-                    Write-HostAndLog -Message "More info: " -Level WARN;
-                    Write-HostAndLog -Message " - https://docs.microsoft.com/fr-fr/power-platform/important-changes-coming#deprecation-of-office365-authentication-type-and-organizationserviceproxy-class-for-connecting-to-dataverse" -Level WARN;
                     Write-HostAndLog -Message "============================================================================" -Level WARN;
                 }
             }
 
-            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString);           
+            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString);            
+            $Global:XrmContext.CurrentConnection = New-XrmConnection -ConnectionString $ConnectionString;
+            $Global:XrmContext.CurrentConnection.TenantId = $XrmClient.TenantId;
+            Connect-XrmAdmin;
         }
         else {
             $XrmClient = Get-CrmConnection -InteractiveMode;
+            $Global:XrmContext.CurrentConnection.TenantId = $XrmClient.TenantId;
+            Connect-XrmAdmin;
         }
-        if ($XrmClient.IsReady -eq $false) {
+        if (-not $XrmClient.IsReady) {
+            $Global:XrmContext.IsUserConnected = $false;
             throw $XrmClient.LastCrmError;
         }
 
         $Global:XrmClient = $XrmClient;
+        $Global:XrmContext.IsUserConnected = $true;
+
+        $Global:XrmContext.CurrentInstance = $XrmClient.OrganizationDetail;
+        $Global:XrmContext.CurrentConnection.Name = $XrmClient.OrganizationDetail.UrlName;
+        $Global:XrmContext.CurrentConnection.Region = $XrmClient.OrganizationDetail.Geo;
 
         $url = $XrmClient.ConnectedOrgPublishedEndpoints["WebApplication"];
+        $Global:XrmContext.CurrentUrl = $url;
+
+        $Global:XrmContext.IsOnline = $url.Contains('dynamics.com');        
+        $Global:XrmContext.IsOnPremise = -not $Global:XrmContext.IsOnline;
+
         $userId = $XrmClient.GetMyCrmUserId();
+        $Global:XrmContext.UserId = $userId;
+
         # Store current settings to context as connection could be initiated with a simple connectionstring and we need thoose parameters for admin operations
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $userName = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Username";
@@ -101,7 +118,7 @@ function New-XrmClient {
             $userName = $userId;
         }
         
-        if(-not $Quiet) {
+        if (-not $Quiet) {
             Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $url | User : $userName]" -ForegroundColor Yellow; 
         }
         $XrmClient;

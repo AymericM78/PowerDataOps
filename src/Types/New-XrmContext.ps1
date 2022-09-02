@@ -25,6 +25,7 @@ function New-XrmContext {
         $hash["IsDevOps"] = ($null -ne $ENV:SYSTEM_COLLECTIONID);
         $hash["CurrentConnection"] = $null;
         $hash["CurrentInstance"] = $null;
+        $hash["CurrentUrl"] = $null;
 
         $object = New-Object PsObject -Property $hash;
         $object;

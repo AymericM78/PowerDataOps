@@ -5,7 +5,11 @@
 function New-XrmConnection {
     [CmdletBinding()]
     param
-    (
+    ( 
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $ConnectionString
     )
     begin {  
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -15,6 +19,7 @@ function New-XrmConnection {
 
         $hash = @{ };
         $hash["Name"] = [String]::Empty;
+        $hash["Url"] = [String]::Empty;
         $hash["AuthType"] = [String]::Empty;
         $hash["Credentials"] = [System.Management.Automation.PSCredential]::Empty;
         $hash["UserName"] = [String]::Empty;
@@ -27,9 +32,19 @@ function New-XrmConnection {
 		
         $hash["Instances"] = $null;
         $hash["DevOpsSettings"] = New-XrmDevOpsSettings;
-        $hash["FilePath"] = [String]::Empty;
         
         $object = New-Object PsObject -Property $hash;
+        
+        if ($PSBoundParameters.ContainsKey('ConnectionString')) {
+            $object.Url = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Url";
+            $object.AuthType = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "AuthType";
+            $object.UserName = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "UserName";
+            $object.Password = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Password";
+            $object.ApplicationId = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "ClientId";
+            $object.ClientSecret = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "ClientSecret";
+            $object.CertificateThumbprint = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Thumbprint";
+        }
+
         $object;
     }
     end {
