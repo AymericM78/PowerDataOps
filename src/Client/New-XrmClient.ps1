@@ -54,8 +54,6 @@ function New-XrmClient {
         [System.Net.ServicePointManager]::DefaultConnectionLimit = 1000;
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
 
-        $Global:XrmContext = New-XrmContext; 
-
         # Initialize CRM Client	
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
 
@@ -79,39 +77,40 @@ function New-XrmClient {
                 }
             }
 
-            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString);            
-            $Global:XrmContext.CurrentConnection = New-XrmConnection -ConnectionString $ConnectionString;
-            $Global:XrmContext.CurrentConnection.TenantId = $XrmClient.TenantId;
-            Connect-XrmAdmin;
+            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString);   
         }
         else {
-            Install-Module -Name Microsoft.Xrm.Tooling.CrmConnector.PowerShell;
+            # Interactive login => use legacy PowerShell connector
+            $requiredModules = @("Microsoft.Xrm.Tooling.CrmConnector.PowerShell")
+            foreach ($module in $requiredModules) {
+                if (-not(Get-Module -ListAvailable -Name $module)) {
+                    Write-Verbose "$module does not exist";
+                    Install-Module -Name $module -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
+                }
+                Import-Module -Name $module -DisableNameChecking;
+                Write-Verbose " > Loading module : '$module' => OK !";
+            }
             $XrmClient = Get-CrmConnection -InteractiveMode;
-            $Global:XrmContext.CurrentConnection.TenantId = $XrmClient.TenantId;
-            Connect-XrmAdmin;
         }
         if (-not $XrmClient.IsReady) {
             $Global:XrmContext.IsUserConnected = $false;
             throw $XrmClient.LastCrmError;
         }
 
+        # Store new context
+        if ($PSBoundParameters.ContainsKey('ConnectionString')) {
+            $Global:XrmContext = New-XrmContext -XrmClient $XrmClient -ConnectionString $ConnectionString;
+        } 
+        else{
+            $Global:XrmContext = New-XrmContext -XrmClient $XrmClient;
+        }
+
+        # Store client to simplify commands execution
         $Global:XrmClient = $XrmClient;
-        $Global:XrmContext.IsUserConnected = $true;
 
-        $Global:XrmContext.CurrentInstance = $XrmClient.OrganizationDetail;
-        $Global:XrmContext.CurrentConnection.Name = $XrmClient.OrganizationDetail.UrlName;
-        $Global:XrmContext.CurrentConnection.Region = $XrmClient.OrganizationDetail.Geo;
+        # Try to use admin commands
+        Connect-XrmAdmin -ErrorAction SilentlyContinue;
 
-        $url = $XrmClient.ConnectedOrgPublishedEndpoints["WebApplication"];
-        $Global:XrmContext.CurrentUrl = $url;
-
-        $Global:XrmContext.IsOnline = $url.Contains('dynamics.com');        
-        $Global:XrmContext.IsOnPremise = -not $Global:XrmContext.IsOnline;
-
-        $userId = $XrmClient.GetMyCrmUserId();
-        $Global:XrmContext.UserId = $userId;
-
-        # Store current settings to context as connection could be initiated with a simple connectionstring and we need thoose parameters for admin operations
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $userName = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Username";
         }
@@ -120,7 +119,7 @@ function New-XrmClient {
         }
         
         if (-not $Quiet) {
-            Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $url | User : $userName]" -ForegroundColor Yellow; 
+            Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $($Global:XrmContext.CurrentUrl) | User : $userName]" -ForegroundColor Yellow; 
         }
         $XrmClient;
     }

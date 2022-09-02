@@ -9,6 +9,14 @@ function New-XrmContext {
     [CmdletBinding()]
     param
     (
+        [Parameter(Mandatory = $false)]
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        $XrmClient = $Global:XrmClient,
+  
+        [Parameter(Mandatory = $false)]
+        [String]
+        [ValidateNotNullOrEmpty()]
+        $ConnectionString
     )
     begin {  
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -23,11 +31,31 @@ function New-XrmContext {
         $hash["IsAdminConnected"] = $false;
         $hash["IsUserConnected"] = $false;
         $hash["IsDevOps"] = ($null -ne $ENV:SYSTEM_COLLECTIONID);
-        $hash["CurrentConnection"] = $null;
+        $hash["CurrentConnection"] = New-XrmConnection;
         $hash["CurrentInstance"] = $null;
         $hash["CurrentUrl"] = $null;
 
         $object = New-Object PsObject -Property $hash;
+        if ($PSBoundParameters.ContainsKey('ConnectionString')) {
+            $object.CurrentConnection = New-XrmConnection -ConnectionString $ConnectionString;
+        }
+        if ($PSBoundParameters.ContainsKey('XrmClient')) {
+            
+            $object.IsUserConnected = $XrmClient.IsReady;
+            $object.CurrentInstance = $XrmClient.OrganizationDetail;
+            $object.CurrentUrl = $XrmClient.ConnectedOrgPublishedEndpoints["WebApplication"];
+
+            $object.CurrentConnection.TenantId = $XrmClient.TenantId;
+            $object.CurrentConnection.Name = $XrmClient.OrganizationDetail.UrlName;
+            $object.CurrentConnection.Region = $XrmClient.OrganizationDetail.Geo;
+
+            $object.IsOnline = $url.Contains('.dynamics.com');        
+            $object.IsOnPremise = -not $object.IsOnline;
+
+            $userId = $XrmClient.GetMyCrmUserId();
+            $object.UserId = $userId;
+        }
+
         $object;
     }
     end {

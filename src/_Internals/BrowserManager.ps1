@@ -288,7 +288,7 @@ function Get-XrmFavorites {
             continue;
         }
 
-        $crmConnectionString = $instance | Out-XrmConnectionString;
+        $crmConnectionString = $instance.ConnectionString;
         
         if (-not [string]::IsNullOrWhiteSpace($OverrideConnectionStringFormat)) {
             $crmConnectionString = $OverrideConnectionStringFormat.Replace("{Url}", $instance.Url);

@@ -69,7 +69,7 @@ function Export-XrmConnectionToXrmToolBox {
             $orgDataSvcUrl = "$($instance.Url)/XRMServices/2011/OrganizationData.svc";
             $orgSvcUrl = "$($instance.Url)/XRMServices/2011/Organization.svc";
 
-            $connectionString = $instance | Out-XrmConnectionString;
+            $connectionString = $instance.ConnectionString;
             if($Global:XrmContext.CurrentConnection.AuthType -eq "Office365"){
                 $encryptedPassword = Protect-XrmToolBoxPassword -Password $XrmConnection.Password;
                 $connectionString = $connectionString.Replace($XrmConnection.Password, $encryptedPassword);
