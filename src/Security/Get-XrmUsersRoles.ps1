@@ -11,8 +11,8 @@
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : all columns)
 
-    .PARAMETER UserQueryConditions
-    Query condition arrays used to filter user query.
+    .PARAMETER Query
+    Query used to select user records.
 #>
 function Get-XrmUsersRoles {
     [CmdletBinding()]
@@ -27,17 +27,19 @@ function Get-XrmUsersRoles {
         [String[]]
         $Columns = @("fullname", "internalemailaddress"),
 
-        [Parameter(Mandatory = $false)]
-        $UserQueryConditions = @()
+                [Parameter(Mandatory = $false)]
+        [Microsoft.Xrm.Sdk.Query.QueryBase]
+        $Query
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
+
         $queryUsers = New-XrmQueryExpression -LogicalName "systemuser" -Columns $Columns;
-        foreach ($condition in $UserQueryConditions) {
-            $queryUsers = $queryUsers.Criteria.AddCondition($condition);
+        if ($PSBoundParameters.Query) {
+            $queryUsers = $Query;
         }
         $users = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $queryUsers;
 
