@@ -97,7 +97,9 @@ function New-XrmClient {
             $XrmClient = Get-CrmConnection -InteractiveMode;
         }
         if (-not $XrmClient.IsReady) {
-            $Global:XrmContext.IsUserConnected = $false;
+            if($Global:XrmContext){
+                $Global:XrmContext.IsUserConnected = $false;
+            }
             throw $XrmClient.LastCrmError;
         }
 
@@ -123,11 +125,11 @@ function New-XrmClient {
             $userName = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "Username";
         }
         if (-not $userName) {
-            $userName = $userId;
+            $userName = $XrmContext.UserId;
         }
         
         if (-not $Quiet) {
-            Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $($Global:XrmContext.CurrentUrl) | User : $userName]" -ForegroundColor Yellow; 
+            Write-HostAndLog -Message "Connected to $($XrmClient.ConnectedOrgFriendlyName)! [Url = $($XrmContext.CurrentUrl) | User : $userName]" -ForegroundColor Yellow; 
         }
         $XrmClient;
     }
