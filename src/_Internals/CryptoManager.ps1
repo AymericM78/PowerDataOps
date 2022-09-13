@@ -15,8 +15,13 @@ function Repair-XrbConnectionString {
     )
 
     $ConnectionStringBackup = $ConnectionString;
-    $potentialEncryptedParameters = @("password", "Password", "clientsecret", "ClientSecret");
-    foreach ($parameter in  $potentialEncryptedParameters) {        
+    $potentialEncryptedParameters = @("Password", "ClientSecret");
+    $isDecrypted = $false;
+    foreach ($parameter in $potentialEncryptedParameters) {        
+        if($isDecrypted){
+            continue;
+        }
+
         $encryptedText = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName $parameter;
         if ([String]::IsNullOrWhiteSpace($encryptedText)) {
             continue;
@@ -31,12 +36,12 @@ function Repair-XrbConnectionString {
 
         $clearText = Unprotect-XrmToolBoxPassword -EncryptedPassword $encryptedText;
         $ConnectionString = $ConnectionString.Replace($encryptedText, $clearText);
+        $isDecrypted = $true;
     }
 
     if ($ConnectionStringBackup -eq $ConnectionString) {
         throw "ConnectionString is not encrypted!";
     }
-
     return $ConnectionString;
 }
 

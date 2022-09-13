@@ -37,10 +37,11 @@ function Out-XrmConnectionStringParameter {
     process {
 
         $alternateParameters = @{
+            "Password" = @("password")
             "UserName" = @("Username", "User Name", "UserId", "User Id")
             "AuthType" = @("authtype", "Authtype", "Auth Type", "AuthenticationType")
             "ClientId" = @("appid", "AppId", "ApplicationId")
-            "ClientSecret" = @("Secret")
+            "ClientSecret" = @("clientSecret", "Clientsecret", "clientsecret", "Secret")
             "Thumbprint" = @("CertThumbprint")
         };
         
