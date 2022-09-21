@@ -134,6 +134,9 @@ function Connect-XrmAdminInternal {
         $Global:currentSession = $null;
         Remove-PowerAppsAccount;
 
+        # Force TLS 1.2
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+
         $xrmConnection = $Global:XrmContext.CurrentConnection;
 
         $authType = $xrmConnection.AuthType.ToLower();
