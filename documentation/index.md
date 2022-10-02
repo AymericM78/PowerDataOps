@@ -60,7 +60,6 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Connect-XrmUser](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Connect-XrmUser.md)|Authenticate user to Microsoft Dataverse.<br/>Prepare Microsoft Dataverse connection with user credentials in order to consume Discovery Service.
 [Export-XrmConnectionToXrmToolBox](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmConnectionToXrmToolBox.md)|Export instances collection to XML file with connection strings to XrmToolBox connection file.<br/>Populate XrmToolbox connections with available instance for given user.
 [Get-XrmConnection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmConnection.md)|Get connections from XrmToolBox.<br/>Browse and retrieve information from XrmToolBox saved connections.
 [Import-XrmConnection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmConnection.md)|Import XrmToolBox connection from file.<br/>Populate XrmToolbox connection object from XML file.

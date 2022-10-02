@@ -8,12 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
+XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
+ConnectionString|String|2|false||
 
 
 ## Usage
 
 ```Powershell 
-New-XrmContext [<CommonParameters>]
+New-XrmContext [[-XrmClient] <CrmServiceClient>] [[-ConnectionString] <String>] [<CommonParameters>]
 ``` 
 
 

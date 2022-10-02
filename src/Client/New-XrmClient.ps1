@@ -10,7 +10,7 @@
     Connection String to Microsoft Dataverse instance (https://docs.microsoft.com/fr-fr/powerapps/developer/common-data-service/xrm-tooling/use-connection-strings-xrm-tooling-connect)
     
     .PARAMETER MaxCrmConnectionTimeOutMinutes
-    Specify timeout duration in minutes for connection.
+    Specify timeout duration in minutes.
 
     .OUTPUTS
     Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
@@ -53,6 +53,8 @@ function New-XrmClient {
         [System.Net.ServicePointManager]::UseNagleAlgorithm = $false;
         [System.Net.ServicePointManager]::DefaultConnectionLimit = 1000;
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+        
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::MaxConnectionTimeout = [System.TimeSpan]::new(0, $MaxCrmConnectionTimeOutMinutes, 0);
 
         # Initialize CRM Client	
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
@@ -67,14 +69,6 @@ function New-XrmClient {
                 # Override O365
                 $ConnectionString = $ConnectionString.Replace("Office365", "OAuth");
                 $ConnectionString = "$ConnectionString;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Auto;";
-
-                # Warn about Office365 authentication
-                if (-not $Quiet) {
-                    Write-HostAndLog -Message "============================================================================" -Level WARN;
-                    Write-HostAndLog -Message "/!\ Office365 authentication type is deprecated!" -Level WARN;
-                    Write-HostAndLog -Message "Connection string as been modified to force OAuth protocol"  -Level WARN;
-                    Write-HostAndLog -Message "============================================================================" -Level WARN;
-                }
             }
 
             $StopWatchXrmClient = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -96,6 +90,7 @@ function New-XrmClient {
             }
             $XrmClient = Get-CrmConnection -InteractiveMode;
         }
+
         if (-not $XrmClient.IsReady) {
             if($Global:XrmContext){
                 $Global:XrmContext.IsUserConnected = $false;
