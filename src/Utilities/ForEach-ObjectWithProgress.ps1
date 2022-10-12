@@ -17,6 +17,9 @@
     .PARAMETER ParentId
     Specifies the parent activity of the current activity. Use the value -1 if the current activity has no parent activity.
 
+    .PARAMETER ProgressStep
+    Define progressbar refresh (Default = 1). Set to bigger value for perf improvements on large collections.
+
     .PARAMETER ScriptBlock
     Custom script to apply for each object. Current object is provided as script block parameter.
 

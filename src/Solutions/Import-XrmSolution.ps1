@@ -29,8 +29,8 @@
     .PARAMETER SkipProductUpdateDependencies
     Gets or sets whether enforcement of dependencies related to product updates should be skipped. (Default : false)
     
-    .PARAMETER StageForUpgrade
-    Gets or sets whether to import the solution as a holding solution without immediate application of the upgrade. The upgrade can afterwards be triggered with Start-XrmSolutionUpgrade. This parameter is ignored if 'Upgrade' already is set to true. (Default : false)
+    .PARAMETER StartUpgrade
+    Start Upgrade operation immediatly after solution import. (Default : false)
 #>
 function Import-XrmSolution {
     [CmdletBinding()]
@@ -69,11 +69,11 @@ function Import-XrmSolution {
         
         [Parameter(Mandatory = $false)]
         [Boolean]
-        $SkipProductUpdateDependencies = $true
+        $SkipProductUpdateDependencies = $true,
         
         [Parameter(Mandatory = $false)]
         [Boolean]
-        $StageForUpgrade = $false,
+        $StartUpgrade = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -94,7 +94,11 @@ function Import-XrmSolution {
         $importSolutionRequest | Add-XrmRequestParameter -Name "OverwriteUnmanagedCustomizations" -Value $OverwriteUnmanagedCustomizations | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "ConvertToManaged" -Value $ConvertToManaged | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "SkipProductUpdateDependencies" -Value $SkipProductUpdateDependencies | Out-Null;
-        if ($Upgrade -or $StageForUpgrade) {
+        
+        if($StartUpgrade){
+            $Upgrade = $true;
+        }
+        if ($Upgrade) {
             $importSolutionRequest | Add-XrmRequestParameter -Name "HoldingSolution" -Value $true | Out-Null;
         }
 
@@ -135,7 +139,7 @@ function Import-XrmSolution {
             throw $errorMessage;
         }  
 
-        if ($Upgrade) {
+        if ($StartUpgrade) {
             Start-XrmSolutionUpgrade -SolutionUniqueName $SolutionUniqueName;
         }
     }
