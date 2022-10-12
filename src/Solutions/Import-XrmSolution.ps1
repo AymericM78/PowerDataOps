@@ -95,7 +95,7 @@ function Import-XrmSolution {
         $importSolutionRequest | Add-XrmRequestParameter -Name "ConvertToManaged" -Value $ConvertToManaged | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "SkipProductUpdateDependencies" -Value $SkipProductUpdateDependencies | Out-Null;
         if ($Upgrade -or $StageForUpgrade) {
-            $importSolutionRequest | Add-XrmRequestParameter -Name "HoldingSolution" -Value $Upgrade | Out-Null;
+            $importSolutionRequest | Add-XrmRequestParameter -Name "HoldingSolution" -Value $true | Out-Null;
         }
 
         try {            
