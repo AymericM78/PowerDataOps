@@ -24,10 +24,13 @@
     Direct the system to convert any matching unmanaged customizations into your managed solution. (Default : false)
 
     .PARAMETER Upgrade
-    Gets or sets whether to import the solution as a holding solution staged for upgrade. (Default : false)
+    Gets or sets whether to import the solution as a holding solution with immediate application of the upgrade. (Default : false)
 
     .PARAMETER SkipProductUpdateDependencies
     Gets or sets whether enforcement of dependencies related to product updates should be skipped. (Default : false)
+    
+    .PARAMETER StageForUpgrade
+    Gets or sets whether to import the solution as a holding solution without immediate application of the upgrade. The upgrade can afterwards be triggered with Start-XrmSolutionUpgrade. This parameter is ignored if 'Upgrade' already is set to true. (Default : false)
 #>
 function Import-XrmSolution {
     [CmdletBinding()]
@@ -67,6 +70,10 @@ function Import-XrmSolution {
         [Parameter(Mandatory = $false)]
         [Boolean]
         $SkipProductUpdateDependencies = $true
+        
+        [Parameter(Mandatory = $false)]
+        [Boolean]
+        $StageForUpgrade = $false,
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -87,7 +94,7 @@ function Import-XrmSolution {
         $importSolutionRequest | Add-XrmRequestParameter -Name "OverwriteUnmanagedCustomizations" -Value $OverwriteUnmanagedCustomizations | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "ConvertToManaged" -Value $ConvertToManaged | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "SkipProductUpdateDependencies" -Value $SkipProductUpdateDependencies | Out-Null;
-        if ($Upgrade) {
+        if ($Upgrade -or $StageForUpgrade) {
             $importSolutionRequest | Add-XrmRequestParameter -Name "HoldingSolution" -Value $Upgrade | Out-Null;
         }
 
