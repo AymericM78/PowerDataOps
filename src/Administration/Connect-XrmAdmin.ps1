@@ -91,6 +91,10 @@ function Connect-XrmAdmin {
         else {
             if (-not $Global:XrmContext) {
                 Add-PowerAppsAccount;
+                
+                if (-not $Global:XrmContext) {            
+                    $Global:XrmContext = New-XrmContext; 
+                }    
                 $Global:XrmContext.IsAdminConnected = $true;
                 return;
             }
