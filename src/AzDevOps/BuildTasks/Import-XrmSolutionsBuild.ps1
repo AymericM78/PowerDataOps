@@ -133,7 +133,7 @@ function Import-XrmSolutionsBuild {
                 $upgradeRequired = $true;
             }
 
-            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $upgradeRequired;
+            $XrmClient | Import-XrmSolution -SolutionUniqueName $solutionUniqueName -SolutionFilePath $solutionFilePath -Upgrade $upgradeRequired -StartUpgrade $upgradeRequired;
             Write-HostAndLog -Message "Solution $($solutionUniqueName) successfully imported" -Level SUCCESS;
 
             if ($env:SLACKURL) {
