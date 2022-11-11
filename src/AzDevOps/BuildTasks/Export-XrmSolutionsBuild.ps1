@@ -126,6 +126,30 @@ function Export-XrmSolutionsBuild {
         Write-HostAndLog -Message " - Param : ExportMarketingSettings = $ExportMarketingSettings" -Level INFO;
         Write-HostAndLog -Message " - Param : ExportRelationshipRoles = $ExportRelationshipRoles" -Level INFO;
 
+        # =========================================================================================================
+        # Step issue path : filtering attributes on create steps
+        # =========================================================================================================
+
+        Write-HostAndLog -Message "Apply steps issue patch" -Level INFO;        
+        $query = New-XrmQueryExpression -LogicalName "sdkmessageprocessingstep" -Columns "name";
+        $query = $query | Add-XrmQueryCondition -Field "sdkmessageidname" -Condition Equal -Values "Create";
+        $query = $query | Add-XrmQueryCondition -Field "filteringattributes" -Condition NotNull;
+        $query = $query | Add-XrmQueryCondition -Field "ishidden" -Condition Equal -Values $false;
+        $query = $query | Add-XrmQueryCondition -Field "iscustomizable" -Condition Equal -Values $true;
+
+        $steps = Get-XrmMultipleRecords -Query $query;
+        foreach($step in $steps){
+            
+            Write-HostAndLog -Message " > Step '$($step.name)' contains filtering attributes" -Level WARN;  
+
+            $stepUpdate = New-XrmEntity -LogicalName $step.LogicalName -Id $step.id -Attributes @{
+                "filteringattributes" = $null;
+            };
+            Update-XrmRecord -Record $stepUpdate;
+        }
+        Write-HostAndLog -Message "$($steps.Count) step(s) updated!" -Level WARN;  
+        # =========================================================================================================
+
         $solutionList = $Solutions.Split(",");
         $solutionList | ForEach-Object {
             
