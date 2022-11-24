@@ -1,3 +1,5 @@
+. "$PsScriptRoot\..\_Internals\CryptoManager.ps1"
+
 <#
     .SYNOPSIS
     Use Add-PowerAppsAccount cmdlet signs in the user or application account and saves the sign in information to cache.
@@ -52,7 +54,11 @@ function Connect-XrmAdmin {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $CertificateThumbprint
+        $CertificateThumbprint,
+
+        [Parameter(Mandatory = $false)]
+        [Switch]
+        $Encrypted
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -69,7 +75,12 @@ function Connect-XrmAdmin {
             $xrmConnection = New-XrmConnection;   
             $xrmConnection.AuthType = "Office365"; 
             $xrmConnection.UserName = $UserName;
-            $xrmConnection.Password = $Password;
+            if($Encrypted){
+                $xrmConnection.Password = Unprotect-XrmToolBoxPassword -EncryptedPassword $Password;
+            }
+            else{
+                $xrmConnection.Password = $Password;
+            }
             $xrmConnection.Credentials = $credentials;
         }
         elseif ($PSBoundParameters.ContainsKey('ClientSecret')) {
@@ -78,7 +89,12 @@ function Connect-XrmAdmin {
             $xrmConnection.AuthType = "ClientSecret"; 
             $xrmConnection.TenantId = $TenantId;
             $xrmConnection.ApplicationId = $ApplicationId;
-            $xrmConnection.ClientSecret = $ClientSecret;
+            if($Encrypted){
+                $xrmConnection.ClientSecret = Unprotect-XrmToolBoxPassword -EncryptedPassword $ClientSecret;
+            }
+            else{
+                $xrmConnection.ClientSecret = $ClientSecret;
+            }
         }
         elseif ($PSBoundParameters.ContainsKey('CertificateThumbprint')) {
             
