@@ -44,6 +44,7 @@ Command|Synopsis
 [Get-XrmMultipleRecords](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmMultipleRecords.md)|Retrieve multiple records with QueryExpression.<br/>Get rows from Microsoft Dataverse table with specified query (QueryBase). <br/>This command use pagination to pull all records.
 [Get-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecord.md)|Search for record with simple query.<br/>Get specific row (Entity record) according to given id, key, or attribute.
 [Invoke-XrmBulkRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequest.md)|Execute Multiple Organization Request.<br/>Send requests to Microsoft Dataverse for bulk execution.
+[Invoke-XrmBulkRequests](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequests.md)|Split and Execute Multiple Organization Requests.<br/>Send requests to Microsoft Dataverse for bulk execution.
 [Invoke-XrmRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmRequest.md)|Execute Organization Request.<br/>Send request to Microsoft Dataverse for execution.
 [Join-XrmRecords](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Join-XrmRecords.md)|Associate records in Dataverse.<br/>Add a link between 1 row (Entity record) and multiple rows in Microsoft Dataverse.
 [New-XrmClient](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmClient.md)|Initialize CrmServiceClient instance.<br/>Create a new connection to Microsoft Dataverse with a connectionstring.
@@ -226,6 +227,7 @@ Command|Synopsis
 [Get-XrmBase64](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmBase64.md)|Get base 64 from file content.<br/>Read given file and return its content as base64 content.
 [Get-XrmRegions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRegions.md)|Retrieve region names.<br/>Get available datacenter regions.
 [Set-XrmCredentials](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmCredentials.md)|Initialize PSCredential object.<br/>Create PSCredential from given login and password.
+[Split-XrmCollection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Split-XrmCollection.md)|Split given collection into specified sized collections.<br/>Extract chunk collections from given one.
 # `Views` commands
 
 Command|Synopsis

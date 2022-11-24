@@ -14,13 +14,14 @@ TenantId|String|3|false||AAD tenant ID (use with Client ID / secret)
 ApplicationId|String|4|false||AAD Application ID
 ClientSecret|String|5|false||AAD Application secret
 CertificateThumbprint|String|6|false||AAD Application Certificate Thumbprint
+Encrypted|SwitchParameter|named|false|False|
 
 
 ## Usage
 
 ```Powershell 
 Connect-XrmAdmin [[-UserName] <String>] [[-Password] <String>] [[-TenantId] <String>] [[-ApplicationId] <String>] 
-[[-ClientSecret] <String>] [[-CertificateThumbprint] <String>] [<CommonParameters>]
+[[-ClientSecret] <String>] [[-CertificateThumbprint] <String>] [-Encrypted] [<CommonParameters>]
 ``` 
 
 
