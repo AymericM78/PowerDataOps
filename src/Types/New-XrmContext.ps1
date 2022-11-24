@@ -34,6 +34,7 @@ function New-XrmContext {
         $hash["CurrentConnection"] = New-XrmConnection;
         $hash["CurrentInstance"] = $null;
         $hash["CurrentUrl"] = $null;
+        $hash["IsEncrypted"] = $false;
 
         $object = New-Object PsObject -Property $hash;
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {

@@ -12,6 +12,9 @@
     .PARAMETER MaxCrmConnectionTimeOutMinutes
     Specify timeout duration in minutes.
 
+    .PARAMETER IsEncrypted
+    Specify if password or secret are encrypted.
+
     .OUTPUTS
     Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
 
@@ -107,6 +110,7 @@ function New-XrmClient {
         else{
             $Global:XrmContext = New-XrmContext -XrmClient $XrmClient;
         }
+        $Global:XrmContext.IsEncrypted = $IsEncrypted;
 
         # Store client to simplify commands execution
         $Global:XrmClient = $XrmClient;

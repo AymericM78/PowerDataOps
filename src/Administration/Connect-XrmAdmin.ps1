@@ -27,6 +27,9 @@
 
     .PARAMETER CertificateThumbprint
     AAD Application Certificate Thumbprint
+    
+    .PARAMETER IsEncrypted
+    Specify if password or secret are encrypted.
 #>
 function Connect-XrmAdmin {
     [CmdletBinding()]
@@ -57,8 +60,8 @@ function Connect-XrmAdmin {
         $CertificateThumbprint,
 
         [Parameter(Mandatory = $false)]
-        [Switch]
-        $Encrypted
+        [bool]
+        $IsEncrypted = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -75,7 +78,7 @@ function Connect-XrmAdmin {
             $xrmConnection = New-XrmConnection;   
             $xrmConnection.AuthType = "Office365"; 
             $xrmConnection.UserName = $UserName;
-            if($Encrypted){
+            if($IsEncrypted){
                 $xrmConnection.Password = Unprotect-XrmToolBoxPassword -EncryptedPassword $Password;
             }
             else{
@@ -89,7 +92,7 @@ function Connect-XrmAdmin {
             $xrmConnection.AuthType = "ClientSecret"; 
             $xrmConnection.TenantId = $TenantId;
             $xrmConnection.ApplicationId = $ApplicationId;
-            if($Encrypted){
+            if($IsEncrypted){
                 $xrmConnection.ClientSecret = Unprotect-XrmToolBoxPassword -EncryptedPassword $ClientSecret;
             }
             else{
@@ -111,7 +114,8 @@ function Connect-XrmAdmin {
                 if (-not $Global:XrmContext) {            
                     $Global:XrmContext = New-XrmContext; 
                 }    
-                $Global:XrmContext.IsAdminConnected = $true;
+                $Global:XrmContext.IsAdminConnected = $true;               
+                $Global:XrmContext.IsEncrypted = $IsEncrypted;
                 return;
             }
         }
@@ -127,6 +131,7 @@ function Connect-XrmAdmin {
         }
 
         $Global:XrmContext.IsAdminConnected = Connect-XrmAdminInternal;
+        $Global:XrmContext.IsEncrypted = $IsEncrypted;
     }
     end {
         $StopWatch.Stop();
