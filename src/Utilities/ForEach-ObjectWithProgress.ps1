@@ -37,7 +37,7 @@ function ForEach-ObjectWithProgress {
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
-        [object[]]
+        [array]
         $Collection,
 
         [Parameter(Mandatory = $false)]
@@ -84,7 +84,12 @@ function ForEach-ObjectWithProgress {
             if($current % $ProgressStep -eq 0) {
                 Write-Progress -Id $Id -ParentId $ParentId -Activity $OperationName -Status "Processing item $current of $total ($($percent.ToString('#.##')) %)..." -PercentComplete $percent;
             }
-            Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $item;
+            if($item -is [Array]){
+                Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList (,$item);
+            }
+            else {
+                Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $item;
+            }
         } 
     }
     end {
