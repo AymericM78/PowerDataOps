@@ -288,14 +288,14 @@ function Get-XrmFavorites {
             continue;
         }
 
-        $crmConnectionString = $instance.ConnectionString;
+        $crmConnectionString = $instance | Out-XrmConnectionString;
         
         if (-not [string]::IsNullOrWhiteSpace($OverrideConnectionStringFormat)) {
             $crmConnectionString = $OverrideConnectionStringFormat.Replace("{Url}", $instance.Url);
         }
 
         try {
-            $xrmClient = New-XrmClient -ConnectionString $crmConnectionString -Quiet;
+            $xrmClient = New-XrmClient -ConnectionString $crmConnectionString -Quiet -IsEncrypted $Global:XrmContext.IsEncrypted;
             $url = $instance.Url;
             if(-not $url){
                 continue;
