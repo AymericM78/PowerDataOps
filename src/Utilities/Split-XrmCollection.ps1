@@ -26,6 +26,15 @@ function Split-XrmCollection {
         $TempArray = @()
     }
     process {
+
+        if(-not $Collection){
+            return @();
+        }
+
+        if($Collection.Count -lt $Count){
+            return $Collection;
+        }
+
         foreach ($item in $Collection) {
             if (++$Index -eq $Count) {
                 $Index = 0;
