@@ -31,7 +31,7 @@ function Invoke-XrmSqlCommand {
         if(-not $Global:XrmClient){
             throw "Not connected to Dataverse instance (New-XrmClient)";
         }
-        Assert-XrmTdsEndpointEnabled;  
+        Assert-XrmTdsEndpointEnabled -XrmClient $XrmClient;  
     }    
     process {            
         $sqlConnectionString = "server=$($XrmClient.CrmConnectOrgUriActual.Host)";
