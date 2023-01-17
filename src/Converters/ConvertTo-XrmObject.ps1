@@ -22,7 +22,7 @@ function ConvertTo-XrmObject {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {               
-        $hash = @{
+        $hash = [ordered]@{
             "Id"          = $Record.Id
             "LogicalName" = $Record.LogicalName
             "Record"      = $Record
