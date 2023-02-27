@@ -271,6 +271,9 @@ function Get-XrmFavorites {
     $d365Folder = $RootBookmark.GetChild("Dataverse");
 
     $instances = Get-XrmInstances;
+    if($instances.Count -gt 10){
+        $instances = $instances | Out-GridView -OutputMode Multiple;
+    }
 
     $queryApps = New-Object "Microsoft.Xrm.Sdk.Query.QueryExpression" -ArgumentList "appmodule";
     $queryApps.Columnset.AddColumn("uniquename");

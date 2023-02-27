@@ -51,7 +51,10 @@ function Export-XrmConnectionToXrmToolBox {
     process {
         
         $filePath = "$XtbConnectionPath\$($Name).xml";
-        $instances = Get-XrmInstances;
+        $instances = Get-XrmInstances;        
+        if($instances.Count -gt 10){
+            $instances = $instances | Out-GridView -OutputMode Multiple;
+        }
         
         $fileContent = New-Object "System.Text.Stringbuilder";
         $fileContent.AppendLine('<?xml version="1.0" encoding="utf-8"?>') | Out-Null;
