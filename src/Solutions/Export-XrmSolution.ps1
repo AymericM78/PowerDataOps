@@ -111,7 +111,11 @@ function Export-XrmSolution {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $ForceSyncExport = $false
+        $ForceSyncExport = $false,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $TimeoutInMinutes = 10
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -183,7 +187,7 @@ function Export-XrmSolution {
             $exportJobId = $exportSolutionResponse.Results["ExportJobId"];
 
             # Monitor request execution
-            $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId;
+            $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -TimeoutInMinutes $TimeoutInMinutes;
 
             # Retrieve solution file binary
             $downloadSolutionExportDataRequest = New-XrmRequest -Name "DownloadSolutionExportData";

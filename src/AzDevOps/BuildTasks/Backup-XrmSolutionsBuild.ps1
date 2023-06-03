@@ -43,7 +43,11 @@ function Backup-XrmSolutionsBuild {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $DefaultExportPath = $env:TEMP
+        $DefaultExportPath = $env:TEMP,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $TimeoutInMinutes = 10
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -55,7 +59,7 @@ function Backup-XrmSolutionsBuild {
         $solutionList | ForEach-Object {
             
             Write-HostAndLog -Message "Exporting solution $($_)" -Level INFO;           
-            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $_ -Managed $Managed -ExportPath $DefaultExportPath -ExportCalendarSettings $true -ExportCustomizationSettings $true -ExportEmailTrackingSettings $true  -ExportAutoNumberingSettings $true  -ExportIsvConfig $true  -ExportOutlookSynchronizationSettings $true  -ExportGeneralSettings $true  -ExportMarketingSettings $true  -ExportRelationshipRoles $true;                
+            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $_ -Managed $Managed -ExportPath $DefaultExportPath -ExportCalendarSettings $true -ExportCustomizationSettings $true -ExportEmailTrackingSettings $true  -ExportAutoNumberingSettings $true  -ExportIsvConfig $true  -ExportOutlookSynchronizationSettings $true  -ExportGeneralSettings $true  -ExportMarketingSettings $true  -ExportRelationshipRoles $true -TimeoutInMinutes $TimeoutInMinutes;                
             Write-HostAndLog -Message "Solution $($_) successfully exported to '$solutionFilePath' !" -Level SUCCESS;
 
             Write-HostAndLog -Message "Unpacking solution $($_)" -Level INFO;   

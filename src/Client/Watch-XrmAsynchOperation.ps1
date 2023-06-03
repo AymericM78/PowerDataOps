@@ -35,7 +35,11 @@ function Watch-XrmAsynchOperation {
             
         [Parameter(Mandatory = $false)]
         [scriptblock] 
-        $ScriptBlock
+        $ScriptBlock,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $TimeoutInMinutes = 60
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -48,6 +52,7 @@ function Watch-XrmAsynchOperation {
         $waitingStatusValue = @(0, 10);
         $completedStatusValue = @(30, 31, 32);
         $completed = $false;
+        $startAt = Get-Date;
         
         while (-not $completed) {
             Start-Sleep -Seconds $PollingIntervalSeconds;
@@ -64,6 +69,10 @@ function Watch-XrmAsynchOperation {
             $waiting = $waitingStatusValue.Contains($asynchOperation.statuscode_value.Value);        
             if($waiting){
                 Write-HostAndLog " > Asyncoperation $AsyncOperationId is waiting for execution..." -ForegroundColor Gray;
+                $now = Get-Date;
+                if(($now - $startAt).TotalMinutes -gt $TimeoutInMinutes){
+                    throw "Operation reach timeout ($TimeoutInMinutes min)!";
+                }
             }
             else {
                 if ($PSBoundParameters.ScriptBlock) {
