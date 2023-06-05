@@ -27,24 +27,34 @@ function Publish-XrmCustomizations {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [int]
-        $TimeOutInMinutes = 10
+        $TimeOutInMinutes = 10,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $Async = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-
-        $publishRequest = New-Object -TypeName Microsoft.Crm.Sdk.Messages.PublishAllXmlRequest;
-        if ($ParameterXml) {
-            $publishRequest = New-Object -TypeName Microsoft.Crm.Sdk.Messages.PublishXmlRequest;
-            $publishRequest.ParameterXml = $ParameterXml;
+               
+        $publishRequest = New-XrmRequest -Name "PublishAllXmlAsync";
+        if(-not $Async){
+            $publishRequest = New-XrmRequest -Name "PublishAllXml";
         }
 
-        # Run request with extended timeout
-        $XrmClient | Set-XrmClientTimeout -DurationInMinutes $TimeOutInMinutes;
+        if ($ParameterXml) {
+            $publishRequest = New-XrmRequest -Name "PublishXml";
+            $publishRequest | Add-XrmRequestParameter -Name "ParameterXml" -Value $ParameterXml | Out-Null;
+        }
+        
         $response = $XrmClient | Invoke-XrmRequest -Request $publishRequest;
-        $XrmClient | Set-XrmClientTimeout -Revert;
+
+        if($Async){
+            $asyncOperationId = $response.Results["AsyncOperationId"]
+            Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId;
+        }
     }
     end {
         $StopWatch.Stop();
