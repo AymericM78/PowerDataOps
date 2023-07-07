@@ -19,8 +19,8 @@ Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
 ## Usage
 
 ```Powershell 
-New-XrmClient [[-ConnectionString] <String>] [[-MaxCrmConnectionTimeOutMinutes] <Int32>] [[-IsEncrypted] <Boolean>] 
-[-Quiet] [<CommonParameters>]
+New-XrmClient [[-ConnectionString] <String>] [[-MaxCrmConnectionTimeOutMinutes] <Int32>] [[-IsEncrypted] <Boolean>] [-Quiet] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

@@ -17,8 +17,8 @@ BackgroundColor|String|4|true||
 ## Usage
 
 ```Powershell 
-Set-XrmThemeColor [[-XrmClient] <CrmServiceClient>] [-Name] <String> [-LabelAndLinkColor] <String> [-BackgroundColor] 
-<String> [<CommonParameters>]
+Set-XrmThemeColor [[-XrmClient] <CrmServiceClient>] [-Name] <String> [-LabelAndLinkColor] <String> [-BackgroundColor] <String> 
+[<CommonParameters>]
 ``` 
 
 

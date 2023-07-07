@@ -23,17 +23,17 @@ ExportMarketingSettings|Boolean|12|false|False|Specify if exported solution shou
 ExportRelationshipRoles|Boolean|13|false|False|Specify if exported solution should include RelationshipRoles (Default: false)
 AddVersionToFileName|Boolean|14|false|False|Specify if solution version number should be added to file name. (Default: false)
 ForceSyncExport|SwitchParameter|named|false|False|Specify if solution should be exported synchronously. (Default: false)
+TimeoutInMinutes|Int32|15|false|10|
 
 
 ## Usage
 
 ```Powershell 
-Export-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] 
-[[-ExportPath] <String>] [[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] 
-[[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] 
-[[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] 
-<Boolean>] [[-ExportRelationshipRoles] <Boolean>] [[-AddVersionToFileName] <Boolean>] [-ForceSyncExport] 
-[<CommonParameters>]
+Export-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] [[-ExportPath] <String>] 
+[[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] 
+[[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] [[-ExportOutlookSynchronizationSettings] <Boolean>] 
+[[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] <Boolean>] [[-AddVersionToFileName] 
+<Boolean>] [-ForceSyncExport] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 

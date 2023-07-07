@@ -14,13 +14,14 @@ UnpackPath|String|2|false|$env:SYSTEM_DEFAULTWORKINGDIRECTORY|Folder path where 
 Solutions|String|3|false|$env:SOLUTIONS|Solution uniquenames that will be exported and then unpacked, use variable 'Solutions' from associated variable group.
 Managed|Boolean|4|false|False|Specify if solution should be export as managed or unmanaged. (Default: false = unmanaged)
 DefaultExportPath|String|5|false|$env:TEMP|Folder path where solutions will be exported before unpacked. (Default: Agent temp directory)
+TimeoutInMinutes|Int32|6|false|10|
 
 
 ## Usage
 
 ```Powershell 
-Backup-XrmSolutionsBuild [[-ConnectionString] <String>] [[-UnpackPath] <String>] [[-Solutions] <String>] [[-Managed] 
-<Boolean>] [[-DefaultExportPath] <String>] [<CommonParameters>]
+Backup-XrmSolutionsBuild [[-ConnectionString] <String>] [[-UnpackPath] <String>] [[-Solutions] <String>] [[-Managed] <Boolean>] 
+[[-DefaultExportPath] <String>] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 

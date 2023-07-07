@@ -21,8 +21,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse
 ## Usage
 
 ```Powershell 
-Invoke-XrmBulkRequests [[-XrmClient] <CrmServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] 
-[[-ContinueOnError] <Boolean>] [[-ReturnResponses] <Boolean>] [-Quiet] [<CommonParameters>]
+Invoke-XrmBulkRequests [[-XrmClient] <CrmServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] [[-ContinueOnError] 
+<Boolean>] [[-ReturnResponses] <Boolean>] [-Quiet] [<CommonParameters>]
 ``` 
 
 

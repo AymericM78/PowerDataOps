@@ -26,9 +26,9 @@ EdgeAppPath|String|11|false|"$($env:LOCALAPPDATA)\Microsoft\Edge SxS\Application
 
 ```Powershell 
 Export-XrmConnectionToBrowser [-ProfileName] <String> [-BrowserShortCutsPath] <String> [[-IsChrome] <Boolean>] 
-[[-OverrideConnectionStringFormat] <String>] [[-Extensions] <String[]>] [[-AppIgnoredList] <String[]>] 
-[[-ChromeDefaultProfilesPath] <String>] [[-ChromeX64AppPath] <String>] [[-ChromeX32AppPath] <String>] 
-[[-EdgeDefaultProfilesPath] <String>] [[-EdgeAppPath] <String>] [<CommonParameters>]
+[[-OverrideConnectionStringFormat] <String>] [[-Extensions] <String[]>] [[-AppIgnoredList] <String[]>] [[-ChromeDefaultProfilesPath] 
+<String>] [[-ChromeX64AppPath] <String>] [[-ChromeX32AppPath] <String>] [[-EdgeDefaultProfilesPath] <String>] [[-EdgeAppPath] <String>] 
+[<CommonParameters>]
 ``` 
 
 

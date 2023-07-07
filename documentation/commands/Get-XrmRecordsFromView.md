@@ -16,8 +16,7 @@ ViewName|String|3|true||Entity saved query name. Use auto completion to select p
 ## Usage
 
 ```Powershell 
-Get-XrmRecordsFromView [[-XrmClient] <CrmServiceClient>] [-EntityLogicalName] <String> [-ViewName] <String> 
-[<CommonParameters>]
+Get-XrmRecordsFromView [[-XrmClient] <CrmServiceClient>] [-EntityLogicalName] <String> [-ViewName] <String> [<CommonParameters>]
 ``` 
 
 
