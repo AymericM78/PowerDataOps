@@ -16,8 +16,7 @@ TargetSolutionUniqueName|String|3|true||Unmanaged solution unique name where to 
 ## Usage
 
 ```Powershell 
-Copy-XrmSolutionComponents [[-XrmClient] <CrmServiceClient>] [-SourceSolutionUniqueName] <String> [-TargetSolutionUniqueName] <String> 
-[<CommonParameters>]
+Copy-XrmSolutionComponents [[-XrmClient] <CrmServiceClient>] [-SourceSolutionUniqueName] <String> [-TargetSolutionUniqueName] <String> [<CommonParameters>]
 ``` 
 
 

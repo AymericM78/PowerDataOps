@@ -13,6 +13,12 @@ Command|Synopsis
 [Restore-XrmInstance](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Restore-XrmInstance.md)|Restore instance at given time.<br/>Restore a backup of given instance to itself or another instance.
 [Set-XrmInstanceMode](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmInstanceMode.md)|Enable or disable admin mode on given instance<br/>Administration mode will prevent users to access to instance.
 [Watch-XrmOperation](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Watch-XrmOperation.md)|Monitor operation completion.<br/>Poll operation status from given url until its done.
+# `Attributes` commands
+
+Command|Synopsis
+-------|-----------
+[Get-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributeValue.md)|Read entity attribute.<br/>Extract entity attribute value from record / table row.
+[Set-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAttributeValue.md)|Set entity attribute value.<br/>Add or update attribute value.
 # `Audit` commands
 
 Command|Synopsis
@@ -73,13 +79,6 @@ Command|Synopsis
 -------|-----------
 [ConvertTo-XrmObject](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmObject.md)|Transform Entity to custom object.<br/>Represent Entity object to custom object.
 [ConvertTo-XrmObjects](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmObjects.md)|Transform Entity Collection to custom object collection.<br/>Represent Entity objects to custom objects array.
-# `Entity` commands
-
-Command|Synopsis
--------|-----------
-[Get-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributeValue.md)|Read entity attribute.<br/>Extract entity attribute value from record / table row.
-[New-XrmEntity](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntity.md)|Initialize Entity object instance.<br/>Create a new Microsoft Dataverse Entity object.
-[Set-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAttributeValue.md)|Set entity attribute value.<br/>Add or update attribute value.
 # `Excel` commands
 
 Command|Synopsis
@@ -213,6 +212,7 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [New-XrmContext](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmContext.md)|Initialize new object that represent a Xrm Context.<br/>Core module cmdlet that create new object to store context information.
+[New-XrmEntity](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntity.md)|Initialize Entity object instance.<br/>Create a new Microsoft Dataverse Entity object.
 [New-XrmEntityCollection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityCollection.md)|Initialize EntityCollection object instance.<br/>Get new Entity Collection object from entities array.
 [New-XrmEntityReference](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityReference.md)|Initialize EntityReference object instance.<br/>Get new EntityReference object from lookup information.
 [New-XrmMoney](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMoney.md)|Initialize Money object instance.<br/>Get new money object from given decimal value.

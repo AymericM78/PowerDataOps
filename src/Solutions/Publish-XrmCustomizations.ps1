@@ -27,20 +27,20 @@ function Publish-XrmCustomizations {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [int]
-        $TimeOutInMinutes = 10,
+        $TimeOutInMinutes = 5,
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $Async = $false
+        $Async = $true
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-               
+        
         $publishRequest = New-XrmRequest -Name "PublishAllXmlAsync";
-        if(-not $Async){
+        if (-not $Async) {
             $publishRequest = New-XrmRequest -Name "PublishAllXml";
         }
 
@@ -51,9 +51,9 @@ function Publish-XrmCustomizations {
         
         $response = $XrmClient | Invoke-XrmRequest -Request $publishRequest;
 
-        if($Async){
+        if ($Async) {
             $asyncOperationId = $response.Results["AsyncOperationId"]
-            Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId;
+            Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -TimeoutInMinutes $TimeOutInMinutes;
         }
     }
     end {

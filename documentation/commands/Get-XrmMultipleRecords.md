@@ -12,6 +12,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Query|QueryBase|2|true||Query that select and filter data from Microsoft Dataverse table. (QueryBase)
 PageSize|Int32|3|false|1000|Specify row count per page to pull. (Default: 1000)
+ShowProgress|SwitchParameter|named|false|False|
 
 ## Outputs
 Custom Objects array. Rows (= Entity records) are converted to custom object to simplify data operations.
@@ -19,7 +20,7 @@ Custom Objects array. Rows (= Entity records) are converted to custom object to 
 ## Usage
 
 ```Powershell 
-Get-XrmMultipleRecords [[-XrmClient] <CrmServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [<CommonParameters>]
+Get-XrmMultipleRecords [[-XrmClient] <CrmServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [-ShowProgress] [<CommonParameters>]
 ``` 
 
 ## Examples

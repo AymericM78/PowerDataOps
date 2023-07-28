@@ -16,8 +16,7 @@ AttributeFilter|String[]|3|false||Attributes logical names to filter.
 ## Usage
 
 ```Powershell 
-Get-XrmAuditHistory [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [[-AttributeFilter] <String[]>] 
-[<CommonParameters>]
+Get-XrmAuditHistory [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [[-AttributeFilter] <String[]>] [<CommonParameters>]
 ``` 
 
 

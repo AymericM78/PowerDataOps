@@ -53,21 +53,39 @@ function Invoke-XrmBulkRequests {
     process {
 
         [System.Collections.ArrayList] $responses = @();
-        $subRequests = Split-XrmCollection -Collection $Requests -Count $BatchSize;
+        if (-Not $Requests) {
+            return $responses;
+        }
+
+        if ($Requests.Count -le $BatchSize) {
+            ForEach-ObjectWithProgress -Collection $Requests -OperationName "Processing requests" -ScriptBlock {
+                param($request)
+                
+                if (-not $Quiet) {
+                    Write-HostAndLog -Message " > Processing $($Requests.Count) requests.";   
+                }
+                $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+                if ($ReturnResponses -and $response) {
+                    $responses.Add($response);
+                }
+            }
+        }
+        else {
+            $subRequests = Split-XrmCollection -Collection $Requests -Count $BatchSize;
         
-        ForEach-ObjectWithProgress -Collection $subRequests -OperationName "Processing requests" -ScriptBlock {
-            param($batchs)
+            ForEach-ObjectWithProgress -Collection $subRequests -OperationName "Processing requests" -ScriptBlock {
+                param($batchs)
             
-            # foreach($batchs in $subRequests) {
-            if(-not $Quiet){
-                Write-HostAndLog -Message " > Processing $($batchs.Count) requests.";   
-            }
-            $batchResponse = Invoke-XrmBulkRequest -XrmClient $XrmClient -Requests $batchs -ContinueOnError $ContinueOnError -ReturnResponses $ReturnResponses;
-            if(-not $ContinueOnError -and $batchResponse.IsFaulted){
-                throw "Processing failed!"; 
-            }
-            if($ReturnResponses -and $batchResponse.Responses){
-                $responses.AddRange($batchResponse.Responses);
+                if (-not $Quiet) {
+                    Write-HostAndLog -Message " > Processing $($batchs.Count) requests.";   
+                }
+                $batchResponse = Invoke-XrmBulkRequest -XrmClient $XrmClient -Requests $batchs -ContinueOnError $ContinueOnError -ReturnResponses $ReturnResponses;
+                if (-not $ContinueOnError -and $batchResponse.IsFaulted) {
+                    throw "Processing failed!"; 
+                }
+                if ($ReturnResponses -and $batchResponse.Responses) {
+                    $responses.AddRange($batchResponse.Responses);
+                }
             }
         }
 

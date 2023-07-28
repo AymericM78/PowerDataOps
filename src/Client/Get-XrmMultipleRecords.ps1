@@ -43,7 +43,11 @@ function Get-XrmMultipleRecords {
         
         [Parameter(Mandatory = $false)]
         [int]
-        $PageSize = 1000
+        $PageSize = 1000,
+        
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $ShowProgress = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -64,7 +68,7 @@ function Get-XrmMultipleRecords {
         [System.Collections.ArrayList] $records = @();
         while ($true) {
             $results = Protect-XrmCommand -ScriptBlock { $XrmClient.RetrieveMultiple($Query) };
-            if ($enablePaging) {
+            if ($enablePaging -and $ShowProgress) {
                 Write-Progress -Activity "Retrieving data from Microsoft Dataverse" -Status "Processing record page : $pageNumber" -PercentComplete -1 -Id 1050;
             }
             if ($results.Entities.Count -gt 0) {               
@@ -85,7 +89,7 @@ function Get-XrmMultipleRecords {
                 break;
             }
         }
-        if ($enablePaging) {
+        if ($enablePaging -and $ShowProgress) {
             Write-Progress -Activity "Retrieving data from Microsoft Dataverse" -Id 1050 -Completed;
         }
         $records;
