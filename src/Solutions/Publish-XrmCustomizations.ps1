@@ -9,7 +9,7 @@
     Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 
     .PARAMETER TimeOutInMinutes
-    Specify timeout duration in minute. (Default : 10 min)
+    Specify timeout duration in minute. (Default : 5 min)
 #>
 function Publish-XrmCustomizations {
     [CmdletBinding()]
