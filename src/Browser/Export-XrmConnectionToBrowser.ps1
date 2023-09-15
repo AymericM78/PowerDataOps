@@ -84,11 +84,11 @@ function Export-XrmConnectionToBrowser {
         
         [Parameter(Mandatory = $false)]
         [string]
-        $EdgeDefaultProfilesPath = "$($env:LOCALAPPDATA)\Microsoft\Edge SxS\User Data\",
+        $EdgeDefaultProfilesPath = "$($env:LOCALAPPDATA)\Microsoft\Edge\User Data\",
 
         [Parameter(Mandatory = $false)]
         [string]
-        $EdgeAppPath = "$($env:LOCALAPPDATA)\Microsoft\Edge SxS\Application\msedge.exe"
+        $EdgeAppPath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
     )
     begin {   
