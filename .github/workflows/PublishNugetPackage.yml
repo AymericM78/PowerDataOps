@@ -1,5 +1,28 @@
- - name: Publish Module to PowerShell Gallery
-        uses: pcgeek86/publish-powershell-module-action@v20
-        id: publish-module
-        with:
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+name: PublishNuget
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '16 12 * * 2'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    name: PSScriptAnalyzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 
+      - name: Publish Module to PowerShell Gallery
+             uses: pcgeek86/publish-powershell-module-action@v20
+             id: publish-module
+             with:
+               NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
