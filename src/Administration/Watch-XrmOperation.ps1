@@ -37,6 +37,9 @@ function Watch-XrmOperation {
             if(-not $operationData) { 
                 continue;
             }
+            if(-not $operationData.Internal.Content) { 
+                continue;
+            }
             $operation = $operationData.Internal.Content | ConvertFrom-Json;
 
             $state = $operation.state.id;
