@@ -33,10 +33,7 @@ function Watch-XrmOperation {
         while ($monitor) {
             Start-Sleep -Seconds $PollingIntervalSeconds;
                 
-            $operationData = Get-AdminPowerAppOperationStatus -OperationStatusUrl $OperationUrl;
-            if(-not $operationData) { 
-                continue;
-            }
+            $operationData = Get-AdminPowerAppOperationStatus -OperationStatusUrl $OperationUrl;            
             if(-not $operationData.Internal.Content) { 
                 continue;
             }
