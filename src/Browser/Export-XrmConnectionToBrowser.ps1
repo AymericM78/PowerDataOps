@@ -115,19 +115,19 @@ function Export-XrmConnectionToBrowser {
         }
 
         # Provision profile folder
-        $profilePath = [IO.Path]::Combine($browserProfilesPath, $profileName);
+        $profilePath = [IO.Path]::Combine($browserProfilesPath, $ProfileName);
         if (-not(Test-Path -Path $profilePath)) {
-            New-Item -ItemType Directory -Path $browserProfilesPath -Name $profileName -Force -ErrorAction Ignore | Out-Null;
+            New-Item -ItemType Directory -Path $browserProfilesPath -Name $ProfileName -Force -ErrorAction Ignore | Out-Null;
 
             # Create shrotcut
-            Add-BrowserShortcut -BrowserShortCutsPath $BrowserShortCutsPath -BrowserAppPath $browserAppPath -ProfileName $profileName;
+            Add-BrowserShortcut -BrowserShortCutsPath $BrowserShortCutsPath -BrowserAppPath $browserAppPath -ProfileName $ProfileName;
     
             # Start browser for folder initialization
-            Start-Browser -BrowserAppPath $browserAppPath -ProfileName $profileName;
+            Start-Browser -BrowserAppPath $browserAppPath -ProfileName $ProfileName;
             Start-Sleep -Seconds 5;
             
             # Configure chrome : Favorite bar
-            Set-BrowserFavoriteBarEnabled -ProfileName $profileName -ProfilePath $profilePath;
+            Set-BrowserFavoriteBarEnabled -ProfileName $ProfileName -ProfilePath $profilePath;
         
             # Configure chrome : Extensions
             $Extensions | ForEach-Object {
@@ -152,7 +152,7 @@ function Export-XrmConnectionToBrowser {
         # Fix profile name
         $browserStateFilePath = "$browserProfilesPath\Local State";
         $localState = [IO.File]::ReadAllText($browserStateFilePath) | ConvertFrom-Json;
-        $localState.profile.info_cache.$profileName.name = $profileName;
+        $localState.profile.info_cache.$ProfileName.name = $ProfileName;
         $localState | ConvertTo-Json -Depth 32 | Out-File -FilePath $browserStateFilePath -Encoding utf8 -Force;
     }
     end {

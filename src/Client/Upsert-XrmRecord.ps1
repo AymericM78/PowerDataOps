@@ -44,8 +44,7 @@ function Upsert-XrmRecord {
         }
 
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
-        $id = $response.Results["id"];
-        $id;
+        $response;
     }
     end {
         $StopWatch.Stop();
