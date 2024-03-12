@@ -10,14 +10,15 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 ParameterXml|String|2|false||
-TimeOutInMinutes|Int32|3|false|5|Specify timeout duration in minute. (Default : 10 min)
+TimeOutInMinutes|Int32|3|false|5|Specify timeout duration in minute. (Default : 5 min)
 Async|Boolean|4|false|True|
 
 
 ## Usage
 
 ```Powershell 
-Publish-XrmCustomizations [[-XrmClient] <CrmServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] [[-Async] <Boolean>] [<CommonParameters>]
+Publish-XrmCustomizations [[-XrmClient] <CrmServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] 
+[[-Async] <Boolean>] [<CommonParameters>]
 ``` 
 
 

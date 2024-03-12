@@ -18,16 +18,17 @@ AppIgnoredList|String[]|6|false|@()|Filter app list during favorite provisionnin
 ChromeDefaultProfilesPath|String|7|false|"$($env:LOCALAPPDATA)\Google\Chrome\User Data\"|Folder path where to store Chrome profile folder.
 ChromeX64AppPath|String|8|false|C:\Program Files\Google\Chrome\Application\chrome.exe|Chrome executable path for 64 bits version.
 ChromeX32AppPath|String|9|false|C:\Program Files (x86)\Google\Chrome\Application\chrome.exe|Chrome executable path for 32 bits version.
-EdgeDefaultProfilesPath|String|10|false|"$($env:LOCALAPPDATA)\Microsoft\Edge SxS\User Data\"|Folder path where to store Edge profile folder.
-EdgeAppPath|String|11|false|"$($env:LOCALAPPDATA)\Microsoft\Edge SxS\Application\msedge.exe"|Edge executable path.
+EdgeDefaultProfilesPath|String|10|false|"$($env:LOCALAPPDATA)\Microsoft\Edge\User Data\"|Folder path where to store Edge profile folder.
+EdgeAppPath|String|11|false|C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe|Edge executable path.
 
 
 ## Usage
 
 ```Powershell 
-Export-XrmConnectionToBrowser [-ProfileName] <String> [-BrowserShortCutsPath] <String> [[-IsChrome] <Boolean>] [[-OverrideConnectionStringFormat] <String>] 
-[[-Extensions] <String[]>] [[-AppIgnoredList] <String[]>] [[-ChromeDefaultProfilesPath] <String>] [[-ChromeX64AppPath] <String>] [[-ChromeX32AppPath] 
-<String>] [[-EdgeDefaultProfilesPath] <String>] [[-EdgeAppPath] <String>] [<CommonParameters>]
+Export-XrmConnectionToBrowser [-ProfileName] <String> [-BrowserShortCutsPath] <String> [[-IsChrome] <Boolean>] 
+[[-OverrideConnectionStringFormat] <String>] [[-Extensions] <String[]>] [[-AppIgnoredList] <String[]>] 
+[[-ChromeDefaultProfilesPath] <String>] [[-ChromeX64AppPath] <String>] [[-ChromeX32AppPath] <String>] 
+[[-EdgeDefaultProfilesPath] <String>] [[-EdgeAppPath] <String>] [<CommonParameters>]
 ``` 
 
 

@@ -16,7 +16,8 @@ BypassCustomPluginExecution|SwitchParameter|named|false|False|Specify wether inv
 ## Usage
 
 ```Powershell 
-Update-XrmRecord [[-XrmClient] <CrmServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] [<CommonParameters>]
+Update-XrmRecord [[-XrmClient] <CrmServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] 
+[<CommonParameters>]
 ``` 
 
 

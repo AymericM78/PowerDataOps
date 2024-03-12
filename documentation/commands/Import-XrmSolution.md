@@ -22,9 +22,9 @@ StartUpgrade|Boolean|9|false|False|Start Upgrade operation immediatly after solu
 ## Usage
 
 ```Powershell 
-Import-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] 
-[[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] 
-[[-StartUpgrade] <Boolean>] [<CommonParameters>]
+Import-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> 
+[[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] 
+[[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [<CommonParameters>]
 ``` 
 
 

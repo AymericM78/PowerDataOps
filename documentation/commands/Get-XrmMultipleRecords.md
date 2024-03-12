@@ -20,7 +20,8 @@ Custom Objects array. Rows (= Entity records) are converted to custom object to 
 ## Usage
 
 ```Powershell 
-Get-XrmMultipleRecords [[-XrmClient] <CrmServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [-ShowProgress] [<CommonParameters>]
+Get-XrmMultipleRecords [[-XrmClient] <CrmServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [-ShowProgress] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

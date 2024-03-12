@@ -16,7 +16,8 @@ Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default :
 ## Usage
 
 ```Powershell 
-Get-XrmViews [[-XrmClient] <CrmServiceClient>] [-EntityLogicalName] <String> [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmViews [[-XrmClient] <CrmServiceClient>] [-EntityLogicalName] <String> [[-Columns] <String[]>] 
+[<CommonParameters>]
 ``` 
 
 

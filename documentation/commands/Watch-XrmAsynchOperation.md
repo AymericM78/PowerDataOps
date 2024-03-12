@@ -18,8 +18,8 @@ TimeoutInMinutes|Int32|5|false|60|
 ## Usage
 
 ```Powershell 
-Watch-XrmAsynchOperation [[-XrmClient] <CrmServiceClient>] [-AsyncOperationId] <Guid> [[-PollingIntervalSeconds] <Int32>] [[-ScriptBlock] <ScriptBlock>] 
-[[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
+Watch-XrmAsynchOperation [[-XrmClient] <CrmServiceClient>] [-AsyncOperationId] <Guid> [[-PollingIntervalSeconds] 
+<Int32>] [[-ScriptBlock] <ScriptBlock>] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 

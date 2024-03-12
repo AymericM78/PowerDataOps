@@ -16,7 +16,8 @@ Roles|Guid[]|3|true|@()|Roles unique identifier array to add.
 ## Usage
 
 ```Powershell 
-Add-XrmUserRoles [[-XrmClient] <CrmServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> [<CommonParameters>]
+Add-XrmUserRoles [[-XrmClient] <CrmServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> 
+[<CommonParameters>]
 ``` 
 
 
