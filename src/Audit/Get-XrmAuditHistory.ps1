@@ -62,7 +62,8 @@ function Get-XrmAuditHistory {
 
                 $hash = @{};
                 $hash["Object"] = $auditRecord.FormattedValues["objecttypecode"];
-                $hash["Id"] = $auditRecord["objectid"].Id;
+                $hash["Id"] = $auditRecord.Id;
+                $hash["ObjectId"] = $auditRecord["objectid"].Id;
                 $hash["Key"] = $RecordReference.Id;
                 $hash["AttributeName"] = $attributeName;
                 $hash["CreatedOn"] = $auditRecord.FormattedValues["createdon"];
