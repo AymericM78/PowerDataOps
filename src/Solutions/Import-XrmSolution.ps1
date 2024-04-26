@@ -118,9 +118,11 @@ function Import-XrmSolution {
                     # First import job retrieve could failed if the delay is too short
                     return;
                 }
-                if ($importJob.progress -ne $lastProgressValue) {
+                if ($importJob.progress -ne $lastProgressValue) {                    
                     Write-HostAndLog " > $SolutionUniqueName import in progress... ($($importJob.progress) %)" -ForegroundColor Cyan;
                     Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Status "Importing solution $SolutionUniqueName...($($importJob.progress) %)" -PercentComplete $importJob.progress_Value -Id 1052;
+                    $progressValue = $importJob.progress_Value;
+                    Write-Host "##vso[task.setprogress value=$progressValue;]Solution Import Progress"
                 }
                 $lastProgressValue = $importJob.progress;
             }
