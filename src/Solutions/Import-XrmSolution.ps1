@@ -122,7 +122,7 @@ function Import-XrmSolution {
                     Write-HostAndLog " > $SolutionUniqueName import in progress... ($($importJob.progress) %)" -ForegroundColor Cyan;
                     Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Status "Importing solution $SolutionUniqueName...($($importJob.progress) %)" -PercentComplete $importJob.progress_Value -Id 1052;
                     $progressValue = $importJob.progress_Value;
-                    Write-Host "##vso[task.setprogress value=$progressValue;]Solution Import Progress"
+                    Write-Output "##vso[task.setprogress value=$progressValue;]Solution Import Progress"
                 }
                 $lastProgressValue = $importJob.progress;
             }
