@@ -17,8 +17,8 @@ jobs:
       shell: pwsh
       run: |
         $modulePath = "./PowerDataOps.psd1"
-        $module = Get-Content $modulePath | Out-String | ConvertFrom-StringData
-        $module.Version = [version]::new($module.Version.Major, $module.Version.Minor, $module.Version.Build + 1)
+        $module = [PsCustomObject] (Import-PowerShellDataFile ".\PowerDataOps.psd1")
+        $module.ModuleVersion = [version]::new($module.ModuleVersion.Major, $module.ModuleVersion.Minor, $module.ModuleVersion.Build + 1)
         $module | Out-String | Set-Content $modulePath
 
     - name: Publish to PSGallery
