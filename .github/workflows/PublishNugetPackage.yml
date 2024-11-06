@@ -10,23 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Update module version
-      shell: pwsh
-      run: |
-        $modulePath = "./PowerDataOps.psd1";
-        $module = [PsCustomObject] (Import-PowerShellDataFile ".\PowerDataOps.psd1");
-        $currentVersion = [version] $module.ModuleVersion;
-        $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build, $currentVersion.Revision + 1);
-        Write-Host "New Module Version = $($newVersion.ToString())";
-        $module.ModuleVersion = $newVersion.ToString();
-        $module | Out-String | Set-Content $modulePath
+      - name: Update module version
+        shell: pwsh
+        run: |
+          $modulePath = "./PowerDataOps.psd1";
+          $moduleContent = [IO.File]::ReadAllText($modulePath);
+          
+          $module = [PsCustomObject] (Import-PowerShellDataFile $modulePath);
+          $currentVersion = [version] $module.ModuleVersion;
+          
+          $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build, $currentVersion.Revision + 1);
+          Write-Host "New Module Version = $($newVersion.ToString())";
 
-    - name: Publish to PSGallery
-      shell: pwsh
-      run: |
-        Publish-Module -Path "./" -NuGetApiKey "${{ secrets.PS_GALLERY_KEY }}" -SkipAutomaticTags -Verbose
-      env:
-        PS_GALLERY_KEY: ${{ secrets.PS_GALLERY_KEY }}
+          $moduleContent = $moduleContent.Replace($currentVersion.ToString(), $newVersion.ToString());
+          
+          $moduleContent | Set-Content $modulePath;
+
+      - name: Publish to PSGallery
+        shell: pwsh
+        run: |
+          Publish-Module -Path "./" -NuGetApiKey "${{ secrets.PS_GALLERY_KEY }}" -SkipAutomaticTags -Verbose
+        env:
+          PS_GALLERY_KEY: ${{ secrets.PS_GALLERY_KEY }}
