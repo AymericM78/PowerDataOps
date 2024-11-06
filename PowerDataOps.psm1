@@ -19,7 +19,7 @@ $requiredModules = @("Microsoft.PowerApps.Administration.PowerShell")
 foreach ($module in $requiredModules) {
     if (-not(Get-Module -ListAvailable -Name $module)) {
         Write-Verbose "$module does not exist";
-        Install-Module -Name $module -RequiredVersion "2.0.194" -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
+        Install-Module -Name $module -RequiredVersion "2.0.200" -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
     }
     Import-Module -Name $module -DisableNameChecking;
     Write-Verbose " > Loading module : '$module' => OK !";
