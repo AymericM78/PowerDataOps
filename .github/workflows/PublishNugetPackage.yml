@@ -1,28 +1,30 @@
-name: PublishNuget
+name: Publish PowerShell Module
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: '16 12 * * 2'
-
-permissions:
-  contents: read
+    branches:
+      - main
 
 jobs:
-  build:
-    permissions:
-      contents: read # for actions/checkout to fetch code
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
-    name: PublishNugetModule
+  publish:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3 
-      - name: Publish Module to PowerShell Gallery
-        uses: pcgeek86/publish-powershell-module-action@v20
-        id: publish-module
-        with:
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up PowerShell
+      uses: actions/setup-powershell@v2
+
+    - name: Update module version
+      run: |
+        $modulePath = "./PowerDataOps.psd1"
+        $module = Get-Content $modulePath | Out-String | ConvertFrom-StringData
+        $module.Version = [version]::new($module.Version.Major, $module.Version.Minor, $module.Version.Build + 1)
+        $module | Out-String | Set-Content $modulePath
+
+    - name: Publish to PSGallery
+      run: |
+        Publish-Module -Path "./path/to/your/module" -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }}
+      env:
+        PS_GALLERY_KEY: ${{ secrets.PS_GALLERY_KEY }}
