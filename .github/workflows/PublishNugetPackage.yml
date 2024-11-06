@@ -16,14 +16,17 @@ jobs:
     - name: Update module version
       shell: pwsh
       run: |
-        $modulePath = "./PowerDataOps.psd1"
-        $module = [PsCustomObject] (Import-PowerShellDataFile ".\PowerDataOps.psd1")
-        $module.ModuleVersion = [version]::new($module.ModuleVersion.Major, $module.ModuleVersion.Minor, $module.ModuleVersion.Build + 1)
+        $modulePath = "./PowerDataOps.psd1";
+        $module = [PsCustomObject] (Import-PowerShellDataFile ".\PowerDataOps.psd1");
+        $currentVersion = [version] $module.ModuleVersion;
+        $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1);
+        Write-Host "New Module Version = $($newVersion.ToString())";
+        $module.ModuleVersion = $newVersion.ToString();
         $module | Out-String | Set-Content $modulePath
 
     - name: Publish to PSGallery
       shell: pwsh
       run: |
-        Publish-Module -Path "./path/to/your/module" -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }}
+        Publish-Module -Path "./" -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }}
       env:
         PS_GALLERY_KEY: ${{ secrets.PS_GALLERY_KEY }}
