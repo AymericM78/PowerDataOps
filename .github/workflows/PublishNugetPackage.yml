@@ -13,10 +13,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up PowerShell
-      uses: msftactions/setup-powershell@v1
-
     - name: Update module version
+      shell: pwsh
       run: |
         $modulePath = "./PowerDataOps.psd1"
         $module = Get-Content $modulePath | Out-String | ConvertFrom-StringData
@@ -24,6 +22,7 @@ jobs:
         $module | Out-String | Set-Content $modulePath
 
     - name: Publish to PSGallery
+      shell: pwsh
       run: |
         Publish-Module -Path "./path/to/your/module" -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }}
       env:
