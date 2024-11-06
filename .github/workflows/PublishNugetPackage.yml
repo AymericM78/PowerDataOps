@@ -19,7 +19,7 @@ jobs:
         $modulePath = "./PowerDataOps.psd1";
         $module = [PsCustomObject] (Import-PowerShellDataFile ".\PowerDataOps.psd1");
         $currentVersion = [version] $module.ModuleVersion;
-        $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build + 1);
+        $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build, $currentVersion.Revision + 1);
         Write-Host "New Module Version = $($newVersion.ToString())";
         $module.ModuleVersion = $newVersion.ToString();
         $module | Out-String | Set-Content $modulePath
@@ -27,6 +27,6 @@ jobs:
     - name: Publish to PSGallery
       shell: pwsh
       run: |
-        Publish-Module -Path "./" -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }}
+        Publish-Module -Path "./" -NuGetApiKey "${{ secrets.PS_GALLERY_KEY }}" -SkipAutomaticTags -Verbose
       env:
         PS_GALLERY_KEY: ${{ secrets.PS_GALLERY_KEY }}
