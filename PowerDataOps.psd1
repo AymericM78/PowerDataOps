@@ -7,8 +7,8 @@
     Copyright = '(c) 2020 Aymeric Mouille. All rights reserved.'
     Description = 'PowerShell module for Microsoft Dataverse (ex Common Data Service) and Power Platform automation (Data Management, administration and DevOps activities)'
     FunctionsToExport = '*'
-    CmdletsToExport = @()
-    AliasesToExport = @()
+    CmdletsToExport = '*'
+    AliasesToExport = '*'
     PrivateData = @{
         PSData = @{
             Tags = 'Cds','PowerPlatform','DevOps','Xrm','D365','Dataverse','Dynamics'
