@@ -1,4 +1,4 @@
-﻿# Command : `Set-XrmOrganizationClientFeature` 
+# Command : `Set-XrmOrganizationClientFeature` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
+XrmClient|ServiceClient|1|false|$Global:XrmClient|
 Name|String|2|true||Client feature name to set.
 Value|String|3|true||Client feature value to set.
 
@@ -16,8 +16,7 @@ Value|String|3|true||Client feature value to set.
 ## Usage
 
 ```Powershell 
-Set-XrmOrganizationClientFeature [[-XrmClient] <CrmServiceClient>] [-Name] <String> [-Value] <String> 
-[<CommonParameters>]
+Set-XrmOrganizationClientFeature [[-XrmClient] <ServiceClient>] [-Name] <String> [-Value] <String> [<CommonParameters>]
 ``` 
 
 

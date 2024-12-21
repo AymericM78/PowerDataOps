@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmRecordsFromView` 
+# Command : `Get-XrmRecordsFromView` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 EntityLogicalName|String|2|true||
 ViewName|String|3|true||Entity saved query name. Use auto completion to select proper one.
 
@@ -16,8 +16,7 @@ ViewName|String|3|true||Entity saved query name. Use auto completion to select p
 ## Usage
 
 ```Powershell 
-Get-XrmRecordsFromView [[-XrmClient] <CrmServiceClient>] [-EntityLogicalName] <String> [-ViewName] <String> 
-[<CommonParameters>]
+Get-XrmRecordsFromView [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-ViewName] <String> [<CommonParameters>]
 ``` 
 
 

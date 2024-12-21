@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmRolePrivileges` 
+# Command : `Get-XrmRolePrivileges` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 RoleId|Guid|2|true||Role unique identifier.
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmRolePrivileges [[-XrmClient] <CrmServiceClient>] [-RoleId] <Guid> [<CommonParameters>]
+Get-XrmRolePrivileges [[-XrmClient] <ServiceClient>] [-RoleId] <Guid> [<CommonParameters>]
 ``` 
 
 

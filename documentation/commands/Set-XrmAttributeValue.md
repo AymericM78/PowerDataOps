@@ -1,4 +1,4 @@
-﻿# Command : `Set-XrmAttributeValue` 
+# Command : `Set-XrmAttributeValue` 
 
 ## Description
 

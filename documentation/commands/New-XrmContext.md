@@ -1,4 +1,4 @@
-﻿# Command : `New-XrmContext` 
+# Command : `New-XrmContext` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
+XrmClient|ServiceClient|1|false|$Global:XrmClient|
 ConnectionString|String|2|false||
 
 
 ## Usage
 
 ```Powershell 
-New-XrmContext [[-XrmClient] <CrmServiceClient>] [[-ConnectionString] <String>] [<CommonParameters>]
+New-XrmContext [[-XrmClient] <ServiceClient>] [[-ConnectionString] <String>] [<CommonParameters>]
 ``` 
 
 

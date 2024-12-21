@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmQueryFromFetch` 
+# Command : `Get-XrmQueryFromFetch` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 FetchXml|String|2|true||FetchXML query string.
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmQueryFromFetch [[-XrmClient] <CrmServiceClient>] [-FetchXml] <String> [<CommonParameters>]
+Get-XrmQueryFromFetch [[-XrmClient] <ServiceClient>] [-FetchXml] <String> [<CommonParameters>]
 ``` 
 
 

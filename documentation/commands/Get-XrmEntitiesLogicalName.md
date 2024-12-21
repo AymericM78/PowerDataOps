@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmEntitiesLogicalName` 
+# Command : `Get-XrmEntitiesLogicalName` 
 
 ## Description
 
@@ -8,13 +8,13 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmEntitiesLogicalName [[-XrmClient] <CrmServiceClient>] [<CommonParameters>]
+Get-XrmEntitiesLogicalName [[-XrmClient] <ServiceClient>] [<CommonParameters>]
 ``` 
 
 

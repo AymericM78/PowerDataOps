@@ -1,4 +1,4 @@
-﻿# Command : `New-XrmDevOpsSettings` 
+# Command : `New-XrmDevOpsSettings` 
 
 ## Description
 

@@ -1,4 +1,4 @@
-﻿# Command : `Update-XrmRecordFileUpload` 
+# Command : `Update-XrmRecordFileUpload` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Record|Entity|2|true||Record (row) to update.
 FileAttributeLogicalName|String|3|true||Entity file attribute name.
 FilePath|String|4|true||Path to file on the OS file system.
@@ -17,8 +17,7 @@ FilePath|String|4|true||Path to file on the OS file system.
 ## Usage
 
 ```Powershell 
-Update-XrmRecordFileUpload [[-XrmClient] <CrmServiceClient>] [-Record] <Entity> [-FileAttributeLogicalName] <String> 
-[-FilePath] <String> [<CommonParameters>]
+Update-XrmRecordFileUpload [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-FileAttributeLogicalName] <String> [-FilePath] <String> [<CommonParameters>]
 ``` 
 
 ## Examples

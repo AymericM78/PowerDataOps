@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmAttributeValue` 
+# Command : `Get-XrmAttributeValue` 
 
 ## Description
 
@@ -17,8 +17,7 @@ RaiseErrorIfMissing|Boolean|3|false|False|If true, throws an exception if attrib
 ## Usage
 
 ```Powershell 
-Get-XrmAttributeValue [-Record] <Entity> [-Name] <String> [-FormattedValue] [[-RaiseErrorIfMissing] <Boolean>] 
-[<CommonParameters>]
+Get-XrmAttributeValue [-Record] <Entity> [-Name] <String> [-FormattedValue] [[-RaiseErrorIfMissing] <Boolean>] [<CommonParameters>]
 ``` 
 
 

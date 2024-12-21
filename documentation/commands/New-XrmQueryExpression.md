@@ -1,4 +1,4 @@
-﻿# Command : `New-XrmQueryExpression` 
+# Command : `New-XrmQueryExpression` 
 
 ## Description
 

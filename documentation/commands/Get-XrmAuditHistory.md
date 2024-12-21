@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmAuditHistory` 
+# Command : `Get-XrmAuditHistory` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 RecordReference|EntityReference|2|true||Lookup to target record. (EntityReference)
 AttributeFilter|String[]|3|false||Attributes logical names to filter.
 
@@ -16,8 +16,7 @@ AttributeFilter|String[]|3|false||Attributes logical names to filter.
 ## Usage
 
 ```Powershell 
-Get-XrmAuditHistory [[-XrmClient] <CrmServiceClient>] [-RecordReference] <EntityReference> [[-AttributeFilter] 
-<String[]>] [<CommonParameters>]
+Get-XrmAuditHistory [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [[-AttributeFilter] <String[]>] [<CommonParameters>]
 ``` 
 
 

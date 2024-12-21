@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmBase64` 
+# Command : `Get-XrmBase64` 
 
 ## Description
 

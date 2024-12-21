@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmRecord` 
+# Command : `Get-XrmRecord` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 LogicalName|String|2|true||Table / Entity logical name.
 Key|String|3|false||Specify alternate key attribute name to search.
 AttributeName|String|4|false||Specify attribute name to search.
@@ -22,8 +22,7 @@ Custom Object. Row (= Entity record) is converted to custom object to simplify d
 ## Usage
 
 ```Powershell 
-Get-XrmRecord [[-XrmClient] <CrmServiceClient>] [-LogicalName] <String> [[-Key] <String>] [[-AttributeName] <String>] 
-[-Value] <Object> [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmRecord [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-Key] <String>] [[-AttributeName] <String>] [-Value] <Object> [[-Columns] <String[]>] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -36,6 +35,6 @@ Write-Host $contosoAccount.revenue;
 
 ## More informations
 
-Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
+System.Object[]
 
 

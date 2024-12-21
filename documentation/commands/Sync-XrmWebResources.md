@@ -1,4 +1,4 @@
-﻿# Command : `Sync-XrmWebResources` 
+# Command : `Sync-XrmWebResources` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 FolderPath|String|2|true||Full path to directory where webresources are stored.
 SolutionUniqueName|String|3|true||Microsoft Dataverse solution unique name where to add new webressource.
 SynchronizationMode|String|4|false||Specify synchronization pattern : full or delta.
@@ -21,9 +21,7 @@ SupportedExtensions|String[]|6|false|@("*.htm", "*.html", "*.css", "*.js", "*.xm
 ## Usage
 
 ```Powershell 
-Sync-XrmWebResources [[-XrmClient] <CrmServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> 
-[[-SynchronizationMode] <String>] [[-SynchronizationDeltaHours] <Int32>] [[-SupportedExtensions] <String[]>] 
-[<CommonParameters>]
+Sync-XrmWebResources [[-XrmClient] <ServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> [[-SynchronizationMode] <String>] [[-SynchronizationDeltaHours] <Int32>] [[-SupportedExtensions] <String[]>] [<CommonParameters>]
 ``` 
 
 

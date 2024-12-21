@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmRegions` 
+# Command : `Get-XrmRegions` 
 
 ## Description
 

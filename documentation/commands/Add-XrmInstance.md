@@ -1,4 +1,4 @@
-﻿# Command : `Add-XrmInstance` 
+# Command : `Add-XrmInstance` 
 
 ## Description
 
@@ -19,8 +19,7 @@ LanguageName|String|6|true||Language name LCID (English = 1033, French = 1036, .
 ## Usage
 
 ```Powershell 
-Add-XrmInstance [-InstanceDisplayName] <String> [-InstanceDomainName] <String> [-Location] <String> [-Sku] <String> 
-[-CurrencyCodeName] <String> [-LanguageName] <String> [<CommonParameters>]
+Add-XrmInstance [-InstanceDisplayName] <String> [-InstanceDomainName] <String> [-Location] <String> [-Sku] <String> [-CurrencyCodeName] <String> [-LanguageName] <String> [<CommonParameters>]
 ``` 
 
 

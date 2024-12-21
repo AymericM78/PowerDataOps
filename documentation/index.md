@@ -1,5 +1,9 @@
-﻿# PowerDataOps module index
+# PowerDataOps module index
 
+# `_Internals` commands
+
+Command|Synopsis
+-------|-----------
 # `Administration` commands
 
 Command|Synopsis
@@ -248,8 +252,4 @@ Command|Synopsis
 [Disable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmWorkflow.md)|Disable a workflow.<br/>Deactivate given workflow.
 [Enable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmWorkflow.md)|Enable a workflow.<br/>Activate given workflow.
 [Get-XrmWorkflows](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmWorkflows.md)|Retrieve workflows.<br/>Get workflows with expected columns.
-# `_Internals` commands
-
-Command|Synopsis
--------|-----------
 

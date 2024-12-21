@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmSolutionVersion` 
+# Command : `Get-XrmSolutionVersion` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 SolutionUniqueName|String|2|true||Solution unique name to retrieve.
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmSolutionVersion [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [<CommonParameters>]
+Get-XrmSolutionVersion [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [<CommonParameters>]
 ``` 
 
 

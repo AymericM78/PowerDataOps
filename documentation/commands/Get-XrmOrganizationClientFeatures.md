@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmOrganizationClientFeatures` 
+# Command : `Get-XrmOrganizationClientFeatures` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|
+XrmClient|ServiceClient|1|false|$Global:XrmClient|
 Name|String|2|false||Client feature name to retrieve.
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmOrganizationClientFeatures [[-XrmClient] <CrmServiceClient>] [[-Name] <String>] [<CommonParameters>]
+Get-XrmOrganizationClientFeatures [[-XrmClient] <ServiceClient>] [[-Name] <String>] [<CommonParameters>]
 ``` 
 
 

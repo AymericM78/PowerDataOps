@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmConnection` 
+# Command : `Get-XrmConnection` 
 
 ## Description
 

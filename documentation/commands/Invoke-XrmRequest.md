@@ -1,4 +1,4 @@
-﻿# Command : `Invoke-XrmRequest` 
+# Command : `Invoke-XrmRequest` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Request|OrganizationRequest|2|true||Organization request to execute.
 Async|SwitchParameter|named|false|False|Indicates if request should be run in background. Request must supports asynchronous execution. (Default: false = run synchronously)
 
@@ -18,7 +18,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse
 ## Usage
 
 ```Powershell 
-Invoke-XrmRequest [[-XrmClient] <CrmServiceClient>] [-Request] <OrganizationRequest> [-Async] [<CommonParameters>]
+Invoke-XrmRequest [[-XrmClient] <ServiceClient>] [-Request] <OrganizationRequest> [-Async] [<CommonParameters>]
 ``` 
 
 

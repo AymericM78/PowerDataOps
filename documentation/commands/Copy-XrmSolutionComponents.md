@@ -1,4 +1,4 @@
-﻿# Command : `Copy-XrmSolutionComponents` 
+# Command : `Copy-XrmSolutionComponents` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 SourceSolutionUniqueName|String|2|true||Unmanaged solution unique name where to add components.
 TargetSolutionUniqueName|String|3|true||Unmanaged solution unique name where to get components.
 
@@ -16,8 +16,7 @@ TargetSolutionUniqueName|String|3|true||Unmanaged solution unique name where to 
 ## Usage
 
 ```Powershell 
-Copy-XrmSolutionComponents [[-XrmClient] <CrmServiceClient>] [-SourceSolutionUniqueName] <String> 
-[-TargetSolutionUniqueName] <String> [<CommonParameters>]
+Copy-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SourceSolutionUniqueName] <String> [-TargetSolutionUniqueName] <String> [<CommonParameters>]
 ``` 
 
 

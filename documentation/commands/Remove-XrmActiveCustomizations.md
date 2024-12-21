@@ -1,4 +1,4 @@
-﻿# Command : `Remove-XrmActiveCustomizations` 
+# Command : `Remove-XrmActiveCustomizations` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 SolutionComponentName|String|2|true||
 ComponentId|Guid|3|true||Solution component unique identifier to clean.
 
@@ -16,8 +16,7 @@ ComponentId|Guid|3|true||Solution component unique identifier to clean.
 ## Usage
 
 ```Powershell 
-Remove-XrmActiveCustomizations [[-XrmClient] <CrmServiceClient>] [-SolutionComponentName] <String> [-ComponentId] 
-<Guid> [<CommonParameters>]
+Remove-XrmActiveCustomizations [[-XrmClient] <ServiceClient>] [-SolutionComponentName] <String> [-ComponentId] <Guid> [<CommonParameters>]
 ``` 
 
 

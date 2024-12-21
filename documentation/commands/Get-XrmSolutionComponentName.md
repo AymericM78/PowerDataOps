@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmSolutionComponentName` 
+# Command : `Get-XrmSolutionComponentName` 
 
 ## Description
 

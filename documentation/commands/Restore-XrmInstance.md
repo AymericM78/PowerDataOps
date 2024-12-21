@@ -1,4 +1,4 @@
-﻿# Command : `Restore-XrmInstance` 
+# Command : `Restore-XrmInstance` 
 
 ## Description
 
@@ -19,9 +19,7 @@ BackupLabel|String|6|false||Name of the backup
 ## Usage
 
 ```Powershell 
-Restore-XrmInstance [-SourceInstanceDomainName] <String> [[-TargetInstanceDomainName] <String>] 
-[[-TargetInstanceNewDisplayName] <String>] [[-TargetInstanceSecurityGroupId] <Guid>] [[-RestoreTimeUtc] <DateTime>] 
-[[-BackupLabel] <String>] [<CommonParameters>]
+Restore-XrmInstance [-SourceInstanceDomainName] <String> [[-TargetInstanceDomainName] <String>] [[-TargetInstanceNewDisplayName] <String>] [[-TargetInstanceSecurityGroupId] <Guid>] [[-RestoreTimeUtc] <DateTime>] [[-BackupLabel] <String>] [<CommonParameters>]
 ``` 
 
 

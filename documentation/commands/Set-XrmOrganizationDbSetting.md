@@ -1,4 +1,4 @@
-﻿# Command : `Set-XrmOrganizationDbSetting` 
+# Command : `Set-XrmOrganizationDbSetting` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Name|String|2|true||Setting name to define.
 Value|String|3|true||Setting value to define.
 
@@ -16,7 +16,7 @@ Value|String|3|true||Setting value to define.
 ## Usage
 
 ```Powershell 
-Set-XrmOrganizationDbSetting [[-XrmClient] <CrmServiceClient>] [-Name] <String> [-Value] <String> [<CommonParameters>]
+Set-XrmOrganizationDbSetting [[-XrmClient] <ServiceClient>] [-Name] <String> [-Value] <String> [<CommonParameters>]
 ``` 
 
 

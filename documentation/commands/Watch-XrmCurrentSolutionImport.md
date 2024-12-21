@@ -1,4 +1,4 @@
-﻿# Command : `Watch-XrmCurrentSolutionImport` 
+# Command : `Watch-XrmCurrentSolutionImport` 
 
 ## Description
 
@@ -8,13 +8,13 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 
 
 ## Usage
 
 ```Powershell 
-Watch-XrmCurrentSolutionImport [[-XrmClient] <CrmServiceClient>] [<CommonParameters>]
+Watch-XrmCurrentSolutionImport [[-XrmClient] <ServiceClient>] [<CommonParameters>]
 ``` 
 
 

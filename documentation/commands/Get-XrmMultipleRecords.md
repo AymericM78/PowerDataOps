@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmMultipleRecords` 
+# Command : `Get-XrmMultipleRecords` 
 
 ## Description
 
@@ -9,7 +9,7 @@ This command use pagination to pull all records.
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Query|QueryBase|2|true||Query that select and filter data from Microsoft Dataverse table. (QueryBase)
 PageSize|Int32|3|false|1000|Specify row count per page to pull. (Default: 1000)
 ShowProgress|SwitchParameter|named|false|False|
@@ -20,8 +20,7 @@ Custom Objects array. Rows (= Entity records) are converted to custom object to 
 ## Usage
 
 ```Powershell 
-Get-XrmMultipleRecords [[-XrmClient] <CrmServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [-ShowProgress] 
-[<CommonParameters>]
+Get-XrmMultipleRecords [[-XrmClient] <ServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [-ShowProgress] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -36,6 +35,6 @@ $accounts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $queryAccounts;
 
 ## More informations
 
-Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
+System.Object[]
 
 

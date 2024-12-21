@@ -1,4 +1,4 @@
-﻿# Command : `Backup-XrmSolutionsBuild` 
+# Command : `Backup-XrmSolutionsBuild` 
 
 ## Description
 
@@ -20,8 +20,7 @@ TimeoutInMinutes|Int32|6|false|10|
 ## Usage
 
 ```Powershell 
-Backup-XrmSolutionsBuild [[-ConnectionString] <String>] [[-UnpackPath] <String>] [[-Solutions] <String>] [[-Managed] 
-<Boolean>] [[-DefaultExportPath] <String>] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
+Backup-XrmSolutionsBuild [[-ConnectionString] <String>] [[-UnpackPath] <String>] [[-Solutions] <String>] [[-Managed] <Boolean>] [[-DefaultExportPath] <String>] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 

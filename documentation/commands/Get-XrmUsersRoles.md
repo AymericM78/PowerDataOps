@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmUsersRoles` 
+# Command : `Get-XrmUsersRoles` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Columns|String[]|2|false|@("fullname", "internalemailaddress")|Specify expected columns to retrieve. (Default : all columns)
 Query|QueryBase|3|false||Query used to select user records.
 
@@ -16,7 +16,7 @@ Query|QueryBase|3|false||Query used to select user records.
 ## Usage
 
 ```Powershell 
-Get-XrmUsersRoles [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [[-Query] <QueryBase>] [<CommonParameters>]
+Get-XrmUsersRoles [[-XrmClient] <ServiceClient>] [[-Columns] <String[]>] [[-Query] <QueryBase>] [<CommonParameters>]
 ``` 
 
 

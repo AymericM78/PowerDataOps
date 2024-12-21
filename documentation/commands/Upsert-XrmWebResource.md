@@ -1,4 +1,4 @@
-﻿# Command : `Upsert-XrmWebResource` 
+# Command : `Upsert-XrmWebResource` 
 
 ## Description
 
@@ -9,7 +9,7 @@ If webresource exists, compare content and update it if different.
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 FilePath|String|2|true||Local webresource file path.
 SolutionUniqueName|String|3|true||Microsoft Dataverse solution unique name where to add new webressource.
 Prefix|String|4|false||Publisher customization prefix for newly created webresource.
@@ -18,8 +18,7 @@ Prefix|String|4|false||Publisher customization prefix for newly created webresou
 ## Usage
 
 ```Powershell 
-Upsert-XrmWebResource [[-XrmClient] <CrmServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] 
-<String>] [<CommonParameters>]
+Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [<CommonParameters>]
 ``` 
 
 

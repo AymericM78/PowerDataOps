@@ -1,4 +1,4 @@
-﻿# Command : `Import-XrmSolutionsBuild` 
+# Command : `Import-XrmSolutionsBuild` 
 
 ## Description
 
@@ -22,9 +22,7 @@ Upgrade|Boolean|8|false|False|
 ## Usage
 
 ```Powershell 
-Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] 
-[[-SolutionsImportIgnore] <String>] [[-SolutionsImportUpgrade] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] 
-[[-PluginAssemblyName] <String>] [[-Upgrade] <Boolean>] [<CommonParameters>]
+Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-SolutionsImportIgnore] <String>] [[-SolutionsImportUpgrade] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] [[-PluginAssemblyName] <String>] [[-Upgrade] <Boolean>] [<CommonParameters>]
 ``` 
 
 

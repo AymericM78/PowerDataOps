@@ -1,4 +1,4 @@
-﻿# Command : `Connect-XrmAdmin` 
+# Command : `Connect-XrmAdmin` 
 
 ## Description
 
@@ -20,8 +20,7 @@ IsEncrypted|Boolean|7|false|False|Specify if password or secret are encrypted.
 ## Usage
 
 ```Powershell 
-Connect-XrmAdmin [[-UserName] <String>] [[-Password] <String>] [[-TenantId] <String>] [[-ApplicationId] <String>] 
-[[-ClientSecret] <String>] [[-CertificateThumbprint] <String>] [[-IsEncrypted] <Boolean>] [<CommonParameters>]
+Connect-XrmAdmin [[-UserName] <String>] [[-Password] <String>] [[-TenantId] <String>] [[-ApplicationId] <String>] [[-ClientSecret] <String>] [[-CertificateThumbprint] <String>] [[-IsEncrypted] <Boolean>] [<CommonParameters>]
 ``` 
 
 

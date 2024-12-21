@@ -1,4 +1,4 @@
-﻿# Command : `Protect-XrmCommand` 
+# Command : `Protect-XrmCommand` 
 
 ## Description
 

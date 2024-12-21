@@ -1,4 +1,4 @@
-﻿# Command : `Add-XrmRecord` 
+# Command : `Add-XrmRecord` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Record|Entity|2|true||Record information to add. (Entity)
 BypassCustomPluginExecution|SwitchParameter|named|false|False|Specify wether involved plugins should be triggered or not during this operation. (Default: False)
 
@@ -18,7 +18,7 @@ Guid. Newly created record identified.
 ## Usage
 
 ```Powershell 
-Add-XrmRecord [[-XrmClient] <CrmServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] [<CommonParameters>]
+Add-XrmRecord [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -35,6 +35,6 @@ $account.Id = Add-XrmRecord -XrmClient $xrmClient -Record $account;
 
 ## More informations
 
-Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
+System.Object[]
 
 

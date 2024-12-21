@@ -1,4 +1,4 @@
-﻿# Command : `Watch-XrmOperation` 
+# Command : `Watch-XrmOperation` 
 
 ## Description
 

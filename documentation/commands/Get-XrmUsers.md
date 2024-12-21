@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmUsers` 
+# Command : `Get-XrmUsers` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Columns|String[]|2|false|@("fullname", "internalemailaddress")|Specify expected columns to retrieve. (Default : all columns)
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmUsers [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmUsers [[-XrmClient] <ServiceClient>] [[-Columns] <String[]>] [<CommonParameters>]
 ``` 
 
 

@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmOrganizationDbSetting` 
+# Command : `Get-XrmOrganizationDbSetting` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Name|String|2|false||Setting name to retrieve.
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmOrganizationDbSetting [[-XrmClient] <CrmServiceClient>] [[-Name] <String>] [<CommonParameters>]
+Get-XrmOrganizationDbSetting [[-XrmClient] <ServiceClient>] [[-Name] <String>] [<CommonParameters>]
 ``` 
 
 

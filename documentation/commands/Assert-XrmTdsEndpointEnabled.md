@@ -1,4 +1,4 @@
-﻿# Command : `Assert-XrmTdsEndpointEnabled` 
+# Command : `Assert-XrmTdsEndpointEnabled` 
 
 ## Description
 
@@ -8,13 +8,13 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 
 
 ## Usage
 
 ```Powershell 
-Assert-XrmTdsEndpointEnabled [[-XrmClient] <CrmServiceClient>] [<CommonParameters>]
+Assert-XrmTdsEndpointEnabled [[-XrmClient] <ServiceClient>] [<CommonParameters>]
 ``` 
 
 

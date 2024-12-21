@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmBasicSolution` 
+# Command : `Get-XrmBasicSolution` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Columns|String[]|2|false|@("solutionid", "uniquename", "friendlyname", "version", "ismanaged", "installedon", "createdby", "publisherid", "modifiedon", "modifiedby")|Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, version, ismanaged, installedon, createdby, publisherid, modifiedon, modifiedby)
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmBasicSolution [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmBasicSolution [[-XrmClient] <ServiceClient>] [[-Columns] <String[]>] [<CommonParameters>]
 ``` 
 
 

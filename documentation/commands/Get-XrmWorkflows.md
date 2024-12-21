@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmWorkflows` 
+# Command : `Get-XrmWorkflows` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Columns|String[]|2|false|@( "name", "category", "primaryentity", "uniquename", "statecode", "statuscode")|Specify expected columns to retrieve. (Default : "name", "category", "primaryentity", "uniquename", "statecode", "statuscode")
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmWorkflows [[-XrmClient] <CrmServiceClient>] [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmWorkflows [[-XrmClient] <ServiceClient>] [[-Columns] <String[]>] [<CommonParameters>]
 ``` 
 
 

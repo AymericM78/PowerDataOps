@@ -1,4 +1,4 @@
-﻿# Command : `Out-XrmConnectionString` 
+# Command : `Out-XrmConnectionString` 
 
 ## Description
 

@@ -1,4 +1,4 @@
-﻿# Command : `Add-XrmFolder` 
+# Command : `Add-XrmFolder` 
 
 ## Description
 

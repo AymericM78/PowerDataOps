@@ -1,4 +1,4 @@
-﻿# Command : `Publish-XrmTheme` 
+# Command : `Publish-XrmTheme` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 Name|String|2|true||
 
 
 ## Usage
 
 ```Powershell 
-Publish-XrmTheme [[-XrmClient] <CrmServiceClient>] [-Name] <String> [<CommonParameters>]
+Publish-XrmTheme [[-XrmClient] <ServiceClient>] [-Name] <String> [<CommonParameters>]
 ``` 
 
 

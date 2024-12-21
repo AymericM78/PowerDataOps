@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmTotalRecordCount` 
+# Command : `Get-XrmTotalRecordCount` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 LogicalNames|String[]|2|true||The logical names of the entities to include in the query.
 
 
 ## Usage
 
 ```Powershell 
-Get-XrmTotalRecordCount [[-XrmClient] <CrmServiceClient>] [-LogicalNames] <String[]> [<CommonParameters>]
+Get-XrmTotalRecordCount [[-XrmClient] <ServiceClient>] [-LogicalNames] <String[]> [<CommonParameters>]
 ``` 
 
 

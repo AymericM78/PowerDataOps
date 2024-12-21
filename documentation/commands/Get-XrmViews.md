@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmViews` 
+# Command : `Get-XrmViews` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 EntityLogicalName|String|2|true||
 Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
 
@@ -16,8 +16,7 @@ Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default :
 ## Usage
 
 ```Powershell 
-Get-XrmViews [[-XrmClient] <CrmServiceClient>] [-EntityLogicalName] <String> [[-Columns] <String[]>] 
-[<CommonParameters>]
+Get-XrmViews [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-Columns] <String[]>] [<CommonParameters>]
 ``` 
 
 

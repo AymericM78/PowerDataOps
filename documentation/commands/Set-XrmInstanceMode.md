@@ -1,4 +1,4 @@
-﻿# Command : `Set-XrmInstanceMode` 
+# Command : `Set-XrmInstanceMode` 
 
 ## Description
 

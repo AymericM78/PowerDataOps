@@ -1,4 +1,4 @@
-﻿# Command : `Get-XrmPluginTraces` 
+# Command : `Get-XrmPluginTraces` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 ErrorsOnly|Boolean|2|false|False|
 Take|Int32|3|false|50|Specify number of items to retrieve. (Default : 50)
 
@@ -16,7 +16,7 @@ Take|Int32|3|false|50|Specify number of items to retrieve. (Default : 50)
 ## Usage
 
 ```Powershell 
-Get-XrmPluginTraces [[-XrmClient] <CrmServiceClient>] [[-ErrorsOnly] <Boolean>] [[-Take] <Int32>] [<CommonParameters>]
+Get-XrmPluginTraces [[-XrmClient] <ServiceClient>] [[-ErrorsOnly] <Boolean>] [[-Take] <Int32>] [<CommonParameters>]
 ``` 
 
 

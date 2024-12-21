@@ -1,4 +1,4 @@
-﻿# Command : `ConvertTo-XrmObjects` 
+# Command : `ConvertTo-XrmObjects` 
 
 ## Description
 

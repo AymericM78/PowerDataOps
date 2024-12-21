@@ -1,4 +1,4 @@
-﻿# Command : `Import-XrmSolution` 
+# Command : `Import-XrmSolution` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 SolutionUniqueName|String|2|true||Solution unique name to import.
 SolutionFilePath|String|3|true||Full path to solution file (.zip).
 PublishWorkflows|Boolean|4|false|True|Gets or sets whether any processes (workflows) included in the solution should be activated after they are imported. (Default : true)
@@ -22,9 +22,7 @@ StartUpgrade|Boolean|9|false|False|Start Upgrade operation immediatly after solu
 ## Usage
 
 ```Powershell 
-Import-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> 
-[[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] 
-[[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [<CommonParameters>]
+Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [<CommonParameters>]
 ``` 
 
 

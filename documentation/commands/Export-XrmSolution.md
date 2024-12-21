@@ -1,4 +1,4 @@
-﻿# Command : `Export-XrmSolution` 
+# Command : `Export-XrmSolution` 
 
 ## Description
 
@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 SolutionUniqueName|String|2|true||Solution unique name to export.
 Managed|Boolean|3|false|False|Specify if solution should be export as managed or unmanaged. (Default: true = managed)
 ExportPath|String|4|false|$env:TEMP|
@@ -29,12 +29,7 @@ TimeoutInMinutes|Int32|15|false|10|
 ## Usage
 
 ```Powershell 
-Export-XrmSolution [[-XrmClient] <CrmServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] 
-[[-ExportPath] <String>] [[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] 
-[[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] 
-[[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] 
-<Boolean>] [[-ExportRelationshipRoles] <Boolean>] [[-AddVersionToFileName] <Boolean>] [-ForceSyncExport] 
-[[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
+Export-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] [[-ExportPath] <String>] [[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] [[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] <Boolean>] [[-AddVersionToFileName] <Boolean>] [-ForceSyncExport] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 

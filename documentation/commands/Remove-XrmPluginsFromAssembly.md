@@ -1,4 +1,4 @@
-﻿# Command : `Remove-XrmPluginsFromAssembly` 
+# Command : `Remove-XrmPluginsFromAssembly` 
 
 ## Description
 
@@ -8,14 +8,14 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|CrmServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
 AssemblyName|String|2|false|Plugins|Name of assembly where plugin will be removed. (Default : Plugins)
 
 
 ## Usage
 
 ```Powershell 
-Remove-XrmPluginsFromAssembly [[-XrmClient] <CrmServiceClient>] [[-AssemblyName] <String>] [<CommonParameters>]
+Remove-XrmPluginsFromAssembly [[-XrmClient] <ServiceClient>] [[-AssemblyName] <String>] [<CommonParameters>]
 ``` 
 
 
