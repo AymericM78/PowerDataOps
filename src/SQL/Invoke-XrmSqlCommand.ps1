@@ -34,7 +34,7 @@ function Invoke-XrmSqlCommand {
         Assert-XrmTdsEndpointEnabled -XrmClient $XrmClient;  
     }    
     process {            
-        $sqlConnectionString = "server=$($XrmClient.CrmConnectOrgUriActual.Host)";
+        $sqlConnectionString = "server=$($XrmClient.ConnectedOrgUriActual.Host)";
 
         $connection = new-object System.Data.SqlClient.SQLConnection($sqlConnectionString);
         $connection.AccessToken = $XrmClient.CurrentAccessToken;
