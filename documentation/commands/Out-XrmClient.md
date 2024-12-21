@@ -11,7 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmInstance|Object|1|true||
 
 ## Outputs
-Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
+Microsoft.PowerPlatform.Dataverse.Client.ServiceClient. Microsoft Dataverse connector.
 
 ## Usage
 

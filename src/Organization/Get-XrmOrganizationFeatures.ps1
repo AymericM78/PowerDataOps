@@ -13,7 +13,7 @@ function Get-XrmOrganizationFeatures {
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
         [Parameter(Mandatory = $false)]

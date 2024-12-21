@@ -9,11 +9,11 @@
     Microsoft Dataverse instance object.
 
     .OUTPUTS
-    Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
+    Microsoft.PowerPlatform.Dataverse.Client.ServiceClient. Microsoft Dataverse connector.
 #>
 function Out-XrmClient {
     [CmdletBinding()]
-    [OutputType("Microsoft.Xrm.Tooling.Connector.CrmServiceClient")]
+    [OutputType("Microsoft.PowerPlatform.Dataverse.Client.ServiceClient")]
     param
     (
         [Parameter(Mandatory = $true, ValueFromPipeline)]

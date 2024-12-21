@@ -19,7 +19,7 @@ function Set-XrmClientTimeout {
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
         
         [Parameter(Mandatory = $false)]
@@ -44,48 +44,7 @@ function Set-XrmClientTimeout {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {       
-        
-        $durationInMinutes = $PSBoundParameters.DurationInMinutes;
-        if ($durationInMinutes) {            
-
-            if (-not $XrmClient.OrganizationServiceProxy) {
-                $Global:XrmClientInitialTimeout = $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.ReceiveTimeout.TotalMinutes;                
-                
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.OpenTimeout = (New-TimeSpan -Minutes $durationInMinutes);     
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.SendTimeout = (New-TimeSpan -Minutes $durationInMinutes);  
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.ReceiveTimeout = (New-TimeSpan -Minutes $durationInMinutes);   
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.CloseTimeout = (New-TimeSpan -Minutes $durationInMinutes);   
-
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.OpenTimeout = (New-TimeSpan -Minutes $durationInMinutes);     
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.SendTimeout = (New-TimeSpan -Minutes $durationInMinutes);  
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.ReceiveTimeout = (New-TimeSpan -Minutes $durationInMinutes);   
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.CloseTimeout = (New-TimeSpan -Minutes $durationInMinutes);        
-            }
-            else {
-                $Global:XrmClientInitialTimeout = $XrmClient.OrganizationServiceProxy.Timeout.TotalMinutes;
-                $XrmClient.OrganizationServiceProxy.Timeout = (New-TimeSpan -Minutes $durationInMinutes); 
-            }
-        }
-
-        if ($Revert) {
-            $initialTimeOutMinutes = $Global:XrmClientInitialTimeout;
-
-            if (-not $XrmClient.OrganizationServiceProxy) {          
-                
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.OpenTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);     
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.SendTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);  
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.ReceiveTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);   
-                $XrmClient.OrganizationWebProxyClient.Endpoint.Binding.CloseTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);   
-
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.OpenTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);     
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.SendTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);  
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.ReceiveTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);   
-                $XrmClient.OrganizationWebProxyClient.ChannelFactory.Endpoint.Binding.CloseTimeout = (New-TimeSpan -Minutes $initialTimeOutMinutes);               
-            }
-            else {
-                $XrmClient.OrganizationServiceProxy.Timeout = (New-TimeSpan -Minutes $initialTimeOutMinutes); 
-            }
-        }
+        # TODO : DEPRECATED
     }
     end {
         $StopWatch.Stop();

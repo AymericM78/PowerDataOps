@@ -14,7 +14,7 @@ IsEncrypted|Boolean|3|false|False|Specify if password or secret are encrypted.
 Quiet|SwitchParameter|named|false|False|
 
 ## Outputs
-Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
+Microsoft.PowerPlatform.Dataverse.Client.ServiceClient. Microsoft Dataverse connector.
 
 ## Usage
 

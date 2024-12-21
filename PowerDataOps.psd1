@@ -1,6 +1,6 @@
 @{
     RootModule = 'PowerDataOps'
-    ModuleVersion = '1.0.0.150'
+    ModuleVersion = '2.0.0.0'
     GUID = 'bfa11058-d4b5-4300-b74a-cdc3d9560389'
     Author = 'Aymeric Mouillé'
     CompanyName = 'Unknown'

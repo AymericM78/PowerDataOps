@@ -16,7 +16,7 @@ function Get-XrmAttributesLogicalName {
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
         [Parameter(Mandatory = $true)]
@@ -31,6 +31,7 @@ function Get-XrmAttributesLogicalName {
     }    
     process {
         $logicalNames = @();
+        # TODO : CrmServiceClient to ServiceClient migration.
         $attributeMetadata = $XrmClient.GetAllAttributesForEntity($EntityLogicalName);
         $attributeMetadata | ForEach-Object {
             $logicalNames += $_.LogicalName;

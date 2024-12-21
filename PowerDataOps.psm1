@@ -1,5 +1,7 @@
+. "$PSScriptRoot\src\_Internals\AssemblyLoader.ps1";
 
 # Discover and load function scripts
+Write-Verbose "----- LOAD FUNCTIONS -----";
 $scriptFiles = @(Get-ChildItem -Path "$PSScriptRoot\src\" -Include "*.ps1" -Recurse);
 foreach ($scriptFile in $scriptFiles) {
     $scriptPath = $scriptFile.FullName;
@@ -15,6 +17,7 @@ foreach ($scriptFile in $scriptFiles) {
 }
 
 # Install and Import required modules
+Write-Verbose "----- LOAD MODULES -----";
 $requiredModules = @("Microsoft.PowerApps.Administration.PowerShell")
 foreach ($module in $requiredModules) {
     if (-not(Get-Module -ListAvailable -Name $module)) {
@@ -25,15 +28,8 @@ foreach ($module in $requiredModules) {
     Write-Verbose " > Loading module : '$module' => OK !";
 }
 
-# Loading assemblies
-$binFolderPath = "$PSScriptRoot\src\Assemblies";
-$assemblies = @("$binFolderPath\Microsoft.Xrm.Sdk.dll", "$binFolderPath\Microsoft.Crm.Sdk.Proxy.dll", "$binFolderPath\Microsoft.Xrm.Tooling.Connector.dll");
-foreach ($assemblyPath in $assemblies) {
-    [System.Reflection.Assembly]::LoadFrom($assemblyPath);
-    Write-Verbose " > Loading assembly file '$assemblyPath' => OK !";
-}
-
 # Provision dedicate appdata folder
+Write-Verbose "----- LOAD APPDATA FOLDER -----";
 $Global:PowerDataOpsModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
 New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Force | Out-Null;
 Write-Verbose " > Initialize module folder '$($Global:PowerDataOpsModuleFolderPath)' => OK !";

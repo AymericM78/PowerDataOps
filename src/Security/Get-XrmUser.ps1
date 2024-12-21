@@ -19,7 +19,7 @@ function Get-XrmUser {
     param
     ( 
         [Parameter(Mandatory = $false, ValueFromPipeline)]
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
         
         [Parameter(Mandatory = $false)]
@@ -38,7 +38,8 @@ function Get-XrmUser {
     }    
     process {
         if (-not $PSBoundParameters.ContainsKey('UserId')) {
-            $UserId = $XrmClient.GetMyCrmUserId();
+            # TODO : CrmServiceClient to ServiceClient migration.
+            # $UserId = $XrmClient.GetMyCrmUserId();
         }
 
         $user = Get-XrmRecord -Logicalname "systemuser" -Id $UserId -Columns $Columns;

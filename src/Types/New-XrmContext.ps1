@@ -10,7 +10,7 @@ function New-XrmContext {
     param
     (
         [Parameter(Mandatory = $false)]
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
   
         [Parameter(Mandatory = $false)]
@@ -52,8 +52,9 @@ function New-XrmContext {
             $object.CurrentConnection.Name = $XrmClient.OrganizationDetail.UrlName;
             $object.CurrentConnection.Region = $XrmClient.OrganizationDetail.Geo;
 
-            $userId = $XrmClient.GetMyCrmUserId();
-            $object.UserId = $userId;
+            # TODO : CrmServiceClient to ServiceClient migration.
+            # $userId = $XrmClient.GetMyCrmUserId();
+            # $object.UserId = $userId;
         }
 
         $object;

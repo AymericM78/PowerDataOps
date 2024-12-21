@@ -1,4 +1,5 @@
-. "$PsScriptRoot\..\_Internals\CryptoManager.ps1"
+. "$PsScriptRoot\..\_Internals\CryptoManager.ps1";
+
 <#
     .SYNOPSIS
     Initialize CrmServiceClient instance. 
@@ -16,7 +17,7 @@
     Specify if password or secret are encrypted.
 
     .OUTPUTS
-    Microsoft.Xrm.Tooling.Connector.CrmServiceClient. Microsoft Dataverse connector.
+    Microsoft.PowerPlatform.Dataverse.Client.ServiceClient. Microsoft Dataverse connector.
 
     .EXAMPLE
     $xrmClient = New-XrmClient -ConnectionString $connectionString;
@@ -26,7 +27,7 @@
 #>
 function New-XrmClient {
     [CmdletBinding()]
-    [OutputType("Microsoft.Xrm.Tooling.Connector.CrmServiceClient")]
+    [OutputType("Microsoft.PowerPlatform.Dataverse.Client.ServiceClient")]
     param
     (        
         [Parameter(Mandatory = $false)]
@@ -56,8 +57,8 @@ function New-XrmClient {
         [System.Net.ServicePointManager]::UseNagleAlgorithm = $false;
         [System.Net.ServicePointManager]::DefaultConnectionLimit = 1000;
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-        
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::MaxConnectionTimeout = [System.TimeSpan]::new(0, $MaxCrmConnectionTimeOutMinutes, 0);
+
+        #[Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]::MaxConnectionTimeout = [System.TimeSpan]::new(0, $MaxCrmConnectionTimeOutMinutes, 0);
 
         # Initialize CRM Client	
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
@@ -75,23 +76,13 @@ function New-XrmClient {
             }
 
             $StopWatchXrmClient = [System.Diagnostics.Stopwatch]::StartNew(); 
-            Trace-XrmFunction -Name 'NewCrmServiceClient' -Stage Start; 
-            $XrmClient = [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]::new($ConnectionString); 
+            Trace-XrmFunction -Name 'NewDataverseServiceClient' -Stage Start; 
+            $XrmClient = [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]::new($ConnectionString); 
             $StopWatch.Stop();
-            Trace-XrmFunction -Name 'NewCrmServiceClient' -Stage Stop -StopWatch $StopWatchXrmClient;  
+            Trace-XrmFunction -Name 'NewDataverseServiceClient' -Stage Stop -StopWatch $StopWatchXrmClient;  
         }
         else {
-            # Interactive login => use legacy PowerShell connector
-            $requiredModules = @("Microsoft.Xrm.Tooling.CrmConnector.PowerShell")
-            foreach ($module in $requiredModules) {
-                if (-not(Get-Module -ListAvailable -Name $module)) {
-                    Write-Verbose "$module does not exist";
-                    Install-Module -Name $module -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
-                }
-                Import-Module -Name $module -DisableNameChecking;
-                Write-Verbose " > Loading module : '$module' => OK !";
-            }
-            $XrmClient = Get-CrmConnection -InteractiveMode;
+            # TODO : Interactive login with ServiceClient ?           
         }
 
         if (-not $XrmClient.IsReady) {
@@ -101,9 +92,8 @@ function New-XrmClient {
             throw $XrmClient.LastCrmError;
         }
 
-        $refreshAdminConnection = ($Global:XrmContext -and $XrmClient.TenantId -ne $Global:XrmContext.CurrentConnection.TenantId);
-
         # Store new context
+        $refreshAdminConnection = ($Global:XrmContext -and $XrmClient.TenantId -ne $Global:XrmContext.CurrentConnection.TenantId);
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
             $Global:XrmContext = New-XrmContext -XrmClient $XrmClient -ConnectionString $ConnectionString;
         } 
@@ -115,7 +105,7 @@ function New-XrmClient {
         # Store client to simplify commands execution
         $Global:XrmClient = $XrmClient;
 
-        # Try to use admin commands    
+        # Try to use admin commands         
         if($refreshAdminConnection){    
             Connect-XrmAdmin -ErrorAction SilentlyContinue;
         }

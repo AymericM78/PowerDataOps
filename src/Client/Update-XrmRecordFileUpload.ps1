@@ -31,7 +31,7 @@ function Update-XrmRecordFileUpload
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
         [Parameter(Mandatory = $true, ValueFromPipeline)]
@@ -119,7 +119,7 @@ function Update-XrmRecordFileUpload
             }
 
             # Upload a block
-            $uploadBlockResponse = [Microsoft.Crm.Sdk.Messages.UploadBlockResponse]$XRMClient.Execute($uploadBlockRequest)
+            $uploadBlockResponse = [Microsoft.Crm.Sdk.Messages.UploadBlockResponse]$XrmClient.Execute($uploadBlockRequest)
 
             $fileBlockCounter = $fileBlockCounter + 1
         }
