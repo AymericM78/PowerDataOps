@@ -6,7 +6,7 @@
     Deactivate given workflow.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER WorkflowId
     Workflow unique identifier.

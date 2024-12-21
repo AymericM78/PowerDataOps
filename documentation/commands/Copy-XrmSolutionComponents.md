@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 SourceSolutionUniqueName|String|2|true||Unmanaged solution unique name where to add components.
 TargetSolutionUniqueName|String|3|true||Unmanaged solution unique name where to get components.
 

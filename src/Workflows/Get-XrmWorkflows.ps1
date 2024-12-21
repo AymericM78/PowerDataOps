@@ -6,7 +6,7 @@
     Get workflows with expected columns.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : "name", "category", "primaryentity", "uniquename", "statecode", "statuscode")

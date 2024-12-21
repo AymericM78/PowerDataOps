@@ -6,7 +6,7 @@
     Get system user according to given ID with expected columns.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER UserId
     System user unique identifier.

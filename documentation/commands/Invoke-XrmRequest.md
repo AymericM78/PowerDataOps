@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 Request|OrganizationRequest|2|true||Organization request to execute.
 Async|SwitchParameter|named|false|False|Indicates if request should be run in background. Request must supports asynchronous execution. (Default: false = run synchronously)
 

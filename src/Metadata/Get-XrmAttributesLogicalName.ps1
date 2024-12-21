@@ -6,7 +6,7 @@
     Get list of columns / attribute logical names from given entity / table.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER EntityLogicalName
     Table / Entity logical name.

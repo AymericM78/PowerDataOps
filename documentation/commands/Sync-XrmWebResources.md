@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 FolderPath|String|2|true||Full path to directory where webresources are stored.
 SolutionUniqueName|String|3|true||Microsoft Dataverse solution unique name where to add new webressource.
 SynchronizationMode|String|4|false||Specify synchronization pattern : full or delta.

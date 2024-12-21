@@ -6,7 +6,7 @@
     Get solution by its unique name with expected columns.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER SolutionUniqueName
     Solution unique name to retrieve.

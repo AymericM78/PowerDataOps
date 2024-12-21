@@ -9,7 +9,7 @@ This command use pagination to pull all records.
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 Query|QueryBase|2|true||Query that select and filter data from Microsoft Dataverse table. (QueryBase)
 PageSize|Int32|3|false|1000|Specify row count per page to pull. (Default: 1000)
 ShowProgress|SwitchParameter|named|false|False|

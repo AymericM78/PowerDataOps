@@ -6,7 +6,7 @@
     Get list of entity / table logical names.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 #>
 function Get-XrmEntitiesLogicalName {
     [CmdletBinding()]

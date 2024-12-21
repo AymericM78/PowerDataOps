@@ -6,7 +6,7 @@
     Get record audit history for given fields changes
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER RecordReference
     Lookup to target record. (EntityReference)

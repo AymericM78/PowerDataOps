@@ -6,7 +6,7 @@
     Upload a file to a date row's (entity record's) file field from Microsoft Dataverse table.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Record
     Record (row) to update.

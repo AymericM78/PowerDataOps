@@ -6,7 +6,7 @@
     Get specific row (Entity record) according to given id, key, or attribute.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER LogicalName
     Table / Entity logical name.

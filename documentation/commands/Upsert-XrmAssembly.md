@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 AssemblyPath|String|2|true||Full file path to dll.
 SolutionUniqueName|String|3|false||Microsoft Dataverse solution unique name where to add new assembly.
 IsolationMode|Int32|4|false|2|Specify if assembly will be deploy in sandbox or not. (Default = 2 | 1 = Not sandboxed, 2 = Sandbox)

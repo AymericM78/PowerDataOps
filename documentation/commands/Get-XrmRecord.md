@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 LogicalName|String|2|true||Table / Entity logical name.
 Key|String|3|false||Specify alternate key attribute name to search.
 AttributeName|String|4|false||Specify attribute name to search.

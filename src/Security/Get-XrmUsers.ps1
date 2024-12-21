@@ -6,7 +6,7 @@
     Get all system users from instance.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : all columns)

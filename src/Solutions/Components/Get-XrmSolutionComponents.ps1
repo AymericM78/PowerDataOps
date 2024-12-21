@@ -6,7 +6,7 @@
     Retrieve components from given solution and expected types.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER SolutionUniqueName
     Unmanaged solution unique name where to get components.

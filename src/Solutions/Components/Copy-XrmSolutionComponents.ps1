@@ -6,7 +6,7 @@
     Add all components from source solution to target one.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER SourceSolutionUniqueName
     Unmanaged solution unique name where to add components.

@@ -6,7 +6,7 @@
     Create or update each webresource content based on local directory.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER FolderPath
     Full path to directory where webresources are stored.

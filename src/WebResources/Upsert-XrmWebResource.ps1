@@ -7,7 +7,7 @@
     If webresource exists, compare content and update it if different.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER FilePath
     Local webresource file path.

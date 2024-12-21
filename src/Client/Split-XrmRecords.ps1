@@ -6,7 +6,7 @@
     Remove a link between 1 row (Entity record) and multiple rows in Microsoft Dataverse.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Record
     Row / Record to split. (Entity)

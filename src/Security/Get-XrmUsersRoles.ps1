@@ -6,7 +6,7 @@
     Get all users with associated roles. This could help to determine unused roles or bad configurations.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : all columns)

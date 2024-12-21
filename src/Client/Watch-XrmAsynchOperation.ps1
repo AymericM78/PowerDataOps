@@ -6,7 +6,7 @@
     Poll status from asynchoperation id until its done.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER AsyncOperationId
     System job unique identifier.

@@ -6,7 +6,7 @@
     Returns data on the total number of records for specific entities. (RetrieveTotalRecordCount)
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER LogicalNames
     The logical names of the entities to include in the query.

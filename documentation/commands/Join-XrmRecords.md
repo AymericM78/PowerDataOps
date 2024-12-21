@@ -8,7 +8,7 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 RecordReference|EntityReference|2|true||
 RecordReferences|EntityReference[]|3|true||Rows / Records references to link to Record. (EntityReference array)
 RelationShipName|String|4|true||RelationShip Logical name involve between these records.

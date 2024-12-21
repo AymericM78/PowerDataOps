@@ -6,7 +6,7 @@
     Get record audit logs with date range and size.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 #>
 function Get-XrmAuditPartitions {
     [CmdletBinding()]

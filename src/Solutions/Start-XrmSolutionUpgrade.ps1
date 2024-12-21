@@ -6,7 +6,7 @@
     Replace managed solution by new one after import.    
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER SolutionUniqueName
     Solution unique name to upgrade.

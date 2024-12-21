@@ -6,7 +6,7 @@
     Get security roles according to different criterias.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER BusinessUnitId
     Business Unit unique identifier where roles are associated.

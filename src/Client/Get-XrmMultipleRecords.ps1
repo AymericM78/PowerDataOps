@@ -7,7 +7,7 @@
     This command use pagination to pull all records.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Query
     Query that select and filter data from Microsoft Dataverse table. (QueryBase)

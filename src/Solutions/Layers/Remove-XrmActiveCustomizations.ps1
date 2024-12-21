@@ -6,7 +6,7 @@
     Performs a cleaning on Active Layer to remove unmanaged customizations for given component.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
     
     .PARAMETER SolutionUniqueName
     Solution unique name where to get components to clean.

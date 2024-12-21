@@ -6,7 +6,7 @@
     Get latest plugin trace log from target instance.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER ErrorOnly
     If true, filter results to return only errors. (Default: false = all traces)

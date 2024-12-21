@@ -6,7 +6,7 @@
     Add new or update existing assembly content from local dll file.    
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER AssemblyPath
     Full file path to dll.

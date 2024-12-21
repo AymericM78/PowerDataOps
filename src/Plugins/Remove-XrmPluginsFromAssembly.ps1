@@ -6,7 +6,7 @@
     Uninstall all steps and types from plugin assembly.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER AssemblyName
     Name of assembly where plugin will be removed. (Default : Plugins)

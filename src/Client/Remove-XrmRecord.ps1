@@ -6,7 +6,7 @@
     Delete row (entity record) from Microsoft Dataverse table by logicalname + id or by Entity object.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Record
     Record (row) to delete.

@@ -6,7 +6,7 @@
     Install specify language pack to target instance.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
     
     .PARAMETER Language
     Language name LCID (English = 1033, French = 1036, ...)

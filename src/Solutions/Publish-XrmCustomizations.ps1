@@ -6,7 +6,7 @@
     Apply unpublished customizations to active layer to promote UI changes.    
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER TimeOutInMinutes
     Specify timeout duration in minute. (Default : 5 min)

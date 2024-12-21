@@ -6,7 +6,7 @@
     Add a new row in Microsoft Dataverse table and return created ID (Uniqueidentifier).
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Record
     Record information to add. (Entity)

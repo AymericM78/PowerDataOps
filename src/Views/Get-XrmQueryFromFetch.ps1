@@ -6,7 +6,7 @@
     Convert FetchXml to QueryExpression.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER FetchXml
     FetchXML query string.

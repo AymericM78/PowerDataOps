@@ -6,7 +6,7 @@
     Get records according to given view name.
 
     .PARAMETER XrmClient
-    Xrm connector initialized to target instance. Use latest one by default. (CrmServiceClient)
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER LogicalName
     Gets or sets the entity name in order to filter views name.
