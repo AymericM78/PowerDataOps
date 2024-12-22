@@ -106,8 +106,10 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
+[Get-XrmAllEntityMetadata](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAllEntityMetadata.md)|Retrieve all entity metadata<br/>Get list of entity / table metadata.
 [Get-XrmAttributesLogicalName](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributesLogicalName.md)|Retrieve entities logicalname attribute.<br/>Get list of columns / attribute logical names from given entity / table.
 [Get-XrmEntitiesLogicalName](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEntitiesLogicalName.md)|Retrieve entities logicalname<br/>Get list of entity / table logical names.
+[Get-XrmEntityMetadata](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEntityMetadata.md)|Retrieve entity metadata<br/>Get entity / table metadata.
 # `Organization` commands
 
 Command|Synopsis

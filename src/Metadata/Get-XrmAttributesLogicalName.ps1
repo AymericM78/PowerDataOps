@@ -31,9 +31,8 @@ function Get-XrmAttributesLogicalName {
     }    
     process {
         $logicalNames = @();
-        # TODO : CrmServiceClient to ServiceClient migration.
-        $attributeMetadata = $XrmClient.GetAllAttributesForEntity($EntityLogicalName);
-        $attributeMetadata | ForEach-Object {
+        $attributeMetadata = Get-XrmEntityMetadata -XrmClient $XrmClient -LogicalName $EntityLogicalName -Filter "Attributes";
+        $attributeMetadata.Attributes | ForEach-Object {
             $logicalNames += $_.LogicalName;
         }   
         $logicalNames | Sort-Object;

@@ -22,8 +22,7 @@ function Get-XrmEntitiesLogicalName {
     }    
     process {
         $logicalNames = @();
-        # TODO : CrmServiceClient to ServiceClient migration.
-        $entityMetadata = $XrmClient.GetAllEntityMetadata($true, [Microsoft.Xrm.Sdk.Metadata.EntityFilters]::Default);
+        $entityMetadata = Get-XrmAllEntityMetadata -XrmClient $XrmClient -Filter "Entity";
         $entityMetadata | ForEach-Object {
             $logicalNames += $_.LogicalName;
         }   
