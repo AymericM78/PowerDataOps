@@ -38,8 +38,7 @@ function Get-XrmUser {
     }    
     process {
         if (-not $PSBoundParameters.ContainsKey('UserId')) {
-            # TODO : CrmServiceClient to ServiceClient migration.
-            # $UserId = $XrmClient.GetMyCrmUserId();
+            $UserId = Get-XrmWhoAmI -XrmClient $XrmClient;
         }
 
         $user = Get-XrmRecord -Logicalname "systemuser" -Id $UserId -Columns $Columns;

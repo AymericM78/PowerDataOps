@@ -52,9 +52,8 @@ function New-XrmContext {
             $object.CurrentConnection.Name = $XrmClient.OrganizationDetail.UrlName;
             $object.CurrentConnection.Region = $XrmClient.OrganizationDetail.Geo;
 
-            # TODO : CrmServiceClient to ServiceClient migration.
-            # $userId = $XrmClient.GetMyCrmUserId();
-            # $object.UserId = $userId;
+            $userId = Get-XrmWhoAmI -XrmClient $XrmClient;
+            $object.UserId = $userId;
         }
 
         $object;
