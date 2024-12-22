@@ -31,7 +31,7 @@ function Enable-XrmWorkflow {
     process {        
 
         $workflowReference = New-XrmEntityReference -LogicalName "workflow" -Id $WorkflowId;
-
+        # TODO : Use Update
         $request = New-Object -TypeName Microsoft.Crm.Sdk.Messages.SetStateRequest;
         $request.EntityMoniker = $workflowReference;   
         $request.State = New-XrmOptionSetValue -Value 1;

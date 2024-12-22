@@ -38,6 +38,7 @@ function Get-XrmAuditHistory {
 
         $auditLogs = @();
 
+        # TODO : Use Web API Function => https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrieverecordchangehistory?view=dataverse-latest
         $retrieveRecordChangeHistoryRequest = New-Object -TypeName Microsoft.Crm.Sdk.Messages.RetrieveRecordChangeHistoryRequest;
         $retrieveRecordChangeHistoryRequest.Target = $RecordReference;
         $retrieveRecordChangeHistoryReponse = Protect-XrmCommand -ScriptBlock { $XrmClient.Execute($retrieveRecordChangeHistoryRequest) };

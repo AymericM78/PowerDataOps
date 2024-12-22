@@ -81,6 +81,7 @@ function Update-XrmRecordFileUpload
         $blockIds = [System.Collections.Generic.List[String]]::new()
 
         # Init file blocks upload request
+        # TODO : Use Web API Function => https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/initializefileblocksupload?view=dataverse-latest
         $initFileBlocksUploadRequest = [Microsoft.Crm.Sdk.Messages.InitializeFileBlocksUploadRequest]::new()
         $initFileBlocksUploadRequest.FileAttributeName = $FileAttributeLogicalName
         $initFileBlocksUploadRequest.FileName = $fileName
@@ -112,6 +113,7 @@ function Update-XrmRecordFileUpload
             $blockId = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes([System.Guid]::NewGuid().ToString()))
             $blockIds.Add($blockId)
 
+            # TODO : Use Web API Function => https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/uploadblock?view=dataverse-latest
             $uploadBlockRequest = [Microsoft.Crm.Sdk.Messages.UploadBlockRequest]@{
                 FileContinuationToken = $fileContinuationToken
                 BlockId = $blockId
@@ -127,6 +129,7 @@ function Update-XrmRecordFileUpload
         $fileReader.Close()
 
         # Commit all file blocks
+        # TODO : Use Web API Function => https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/commitfileblocksupload?view=dataverse-latest
         $commitBlocksUploadRequest = [Microsoft.Crm.Sdk.Messages.CommitFileBlocksUploadRequest]@{
             BlockList = $blockIds.ToArray()
             FileContinuationToken = $fileContinuationToken
