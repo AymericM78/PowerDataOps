@@ -27,7 +27,7 @@ jobs:
 
           $moduleContent = $moduleContent.Replace($currentVersion.ToString(), $newVersion.ToString());
           
-          $moduleContent | Set-Content $modulePath;
+          #$moduleContent | Set-Content $modulePath;
 
       - name: Publish to PSGallery
         shell: pwsh
