@@ -45,7 +45,7 @@ function Invoke-XrmSolutionPackager {
         [ValidateNotNullOrEmpty()]
         [ValidateScript( { Test-Path $_ })]
         [String]
-        $SolutionPackagerExeFilePath = "$PSScriptRoot\..\Assemblies\SolutionPackager.exe",
+        $SolutionPackagerExeFilePath = "$PSScriptRoot\..\Assemblies\CoreTools\SolutionPackager.exe",
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("Extract", "Pack")]
