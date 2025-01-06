@@ -29,15 +29,11 @@ function Disable-XrmWorkflow {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {            
-
-        $workflowReference = New-XrmEntityReference -LogicalName "workflow" -Id $WorkflowId;
-        # TODO : Use Update
-        $request = New-Object -TypeName Microsoft.Crm.Sdk.Messages.SetStateRequest;
-        $request.EntityMoniker = $workflowReference;   	
-        $request.State = New-XrmOptionSetValue -Value 0;
-        $request.Status = New-XrmOptionSetValue -Value 1;
-        
-        Invoke-XrmRequest -XrmClient $XrmClient -Request $request | Out-Null;
+        $workflowUpdate = New-XrmEntity -LogicalName "workflow" -Id $WorkflowId -Attributes @{
+            "statecode" = New-XrmOptionSetValue -Value 0 
+            "statuscode" = New-XrmOptionSetValue -Value 1
+        }
+        Update-XrmRecord -XrmClient $XrmClient -Entity $workflowUpdate;
     }
     end {
         $StopWatch.Stop();
