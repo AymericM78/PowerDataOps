@@ -29,11 +29,11 @@ function Get-XrmQueryFromFetch {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        # TODO : Use Web API Function => https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/fetchxmltoqueryexpression?view=dataverse-latest
-        $conversionRequest = New-Object "Microsoft.Crm.Sdk.Messages.FetchXmlToQueryExpressionRequest";
-        $conversionRequest.FetchXml = $FetchXml;
-        $conversionResponse = $XrmClient.Execute($conversionRequest);
-        $conversionResponse.Query;
+        $conversionRequest = New-XrmRequest -Name "FetchXmlToQueryExpression"; ;        
+        $conversionRequest = $conversionRequest | Add-XrmRequestParameter -Name "FetchXml" -Value $FetchXml;
+        $conversionResponse = Invoke-XrmRequest -XrmClient $XrmClient -Request $conversionRequest;
+        
+        $conversionResponse.Results["Query"];
     }
     end {
         $StopWatch.Stop();
