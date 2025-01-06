@@ -38,12 +38,12 @@ function Get-XrmAuditHistory {
 
         $auditLogs = @();
 
-        # TODO : Use Web API Function => https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrieverecordchangehistory?view=dataverse-latest
-        $retrieveRecordChangeHistoryRequest = New-Object -TypeName Microsoft.Crm.Sdk.Messages.RetrieveRecordChangeHistoryRequest;
-        $retrieveRecordChangeHistoryRequest.Target = $RecordReference;
-        $retrieveRecordChangeHistoryReponse = Protect-XrmCommand -ScriptBlock { $XrmClient.Execute($retrieveRecordChangeHistoryRequest) };
+        $retrieveRecordChangeHistoryRequest = New-XrmRequest -Name "RetrieveRecordChangeHistory";
+        $retrieveRecordChangeHistoryRequest = $retrieveRecordChangeHistoryRequest | Add-XrmRequestParameter -Name "Target" -Value $RecordReference;
+        $retrieveRecordChangeHistoryReponse = Invoke-XrmRequest -XrmClient $XrmClient -Request $retrieveRecordChangeHistoryRequest;
 
-        foreach ($auditDetail in $retrieveRecordChangeHistoryReponse.AuditDetailCollection.AuditDetails) {
+        $auditDetails = $retrieveRecordChangeHistoryReponse.Results["AuditDetailCollection"].AuditDetails;
+        foreach ($auditDetail in $auditDetails) {
             $attributes = @();
             $auditDetail.NewValue.Attributes | ForEach-Object { $attributes += $_.Key; };
             $auditDetail.OldValue.Attributes | ForEach-Object { if (-not $attributes.Contains($_.Key)) { $attributes += $_.Key; } };
@@ -67,6 +67,7 @@ function Get-XrmAuditHistory {
                 $hash["ObjectId"] = $auditRecord["objectid"].Id;
                 $hash["Key"] = $RecordReference.Id;
                 $hash["AttributeName"] = $attributeName;
+                $hash["CreatedOn_Value"] = $auditRecord["createdon"];
                 $hash["CreatedOn"] = $auditRecord.FormattedValues["createdon"];
                 $hash["User"] = $auditRecord["userid"].Name;
                 $hash["Operation"] = $auditRecord.FormattedValues["operation"];
@@ -84,7 +85,7 @@ function Get-XrmAuditHistory {
                 $auditLogs += $auditLog;
             }
         }
-        $auditLogs;
+        $auditLogs | Sort-Object -Property CreatedOn_Value -Descending;
     }
     end {
         $StopWatch.Stop();
