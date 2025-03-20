@@ -31,6 +31,9 @@
     
     .PARAMETER StartUpgrade
     Start Upgrade operation immediatly after solution import. (Default : false)
+
+    .PARAMETER StageAndUpgrade
+    Import solution, stage it for upgrade, and apply the upgrade in one action. (Default : false)
 #>
 function Import-XrmSolution {
     [CmdletBinding()]
@@ -73,7 +76,11 @@ function Import-XrmSolution {
         
         [Parameter(Mandatory = $false)]
         [Boolean]
-        $StartUpgrade = $false
+        $StartUpgrade = $false,
+
+        [Parameter(Mandatory = $false)]
+        [Boolean]
+        $StageAndUpgrade = $false
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -87,7 +94,16 @@ function Import-XrmSolution {
         # Initialize import solution request
         $importJobId = New-Guid;
 
-        $importSolutionRequest = New-XrmRequest -Name "ImportSolution";
+        if ($StageAndUpgrade) {
+            $XrmRequestName = "StageAndUpgrade";
+            $Upgrade = $false; # skip regular upgrade if StageAndUpgrade is requested
+            $StartUpgrade = $false;
+        }
+        else {
+            $XrmRequestName = "ImportSolution";
+        }
+
+        $importSolutionRequest = New-XrmRequest -Name $XrmRequestName;
         $importSolutionRequest | Add-XrmRequestParameter -Name "ImportJobId" -Value $importJobId | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "CustomizationFile" -Value $solutionContent | Out-Null;
         $importSolutionRequest | Add-XrmRequestParameter -Name "PublishWorkflows" -Value $PublishWorkflows | Out-Null;
