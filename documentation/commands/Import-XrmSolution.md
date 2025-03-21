@@ -17,12 +17,13 @@ ConvertToManaged|Boolean|6|false|False|Direct the system to convert any matching
 Upgrade|Boolean|7|false|False|Gets or sets whether to import the solution as a holding solution with immediate application of the upgrade. (Default : false)
 SkipProductUpdateDependencies|Boolean|8|false|True|Gets or sets whether enforcement of dependencies related to product updates should be skipped. (Default : false)
 StartUpgrade|Boolean|9|false|False|Start Upgrade operation immediatly after solution import. (Default : false)
+StageAndUpgrade|Boolean|10|false|False|Import solution, stage it for upgrade, and apply the upgrade in one action. (Default : false)
 
 
 ## Usage
 
 ```Powershell 
-Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [<CommonParameters>]
+Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [[-StageAndUpgrade] <Boolean>] [<CommonParameters>]
 ``` 
 
 
