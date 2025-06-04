@@ -54,7 +54,7 @@ function Upsert-XrmAssembly {
     process {
         
         $assemblyFile = [System.Reflection.Assembly]::Load([System.IO.File]::ReadAllBytes($AssemblyPath));
-        $assemblyProperties = $assemblyFile.GetName().FullName.Split(",= ".ToCharArray(), [StringSplitOptions]::RemoveEmptyEntries);
+        $assemblyProperties = $assemblyFile.GetName().FullName.Split(",=".ToCharArray(), [StringSplitOptions]::RemoveEmptyEntries) | ForEach-Object { $_.Trim() };
         $assemblyShortName = $assemblyProperties[0];
         $assemblyContent = Get-XrmBase64 -FilePath $AssemblyPath;
 
