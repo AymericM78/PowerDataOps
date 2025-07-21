@@ -1,4 +1,4 @@
-# Command : `Import-XrmSolution` 
+﻿# Command : `Import-XrmSolution` 
 
 ## Description
 
@@ -23,7 +23,10 @@ StageAndUpgrade|Boolean|10|false|False|Import solution, stage it for upgrade, an
 ## Usage
 
 ```Powershell 
-Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [[-StageAndUpgrade] <Boolean>] [<CommonParameters>]
+Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> 
+[[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] 
+[[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [[-StageAndUpgrade] 
+<Boolean>] [<CommonParameters>]
 ``` 
 
 

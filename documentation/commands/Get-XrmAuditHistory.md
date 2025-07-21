@@ -1,4 +1,4 @@
-# Command : `Get-XrmAuditHistory` 
+﻿# Command : `Get-XrmAuditHistory` 
 
 ## Description
 
@@ -16,7 +16,8 @@ AttributeFilter|String[]|3|false||Attributes logical names to filter.
 ## Usage
 
 ```Powershell 
-Get-XrmAuditHistory [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [[-AttributeFilter] <String[]>] [<CommonParameters>]
+Get-XrmAuditHistory [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [[-AttributeFilter] 
+<String[]>] [<CommonParameters>]
 ``` 
 
 

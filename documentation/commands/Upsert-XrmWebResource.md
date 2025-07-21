@@ -1,4 +1,4 @@
-# Command : `Upsert-XrmWebResource` 
+﻿# Command : `Upsert-XrmWebResource` 
 
 ## Description
 
@@ -18,7 +18,8 @@ Prefix|String|4|false||Publisher customization prefix for newly created webresou
 ## Usage
 
 ```Powershell 
-Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [<CommonParameters>]
+Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] 
+<String>] [<CommonParameters>]
 ``` 
 
 

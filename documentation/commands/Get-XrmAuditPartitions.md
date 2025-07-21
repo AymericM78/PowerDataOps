@@ -1,4 +1,4 @@
-# Command : `Get-XrmAuditPartitions` 
+﻿# Command : `Get-XrmAuditPartitions` 
 
 ## Description
 

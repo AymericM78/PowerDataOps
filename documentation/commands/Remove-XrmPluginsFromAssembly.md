@@ -1,4 +1,4 @@
-# Command : `Remove-XrmPluginsFromAssembly` 
+﻿# Command : `Remove-XrmPluginsFromAssembly` 
 
 ## Description
 

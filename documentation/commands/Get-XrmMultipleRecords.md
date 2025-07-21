@@ -1,4 +1,4 @@
-# Command : `Get-XrmMultipleRecords` 
+﻿# Command : `Get-XrmMultipleRecords` 
 
 ## Description
 
@@ -20,7 +20,8 @@ Custom Objects array. Rows (= Entity records) are converted to custom object to 
 ## Usage
 
 ```Powershell 
-Get-XrmMultipleRecords [[-XrmClient] <ServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [-ShowProgress] [<CommonParameters>]
+Get-XrmMultipleRecords [[-XrmClient] <ServiceClient>] [-Query] <QueryBase> [[-PageSize] <Int32>] [-ShowProgress] 
+[<CommonParameters>]
 ``` 
 
 ## Examples
@@ -35,6 +36,6 @@ $accounts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $queryAccounts;
 
 ## More informations
 
-System.Object[]
+Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
 
 

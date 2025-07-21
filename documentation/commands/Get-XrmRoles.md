@@ -1,4 +1,4 @@
-# Command : `Get-XrmRoles` 
+﻿# Command : `Get-XrmRoles` 
 
 ## Description
 
@@ -18,7 +18,8 @@ ExportPrivileges|SwitchParameter|named|false|False|Specify if privileges are ret
 ## Usage
 
 ```Powershell 
-Get-XrmRoles [[-XrmClient] <ServiceClient>] [[-BusinessUnitId] <Guid>] [-OnlyRoots] [[-Columns] <String[]>] [-ExportPrivileges] [<CommonParameters>]
+Get-XrmRoles [[-XrmClient] <ServiceClient>] [[-BusinessUnitId] <Guid>] [-OnlyRoots] [[-Columns] <String[]>] 
+[-ExportPrivileges] [<CommonParameters>]
 ``` 
 
 

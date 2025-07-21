@@ -1,4 +1,4 @@
-# Command : `Upsert-XrmAssembly` 
+﻿# Command : `Upsert-XrmAssembly` 
 
 ## Description
 
@@ -18,7 +18,8 @@ SourceType|Int32|5|false|0|Specify where assembly will be stored. (Default = 0 |
 ## Usage
 
 ```Powershell 
-Upsert-XrmAssembly [[-XrmClient] <ServiceClient>] [-AssemblyPath] <String> [[-SolutionUniqueName] <String>] [[-IsolationMode] <Int32>] [[-SourceType] <Int32>] [<CommonParameters>]
+Upsert-XrmAssembly [[-XrmClient] <ServiceClient>] [-AssemblyPath] <String> [[-SolutionUniqueName] <String>] 
+[[-IsolationMode] <Int32>] [[-SourceType] <Int32>] [<CommonParameters>]
 ``` 
 
 

@@ -1,8 +1,8 @@
-﻿# Command : `Get-XrmEntitiesLogicalName` 
+﻿# Command : `Get-XrmWhoAmI` 
 
 ## Description
 
-**Retrieve entities logicalname** : Get list of entity / table logical names.
+**Retrieve current user id.** : Get system user unique identifier.
 
 ## Inputs
 
@@ -14,7 +14,7 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 ## Usage
 
 ```Powershell 
-Get-XrmEntitiesLogicalName [[-XrmClient] <ServiceClient>] [<CommonParameters>]
+Get-XrmWhoAmI [[-XrmClient] <ServiceClient>] [<CommonParameters>]
 ``` 
 
 

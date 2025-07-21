@@ -1,4 +1,4 @@
-# Command : `Get-XrmSolution` 
+﻿# Command : `Get-XrmSolution` 
 
 ## Description
 
@@ -16,7 +16,8 @@ Columns|String[]|3|false|@("solutionid", "uniquename", "friendlyname", "version"
 ## Usage
 
 ```Powershell 
-Get-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-Columns] <String[]>] 
+[<CommonParameters>]
 ``` 
 
 

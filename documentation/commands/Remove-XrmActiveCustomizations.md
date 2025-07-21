@@ -1,4 +1,4 @@
-# Command : `Remove-XrmActiveCustomizations` 
+﻿# Command : `Remove-XrmActiveCustomizations` 
 
 ## Description
 
@@ -16,7 +16,8 @@ ComponentId|Guid|3|true||Solution component unique identifier to clean.
 ## Usage
 
 ```Powershell 
-Remove-XrmActiveCustomizations [[-XrmClient] <ServiceClient>] [-SolutionComponentName] <String> [-ComponentId] <Guid> [<CommonParameters>]
+Remove-XrmActiveCustomizations [[-XrmClient] <ServiceClient>] [-SolutionComponentName] <String> [-ComponentId] <Guid> 
+[<CommonParameters>]
 ``` 
 
 

@@ -1,4 +1,4 @@
-# Command : `Out-XrmConnectionStringParameter` 
+﻿# Command : `Out-XrmConnectionStringParameter` 
 
 ## Description
 
@@ -16,7 +16,8 @@ RaiseErrorIfMising|SwitchParameter|named|false|False|If parameter is not found, 
 ## Usage
 
 ```Powershell 
-Out-XrmConnectionStringParameter [-ConnectionString] <String> [-ParameterName] <String> [-RaiseErrorIfMising] [<CommonParameters>]
+Out-XrmConnectionStringParameter [-ConnectionString] <String> [-ParameterName] <String> [-RaiseErrorIfMising] 
+[<CommonParameters>]
 ``` 
 
 

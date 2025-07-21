@@ -1,4 +1,4 @@
-# Command : `Clear-XrmActiveCustomizations` 
+﻿# Command : `Clear-XrmActiveCustomizations` 
 
 ## Description
 
@@ -16,7 +16,8 @@ ComponentTypes|Int32[]|3|false|@(26, 59, 60, 61, 62, 300)|Solution components ty
 ## Usage
 
 ```Powershell 
-Clear-XrmActiveCustomizations [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-ComponentTypes] <Int32[]>] [<CommonParameters>]
+Clear-XrmActiveCustomizations [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-ComponentTypes] 
+<Int32[]>] [<CommonParameters>]
 ``` 
 
 

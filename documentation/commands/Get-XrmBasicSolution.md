@@ -1,4 +1,4 @@
-# Command : `Get-XrmBasicSolution` 
+﻿# Command : `Get-XrmBasicSolution` 
 
 ## Description
 

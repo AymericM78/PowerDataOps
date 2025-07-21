@@ -1,4 +1,4 @@
-# Command : `Get-XrmInstances` 
+﻿# Command : `Get-XrmInstances` 
 
 ## Description
 

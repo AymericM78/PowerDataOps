@@ -1,4 +1,4 @@
-# Command : `Get-XrmRolePrivileges` 
+﻿# Command : `Get-XrmRolePrivileges` 
 
 ## Description
 

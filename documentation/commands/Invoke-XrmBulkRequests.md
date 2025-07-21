@@ -1,4 +1,4 @@
-# Command : `Invoke-XrmBulkRequests` 
+﻿# Command : `Invoke-XrmBulkRequests` 
 
 ## Description
 
@@ -21,7 +21,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse
 ## Usage
 
 ```Powershell 
-Invoke-XrmBulkRequests [[-XrmClient] <ServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] [[-ContinueOnError] <Boolean>] [[-ReturnResponses] <Boolean>] [-Quiet] [<CommonParameters>]
+Invoke-XrmBulkRequests [[-XrmClient] <ServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] 
+[[-ContinueOnError] <Boolean>] [[-ReturnResponses] <Boolean>] [-Quiet] [<CommonParameters>]
 ``` 
 
 

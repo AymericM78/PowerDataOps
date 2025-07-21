@@ -1,4 +1,4 @@
-# Command : `Get-XrmOrganization` 
+﻿# Command : `Get-XrmOrganization` 
 
 ## Description
 

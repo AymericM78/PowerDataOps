@@ -1,4 +1,4 @@
-# Command : `Get-XrmAttributesLogicalName` 
+﻿# Command : `Get-XrmAttributesLogicalName` 
 
 ## Description
 

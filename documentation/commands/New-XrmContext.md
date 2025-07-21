@@ -1,4 +1,4 @@
-# Command : `New-XrmContext` 
+﻿# Command : `New-XrmContext` 
 
 ## Description
 

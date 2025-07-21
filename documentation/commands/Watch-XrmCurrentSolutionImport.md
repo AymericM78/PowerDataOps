@@ -1,4 +1,4 @@
-# Command : `Watch-XrmCurrentSolutionImport` 
+﻿# Command : `Watch-XrmCurrentSolutionImport` 
 
 ## Description
 

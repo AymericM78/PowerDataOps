@@ -1,4 +1,4 @@
-# Command : `New-XrmConnection` 
+﻿# Command : `New-XrmConnection` 
 
 ## Description
 

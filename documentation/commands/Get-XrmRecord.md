@@ -1,4 +1,4 @@
-# Command : `Get-XrmRecord` 
+﻿# Command : `Get-XrmRecord` 
 
 ## Description
 
@@ -22,7 +22,8 @@ Custom Object. Row (= Entity record) is converted to custom object to simplify d
 ## Usage
 
 ```Powershell 
-Get-XrmRecord [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-Key] <String>] [[-AttributeName] <String>] [-Value] <Object> [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmRecord [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-Key] <String>] [[-AttributeName] <String>] 
+[-Value] <Object> [[-Columns] <String[]>] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -35,6 +36,6 @@ Write-Host $contosoAccount.revenue;
 
 ## More informations
 
-System.Object[]
+Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
 
 

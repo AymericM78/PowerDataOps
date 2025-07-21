@@ -1,4 +1,4 @@
-# Command : `Join-XrmRecords` 
+﻿# Command : `Join-XrmRecords` 
 
 ## Description
 
@@ -19,7 +19,9 @@ IgnoreExistings|Boolean|6|false|True|Prevent exceptions if record associations a
 ## Usage
 
 ```Powershell 
-Join-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] <Boolean>] [<CommonParameters>]
+Join-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] 
+<EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] 
+<Boolean>] [<CommonParameters>]
 ``` 
 
 

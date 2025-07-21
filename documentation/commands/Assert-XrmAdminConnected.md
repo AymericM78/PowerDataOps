@@ -1,4 +1,4 @@
-# Command : `Assert-XrmAdminConnected` 
+﻿# Command : `Assert-XrmAdminConnected` 
 
 ## Description
 

@@ -1,4 +1,4 @@
-# Command : `Get-XrmPluginTraces` 
+﻿# Command : `Get-XrmPluginTraces` 
 
 ## Description
 

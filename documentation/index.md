@@ -1,9 +1,5 @@
-# PowerDataOps module index
+﻿# PowerDataOps module index
 
-# `_Internals` commands
-
-Command|Synopsis
--------|-----------
 # `Administration` commands
 
 Command|Synopsis
@@ -158,6 +154,7 @@ Command|Synopsis
 [Get-XrmUserRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmUserRoles.md)|Retrieve user assigned security roles.<br/>Get security roles associated to given user.
 [Get-XrmUsers](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmUsers.md)|Retrieve users.<br/>Get all system users from instance.
 [Get-XrmUsersRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmUsersRoles.md)|Retrieve assigned security roles for all users.<br/>Get all users with associated roles. This could help to determine unused roles or bad configurations.
+[Get-XrmWhoAmI](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmWhoAmI.md)|Retrieve current user id.<br/>Get system user unique identifier.
 [Remove-XrmUserRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmUserRoles.md)|Remove security roles to user.<br/>Unassign one or multiple roles to given user.
 # `Components` commands
 
@@ -254,4 +251,8 @@ Command|Synopsis
 [Disable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmWorkflow.md)|Disable a workflow.<br/>Deactivate given workflow.
 [Enable-XrmWorkflow](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmWorkflow.md)|Enable a workflow.<br/>Activate given workflow.
 [Get-XrmWorkflows](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmWorkflows.md)|Retrieve workflows.<br/>Get workflows with expected columns.
+# `_Internals` commands
+
+Command|Synopsis
+-------|-----------
 

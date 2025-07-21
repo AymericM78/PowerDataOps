@@ -1,4 +1,4 @@
-# Command : `Split-XrmCollection` 
+﻿# Command : `Split-XrmCollection` 
 
 ## Description
 

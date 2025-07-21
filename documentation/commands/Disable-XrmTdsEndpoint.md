@@ -1,4 +1,4 @@
-# Command : `Disable-XrmTdsEndpoint` 
+﻿# Command : `Disable-XrmTdsEndpoint` 
 
 ## Description
 

@@ -1,4 +1,4 @@
-# Command : `Update-XrmRecordFileUpload` 
+﻿# Command : `Update-XrmRecordFileUpload` 
 
 ## Description
 
@@ -17,7 +17,8 @@ FilePath|String|4|true||Path to file on the OS file system.
 ## Usage
 
 ```Powershell 
-Update-XrmRecordFileUpload [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-FileAttributeLogicalName] <String> [-FilePath] <String> [<CommonParameters>]
+Update-XrmRecordFileUpload [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-FileAttributeLogicalName] <String> 
+[-FilePath] <String> [<CommonParameters>]
 ``` 
 
 ## Examples

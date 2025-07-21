@@ -1,4 +1,4 @@
-# Command : `Copy-XrmSolutionComponents` 
+﻿# Command : `Copy-XrmSolutionComponents` 
 
 ## Description
 
@@ -16,7 +16,8 @@ TargetSolutionUniqueName|String|3|true||Unmanaged solution unique name where to 
 ## Usage
 
 ```Powershell 
-Copy-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SourceSolutionUniqueName] <String> [-TargetSolutionUniqueName] <String> [<CommonParameters>]
+Copy-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SourceSolutionUniqueName] <String> 
+[-TargetSolutionUniqueName] <String> [<CommonParameters>]
 ``` 
 
 

@@ -1,4 +1,4 @@
-# Command : `New-XrmEntity` 
+﻿# Command : `New-XrmEntity` 
 
 ## Description
 

@@ -1,4 +1,4 @@
-# Command : `Clear-XrmSolutions` 
+﻿# Command : `Clear-XrmSolutions` 
 
 ## Description
 
@@ -16,7 +16,8 @@ TimeOutInMinutes|Int32|3|false|45|Specify timeout duration in minute for each so
 ## Usage
 
 ```Powershell 
-Clear-XrmSolutions [[-XrmClient] <ServiceClient>] [[-Columns] <String[]>] [[-TimeOutInMinutes] <Int32>] [<CommonParameters>]
+Clear-XrmSolutions [[-XrmClient] <ServiceClient>] [[-Columns] <String[]>] [[-TimeOutInMinutes] <Int32>] 
+[<CommonParameters>]
 ``` 
 
 

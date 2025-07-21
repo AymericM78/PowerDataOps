@@ -1,4 +1,4 @@
-# Command : `Enable-XrmTdsEndpoint` 
+﻿# Command : `Enable-XrmTdsEndpoint` 
 
 ## Description
 

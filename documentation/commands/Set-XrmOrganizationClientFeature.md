@@ -1,4 +1,4 @@
-# Command : `Set-XrmOrganizationClientFeature` 
+﻿# Command : `Set-XrmOrganizationClientFeature` 
 
 ## Description
 

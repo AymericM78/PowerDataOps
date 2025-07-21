@@ -1,4 +1,4 @@
-# Command : `Get-XrmSolutionComponents` 
+﻿# Command : `Get-XrmSolutionComponents` 
 
 ## Description
 
@@ -16,7 +16,8 @@ ComponentTypes|Int32[]|3|false|@()|Array of component types number to retrieve. 
 ## Usage
 
 ```Powershell 
-Get-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-ComponentTypes] <Int32[]>] [<CommonParameters>]
+Get-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-ComponentTypes] <Int32[]>] 
+[<CommonParameters>]
 ``` 
 
 

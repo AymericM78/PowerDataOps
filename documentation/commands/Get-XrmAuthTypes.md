@@ -1,4 +1,4 @@
-# Command : `Get-XrmAuthTypes` 
+﻿# Command : `Get-XrmAuthTypes` 
 
 ## Description
 

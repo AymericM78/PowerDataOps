@@ -1,4 +1,4 @@
-# Command : `Get-XrmSolutionHistory` 
+﻿# Command : `Get-XrmSolutionHistory` 
 
 ## Description
 

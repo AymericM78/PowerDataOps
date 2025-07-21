@@ -1,4 +1,4 @@
-# Command : `Remove-XrmLanguagePack` 
+﻿# Command : `Remove-XrmLanguagePack` 
 
 ## Description
 

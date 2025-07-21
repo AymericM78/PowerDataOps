@@ -1,4 +1,4 @@
-# Command : `Get-XrmOrganizationDbSetting` 
+﻿# Command : `Get-XrmOrganizationDbSetting` 
 
 ## Description
 

@@ -1,4 +1,4 @@
-# Command : `Get-XrmSolutionVersion` 
+﻿# Command : `Get-XrmSolutionVersion` 
 
 ## Description
 

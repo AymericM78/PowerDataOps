@@ -1,4 +1,4 @@
-# Command : `Add-XrmQueryOrder` 
+﻿# Command : `Add-XrmQueryOrder` 
 
 ## Description
 
@@ -18,7 +18,8 @@ Microsoft.Xrm.Sdk.Query.QueryExpression
 ## Usage
 
 ```Powershell 
-Add-XrmQueryOrder [-Query] <QueryExpression> [-Field] <String> [-OrderType] {Ascending | Descending} [<CommonParameters>]
+Add-XrmQueryOrder [-Query] <QueryExpression> [-Field] <String> [-OrderType] {Ascending | Descending} 
+[<CommonParameters>]
 ``` 
 
 

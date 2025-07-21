@@ -1,4 +1,4 @@
-# Command : `Sync-XrmWebResources` 
+﻿# Command : `Sync-XrmWebResources` 
 
 ## Description
 
@@ -21,7 +21,9 @@ SupportedExtensions|String[]|6|false|@("*.htm", "*.html", "*.css", "*.js", "*.xm
 ## Usage
 
 ```Powershell 
-Sync-XrmWebResources [[-XrmClient] <ServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> [[-SynchronizationMode] <String>] [[-SynchronizationDeltaHours] <Int32>] [[-SupportedExtensions] <String[]>] [<CommonParameters>]
+Sync-XrmWebResources [[-XrmClient] <ServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> 
+[[-SynchronizationMode] <String>] [[-SynchronizationDeltaHours] <Int32>] [[-SupportedExtensions] <String[]>] 
+[<CommonParameters>]
 ``` 
 
 

@@ -1,4 +1,4 @@
-# Command : `Backup-XrmInstance` 
+﻿# Command : `Backup-XrmInstance` 
 
 ## Description
 
@@ -16,7 +16,8 @@ BackupDescription|String|3|false||Backup description
 ## Usage
 
 ```Powershell 
-Backup-XrmInstance [-InstanceDomainName] <String> [-BackupLabel] <String> [[-BackupDescription] <String>] [<CommonParameters>]
+Backup-XrmInstance [-InstanceDomainName] <String> [-BackupLabel] <String> [[-BackupDescription] <String>] 
+[<CommonParameters>]
 ``` 
 
 

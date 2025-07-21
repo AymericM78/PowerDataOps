@@ -1,4 +1,4 @@
-# Command : `Publish-XrmTheme` 
+﻿# Command : `Publish-XrmTheme` 
 
 ## Description
 

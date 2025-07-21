@@ -1,4 +1,4 @@
-# Command : `Get-XrmRecordsFromView` 
+﻿# Command : `Get-XrmRecordsFromView` 
 
 ## Description
 
@@ -16,7 +16,8 @@ ViewName|String|3|true||Entity saved query name. Use auto completion to select p
 ## Usage
 
 ```Powershell 
-Get-XrmRecordsFromView [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-ViewName] <String> [<CommonParameters>]
+Get-XrmRecordsFromView [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-ViewName] <String> 
+[<CommonParameters>]
 ``` 
 
 

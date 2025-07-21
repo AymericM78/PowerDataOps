@@ -1,4 +1,4 @@
-# Command : `Set-XrmThemeColor` 
+﻿# Command : `Set-XrmThemeColor` 
 
 ## Description
 
@@ -17,7 +17,8 @@ BackgroundColor|String|4|true||
 ## Usage
 
 ```Powershell 
-Set-XrmThemeColor [[-XrmClient] <ServiceClient>] [-Name] <String> [-LabelAndLinkColor] <String> [-BackgroundColor] <String> [<CommonParameters>]
+Set-XrmThemeColor [[-XrmClient] <ServiceClient>] [-Name] <String> [-LabelAndLinkColor] <String> [-BackgroundColor] 
+<String> [<CommonParameters>]
 ``` 
 
 

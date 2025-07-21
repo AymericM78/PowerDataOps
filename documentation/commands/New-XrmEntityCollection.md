@@ -1,4 +1,4 @@
-# Command : `New-XrmEntityCollection` 
+﻿# Command : `New-XrmEntityCollection` 
 
 ## Description
 

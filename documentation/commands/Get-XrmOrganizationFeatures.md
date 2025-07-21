@@ -1,4 +1,4 @@
-# Command : `Get-XrmOrganizationFeatures` 
+﻿# Command : `Get-XrmOrganizationFeatures` 
 
 ## Description
 

@@ -1,4 +1,4 @@
-# Command : `Write-XrmExcelSheet` 
+﻿# Command : `Write-XrmExcelSheet` 
 
 ## Description
 
@@ -20,7 +20,8 @@ More information : https://docs.devexpress.com/OfficeFileAPI/DevExpress.Spreadsh
 ## Usage
 
 ```Powershell 
-Write-XrmExcelSheet [-ExcelFilePath] <String> [-SheetName] <String> [-Records] <PSObject[]> [-HeaderMappings] <OrderedDictionary> [[-ColumnsSize] <Int32[]>] [[-TableStyle] <String>] [<CommonParameters>]
+Write-XrmExcelSheet [-ExcelFilePath] <String> [-SheetName] <String> [-Records] <PSObject[]> [-HeaderMappings] 
+<OrderedDictionary> [[-ColumnsSize] <Int32[]>] [[-TableStyle] <String>] [<CommonParameters>]
 ``` 
 
 

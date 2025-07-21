@@ -1,4 +1,4 @@
-# Command : `Add-XrmRecord` 
+﻿# Command : `Add-XrmRecord` 
 
 ## Description
 
@@ -35,6 +35,6 @@ $account.Id = Add-XrmRecord -XrmClient $xrmClient -Record $account;
 
 ## More informations
 
-System.Object[]
+Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
 
 

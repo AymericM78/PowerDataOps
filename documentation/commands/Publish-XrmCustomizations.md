@@ -1,4 +1,4 @@
-# Command : `Publish-XrmCustomizations` 
+﻿# Command : `Publish-XrmCustomizations` 
 
 ## Description
 
@@ -17,7 +17,8 @@ Async|Boolean|4|false|True|
 ## Usage
 
 ```Powershell 
-Publish-XrmCustomizations [[-XrmClient] <ServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] [[-Async] <Boolean>] [<CommonParameters>]
+Publish-XrmCustomizations [[-XrmClient] <ServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] 
+[[-Async] <Boolean>] [<CommonParameters>]
 ``` 
 
 

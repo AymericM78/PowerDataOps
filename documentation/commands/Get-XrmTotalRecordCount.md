@@ -1,4 +1,4 @@
-# Command : `Get-XrmTotalRecordCount` 
+﻿# Command : `Get-XrmTotalRecordCount` 
 
 ## Description
 

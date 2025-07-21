@@ -1,4 +1,4 @@
-# Command : `Get-XrmQueryFromFetch` 
+﻿# Command : `Get-XrmQueryFromFetch` 
 
 ## Description
 

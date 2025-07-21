@@ -1,4 +1,4 @@
-# Command : `Get-XrmEntityMetadata` 
+﻿# Command : `Get-XrmEntityMetadata` 
 
 ## Description
 
@@ -17,7 +17,8 @@ RetrieveAsIfPublished|Boolean|4|false|True|Retrieve metadata as if published.
 ## Usage
 
 ```Powershell 
-Get-XrmEntityMetadata [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-Filter] {Entity | Default | Attributes | Privileges | Relationships | All}] [[-RetrieveAsIfPublished] <Boolean>] [<CommonParameters>]
+Get-XrmEntityMetadata [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-Filter] {Entity | Default | Attributes 
+| Privileges | Relationships | All}] [[-RetrieveAsIfPublished] <Boolean>] [<CommonParameters>]
 ``` 
 
 

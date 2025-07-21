@@ -1,4 +1,4 @@
-# Command : `Trace-XrmFunction` 
+﻿# Command : `Trace-XrmFunction` 
 
 ## Description
 
@@ -17,7 +17,8 @@ StopWatch|Stopwatch|4|false||StopWath object initialized during first function c
 ## Usage
 
 ```Powershell 
-Trace-XrmFunction [-Name] <String> [-Stage] <String> [[-Parameters] <Object[]>] [[-StopWatch] <Stopwatch>] [<CommonParameters>]
+Trace-XrmFunction [-Name] <String> [-Stage] <String> [[-Parameters] <Object[]>] [[-StopWatch] <Stopwatch>] 
+[<CommonParameters>]
 ``` 
 
 

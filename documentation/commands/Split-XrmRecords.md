@@ -1,4 +1,4 @@
-# Command : `Split-XrmRecords` 
+﻿# Command : `Split-XrmRecords` 
 
 ## Description
 
@@ -18,7 +18,8 @@ RelationShipRole|EntityRole|5|false|Referencing|
 ## Usage
 
 ```Powershell 
-Split-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [<CommonParameters>]
+Split-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] 
+<EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [<CommonParameters>]
 ``` 
 
 

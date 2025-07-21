@@ -1,4 +1,4 @@
-# Command : `New-XrmEntityReference` 
+﻿# Command : `New-XrmEntityReference` 
 
 ## Description
 

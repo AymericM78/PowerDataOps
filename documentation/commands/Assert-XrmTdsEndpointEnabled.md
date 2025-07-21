@@ -1,4 +1,4 @@
-# Command : `Assert-XrmTdsEndpointEnabled` 
+﻿# Command : `Assert-XrmTdsEndpointEnabled` 
 
 ## Description
 

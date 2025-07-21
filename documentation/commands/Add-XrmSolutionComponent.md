@@ -1,4 +1,4 @@
-# Command : `Add-XrmSolutionComponent` 
+﻿# Command : `Add-XrmSolutionComponent` 
 
 ## Description
 
@@ -19,7 +19,9 @@ AddRequiredComponents|Boolean|6|false|False|Gets or sets a value that indicates 
 ## Usage
 
 ```Powershell 
-Add-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> [[-DoNotIncludeSubcomponents] <Boolean>] [[-AddRequiredComponents] <Boolean>] [<CommonParameters>]
+Add-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> 
+[-ComponentType] <Int32> [[-DoNotIncludeSubcomponents] <Boolean>] [[-AddRequiredComponents] <Boolean>] 
+[<CommonParameters>]
 ``` 
 
 

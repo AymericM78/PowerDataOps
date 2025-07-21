@@ -1,4 +1,4 @@
-# Command : `Add-XrmUserRoles` 
+﻿# Command : `Add-XrmUserRoles` 
 
 ## Description
 
@@ -16,7 +16,8 @@ Roles|Guid[]|3|true|@()|Roles unique identifier array to add.
 ## Usage
 
 ```Powershell 
-Add-XrmUserRoles [[-XrmClient] <ServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> [<CommonParameters>]
+Add-XrmUserRoles [[-XrmClient] <ServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> 
+[<CommonParameters>]
 ``` 
 
 

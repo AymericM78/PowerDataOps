@@ -1,4 +1,4 @@
-# Command : `Write-XrmMessageToSlack` 
+﻿# Command : `Write-XrmMessageToSlack` 
 
 ## Description
 
@@ -17,7 +17,8 @@ Emoji|String|4|false||Emoji to use as the icon for this message.
 ## Usage
 
 ```Powershell 
-Write-XrmMessageToSlack [[-SlackUrl] <String>] [[-BotName] <String>] [-Message] <String> [[-Emoji] <String>] [<CommonParameters>]
+Write-XrmMessageToSlack [[-SlackUrl] <String>] [[-BotName] <String>] [-Message] <String> [[-Emoji] <String>] 
+[<CommonParameters>]
 ``` 
 
 ## More informations

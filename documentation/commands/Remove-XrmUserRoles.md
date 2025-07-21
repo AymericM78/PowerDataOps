@@ -1,4 +1,4 @@
-# Command : `Remove-XrmUserRoles` 
+﻿# Command : `Remove-XrmUserRoles` 
 
 ## Description
 
@@ -16,7 +16,8 @@ Roles|Guid[]|3|true|@()|Roles unique identifier array to add.
 ## Usage
 
 ```Powershell 
-Remove-XrmUserRoles [[-XrmClient] <ServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> [<CommonParameters>]
+Remove-XrmUserRoles [[-XrmClient] <ServiceClient>] [-UserReference] <EntityReference> [-Roles] <Guid[]> 
+[<CommonParameters>]
 ``` 
 
 

@@ -1,4 +1,4 @@
-# Command : `Add-XrmQueryLink` 
+﻿# Command : `Add-XrmQueryLink` 
 
 ## Description
 
@@ -21,7 +21,9 @@ Microsoft.Xrm.Sdk.Query.LinkEntity
 ## Usage
 
 ```Powershell 
-Add-XrmQueryLink [-Query] <QueryExpression> [-FromAttributeName] <String> [-ToEntityName] <String> [[-ToAttributeName] <String>] [[-Alias] <String>] [[-JoinOperator] {Inner | LeftOuter | Natural | MatchFirstRowUsingCrossApply | In | Exists | Any | NotAny | All | NotAll}] [<CommonParameters>]
+Add-XrmQueryLink [-Query] <QueryExpression> [-FromAttributeName] <String> [-ToEntityName] <String> [[-ToAttributeName] 
+<String>] [[-Alias] <String>] [[-JoinOperator] {Inner | LeftOuter | Natural | MatchFirstRowUsingCrossApply | In | 
+Exists | Any | NotAny | All | NotAll}] [<CommonParameters>]
 ``` 
 
 
