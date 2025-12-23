@@ -16,18 +16,12 @@ jobs:
       - name: Update module version
         shell: pwsh
         run: |
-          $modulePath = "./PowerDataOps.psd1";
-          $moduleContent = [IO.File]::ReadAllText($modulePath);
-          
-          $module = [PsCustomObject] (Import-PowerShellDataFile $modulePath);
-          $currentVersion = [version] $module.ModuleVersion;
-          
-          $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build, $currentVersion.Revision + 1);
-          Write-Host "New Module Version = $($newVersion.ToString())";
-
-          $moduleContent = $moduleContent.Replace($currentVersion.ToString(), $newVersion.ToString());
-          
-          #$moduleContent | Set-Content $modulePath;
+          $modulePath = './PowerDataOps.psd1'
+          $module = Import-PowerShellDataFile -Path $modulePath
+          $currentVersion = [version]$module.ModuleVersion
+          $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build, $currentVersion.Revision + 1)
+          Write-Host "New Module Version = $($newVersion.ToString())"
+          Update-ModuleManifest -Path $modulePath -ModuleVersion $newVersion.ToString()
 
       - name: Publish to PSGallery
         shell: pwsh

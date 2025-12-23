@@ -140,15 +140,6 @@ function Export-XrmSolution {
 
         # Build output path
         $solutionFilePath = [System.IO.Path]::Combine($ExportPath, $solutionFileName);
-
-        # Define async export solution feature
-        try {
-            Set-XrmOrganizationFeature -Name "FCB.AllowExportSolutionAsync" -Value "true";
-        }
-        catch {
-            # For some reasons, featureset is lock on new orgs and async flag is already defined
-            Write-HostAndLog -Message "Unable to set FCB.AllowExportSolutionAsync flag" -Level WARN;
-        }
         
         # Build request
         if ($ForceSyncExport) {
