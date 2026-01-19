@@ -16,14 +16,17 @@ jobs:
       - name: Update module version (text-only, preserve other keys)
         shell: pwsh
         run: |
+          <#
           $modulePath = './PowerDataOps.psd1'
           $module = Import-PowerShellDataFile -Path $modulePath
-          $currentVersion = [version]$module.ModuleVersion
+          Write-Host "Current Module Version = $($module.ModuleVersion)";
+          $currentVersion = [version]$module.ModuleVersion;
           $newVersion = [version]::new($currentVersion.Major, $currentVersion.Minor, $currentVersion.Build, $currentVersion.Revision + 1)
-          Write-Host "New Module Version = $($newVersion.ToString())"
+          Write-Host "New Module Version = $($newVersion.ToString())";
           $text = Get-Content -Path $modulePath -Raw
           $text = $text -replace "ModuleVersion\s*=\s*'[^']+'","ModuleVersion = '$($newVersion.ToString())'"
-          Set-Content -Path $modulePath -Value $text -Encoding UTF8
+          Set-Content -Path $modulePath -Value $text -Encoding UTF8 
+          #>
 
       - name: Publish to PSGallery
         shell: pwsh
