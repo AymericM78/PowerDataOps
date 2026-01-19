@@ -41,7 +41,12 @@ function Upsert-XrmWebResource {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Prefix
+        $Prefix,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $DisplayName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -76,9 +81,14 @@ function Upsert-XrmWebResource {
         } 
 
         # Load webresource object from path
-        $webResourceDisplayName = $webResourceName;
-        $index = $webResourceDisplayName.LastIndexOf("/") + 1;
-        $webResourceDisplayName = $webResourceDisplayName.Substring($index, ($webResourceDisplayName.Length - $index));
+        if (!$DisplayName) {
+            $webResourceDisplayName = $webResourceName;
+            $index = $webResourceDisplayName.LastIndexOf("/") + 1;
+            $webResourceDisplayName = $webResourceDisplayName.Substring($index, ($webResourceDisplayName.Length - $index));
+        }
+        else {
+            $webResourceDisplayName = $DisplayName;
+        }
 
         # Get resource type from extension
         # https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/entities/webresource#webresourcetype-options
