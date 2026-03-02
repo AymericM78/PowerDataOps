@@ -67,9 +67,7 @@ function Add-XrmSolutionComponent {
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "ComponentId" -Value $ComponentId;
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "ComponentType" -Value $ComponentType;
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "AddRequiredComponents" -Value $AddRequiredComponents;
-        if (-not $DoNotIncludeSubcomponents) {
-            $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "DoNotIncludeSubcomponents" -Value $DoNotIncludeSubcomponents;
-        }
+        $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "DoNotIncludeSubcomponents" -Value $DoNotIncludeSubcomponents;
 
         $response = $XrmClient | Invoke-XrmRequest -Request $addComponentRequest;
     }
