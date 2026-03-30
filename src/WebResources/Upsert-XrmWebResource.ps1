@@ -143,7 +143,7 @@ function Upsert-XrmWebResource {
         }
 
         if ($PSBoundParameters.SolutionUniqueName) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -ComponentId $webresourceRecord.Id -ComponentType 61 -SolutionUniqueName $SolutionUniqueName;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -ComponentId $webresourceRecord.Id -ComponentType 61 -SolutionUniqueName $SolutionUniqueName -DoNotIncludeSubcomponents $false;
         }
 
         if (-not $ignore) {   
