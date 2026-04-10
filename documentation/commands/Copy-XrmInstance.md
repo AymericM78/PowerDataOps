@@ -16,8 +16,7 @@ CopyType|String|3|true||Copy type : MinimalCopy (schema only) / FullCopy (All)
 ## Usage
 
 ```Powershell 
-Copy-XrmInstance [-SourceInstanceDomainName] <String> [-TargetInstanceDomainName] <String> [-CopyType] <String> 
-[<CommonParameters>]
+Copy-XrmInstance [-SourceInstanceDomainName] <String> [-TargetInstanceDomainName] <String> [-CopyType] <String> [<CommonParameters>]
 ``` 
 
 

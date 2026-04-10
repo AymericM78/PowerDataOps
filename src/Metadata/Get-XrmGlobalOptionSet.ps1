@@ -1,0 +1,59 @@
+<#
+    .SYNOPSIS
+    Retrieve a global option set from Microsoft Dataverse.
+
+    .DESCRIPTION
+    Get global option set metadata using RetrieveOptionSetRequest.
+
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
+
+    .PARAMETER Name
+    Global option set name.
+
+    .PARAMETER RetrieveAsIfPublished
+    Retrieve metadata as if published. Default: true.
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.Metadata.OptionSetMetadataBase. The global option set metadata.
+
+    .EXAMPLE
+    $optionSet = Get-XrmGlobalOptionSet -Name "new_status";
+#>
+function Get-XrmGlobalOptionSet {
+    [CmdletBinding()]
+    [OutputType([Microsoft.Xrm.Sdk.Metadata.OptionSetMetadataBase])]
+    param
+    (
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
+        $XrmClient = $Global:XrmClient,
+
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Name,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $RetrieveAsIfPublished = $true
+    )
+    begin {
+        $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
+    }
+    process {
+        $request = [Microsoft.Xrm.Sdk.Messages.RetrieveOptionSetRequest]::new();
+        $request.Name = $Name;
+        $request.RetrieveAsIfPublished = $RetrieveAsIfPublished;
+
+        $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+        $response.Results["OptionSetMetadata"];
+    }
+    end {
+        $StopWatch.Stop();
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
+    }
+}
+
+Export-ModuleMember -Function Get-XrmGlobalOptionSet -Alias *;

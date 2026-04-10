@@ -18,8 +18,7 @@ BypassCustomPluginExecution|SwitchParameter|named|false|False|Specify wether inv
 ## Usage
 
 ```Powershell 
-Remove-XrmRecord [[-XrmClient] <ServiceClient>] [[-Record] <Entity>] [[-LogicalName] <String>] [[-Id] <Guid>] 
-[-BypassCustomPluginExecution] [<CommonParameters>]
+Remove-XrmRecord [[-XrmClient] <ServiceClient>] [[-Record] <Entity>] [[-LogicalName] <String>] [[-Id] <Guid>] [-BypassCustomPluginExecution] [<CommonParameters>]
 ``` 
 
 

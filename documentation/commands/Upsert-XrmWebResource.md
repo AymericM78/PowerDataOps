@@ -13,13 +13,13 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 FilePath|String|2|true||Local webresource file path.
 SolutionUniqueName|String|3|true||Microsoft Dataverse solution unique name where to add new webressource.
 Prefix|String|4|false||Publisher customization prefix for newly created webresource.
+DisplayName|String|5|false||
 
 
 ## Usage
 
 ```Powershell 
-Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] 
-<String>] [<CommonParameters>]
+Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [[-DisplayName] <String>] [<CommonParameters>]
 ``` 
 
 

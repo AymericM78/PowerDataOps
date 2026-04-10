@@ -19,8 +19,7 @@ Solutions|String|4|false|$env:SOLUTIONS|Solution uniquenames to update, use vari
 ## Usage
 
 ```Powershell 
-Set-XrmSolutionsVersionBuild [[-ConnectionString] <String>] [[-BuildId] <String>] [[-Version] <String>] [[-Solutions] 
-<String>] [<CommonParameters>]
+Set-XrmSolutionsVersionBuild [[-ConnectionString] <String>] [[-BuildId] <String>] [[-Version] <String>] [[-Solutions] <String>] [<CommonParameters>]
 ``` 
 
 

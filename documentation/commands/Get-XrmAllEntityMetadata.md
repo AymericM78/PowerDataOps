@@ -16,8 +16,7 @@ RetrieveAsIfPublished|Boolean|3|false|True|Retrieve metadata as if published.
 ## Usage
 
 ```Powershell 
-Get-XrmAllEntityMetadata [[-XrmClient] <ServiceClient>] [[-Filter] {Entity | Default | Attributes | Privileges | 
-Relationships | All}] [[-RetrieveAsIfPublished] <Boolean>] [<CommonParameters>]
+Get-XrmAllEntityMetadata [[-XrmClient] <ServiceClient>] [[-Filter] {Entity | Default | Attributes | Privileges | Relationships | All}] [[-RetrieveAsIfPublished] <Boolean>] [<CommonParameters>]
 ``` 
 
 
