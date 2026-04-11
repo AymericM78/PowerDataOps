@@ -43,7 +43,7 @@ function Get-XrmUsersFromTeam {
     process {
         $queryUsers = New-XrmQueryExpression -LogicalName "systemuser" -Columns $Columns;
         $link = $queryUsers | Add-XrmQueryLink -ToEntityName "teammembership" -FromAttributeName "systemuserid" -ToAttributeName "systemuserid";
-        $link | Add-XrmQueryCondition -Field "teamid" -Condition Equal -Values @($TeamReference.Id) | Out-Null;
+        $link | Add-XrmQueryLinkCondition -Field "teamid" -Condition Equal -Values @($TeamReference.Id) | Out-Null;
         $users = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $queryUsers;
         $users;
     }
