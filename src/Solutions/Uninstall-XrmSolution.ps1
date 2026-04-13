@@ -49,8 +49,8 @@ function Uninstall-XrmSolution {
         $uninstallRequest = $uninstallRequest | Add-XrmRequestParameter -Name "SolutionUniqueName" -Value $SolutionUniqueName;
 
         try {
-            $response = $XrmClient | Invoke-XrmRequest -Request $uninstallRequest -Async;
-            $asyncOperationId = $response.AsyncJobId;
+            $response = $XrmClient | Invoke-XrmRequest -Request $uninstallRequest;
+            $asyncOperationId = $response.Results["AsyncOperationId"];
             Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -ScriptBlock {
                 param($asyncOperation)
 

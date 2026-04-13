@@ -33,7 +33,7 @@ function Disable-XrmWorkflow {
             "statecode" = New-XrmOptionSetValue -Value 0 
             "statuscode" = New-XrmOptionSetValue -Value 1
         }
-        Update-XrmRecord -XrmClient $XrmClient -Entity $workflowUpdate;
+        Update-XrmRecord -XrmClient $XrmClient -Record $workflowUpdate;
     }
     end {
         $StopWatch.Stop();

@@ -90,8 +90,8 @@ function New-XrmEmail {
     }
     process {
         $record = New-XrmEntity -LogicalName "email" -Attributes @{
-            "from"          = (New-XrmEntityCollection -Entities $From);
-            "to"            = (New-XrmEntityCollection -Entities $To);
+            "from"          = [Microsoft.Xrm.Sdk.EntityCollection] (New-XrmEntityCollection -Entities $From);
+            "to"            = [Microsoft.Xrm.Sdk.EntityCollection] (New-XrmEntityCollection -Entities $To);
             "subject"       = $Subject;
             "directioncode" = $DirectionCode;
         };
@@ -101,11 +101,11 @@ function New-XrmEmail {
         }
 
         if ($PSBoundParameters.ContainsKey('Cc')) {
-            $record.Attributes["cc"] = (New-XrmEntityCollection -Entities $Cc);
+            $record.Attributes["cc"] = [Microsoft.Xrm.Sdk.EntityCollection] (New-XrmEntityCollection -Entities $Cc);
         }
 
         if ($PSBoundParameters.ContainsKey('Bcc')) {
-            $record.Attributes["bcc"] = (New-XrmEntityCollection -Entities $Bcc);
+            $record.Attributes["bcc"] = [Microsoft.Xrm.Sdk.EntityCollection] (New-XrmEntityCollection -Entities $Bcc);
         }
 
         if ($PSBoundParameters.ContainsKey('RegardingObjectReference')) {

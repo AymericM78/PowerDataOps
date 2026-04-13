@@ -33,7 +33,7 @@ function Enable-XrmWorkflow {
             "statecode" = New-XrmOptionSetValue -Value 1 
             "statuscode" = New-XrmOptionSetValue -Value 2
         }
-        Update-XrmRecord -XrmClient $XrmClient -Entity $workflowUpdate;
+        Update-XrmRecord -XrmClient $XrmClient -Record $workflowUpdate;
     }
     end {
         $StopWatch.Stop();

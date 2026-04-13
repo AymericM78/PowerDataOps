@@ -18,7 +18,10 @@
     Action type (0=Standard, 1=Dropdown, 2=SplitButton, 3=Group).
 
     .PARAMETER Context
-    Context (0=All, 1=Entity, 2=Global).
+    Context (0=All, 1=Entity).
+
+    .PARAMETER Location
+    Location of the Command bar associated with the Modern Command. (0=Form, 1=Main Grid, 2=Sub Grid, 3=Associated Grid, 4=Quick Form, 5=Global Header, 6=Dashboard).
 
     .PARAMETER ContextEntity
     Entity logical name when context is Entity.
@@ -67,6 +70,10 @@ function New-XrmCommand {
         [Parameter(Mandatory = $true)]
         [int]
         $Context,
+        
+        [Parameter(Mandatory = $true)]
+        [int]
+        $Location,
 
         [Parameter(Mandatory = $false)]
         [string]
@@ -96,9 +103,10 @@ function New-XrmCommand {
         $record = New-XrmEntity -LogicalName "appaction" -Attributes @{
             "name"       = $Name;
             "uniquename" = $UniqueName;
-            "type"       = $Type;
-            "context"    = $Context;
+            "type"       = (New-XrmOptionSetValue -Value $Type);
+            "context"    = (New-XrmOptionSetValue -Value $Context);
             "hidden"     = $Hidden;
+            "location"       = (New-XrmOptionSetValue -Value $Location);
         };
 
         if ($PSBoundParameters.ContainsKey('ContextEntity')) {

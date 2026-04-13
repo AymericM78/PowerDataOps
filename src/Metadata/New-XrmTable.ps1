@@ -126,6 +126,7 @@ function New-XrmTable {
     process {
         $entityMetadata = [Microsoft.Xrm.Sdk.Metadata.EntityMetadata]::new();
         $entityMetadata.LogicalName = $LogicalName;
+        $entityMetadata.SchemaName = $LogicalName;
         $entityMetadata.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
         $entityMetadata.DisplayCollectionName = New-XrmLabel -Text $PluralName -LanguageCode $LanguageCode;
         $entityMetadata.OwnershipType = $OwnershipType;
