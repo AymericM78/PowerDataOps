@@ -8,14 +8,15 @@
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
-    .PARAMETER WorkflowId
-    Workflow unique identifier.
+    .PARAMETER WorkflowReference
+    Entity reference of the workflow to disable.
 
     .OUTPUTS
     System.Void.
 
     .EXAMPLE
-    Disable-XrmWorkflow -WorkflowId $workflowId;
+    $wfRef = New-XrmEntityReference -LogicalName "workflow" -Id $workflowId;
+    Disable-XrmWorkflow -WorkflowReference $wfRef;
 #>
 function Disable-XrmWorkflow {
     [CmdletBinding()]
@@ -27,16 +28,16 @@ function Disable-XrmWorkflow {
         $XrmClient = $Global:XrmClient,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Guid]
-        $WorkflowId
+        [ValidateNotNull()]
+        [Microsoft.Xrm.Sdk.EntityReference]
+        $WorkflowReference
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {            
-        Set-XrmRecordState -XrmClient $XrmClient -LogicalName "workflow" -Id $WorkflowId -StateCode 0 -StatusCode 1;
+        Set-XrmRecordState -XrmClient $XrmClient -RecordReference $WorkflowReference -StateCode 0 -StatusCode 1;
     }
     end {
         $StopWatch.Stop();

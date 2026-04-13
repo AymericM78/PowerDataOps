@@ -31,7 +31,7 @@ function Assert-Test {
         [scriptblock]$Condition
     )
     try {
-        $result = . $Condition;
+        $result = Invoke-Command -ScriptBlock $Condition;
         if ($result) {
             $Global:TestPass++;
             Write-Host "  [PASS] $Label" -ForegroundColor Green;

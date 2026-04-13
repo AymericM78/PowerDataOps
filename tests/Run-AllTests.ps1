@@ -16,15 +16,19 @@ $allTests = @(
     @{ Category = "Types";         File = "Types\TypeHelpers.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Connection.Tests.ps1" },
     @{ Category = "Query";         File = "Query\QueryExpression.Tests.ps1" },
+    @{ Category = "Query";         File = "Query\QueryLinkColumns.Tests.ps1" },
     @{ Category = "Client";        File = "Client\RecordOperations.Tests.ps1" },
     @{ Category = "Client";        File = "Client\AccountCrud.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Associations.Tests.ps1" },
     @{ Category = "Security";      File = "Security\Security.Tests.ps1" },
+    @{ Category = "Security";      File = "Security\SecurityRoles.Tests.ps1" },
     @{ Category = "Organization";  File = "Organization\EnvironmentVariables.Tests.ps1" },
     @{ Category = "Email";         File = "Email\Email.Tests.ps1" },
     @{ Category = "Workflows";     File = "Workflows\Workflows.Tests.ps1" },
+    @{ Category = "Plugins";       File = "Plugins\PluginSteps.Tests.ps1" },
     @{ Category = "Customization"; File = "Customization\Customization.Tests.ps1" },
     @{ Category = "Metadata";      File = "Metadata\MetadataCrud.Tests.ps1" },
+    @{ Category = "Metadata";      File = "Metadata\OptionSetValues.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Solutions.Tests.ps1" }
 );
 

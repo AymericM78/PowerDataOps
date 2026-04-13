@@ -35,15 +35,16 @@ $offWorkflows = $workflows | Where-Object { $_.statecode_Value.Value -eq 0 -and 
 
 if ($offWorkflows) {
     $wfId = $offWorkflows.workflowid;
+    $wfRef = New-XrmEntityReference -LogicalName "workflow" -Id $wfId;
     Write-Host "    Testing with workflow: $($offWorkflows.name) ($wfId)" -ForegroundColor Gray;
 
     # Enable it
     try {
-        $Global:XrmClient | Enable-XrmWorkflow -WorkflowId $wfId;
+        $Global:XrmClient | Enable-XrmWorkflow -WorkflowReference $wfRef;
         Assert-Test "Enable-XrmWorkflow - workflow activated" { $true };
 
         # Disable it back
-        $Global:XrmClient | Disable-XrmWorkflow -WorkflowId $wfId;
+        $Global:XrmClient | Disable-XrmWorkflow -WorkflowReference $wfRef;
         Assert-Test "Disable-XrmWorkflow - workflow deactivated" { $true };
     }
     catch {

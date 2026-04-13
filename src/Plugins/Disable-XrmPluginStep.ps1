@@ -1,24 +1,24 @@
 <#
     .SYNOPSIS
-    Enable a workflow.
+    Disable a plugin step.
 
     .DESCRIPTION
-    Activate given workflow.
+    Deactivate a given SDK message processing step.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
-    .PARAMETER WorkflowReference
-    Entity reference of the workflow to enable.
+    .PARAMETER PluginStepReference
+    Entity reference of the SDK message processing step to disable.
 
     .OUTPUTS
     System.Void.
 
     .EXAMPLE
-    $wfRef = New-XrmEntityReference -LogicalName "workflow" -Id $workflowId;
-    Enable-XrmWorkflow -WorkflowReference $wfRef;
+    $stepRef = New-XrmEntityReference -LogicalName "sdkmessageprocessingstep" -Id $stepId;
+    Disable-XrmPluginStep -PluginStepReference $stepRef;
 #>
-function Enable-XrmWorkflow {
+function Disable-XrmPluginStep {
     [CmdletBinding()]
     [OutputType([System.Void])]
     param
@@ -30,14 +30,14 @@ function Enable-XrmWorkflow {
         [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [Microsoft.Xrm.Sdk.EntityReference]
-        $WorkflowReference
+        $PluginStepReference
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
-        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }    
-    process {                
-        Set-XrmRecordState -XrmClient $XrmClient -RecordReference $WorkflowReference -StateCode 1 -StatusCode 2;
+    process {
+        Set-XrmRecordState -XrmClient $XrmClient -RecordReference $PluginStepReference -StateCode 1 -StatusCode 2;
     }
     end {
         $StopWatch.Stop();
@@ -45,4 +45,4 @@ function Enable-XrmWorkflow {
     }    
 }
 
-Export-ModuleMember -Function Enable-XrmWorkflow -Alias *;
+Export-ModuleMember -Function Disable-XrmPluginStep -Alias *;

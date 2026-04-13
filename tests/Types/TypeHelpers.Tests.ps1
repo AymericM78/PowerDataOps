@@ -61,14 +61,14 @@ Assert-Test "New-XrmEntityCollection - 2 entities" {
 # ============================================================
 Write-Section "New-XrmLabel";
 
-$label = New-XrmLabel -Text "Test Label";
+$labelTest1 = New-XrmLabel -Text "Test Label";
 Assert-Test "New-XrmLabel - default lang 1033" {
-    $label.LocalizedLabels[0].Label -eq "Test Label" -and $label.LocalizedLabels[0].LanguageCode -eq 1033;
+    $labelTest1.LocalizedLabels[0].Label -eq "Test Label" -and $labelTest1.LocalizedLabels[0].LanguageCode -eq 1033;
 };
 
-$label = New-XrmLabel -Text "Libelle" -LanguageCode 1036;
+$labelTest2 = New-XrmLabel -Text "Libelle" -LanguageCode 1036;
 Assert-Test "New-XrmLabel - French 1036" {
-    $label.LocalizedLabels[0].Label -eq "Libelle" -and $label.LocalizedLabels[0].LanguageCode -eq 1036;
+    $labelTest2.LocalizedLabels[0].Label -eq "Libelle" -and $labelTest2.LocalizedLabels[0].LanguageCode -eq 1036;
 };
 
 # ============================================================
