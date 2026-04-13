@@ -58,3 +58,9 @@ function Remove-XrmColumn {
 }
 
 Export-ModuleMember -Function Remove-XrmColumn -Alias *;
+
+Register-ArgumentCompleter -CommandName Remove-XrmColumn -ParameterName "EntityLogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

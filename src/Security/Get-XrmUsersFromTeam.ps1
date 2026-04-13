@@ -21,6 +21,7 @@
 #>
 function Get-XrmUsersFromTeam {
     [CmdletBinding()]
+    [OutputType([PSCustomObject[]])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

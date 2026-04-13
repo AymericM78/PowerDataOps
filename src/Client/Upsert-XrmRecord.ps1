@@ -13,10 +13,17 @@
 
     .PARAMETER BypassCustomPluginExecution
     Specify wether involved plugins should be triggered or not during this operation. (Default: False)
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.OrganizationResponse. The Upsert response.
+
+    .EXAMPLE
+    $record = New-XrmEntity -LogicalName "account" -Attributes @{ "name" = "Contoso" };
+    Upsert-XrmRecord -Record $record;
 #>
 function Upsert-XrmRecord {
     [CmdletBinding()]
-    [OutputType([Guid])]
+    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (    
         [Parameter(Mandatory = $false, ValueFromPipeline)]

@@ -7,6 +7,12 @@
 
     .PARAMETER Value
     Option integer value.
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.OptionSetValue. The initialized OptionSetValue object.
+
+    .EXAMPLE
+    $optionSet = New-XrmOptionSetValue -Value 1;
 #>
 function New-XrmOptionSetValue {
     [CmdletBinding()]

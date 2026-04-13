@@ -96,3 +96,9 @@ function New-XrmView {
 }
 
 Export-ModuleMember -Function New-XrmView -Alias *;
+
+Register-ArgumentCompleter -CommandName New-XrmView -ParameterName "EntityLogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

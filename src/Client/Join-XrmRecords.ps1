@@ -19,9 +19,18 @@
 
     .PARAMETER IgnoreExistings
     Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
+
+    .OUTPUTS
+    System.Void.
+
+    .EXAMPLE
+    $record = Get-XrmRecord -LogicalName "account" -Id $accountId;
+    $contactRefs = @(New-XrmEntityReference -LogicalName "contact" -Id $contactId);
+    Join-XrmRecords -Record $record -RecordReferences $contactRefs -RelationShipName "contact_customer_accounts";
 #>
 function Join-XrmRecords {
     [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (    
         [Parameter(Mandatory = $false, ValueFromPipeline)]

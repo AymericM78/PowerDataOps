@@ -22,9 +22,16 @@
     
     .PARAMETER AddRequiredComponents
     Gets or sets a value that indicates whether other solution components that are required by the solution component that you are adding should also be added to the unmanaged solution. Required. (Default : false = do not add required components)
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.OrganizationResponse. The AddSolutionComponent response.
+
+    .EXAMPLE
+    Add-XrmSolutionComponent -SolutionUniqueName "MySolution" -ComponentId $tableId -ComponentType 1;
 #>
 function Add-XrmSolutionComponent {
     [CmdletBinding()]
+    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -70,6 +77,7 @@ function Add-XrmSolutionComponent {
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "DoNotIncludeSubcomponents" -Value $DoNotIncludeSubcomponents;
 
         $response = $XrmClient | Invoke-XrmRequest -Request $addComponentRequest;
+        $response;
     }
     end {
         $StopWatch.Stop();

@@ -10,9 +10,16 @@
 
     .PARAMETER WorkflowId
     Workflow unique identifier.
+
+    .OUTPUTS
+    System.Void.
+
+    .EXAMPLE
+    Disable-XrmWorkflow -WorkflowId $workflowId;
 #>
 function Disable-XrmWorkflow {
-    [CmdletBinding()]    
+    [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

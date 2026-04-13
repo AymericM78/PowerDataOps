@@ -7,6 +7,12 @@
 
     .PARAMETER Value
     Decimal value.
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.Money. The initialized Money object.
+
+    .EXAMPLE
+    $money = New-XrmMoney -Value 100.50;
 #>
 function New-XrmMoney {
     [CmdletBinding()]

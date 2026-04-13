@@ -13,6 +13,12 @@
 
     .PARAMETER Attributes
     Attributes array (Key value pair: logicalname = value).
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.Entity. The initialized Entity object.
+
+    .EXAMPLE
+    $record = New-XrmEntity -LogicalName "account" -Attributes @{ "name" = "Contoso" };
 #>
 function New-XrmEntity {
     [CmdletBinding()]

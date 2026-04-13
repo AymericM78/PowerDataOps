@@ -74,3 +74,9 @@ function New-XrmColumn {
 }
 
 Export-ModuleMember -Function New-XrmColumn -Alias *;
+
+Register-ArgumentCompleter -CommandName New-XrmColumn -ParameterName "EntityLogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

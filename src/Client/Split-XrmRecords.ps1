@@ -19,9 +19,18 @@
 
     .PARAMETER IgnoreExistings
     Prevent exceptions if record associations doesn't exist.
+
+    .OUTPUTS
+    System.Void.
+
+    .EXAMPLE
+    $record = Get-XrmRecord -LogicalName "account" -Id $accountId;
+    $contactRefs = @(New-XrmEntityReference -LogicalName "contact" -Id $contactId);
+    Split-XrmRecords -Record $record -RecordReferences $contactRefs -RelationShipName "contact_customer_accounts";
 #>
 function Split-XrmRecords {
     [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (    
         [Parameter(Mandatory = $false, ValueFromPipeline)]

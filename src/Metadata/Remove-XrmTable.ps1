@@ -49,3 +49,9 @@ function Remove-XrmTable {
 }
 
 Export-ModuleMember -Function Remove-XrmTable -Alias *;
+
+Register-ArgumentCompleter -CommandName Remove-XrmTable -ParameterName "LogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

@@ -10,9 +10,16 @@
     
     .PARAMETER Roles
     Roles unique identifier array to add.
+
+    .OUTPUTS
+    System.Void.
+
+    .EXAMPLE
+    Remove-XrmUserRoles -UserId $userId -Roles @($roleId1, $roleId2);
 #>
 function Remove-XrmUserRoles {
-    [CmdletBinding()]    
+    [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

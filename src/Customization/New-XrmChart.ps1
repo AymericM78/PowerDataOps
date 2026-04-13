@@ -88,3 +88,9 @@ function New-XrmChart {
 }
 
 Export-ModuleMember -Function New-XrmChart -Alias *;
+
+Register-ArgumentCompleter -CommandName New-XrmChart -ParameterName "EntityLogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

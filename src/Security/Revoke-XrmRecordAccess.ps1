@@ -14,6 +14,9 @@
     .PARAMETER TargetReference
     Target record entity reference to unshare.
 
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.OrganizationResponse. The RevokeAccess response.
+
     .EXAMPLE
     $xrmClient = New-XrmClient -ConnectionString $connectionString;
     $userRef = New-XrmEntityReference -LogicalName "systemuser" -Id $userId;
@@ -22,6 +25,7 @@
 #>
 function Revoke-XrmRecordAccess {
     [CmdletBinding()]
+    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

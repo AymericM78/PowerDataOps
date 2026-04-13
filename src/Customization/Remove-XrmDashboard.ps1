@@ -19,6 +19,7 @@
 #>
 function Remove-XrmDashboard {
     [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

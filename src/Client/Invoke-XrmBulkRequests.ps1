@@ -16,6 +16,12 @@
 
     .PARAMETER ReturnResponses
     Indicates if response are collected for each request execution. (Default: false = No response)
+
+    .OUTPUTS
+    System.Collections.ArrayList. Collection of OrganizationResponse objects.
+
+    .EXAMPLE
+    $responses = Invoke-XrmBulkRequests -Requests $requests -ReturnResponses $true;
 #>
 function Invoke-XrmBulkRequests {
     [CmdletBinding()]

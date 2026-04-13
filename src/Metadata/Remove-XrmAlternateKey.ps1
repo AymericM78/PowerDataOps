@@ -58,3 +58,9 @@ function Remove-XrmAlternateKey {
 }
 
 Export-ModuleMember -Function Remove-XrmAlternateKey -Alias *;
+
+Register-ArgumentCompleter -CommandName Remove-XrmAlternateKey -ParameterName "EntityLogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

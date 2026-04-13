@@ -17,6 +17,9 @@
     .PARAMETER TrackingToken
     Optional tracking token for the email.
 
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.OrganizationResponse. The SendEmail response.
+
     .EXAMPLE
     $xrmClient = New-XrmClient -ConnectionString $connectionString;
     $emailRef = New-XrmEntityReference -LogicalName "email" -Id $emailId;
@@ -24,6 +27,7 @@
 #>
 function Send-XrmEmail {
     [CmdletBinding()]
+    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

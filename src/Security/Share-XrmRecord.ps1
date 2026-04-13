@@ -14,6 +14,9 @@
     .PARAMETER PrincipalAccess
     PrincipalAccess object created via New-XrmPrincipalAccess.
 
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.OrganizationResponse. The GrantAccess response.
+
     .EXAMPLE
     $xrmClient = New-XrmClient -ConnectionString $connectionString;
     $userRef = New-XrmEntityReference -LogicalName "systemuser" -Id $userId;
@@ -23,6 +26,7 @@
 #>
 function Share-XrmRecord {
     [CmdletBinding()]
+    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

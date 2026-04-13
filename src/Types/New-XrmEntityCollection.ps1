@@ -7,6 +7,12 @@
 
     .PARAMETER Entities
     Entities array.
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.EntityCollection. The initialized EntityCollection object.
+
+    .EXAMPLE
+    $collection = New-XrmEntityCollection -Entities @($entity1, $entity2);
 #>
 function New-XrmEntityCollection {
     [CmdletBinding()]

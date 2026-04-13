@@ -164,3 +164,9 @@ function New-XrmTable {
 }
 
 Export-ModuleMember -Function New-XrmTable -Alias *;
+
+Register-ArgumentCompleter -CommandName New-XrmTable -ParameterName "LogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

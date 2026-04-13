@@ -73,3 +73,9 @@ function New-XrmAlternateKey {
 }
 
 Export-ModuleMember -Function New-XrmAlternateKey -Alias *;
+
+Register-ArgumentCompleter -CommandName New-XrmAlternateKey -ParameterName "EntityLogicalName" -ScriptBlock {
+    param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+    $validLogicalNames = Get-XrmEntitiesLogicalName;
+    return $validLogicalNames | Where-Object { $_ -like "$wordToComplete*" };
+}

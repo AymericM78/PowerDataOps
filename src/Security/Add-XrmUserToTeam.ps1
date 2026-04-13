@@ -22,7 +22,8 @@
     Add-XrmUserToTeam -XrmClient $xrmClient -TeamReference $teamRef -UserReferences @($userRef1, $userRef2);
 #>
 function Add-XrmUserToTeam {
-    [CmdletBinding()]    
+    [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]
