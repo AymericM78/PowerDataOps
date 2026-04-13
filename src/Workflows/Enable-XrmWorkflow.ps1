@@ -28,12 +28,8 @@ function Enable-XrmWorkflow {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
-    process {        
-        $workflowUpdate = New-XrmEntity -LogicalName "workflow" -Id $WorkflowId -Attributes @{
-            "statecode" = New-XrmOptionSetValue -Value 1 
-            "statuscode" = New-XrmOptionSetValue -Value 2
-        }
-        Update-XrmRecord -XrmClient $XrmClient -Record $workflowUpdate;
+    process {                
+        Set-XrmRecordState -XrmClient $XrmClient -LogicalName "workflow" -Id $WorkflowId -StateCode 1 -StatusCode 2;
     }
     end {
         $StopWatch.Stop();

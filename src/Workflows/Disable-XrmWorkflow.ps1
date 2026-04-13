@@ -29,11 +29,7 @@ function Disable-XrmWorkflow {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {            
-        $workflowUpdate = New-XrmEntity -LogicalName "workflow" -Id $WorkflowId -Attributes @{
-            "statecode" = New-XrmOptionSetValue -Value 0 
-            "statuscode" = New-XrmOptionSetValue -Value 1
-        }
-        Update-XrmRecord -XrmClient $XrmClient -Record $workflowUpdate;
+        Set-XrmRecordState -XrmClient $XrmClient -LogicalName "workflow" -Id $WorkflowId -StateCode 0 -StatusCode 1;
     }
     end {
         $StopWatch.Stop();
