@@ -15,7 +15,7 @@
     Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, customizationprefix, customizationoptionvalueprefix, description)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity. Publisher record.
+    PSCustomObject. Publisher record (XrmObject).
 
     .EXAMPLE
     $publisher = Get-XrmPublisher -PublisherUniqueName "contoso";
@@ -28,7 +28,7 @@
 #>
 function Get-XrmPublisher {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity])]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

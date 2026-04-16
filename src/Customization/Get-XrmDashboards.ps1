@@ -12,14 +12,14 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of systemform records (dashboards).
+    PSCustomObject[]. Array of systemform records (XrmObject, dashboards).
 
     .EXAMPLE
     $dashboards = Get-XrmDashboards;
 #>
 function Get-XrmDashboards {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

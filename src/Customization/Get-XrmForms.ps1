@@ -18,7 +18,7 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of systemform records.
+    PSCustomObject[]. Array of systemform records (XrmObject).
 
     .EXAMPLE
     $forms = Get-XrmForms -EntityLogicalName "account";
@@ -27,7 +27,7 @@
 #>
 function Get-XrmForms {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

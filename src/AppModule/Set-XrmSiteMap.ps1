@@ -19,7 +19,7 @@
 
     .EXAMPLE
     $sitemaps = Get-XrmSiteMaps -Name "My SiteMap";
-    $sitemapRef = $sitemaps[0].ToEntityReference();
+    $sitemapRef = $sitemaps[0].Reference;
     Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml;
 
     .LINK

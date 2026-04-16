@@ -15,7 +15,7 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of appmodule records.
+    PSCustomObject[]. Array of appmodule records (XrmObject).
 
     .EXAMPLE
     $apps = Get-XrmAppModules;
@@ -26,7 +26,7 @@
 #>
 function Get-XrmAppModules {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

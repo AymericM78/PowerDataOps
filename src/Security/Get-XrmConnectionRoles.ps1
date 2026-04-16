@@ -18,7 +18,7 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of connectionrole records.
+    PSCustomObject[]. Array of connection role records (XrmObject).
 
     .EXAMPLE
     $roles = Get-XrmConnectionRoles;
@@ -29,7 +29,7 @@
 #>
 function Get-XrmConnectionRoles {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

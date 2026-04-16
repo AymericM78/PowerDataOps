@@ -63,7 +63,7 @@ function New-XrmSecurityRole {
         }
         else {
             $rootBU = Get-XrmRootBusinessUnit -XrmClient $XrmClient;
-            $attributes["businessunitid"] = $rootBU.ToEntityReference();
+            $attributes["businessunitid"] = $rootBU.Reference;
         }
 
         $record = New-XrmEntity -LogicalName "role" -Attributes $attributes;

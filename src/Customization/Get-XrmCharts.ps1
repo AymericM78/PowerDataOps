@@ -15,14 +15,14 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of savedqueryvisualization records.
+    PSCustomObject[]. Array of savedqueryvisualization records (XrmObject).
 
     .EXAMPLE
     $charts = Get-XrmCharts -EntityLogicalName "account";
 #>
 function Get-XrmCharts {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

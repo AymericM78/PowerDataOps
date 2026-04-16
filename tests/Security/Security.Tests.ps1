@@ -122,7 +122,7 @@ $query = $query | Add-XrmQueryCondition -Field "isdefault" -Condition Equal -Val
 $defaultTeam = ($Global:XrmClient | Get-XrmMultipleRecords -Query $query) | Select-Object -First 1;
 
 if ($defaultTeam) {
-    $teamRef = New-XrmEntityReference -LogicalName "team" -Id $defaultTeam.teamid;
+    $teamRef = $defaultTeam.Reference;
 
     $teamUsers = $Global:XrmClient | Get-XrmUsersFromTeam -TeamReference $teamRef -Columns "fullname";
     Assert-Test "Get-XrmUsersFromTeam - default team has members (actual: $($teamUsers.Count))" {

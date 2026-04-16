@@ -15,7 +15,7 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of appaction records.
+    PSCustomObject[]. Array of appaction records (XrmObject).
 
     .EXAMPLE
     $commands = Get-XrmCommands;
@@ -23,7 +23,7 @@
 #>
 function Get-XrmCommands {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

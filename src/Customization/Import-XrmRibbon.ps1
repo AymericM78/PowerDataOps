@@ -71,7 +71,7 @@ function Import-XrmRibbon {
 
         if ($useTempSolution) {
             $publisher = Get-XrmPublisher | Select-Object -First 1;
-            $publisherRef = $publisher.ToEntityReference();
+            $publisherRef = $publisher.Reference;
             $SolutionUniqueName = $tempSolutionName;
 
             New-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;

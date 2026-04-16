@@ -62,7 +62,7 @@ function Export-XrmRibbon {
         if ($useTempSolution) {
             # Create temporary solution
             $publisher = Get-XrmPublisher | Select-Object -First 1;
-            $publisherRef = $publisher.ToEntityReference();
+            $publisherRef = $publisher.Reference;
             $SolutionUniqueName = $tempSolutionName;
 
             New-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;

@@ -15,7 +15,7 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of sitemap records.
+    PSCustomObject[]. Array of sitemap records (XrmObject).
 
     .EXAMPLE
     $sitemaps = Get-XrmSiteMaps;
@@ -26,7 +26,7 @@
 #>
 function Get-XrmSiteMaps {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

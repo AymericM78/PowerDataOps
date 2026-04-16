@@ -15,7 +15,7 @@
     Specify expected columns to retrieve. (Default : all columns)
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Entity[]. Array of duplicaterule records.
+    PSCustomObject[]. Array of duplicate rule records (XrmObject).
 
     .EXAMPLE
     $rules = Get-XrmDuplicateRules;
@@ -26,7 +26,7 @@
 #>
 function Get-XrmDuplicateRules {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Entity[]])]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
