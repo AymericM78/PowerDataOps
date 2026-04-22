@@ -21,7 +21,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedquery record.
 ## Usage
 
 ```Powershell 
-Set-XrmView [[-XrmClient] <ServiceClient>] [-ViewReference] <EntityReference> [[-Name] <String>] [[-FetchXml] <String>] [[-LayoutXml] <String>] [[-Description] <String>] [<CommonParameters>]
+Set-XrmView [[-XrmClient] <ServiceClient>] [-ViewReference] <EntityReference> [[-Name] <String>] [[-FetchXml] <String>] [[-LayoutXml] <String>] 
+[[-Description] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

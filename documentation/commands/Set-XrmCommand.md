@@ -21,8 +21,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated appaction record.
 ## Usage
 
 ```Powershell 
-Set-XrmCommand [[-XrmClient] <ServiceClient>] [-CommandReference] <EntityReference> [[-Name] <String>] [[-ButtonLabelText] <String>] [[-TooltipTitle] <String>] [[-Hidden] <Boolean>] 
-[<CommonParameters>]
+Set-XrmCommand [[-XrmClient] <ServiceClient>] [-CommandReference] <EntityReference> [[-Name] <String>] [[-ButtonLabelText] <String>] [[-TooltipTitle] 
+<String>] [[-Hidden] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

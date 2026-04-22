@@ -12,13 +12,16 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 LogicalName|String|2|true||Table / Entity logical name.
 Filter|EntityFilters|3|false|All|Filter to apply on metadata.
 RetrieveAsIfPublished|Boolean|4|false|True|Retrieve metadata as if published.
+IfExists|SwitchParameter|named|false|False|
 
+## Outputs
+Microsoft.Xrm.Sdk.Metadata.EntityMetadata
 
 ## Usage
 
 ```Powershell 
-Get-XrmEntityMetadata [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-Filter] {Entity | Default | Attributes | Privileges | Relationships | All}] [[-RetrieveAsIfPublished] <Boolean>] 
-[<CommonParameters>]
+Get-XrmEntityMetadata [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-Filter] {Entity | Default | Attributes | Privileges | Relationships | 
+All}] [[-RetrieveAsIfPublished] <Boolean>] [-IfExists] [<CommonParameters>]
 ``` 
 
 

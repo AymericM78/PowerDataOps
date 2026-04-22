@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 TeamReference|EntityReference|2|true||Team entity reference.
 Columns|String[]|3|false|@("fullname", "internalemailaddress")|Specify expected columns to retrieve. (Default : fullname, internalemailaddress)
 
+## Outputs
+System.Management.Automation.PSObject[]
 
 ## Usage
 

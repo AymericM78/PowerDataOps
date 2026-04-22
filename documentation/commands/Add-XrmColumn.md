@@ -1,8 +1,18 @@
-# Command : `Add-XrmColumn` 
+﻿# Command : `Add-XrmColumn` 
 
 ## Description
 
 **Create a new column in Microsoft Dataverse.** : Add a new attribute / column to a table using CreateAttributeRequest.
+Use typed constructors such as New-XrmStringColumn, New-XrmBooleanColumn,
+New-XrmIntegerColumn, New-XrmDecimalColumn, New-XrmDoubleColumn,
+New-XrmMoneyColumn, New-XrmDateColumn, New-XrmChoiceColumn,
+New-XrmMultiChoiceColumn, New-XrmFileColumn, New-XrmImageColumn,
+New-XrmMemoColumn, and New-XrmAutoNumberColumn to build the
+AttributeMetadata object.
+
+Relationship-based lookups require specialized SDK messages and should use
+Add-XrmOneToManyRelationship or Add-XrmPolymorphicLookup instead of
+Add-XrmColumn.
 
 ## Inputs
 
@@ -19,7 +29,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateAttribute response.
 ## Usage
 
 ```Powershell 
-Add-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples
@@ -32,5 +43,15 @@ $attr.DisplayName = New-XrmLabel -Text "Code";
 $attr.MaxLength = 50;
 Add-XrmColumn -EntityLogicalName "account" -Attribute $attr;
 ``` 
+
+
+```Powershell 
+$attr = New-XrmBooleanColumn -LogicalName "new_enabled" -SchemaName "new_Enabled" -DisplayName "Enabled" -DefaultValue $true;
+Add-XrmColumn -EntityLogicalName "account" -Attribute $attr;
+``` 
+
+## More informations
+
+https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns
 
 

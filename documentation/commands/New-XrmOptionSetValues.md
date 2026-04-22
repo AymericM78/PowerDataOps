@@ -11,12 +11,18 @@ Name|Type|Position|Required|Default|Description
 Values|Int32[]|1|true||
 
 ## Outputs
-Microsoft.Xrm.Sdk.OptionSetValueCollection
+Microsoft.Xrm.Sdk.OptionSetValueCollection. The initialized OptionSetValueCollection object.
 
 ## Usage
 
 ```Powershell 
 New-XrmOptionSetValues [-Values] <Int32[]> [<CommonParameters>]
+``` 
+
+## Examples
+
+```Powershell 
+$optionSets = New-XrmOptionSetValues -Value @(1, 2, 3);
 ``` 
 
 

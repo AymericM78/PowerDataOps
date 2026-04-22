@@ -29,10 +29,11 @@ TimeoutInMinutes|Int32|15|false|10|
 ## Usage
 
 ```Powershell 
-Export-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] [[-ExportPath] <String>] [[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] 
-<Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] [[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] [[-ExportOutlookSynchronizationSettings] <Boolean>] 
-[[-ExportGeneralSettings] <Boolean>] [[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] <Boolean>] [[-AddVersionToFileName] <Boolean>] [-ForceSyncExport] [[-TimeoutInMinutes] 
-<Int32>] [<CommonParameters>]
+Export-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [[-Managed] <Boolean>] [[-ExportPath] <String>] 
+[[-ExportCalendarSettings] <Boolean>] [[-ExportCustomizationSettings] <Boolean>] [[-ExportEmailTrackingSettings] <Boolean>] 
+[[-ExportAutoNumberingSettings] <Boolean>] [[-ExportIsvConfig] <Boolean>] [[-ExportOutlookSynchronizationSettings] <Boolean>] [[-ExportGeneralSettings] 
+<Boolean>] [[-ExportMarketingSettings] <Boolean>] [[-ExportRelationshipRoles] <Boolean>] [[-AddVersionToFileName] <Boolean>] [-ForceSyncExport] 
+[[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 

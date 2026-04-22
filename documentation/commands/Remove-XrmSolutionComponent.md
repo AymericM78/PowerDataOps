@@ -20,7 +20,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. SDK response.
 ## Usage
 
 ```Powershell 
-Remove-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> [<CommonParameters>]
+Remove-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> 
+[<CommonParameters>]
 ``` 
 
 ## Examples

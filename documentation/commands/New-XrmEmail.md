@@ -24,8 +24,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created email record.
 ## Usage
 
 ```Powershell 
-New-XrmEmail [[-XrmClient] <ServiceClient>] [-From] <Entity[]> [-To] <Entity[]> [[-Cc] <Entity[]>] [[-Bcc] <Entity[]>] [-Subject] <String> [[-Body] <String>] [[-RegardingObjectReference] 
-<EntityReference>] [[-DirectionCode] <Boolean>] [<CommonParameters>]
+New-XrmEmail [[-XrmClient] <ServiceClient>] [-From] <Entity[]> [-To] <Entity[]> [[-Cc] <Entity[]>] [[-Bcc] <Entity[]>] [-Subject] <String> [[-Body] 
+<String>] [[-RegardingObjectReference] <EntityReference>] [[-DirectionCode] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

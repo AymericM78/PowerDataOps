@@ -1,4 +1,4 @@
-# Command : `Add-XrmTable` 
+﻿# Command : `Add-XrmTable` 
 
 ## Description
 
@@ -29,9 +29,10 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 ## Usage
 
 ```Powershell 
-Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | 
-BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> 
-[-PrimaryAttributeDisplayName] <String> [[-PrimaryAttributeMaxLength] <Int32>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [<CommonParameters>]
+Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] 
+[[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] 
+[[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [-PrimaryAttributeDisplayName] <String> 
+[[-PrimaryAttributeMaxLength] <Int32>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples

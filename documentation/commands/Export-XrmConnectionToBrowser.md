@@ -25,9 +25,9 @@ EdgeAppPath|String|11|false|C:\Program Files (x86)\Microsoft\Edge\Application\ms
 ## Usage
 
 ```Powershell 
-Export-XrmConnectionToBrowser [-ProfileName] <String> [-BrowserShortCutsPath] <String> [[-IsChrome] <Boolean>] [[-OverrideConnectionStringFormat] <String>] [[-Extensions] <String[]>] 
-[[-AppIgnoredList] <String[]>] [[-ChromeDefaultProfilesPath] <String>] [[-ChromeX64AppPath] <String>] [[-ChromeX32AppPath] <String>] [[-EdgeDefaultProfilesPath] <String>] [[-EdgeAppPath] <String>] 
-[<CommonParameters>]
+Export-XrmConnectionToBrowser [-ProfileName] <String> [-BrowserShortCutsPath] <String> [[-IsChrome] <Boolean>] [[-OverrideConnectionStringFormat] 
+<String>] [[-Extensions] <String[]>] [[-AppIgnoredList] <String[]>] [[-ChromeDefaultProfilesPath] <String>] [[-ChromeX64AppPath] <String>] 
+[[-ChromeX32AppPath] <String>] [[-EdgeDefaultProfilesPath] <String>] [[-EdgeAppPath] <String>] [<CommonParameters>]
 ``` 
 
 

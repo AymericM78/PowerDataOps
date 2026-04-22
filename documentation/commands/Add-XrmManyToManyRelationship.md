@@ -1,4 +1,4 @@
-# Command : `Add-XrmManyToManyRelationship` 
+﻿# Command : `Add-XrmManyToManyRelationship` 
 
 ## Description
 
@@ -19,8 +19,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateManyToMany response.
 ## Usage
 
 ```Powershell 
-Add-XrmManyToManyRelationship [[-XrmClient] <ServiceClient>] [-ManyToManyRelationship] <ManyToManyRelationshipMetadata> [-IntersectEntityName] <String> [[-SolutionUniqueName] <String>] 
-[<CommonParameters>]
+Add-XrmManyToManyRelationship [[-XrmClient] <ServiceClient>] [-ManyToManyRelationship] <ManyToManyRelationshipMetadata> [-IntersectEntityName] <String> 
+[[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

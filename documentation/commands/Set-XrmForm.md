@@ -20,7 +20,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated systemform record.
 ## Usage
 
 ```Powershell 
-Set-XrmForm [[-XrmClient] <ServiceClient>] [-FormReference] <EntityReference> [[-Name] <String>] [[-FormXml] <String>] [[-Description] <String>] [<CommonParameters>]
+Set-XrmForm [[-XrmClient] <ServiceClient>] [-FormReference] <EntityReference> [[-Name] <String>] [[-FormXml] <String>] [[-Description] <String>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

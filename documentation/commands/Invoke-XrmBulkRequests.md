@@ -16,13 +16,19 @@ ReturnResponses|Boolean|5|false|False|Indicates if response are collected for ea
 Quiet|SwitchParameter|named|false|False|
 
 ## Outputs
-Microsoft.Xrm.Sdk.OrganizationResponse
+System.Collections.ArrayList. Collection of OrganizationResponse objects.
 
 ## Usage
 
 ```Powershell 
-Invoke-XrmBulkRequests [[-XrmClient] <ServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] [[-ContinueOnError] <Boolean>] [[-ReturnResponses] <Boolean>] [-Quiet] 
-[<CommonParameters>]
+Invoke-XrmBulkRequests [[-XrmClient] <ServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] [[-ContinueOnError] <Boolean>] 
+[[-ReturnResponses] <Boolean>] [-Quiet] [<CommonParameters>]
+``` 
+
+## Examples
+
+```Powershell 
+$responses = Invoke-XrmBulkRequests -Requests $requests -ReturnResponses $true;
 ``` 
 
 

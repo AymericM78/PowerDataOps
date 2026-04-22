@@ -13,12 +13,19 @@ Record|Entity|2|true||Record (row) to Upsert.
 BypassCustomPluginExecution|SwitchParameter|named|false|False|Specify wether involved plugins should be triggered or not during this operation. (Default: False)
 
 ## Outputs
-System.Guid
+Microsoft.Xrm.Sdk.OrganizationResponse. The Upsert response.
 
 ## Usage
 
 ```Powershell 
 Upsert-XrmRecord [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] [<CommonParameters>]
+``` 
+
+## Examples
+
+```Powershell 
+$record = New-XrmEntity -LogicalName "account" -Attributes @{ "name" = "Contoso" };
+Upsert-XrmRecord -Record $record;
 ``` 
 
 

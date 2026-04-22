@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 TeamReference|EntityReference|2|true||Team entity reference.
 UserReferences|EntityReference[]|3|true||Array of system user entity references to add to the team.
 
+## Outputs
+System.Void
 
 ## Usage
 

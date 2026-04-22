@@ -19,7 +19,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateOptionSet response.
 ## Usage
 
 ```Powershell 
-Set-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-OptionSetMetadata] <OptionSetMetadataBase> [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [<CommonParameters>]
+Set-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-OptionSetMetadata] <OptionSetMetadataBase> [[-SolutionUniqueName] <String>] [[-MergeLabels] 
+<Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

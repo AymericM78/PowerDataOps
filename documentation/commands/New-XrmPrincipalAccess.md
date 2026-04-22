@@ -17,8 +17,8 @@ Microsoft.Crm.Sdk.Messages.PrincipalAccess.
 ## Usage
 
 ```Powershell 
-New-XrmPrincipalAccess [-Principal] <EntityReference> [[-AccessRights] {None | ReadAccess | WriteAccess | AppendAccess | AppendToAccess | CreateAccess | DeleteAccess | ShareAccess | AssignAccess}] 
-[<CommonParameters>]
+New-XrmPrincipalAccess [-Principal] <EntityReference> [[-AccessRights] {None | ReadAccess | WriteAccess | AppendAccess | AppendToAccess | CreateAccess | 
+DeleteAccess | ShareAccess | AssignAccess}] [<CommonParameters>]
 ``` 
 
 ## Examples

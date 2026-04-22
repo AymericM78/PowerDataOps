@@ -1,4 +1,4 @@
-# Command : `Add-XrmView` 
+﻿# Command : `Add-XrmView` 
 
 ## Description
 
@@ -22,8 +22,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedquery record.
 ## Usage
 
 ```Powershell 
-Add-XrmView [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Name] <String> [-FetchXml] <String> [-LayoutXml] <String> [[-QueryType] <Int32>] [[-Description] <String>] 
-[<CommonParameters>]
+Add-XrmView [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Name] <String> [-FetchXml] <String> [-LayoutXml] <String> [[-QueryType] 
+<Int32>] [[-Description] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

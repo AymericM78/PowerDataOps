@@ -12,7 +12,7 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Columns|String[]|2|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
 
 ## Outputs
-Microsoft.Xrm.Sdk.Entity[]. Array of systemform records (dashboards).
+PSCustomObject[]. Array of systemform records (XrmObject, dashboards).
 
 ## Usage
 

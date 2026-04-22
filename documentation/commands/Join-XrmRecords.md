@@ -15,12 +15,22 @@ RelationShipName|String|4|true||RelationShip Logical name involve between these 
 RelationShipRole|EntityRole|5|false|Referencing|
 IgnoreExistings|Boolean|6|false|True|Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
 
+## Outputs
+System.Void.
 
 ## Usage
 
 ```Powershell 
-Join-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | 
-Referenced}] [[-IgnoreExistings] <Boolean>] [<CommonParameters>]
+Join-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> 
+[[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] <Boolean>] [<CommonParameters>]
+``` 
+
+## Examples
+
+```Powershell 
+$record = Get-XrmRecord -LogicalName "account" -Id $accountId;
+$contactRefs = @(New-XrmEntityReference -LogicalName "contact" -Id $contactId);
+Join-XrmRecords -Record $record -RecordReferences $contactRefs -RelationShipName "contact_customer_accounts";
 ``` 
 
 

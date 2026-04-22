@@ -13,6 +13,8 @@ EmailReference|EntityReference|2|true||Entity reference of the email activity re
 IssueSend|Boolean|3|false|True|Whether to issue the send operation. (Default: true)
 TrackingToken|String|4|false||Optional tracking token for the email.
 
+## Outputs
+Microsoft.Xrm.Sdk.OrganizationResponse. The SendEmail response.
 
 ## Usage
 

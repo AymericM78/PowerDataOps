@@ -1,4 +1,4 @@
-# Command : `Add-XrmPublisher` 
+﻿# Command : `Add-XrmPublisher` 
 
 ## Description
 
@@ -21,7 +21,8 @@ Microsoft.Xrm.Sdk.EntityReference. Created publisher reference.
 ## Usage
 
 ```Powershell 
-Add-XrmPublisher [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-Prefix] <String> [-OptionValuePrefix] <Int32> [[-Description] <String>] [<CommonParameters>]
+Add-XrmPublisher [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-Prefix] <String> [-OptionValuePrefix] <Int32> 
+[[-Description] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

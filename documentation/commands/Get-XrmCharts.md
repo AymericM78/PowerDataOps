@@ -13,7 +13,7 @@ EntityLogicalName|String|2|true||Table / Entity logical name to filter charts.
 Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
 
 ## Outputs
-Microsoft.Xrm.Sdk.Entity[]. Array of savedqueryvisualization records.
+PSCustomObject[]. Array of savedqueryvisualization records (XrmObject).
 
 ## Usage
 

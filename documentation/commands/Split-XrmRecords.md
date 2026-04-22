@@ -14,12 +14,22 @@ RecordReferences|EntityReference[]|3|true||Rows / Records references to split to
 RelationShipName|String|4|true||RelationShip Logical name involve between these records.
 RelationShipRole|EntityRole|5|false|Referencing|
 
+## Outputs
+System.Void.
 
 ## Usage
 
 ```Powershell 
-Split-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | 
-Referenced}] [<CommonParameters>]
+Split-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> 
+[[-RelationShipRole] {Referencing | Referenced}] [<CommonParameters>]
+``` 
+
+## Examples
+
+```Powershell 
+$record = Get-XrmRecord -LogicalName "account" -Id $accountId;
+$contactRefs = @(New-XrmEntityReference -LogicalName "contact" -Id $contactId);
+Split-XrmRecords -Record $record -RecordReferences $contactRefs -RelationShipName "contact_customer_accounts";
 ``` 
 
 

@@ -14,7 +14,7 @@ FormType|Int32|3|false|0|Form type filter (0=Dashboard, 2=Main, 5=Mobile, 6=Quic
 Columns|String[]|4|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
 
 ## Outputs
-Microsoft.Xrm.Sdk.Entity[]. Array of systemform records.
+PSCustomObject[]. Array of systemform records (XrmObject).
 
 ## Usage
 

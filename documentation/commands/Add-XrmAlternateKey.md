@@ -1,4 +1,4 @@
-# Command : `Add-XrmAlternateKey` 
+﻿# Command : `Add-XrmAlternateKey` 
 
 ## Description
 
@@ -19,7 +19,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntityKey response.
 ## Usage
 
 ```Powershell 
-Add-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-EntityKeyMetadata] <EntityKeyMetadata> [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-EntityKeyMetadata] <EntityKeyMetadata> [[-SolutionUniqueName] 
+<String>] [<CommonParameters>]
 ``` 
 
 ## Examples

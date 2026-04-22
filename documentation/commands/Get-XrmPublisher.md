@@ -13,7 +13,7 @@ PublisherUniqueName|String|2|true||Publisher unique name to retrieve.
 Columns|String[]|3|false|@("publisherid", "uniquename", "friendlyname", "customizationprefix", "customizationoptionvalueprefix", "description")|Specify expected columns to retrieve. (Default : id, uniquename, friendlyname, customizationprefix, customizationoptionvalueprefix, description)
 
 ## Outputs
-Microsoft.Xrm.Sdk.Entity. Publisher record.
+PSCustomObject. Publisher record (XrmObject).
 
 ## Usage
 

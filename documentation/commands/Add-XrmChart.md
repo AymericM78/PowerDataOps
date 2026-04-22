@@ -1,4 +1,4 @@
-# Command : `Add-XrmChart` 
+﻿# Command : `Add-XrmChart` 
 
 ## Description
 
@@ -21,8 +21,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedqueryvisualizat
 ## Usage
 
 ```Powershell 
-Add-XrmChart [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Name] <String> [-DataDescription] <String> [-PresentationDescription] <String> [[-Description] <String>] 
-[<CommonParameters>]
+Add-XrmChart [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Name] <String> [-DataDescription] <String> [-PresentationDescription] 
+<String> [[-Description] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

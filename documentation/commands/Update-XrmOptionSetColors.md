@@ -18,7 +18,8 @@ PublishChanges|Boolean|5|false|True|Whether to publish customizations after upda
 ## Usage
 
 ```Powershell 
-Update-XrmOptionSetColors [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Colors] <Hashtable> [[-PublishChanges] <Boolean>] [<CommonParameters>]
+Update-XrmOptionSetColors [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Colors] <Hashtable> 
+[[-PublishChanges] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

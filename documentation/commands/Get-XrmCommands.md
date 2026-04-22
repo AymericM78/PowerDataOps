@@ -13,7 +13,7 @@ EntityLogicalName|String|2|false||Table / Entity logical name to filter commands
 Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
 
 ## Outputs
-Microsoft.Xrm.Sdk.Entity[]. Array of appaction records.
+PSCustomObject[]. Array of appaction records (XrmObject).
 
 ## Usage
 

@@ -11,6 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 Name|String|2|true||Global option set name.
 RetrieveAsIfPublished|Boolean|3|false|True|Retrieve metadata as if published. Default: true.
+IfExists|SwitchParameter|named|false|False|Return $null instead of throwing when the global option set does not exist.
 
 ## Outputs
 Microsoft.Xrm.Sdk.Metadata.OptionSetMetadataBase. The global option set metadata.
@@ -18,7 +19,7 @@ Microsoft.Xrm.Sdk.Metadata.OptionSetMetadataBase. The global option set metadata
 ## Usage
 
 ```Powershell 
-Get-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-Name] <String> [[-RetrieveAsIfPublished] <Boolean>] [<CommonParameters>]
+Get-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-Name] <String> [[-RetrieveAsIfPublished] <Boolean>] [-IfExists] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -24,8 +24,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. BulkDelete response containing JobId.
 ## Usage
 
 ```Powershell 
-Add-XrmBulkDelete [[-XrmClient] <ServiceClient>] [-Query] <QueryExpression> [[-JobName] <String>] [[-SendEmailNotification] <Boolean>] [[-ToRecipients] <Guid[]>] [[-CCRecipients] <Guid[]>] 
-[[-RecurrencePattern] <String>] [[-StartDateTime] <DateTime>] [[-SourceImportId] <Guid>] [<CommonParameters>]
+Add-XrmBulkDelete [[-XrmClient] <ServiceClient>] [-Query] <QueryExpression> [[-JobName] <String>] [[-SendEmailNotification] <Boolean>] [[-ToRecipients] 
+<Guid[]>] [[-CCRecipients] <Guid[]>] [[-RecurrencePattern] <String>] [[-StartDateTime] <DateTime>] [[-SourceImportId] <Guid>] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -21,8 +21,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedqueryvisualizat
 ## Usage
 
 ```Powershell 
-Set-XrmChart [[-XrmClient] <ServiceClient>] [-ChartReference] <EntityReference> [[-Name] <String>] [[-DataDescription] <String>] [[-PresentationDescription] <String>] [[-Description] <String>] 
-[<CommonParameters>]
+Set-XrmChart [[-XrmClient] <ServiceClient>] [-ChartReference] <EntityReference> [[-Name] <String>] [[-DataDescription] <String>] 
+[[-PresentationDescription] <String>] [[-Description] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

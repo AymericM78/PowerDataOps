@@ -1,4 +1,4 @@
-# Command : `Add-XrmOneToManyRelationship` 
+﻿# Command : `Add-XrmOneToManyRelationship` 
 
 ## Description
 
@@ -19,8 +19,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateOneToMany response.
 ## Usage
 
 ```Powershell 
-Add-XrmOneToManyRelationship [[-XrmClient] <ServiceClient>] [-OneToManyRelationship] <OneToManyRelationshipMetadata> [-Lookup] <LookupAttributeMetadata> [[-SolutionUniqueName] <String>] 
-[<CommonParameters>]
+Add-XrmOneToManyRelationship [[-XrmClient] <ServiceClient>] [-OneToManyRelationship] <OneToManyRelationshipMetadata> [-Lookup] <LookupAttributeMetadata> 
+[[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

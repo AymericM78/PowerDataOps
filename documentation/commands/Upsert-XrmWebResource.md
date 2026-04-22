@@ -19,7 +19,8 @@ DisplayName|String|5|false||
 ## Usage
 
 ```Powershell 
-Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [[-DisplayName] <String>] [<CommonParameters>]
+Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [[-DisplayName] <String>] 
+[<CommonParameters>]
 ``` 
 
 

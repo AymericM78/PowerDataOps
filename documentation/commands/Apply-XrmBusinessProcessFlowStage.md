@@ -20,8 +20,8 @@ ProcessId|Guid|6|true||Business process flow unique identifier (workflow id).
 ## Usage
 
 ```Powershell 
-Apply-XrmBusinessProcessFlowStage [[-XrmClient] <ServiceClient>] [-TargetRecordReference] <EntityReference> [-TargetStageName] <String> [-BpfEntityLogicalName] <String> [-BpfLookupAttributeName] 
-<String> [-ProcessId] <Guid> [<CommonParameters>]
+Apply-XrmBusinessProcessFlowStage [[-XrmClient] <ServiceClient>] [-TargetRecordReference] <EntityReference> [-TargetStageName] <String> 
+[-BpfEntityLogicalName] <String> [-BpfLookupAttributeName] <String> [-ProcessId] <Guid> [<CommonParameters>]
 ``` 
 
 ## Examples

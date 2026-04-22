@@ -19,7 +19,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
 ## Usage
 
 ```Powershell 
-Set-XrmTable [[-XrmClient] <ServiceClient>] [-EntityMetadata] <EntityMetadata> [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [<CommonParameters>]
+Set-XrmTable [[-XrmClient] <ServiceClient>] [-EntityMetadata] <EntityMetadata> [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

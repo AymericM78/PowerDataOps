@@ -20,7 +20,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
 ## Usage
 
 ```Powershell 
-Set-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [<CommonParameters>]
+Set-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] 
+[[-MergeLabels] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

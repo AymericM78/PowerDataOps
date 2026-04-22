@@ -19,7 +19,8 @@ Microsoft.Xrm.Sdk.Metadata.EntityKeyMetadata. The alternate key metadata.
 ## Usage
 
 ```Powershell 
-Get-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-LogicalName] <String> [[-RetrieveAsIfPublished] <Boolean>] [<CommonParameters>]
+Get-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-LogicalName] <String> [[-RetrieveAsIfPublished] <Boolean>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

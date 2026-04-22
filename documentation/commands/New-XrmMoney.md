@@ -11,12 +11,18 @@ Name|Type|Position|Required|Default|Description
 Value|Decimal|1|true|0|Decimal value.
 
 ## Outputs
-Microsoft.Xrm.Sdk.Money
+Microsoft.Xrm.Sdk.Money. The initialized Money object.
 
 ## Usage
 
 ```Powershell 
 New-XrmMoney [-Value] <Decimal> [<CommonParameters>]
+``` 
+
+## Examples
+
+```Powershell 
+$money = New-XrmMoney -Value 100.50;
 ``` 
 
 

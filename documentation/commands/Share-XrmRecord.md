@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 TargetReference|EntityReference|2|true||Target record entity reference to share.
 PrincipalAccess|PrincipalAccess|3|true||PrincipalAccess object created via New-XrmPrincipalAccess.
 
+## Outputs
+Microsoft.Xrm.Sdk.OrganizationResponse. The GrantAccess response.
 
 ## Usage
 

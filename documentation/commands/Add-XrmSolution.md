@@ -1,4 +1,4 @@
-# Command : `Add-XrmSolution` 
+﻿# Command : `Add-XrmSolution` 
 
 ## Description
 
@@ -21,8 +21,8 @@ Microsoft.Xrm.Sdk.EntityReference. Created solution reference.
 ## Usage
 
 ```Powershell 
-Add-XrmSolution [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-PublisherReference] <EntityReference> [[-Version] <String>] [[-Description] <String>] 
-[<CommonParameters>]
+Add-XrmSolution [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-PublisherReference] <EntityReference> [[-Version] 
+<String>] [[-Description] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
