@@ -29,7 +29,11 @@ $allTests = @(
     @{ Category = "Customization"; File = "Customization\Customization.Tests.ps1" },
     @{ Category = "Metadata";      File = "Metadata\MetadataCrud.Tests.ps1" },
     @{ Category = "Metadata";      File = "Metadata\OptionSetValues.Tests.ps1" },
-    @{ Category = "Solutions";     File = "Solutions\Solutions.Tests.ps1" }
+    @{ Category = "Solutions";     File = "Solutions\Solutions.Tests.ps1" },
+    @{ Category = "Solutions";     File = "Solutions\Add-XrmSolutionComponents.Tests.ps1" },
+    @{ Category = "Solutions";     File = "Solutions\Test-XrmComponentCustomization.Tests.ps1" },
+    @{ Category = "Solutions";     File = "Solutions\Get-XrmCustomizedSolutionComponents.Tests.ps1" },
+    @{ Category = "Client";        File = "Client\Sync-XrmRecords.Tests.ps1" }
 );
 
 # Filter by category if specified
