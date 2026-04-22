@@ -4,6 +4,11 @@
 
     .DESCRIPTION
     Add a new attribute / column to a table using CreateAttributeRequest.
+    Use typed constructors such as New-XrmStringColumn, New-XrmBooleanColumn,
+    New-XrmIntegerColumn, New-XrmDecimalColumn, New-XrmMoneyColumn,
+    New-XrmDateColumn, New-XrmChoiceColumn, New-XrmFileColumn,
+    New-XrmLookupColumn, New-XrmMemoColumn, and New-XrmAutoNumberColumn
+    to build the AttributeMetadata object.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -27,6 +32,13 @@
     $attr.DisplayName = New-XrmLabel -Text "Code";
     $attr.MaxLength = 50;
     New-XrmColumn -EntityLogicalName "account" -Attribute $attr;
+
+    .EXAMPLE
+    $attr = New-XrmBooleanColumn -LogicalName "new_enabled" -SchemaName "new_Enabled" -DisplayName "Enabled" -DefaultValue $true;
+    New-XrmColumn -EntityLogicalName "account" -Attribute $attr;
+
+    .LINK
+    https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns
 #>
 function New-XrmColumn {
     [CmdletBinding()]

@@ -28,6 +28,7 @@ $allTests = @(
     @{ Category = "Plugins";       File = "Plugins\PluginSteps.Tests.ps1" },
     @{ Category = "Customization"; File = "Customization\Customization.Tests.ps1" },
     @{ Category = "Metadata";      File = "Metadata\MetadataCrud.Tests.ps1" },
+    @{ Category = "Metadata";      File = "Metadata\ColumnTypes.Tests.ps1" },
     @{ Category = "Metadata";      File = "Metadata\OptionSetValues.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Solutions.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Add-XrmSolutionComponents.Tests.ps1" },
