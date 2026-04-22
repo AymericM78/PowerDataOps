@@ -65,7 +65,7 @@ function Export-XrmRibbon {
             $publisherRef = $publisher.Reference;
             $SolutionUniqueName = $tempSolutionName;
 
-            New-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
+            Add-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
 
             # Add entity to solution (ComponentType 1 = Entity)
             $entityMetadata = Get-XrmEntityMetadata -LogicalName $EntityLogicalName;

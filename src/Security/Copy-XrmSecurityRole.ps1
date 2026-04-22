@@ -77,7 +77,7 @@ function Copy-XrmSecurityRole {
         if ($PSBoundParameters.ContainsKey('Description')) {
             $newRoleParams["Description"] = $Description;
         }
-        $newRoleRef = New-XrmSecurityRole @newRoleParams;
+        $newRoleRef = Add-XrmSecurityRole @newRoleParams;
 
         # Step 3: Copy privileges to the new role
         Set-XrmSecurityRolePrivileges -XrmClient $XrmClient -RoleReference $newRoleRef -Privileges $sourcePrivileges | Out-Null;

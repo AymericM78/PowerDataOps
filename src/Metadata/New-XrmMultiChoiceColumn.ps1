@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata object
-    referencing a global option set or defining local options, ready for New-XrmColumn.
+    referencing a global option set or defining local options, ready for Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -20,6 +20,9 @@
 
     .PARAMETER LocalOptions
     Local option labels to embed directly in the column metadata.
+
+    .PARAMETER Options
+    Local option metadata objects to embed directly in the column metadata.
 
     .PARAMETER StartingValue
     Starting integer value for local options. Default: 100000000.
@@ -38,11 +41,19 @@
 
     .EXAMPLE
     $attribute = New-XrmMultiChoiceColumn -LogicalName "new_tags" -SchemaName "new_Tags" -DisplayName "Tags" -GlobalOptionSetName "new_tagchoices";
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .EXAMPLE
     $attribute = New-XrmMultiChoiceColumn -LogicalName "new_preferences" -SchemaName "new_Preferences" -DisplayName "Preferences" -LocalOptions @("Phone", "Email", "SMS");
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+
+    .EXAMPLE
+    $options = @(
+        (New-XrmOption -Value 100000000 -Label (New-XrmLabel -Text "Phone") -Color "#CDDAFD"),
+        (New-XrmOption -Value 100000001 -Label (New-XrmLabel -Text "Email") -Color "#FCE1E4")
+    );
+    $attribute = New-XrmMultiChoiceColumn -LogicalName "new_preferences" -SchemaName "new_Preferences" -DisplayName "Preferences" -Options $options;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/multi-select-picklist
@@ -76,6 +87,11 @@ function New-XrmMultiChoiceColumn {
         [ValidateNotNullOrEmpty()]
         [string[]]
         $LocalOptions,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'ByOptionMetadata')]
+        [ValidateNotNull()]
+        [Microsoft.Xrm.Sdk.Metadata.OptionMetadata[]]
+        $Options,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ByLocalOptions')]
         [int]
@@ -118,13 +134,20 @@ function New-XrmMultiChoiceColumn {
                 $optionSet.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
             }
 
-            $currentValue = $StartingValue;
-            foreach ($localOption in $LocalOptions) {
-                $option = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
-                $option.Label = New-XrmLabel -Text $localOption -LanguageCode $LanguageCode;
-                $option.Value = $currentValue;
-                $optionSet.Options.Add($option);
-                $currentValue++;
+            if ($PSCmdlet.ParameterSetName -eq 'ByLocalOptions') {
+                $currentValue = $StartingValue;
+                foreach ($localOption in $LocalOptions) {
+                    $option = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
+                    $option.Label = New-XrmLabel -Text $localOption -LanguageCode $LanguageCode;
+                    $option.Value = $currentValue;
+                    $optionSet.Options.Add($option);
+                    $currentValue++;
+                }
+            }
+            else {
+                foreach ($option in $Options) {
+                    $optionSet.Options.Add($option);
+                }
             }
         }
         $attribute.OptionSet = $optionSet;

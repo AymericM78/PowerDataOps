@@ -7,7 +7,7 @@
 Write-Section "Create App Module for Component";
 $name = Get-TestName -Prefix "AppComp";
 $uniqueName = $name.Replace("-", "");
-$app = New-XrmAppModule -Name $name -UniqueName $uniqueName;
+$app = Add-XrmAppModule -Name $name -UniqueName $uniqueName;
 Assert-Test "AppModule created" { $app -and $app.appmoduleid };
 
 Write-Section "Add Component (SavedQuery)";

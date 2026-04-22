@@ -14,6 +14,9 @@
     .PARAMETER RetrieveAsIfPublished
     Retrieve metadata as if published. Default: true.
 
+    .PARAMETER IfExists
+    Return $null instead of throwing when the global option set does not exist.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.Metadata.OptionSetMetadataBase. The global option set metadata.
 
@@ -36,19 +39,32 @@ function Get-XrmGlobalOptionSet {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $RetrieveAsIfPublished = $true
+        $RetrieveAsIfPublished = $true,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $IfExists
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $request = [Microsoft.Xrm.Sdk.Messages.RetrieveOptionSetRequest]::new();
-        $request.Name = $Name;
-        $request.RetrieveAsIfPublished = $RetrieveAsIfPublished;
+        try {
+            $request = [Microsoft.Xrm.Sdk.Messages.RetrieveOptionSetRequest]::new();
+            $request.Name = $Name;
+            $request.RetrieveAsIfPublished = $RetrieveAsIfPublished;
 
-        $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
-        $response.Results["OptionSetMetadata"];
+            $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+            $response.Results["OptionSetMetadata"];
+        }
+        catch {
+            if ($IfExists -and (Test-XrmNotFoundError -ErrorRecord $_)) {
+                return $null;
+            }
+
+            throw;
+        }
     }
     end {
         $StopWatch.Stop();

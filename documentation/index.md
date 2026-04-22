@@ -1,4 +1,4 @@
-﻿# PowerDataOps module index
+# PowerDataOps module index
 
 # `Administration` commands
 
@@ -90,11 +90,11 @@ Command|Synopsis
 [Get-XrmCommands](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCommands.md)|Retrieve command records from Microsoft Dataverse.<br/>Get appaction records (command bar buttons) optionally filtered by entity context.
 [Get-XrmDashboards](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDashboards.md)|Retrieve dashboard records from Microsoft Dataverse.<br/>Get systemform records filtered to dashboards (type = 0). Delegates to Get-XrmForms.
 [Get-XrmForms](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmForms.md)|Retrieve form records from Microsoft Dataverse.<br/>Get systemform records (forms) filtered by entity logical name and optionally by form type.
-[New-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmChart.md)|Create a new chart in Microsoft Dataverse.<br/>Create a new savedqueryvisualization record (system chart).
-[New-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmCommand.md)|Create a new command bar button in Microsoft Dataverse.<br/>Create a new appaction record (command bar button).
-[New-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDashboard.md)|Create a new dashboard in Microsoft Dataverse.<br/>Create a new systemform record of type dashboard (type = 0). Delegates to New-XrmForm.
-[New-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmForm.md)|Create a new form in Microsoft Dataverse.<br/>Create a new systemform record.
-[New-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmView.md)|Create a new view in Microsoft Dataverse.<br/>Create a new savedquery record (system view).
+[Add-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmChart.md)|Create a new chart in Microsoft Dataverse.<br/>Create a new savedqueryvisualization record (system chart).
+[Add-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmCommand.md)|Create a new command bar button in Microsoft Dataverse.<br/>Create a new appaction record (command bar button).
+[Add-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDashboard.md)|Create a new dashboard in Microsoft Dataverse.<br/>Create a new systemform record of type dashboard (type = 0). Delegates to Add-XrmForm.
+[Add-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmForm.md)|Create a new form in Microsoft Dataverse.<br/>Create a new systemform record.
+[Add-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmView.md)|Create a new view in Microsoft Dataverse.<br/>Create a new savedquery record (system view).
 [Remove-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmChart.md)|Delete a chart from Microsoft Dataverse.<br/>Delete a savedqueryvisualization record (system chart).
 [Remove-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmCommand.md)|Delete a command bar button from Microsoft Dataverse.<br/>Delete an appaction record (command bar button).
 [Remove-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmDashboard.md)|Delete a dashboard from Microsoft Dataverse.<br/>Delete a systemform record (dashboard). Delegates to Remove-XrmForm.
@@ -143,12 +143,12 @@ Command|Synopsis
 [Get-XrmEntityMetadata](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEntityMetadata.md)|Retrieve entity metadata<br/>Get entity / table metadata.
 [Get-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmGlobalOptionSet.md)|Retrieve a global option set from Microsoft Dataverse.<br/>Get global option set metadata using RetrieveOptionSetRequest.
 [Get-XrmRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRelationship.md)|Retrieve relationship metadata from Microsoft Dataverse.<br/>Get relationship metadata using RetrieveRelationshipRequest.
-[New-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmAlternateKey.md)|Create an alternate key on a Microsoft Dataverse table.<br/>Add a new entity key using CreateEntityKeyRequest.
-[New-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmColumn.md)|Create a new column in Microsoft Dataverse.<br/>Add a new attribute / column to a table using CreateAttributeRequest.
-[New-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmGlobalOptionSet.md)|Create a global option set in Microsoft Dataverse.<br/>Create a new global option set using CreateOptionSetRequest.
-[New-XrmManyToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmManyToManyRelationship.md)|Create a many-to-many relationship in Microsoft Dataverse.<br/>Create an N:N relationship using CreateManyToManyRequest.
-[New-XrmOneToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmOneToManyRelationship.md)|Create a one-to-many relationship in Microsoft Dataverse.<br/>Create a 1:N relationship using CreateOneToManyRequest.
-[New-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmTable.md)|Create a new table in Microsoft Dataverse.<br/>Create a new entity / table using CreateEntityRequest.
+[Add-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAlternateKey.md)|Create an alternate key on a Microsoft Dataverse table.<br/>Add a new entity key using CreateEntityKeyRequest.
+[Add-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmColumn.md)|Create a new column in Microsoft Dataverse.<br/>Add a new attribute / column to a table using CreateAttributeRequest.
+[Add-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmGlobalOptionSet.md)|Create a global option set in Microsoft Dataverse.<br/>Create a new global option set using CreateOptionSetRequest.
+[Add-XrmManyToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmManyToManyRelationship.md)|Create a many-to-many relationship in Microsoft Dataverse.<br/>Create an N:N relationship using CreateManyToManyRequest.
+[Add-XrmOneToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmOneToManyRelationship.md)|Create a one-to-many relationship in Microsoft Dataverse.<br/>Create a 1:N relationship using CreateOneToManyRequest.
+[Add-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmTable.md)|Create a new table in Microsoft Dataverse.<br/>Create a new entity / table using CreateEntityRequest.
 [Remove-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAlternateKey.md)|Delete an alternate key from a Microsoft Dataverse table.<br/>Delete an entity key using DeleteEntityKeyRequest.
 [Remove-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmColumn.md)|Delete a column from Microsoft Dataverse.<br/>Delete an attribute / column from a table using DeleteAttributeRequest.
 [Remove-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmGlobalOptionSet.md)|Delete a global option set from Microsoft Dataverse.<br/>Delete a global option set using DeleteOptionSetRequest.
@@ -245,8 +245,8 @@ Command|Synopsis
 [Get-XrmSolutionVersion](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutionVersion.md)|Get solution version.<br/>Get version number from given solution.
 [Import-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmSolution.md)|Import solution.<br/>Performs solution import to target instance.
 [Invoke-XrmSolutionPackager](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmSolutionPackager.md)|Run solution packager tool.<br/>Pack or unpack given solution file with Solution Packager.
-[New-XrmPublisher](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmPublisher.md)|Create a new publisher in Microsoft Dataverse.<br/>Create a publisher record with the specified unique name, display name, prefix, and option value prefix.
-[New-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmSolution.md)|Create a new unmanaged solution in Microsoft Dataverse.<br/>Create an unmanaged solution with the specified unique name, display name, version, and publisher.
+[Add-XrmPublisher](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmPublisher.md)|Create a new publisher in Microsoft Dataverse.<br/>Create a publisher record with the specified unique name, display name, prefix, and option value prefix.
+[Add-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSolution.md)|Create a new unmanaged solution in Microsoft Dataverse.<br/>Create an unmanaged solution with the specified unique name, display name, version, and publisher.
 [Publish-XrmCustomizations](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Publish-XrmCustomizations.md)|Publish customizations.<br/>Apply unpublished customizations to active layer to promote UI changes.
 [Select-XrmSolutions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Select-XrmSolutions.md)|Display solutions selector.<br/>Open gridview view all solutions and select one or many.
 [Set-XrmSolutionVersion](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSolutionVersion.md)|Set solution version.<br/>Update specified solution by its uniquename with given version number.

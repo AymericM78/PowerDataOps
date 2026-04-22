@@ -1,7 +1,7 @@
 <#
     Integration Test: Solutions
     Tests publisher, solution, solution component cmdlets.
-    Cmdlets: New-XrmPublisher, Get-XrmPublisher, New-XrmSolution,
+    Cmdlets: Add-XrmPublisher, Get-XrmPublisher, Add-XrmSolution,
              Get-XrmSolution, Add-XrmSolutionComponent, Get-XrmSolutionComponents,
              Remove-XrmSolutionComponent, Uninstall-XrmSolution
 #>
@@ -10,22 +10,26 @@
 $randomSuffix = Get-Random -Minimum 10000 -Maximum 99999;
 
 # ============================================================
-# New-XrmPublisher + Get-XrmPublisher
+# Add-XrmPublisher + Get-XrmPublisher
 # ============================================================
-Write-Section "New-XrmPublisher + Get-XrmPublisher";
+Write-Section "Add-XrmPublisher + Get-XrmPublisher";
 
 $publisherUniqueName = "pdotest${randomSuffix}";
 $publisherDisplayName = "PDO Test Publisher $randomSuffix";
 $publisherPrefix = "pdot";
 
-$publisherRef = $Global:XrmClient | New-XrmPublisher `
+Assert-Test "Test-XrmPublisher - publisher absent before create" {
+    -not ($Global:XrmClient | Test-XrmPublisher -PublisherUniqueName $publisherUniqueName);
+};
+
+$publisherRef = $Global:XrmClient | Add-XrmPublisher `
     -UniqueName $publisherUniqueName `
     -DisplayName $publisherDisplayName `
     -Prefix $publisherPrefix `
     -OptionValuePrefix (10000 + ($randomSuffix % 89999)) `
     -Description "Integration test publisher";
 
-Assert-Test "New-XrmPublisher - created '$publisherUniqueName'" {
+Assert-Test "Add-XrmPublisher - created '$publisherUniqueName'" {
     $publisherRef -ne $null -and $publisherRef.Id -ne [Guid]::Empty;
 };
 
@@ -39,23 +43,30 @@ Assert-Test "Get-XrmPublisher - friendlyname matches" {
 Assert-Test "Get-XrmPublisher - prefix matches" {
     $publisher.customizationprefix -eq $publisherPrefix;
 };
+Assert-Test "Test-XrmPublisher - publisher exists after create" {
+    $Global:XrmClient | Test-XrmPublisher -PublisherUniqueName $publisherUniqueName;
+};
 
 # ============================================================
-# New-XrmSolution + Get-XrmSolution
+# Add-XrmSolution + Get-XrmSolution
 # ============================================================
-Write-Section "New-XrmSolution + Get-XrmSolution";
+Write-Section "Add-XrmSolution + Get-XrmSolution";
 
 $solutionUniqueName = "pdotestsol${randomSuffix}";
 $solutionDisplayName = "PDO Test Solution $randomSuffix";
 
-$solutionRef = $Global:XrmClient | New-XrmSolution `
+Assert-Test "Test-XrmSolution - solution absent before create" {
+    -not ($Global:XrmClient | Test-XrmSolution -SolutionUniqueName $solutionUniqueName);
+};
+
+$solutionRef = $Global:XrmClient | Add-XrmSolution `
     -UniqueName $solutionUniqueName `
     -DisplayName $solutionDisplayName `
     -PublisherReference $publisherRef `
     -Version "1.0.0.0" `
     -Description "Integration test solution";
 
-Assert-Test "New-XrmSolution - created '$solutionUniqueName'" {
+Assert-Test "Add-XrmSolution - created '$solutionUniqueName'" {
     $solutionRef -ne $null -and $solutionRef.Id -ne [Guid]::Empty;
 };
 
@@ -65,6 +76,9 @@ Assert-Test "Get-XrmSolution - uniquename matches" {
 };
 Assert-Test "Get-XrmSolution - version is 1.0.0.0" {
     $solution.version -eq "1.0.0.0";
+};
+Assert-Test "Test-XrmSolution - solution exists after create" {
+    $Global:XrmClient | Test-XrmSolution -SolutionUniqueName $solutionUniqueName;
 };
 
 # ============================================================
@@ -126,9 +140,15 @@ Write-Section "Cleanup";
 # Delete solution record directly (unmanaged solution)
 $Global:XrmClient | Remove-XrmRecord -LogicalName "solution" -Id $solutionRef.Id;
 Assert-Test "Solution deleted" { $true };
+Assert-Test "Test-XrmSolution - solution absent after delete" {
+    -not ($Global:XrmClient | Test-XrmSolution -SolutionUniqueName $solutionUniqueName);
+};
 
 # Delete publisher record
 $Global:XrmClient | Remove-XrmRecord -LogicalName "publisher" -Id $publisherRef.Id;
 Assert-Test "Publisher deleted" { $true };
+Assert-Test "Test-XrmPublisher - publisher absent after delete" {
+    -not ($Global:XrmClient | Test-XrmPublisher -PublisherUniqueName $publisherUniqueName);
+};
 
 Write-TestSummary;

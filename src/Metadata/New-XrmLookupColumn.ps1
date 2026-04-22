@@ -4,8 +4,10 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata object
-    for relationship-based creation requests such as New-XrmOneToManyRelationship
-    or New-XrmPolymorphicLookup.
+    for relationship-based creation requests such as Add-XrmOneToManyRelationship
+    or Add-XrmPolymorphicLookup. This constructor does not create the lookup
+    through Add-XrmColumn because Dataverse requires a relationship creation
+    request for lookup attributes.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -38,7 +40,7 @@
     $relationship.ReferencedEntity = "account";
     $relationship.ReferencingEntity = "contact";
     $relationship.ReferencedAttribute = "accountid";
-    New-XrmOneToManyRelationship -OneToManyRelationship $relationship -Lookup $attribute;
+    Add-XrmOneToManyRelationship -OneToManyRelationship $relationship -Lookup $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/create-edit-entity-relationships

@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.IntegerAttributeMetadata object
-    that can be passed to New-XrmColumn.
+    that can be passed to Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -35,7 +35,7 @@
 
     .EXAMPLE
     $attribute = New-XrmIntegerColumn -LogicalName "new_score" -SchemaName "new_Score" -DisplayName "Score" -MinValue 0 -MaxValue 100;
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns

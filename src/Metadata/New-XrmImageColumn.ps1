@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata object
-    that can be passed to New-XrmColumn.
+    that can be passed to Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -38,7 +38,7 @@
 
     .EXAMPLE
     $attribute = New-XrmImageColumn -LogicalName "new_profileimage" -SchemaName "new_ProfileImage" -DisplayName "Profile Image" -MaxSizeInKb 10240 -CanStoreFullImage;
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/image-column-data

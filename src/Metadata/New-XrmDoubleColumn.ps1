@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata object
-    that can be passed to New-XrmColumn.
+    that can be passed to Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -38,7 +38,7 @@
 
     .EXAMPLE
     $attribute = New-XrmDoubleColumn -LogicalName "new_ratio" -SchemaName "new_Ratio" -DisplayName "Ratio" -Precision 2 -MinValue 0 -MaxValue 100;
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns

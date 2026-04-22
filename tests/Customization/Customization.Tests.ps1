@@ -1,9 +1,9 @@
 <#
     Integration Test: Customization
     Tests views, forms, charts, dashboards, commands cmdlets.
-    Cmdlets: New-XrmView, Get-XrmViews, Remove-XrmView,
+    Cmdlets: Add-XrmView, Get-XrmViews, Remove-XrmView,
              Get-XrmForms, Get-XrmCharts, Get-XrmDashboards,
-             New-XrmCommand, Get-XrmCommands, Remove-XrmCommand
+             Add-XrmCommand, Get-XrmCommands, Remove-XrmCommand
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -23,9 +23,9 @@ Assert-Test "Get-XrmViews - 'Active Accounts' view exists" {
 };
 
 # ============================================================
-# New-XrmView + Remove-XrmView
+# Add-XrmView + Remove-XrmView
 # ============================================================
-Write-Section "New-XrmView + Remove-XrmView";
+Write-Section "Add-XrmView + Remove-XrmView";
 
 $viewName = Get-TestName -Prefix "View";
 $fetchXml = @"
@@ -49,21 +49,21 @@ $layoutXml = @"
 </grid>
 "@;
 
-$viewRef = $Global:XrmClient | New-XrmView `
+$viewRef = $Global:XrmClient | Add-XrmView `
     -EntityLogicalName "account" `
     -Name $viewName `
     -FetchXml $fetchXml `
     -LayoutXml $layoutXml `
     -Description "Integration test view";
 
-Assert-Test "New-XrmView - created '$viewName' (Id: $($viewRef.Id))" {
+Assert-Test "Add-XrmView - created '$viewName' (Id: $($viewRef.Id))" {
     $viewRef -ne $null -and $viewRef.Id -ne [Guid]::Empty;
 };
 
 # Verify the view appears
 $viewsAfter = $Global:XrmClient | Get-XrmViews -EntityLogicalName "account" -Columns "name", "savedqueryid";
 $createdView = $viewsAfter | Where-Object { $_.name -eq $viewName } | Select-Object -First 1;
-Assert-Test "New-XrmView - view appears in Get-XrmViews" {
+Assert-Test "Add-XrmView - view appears in Get-XrmViews" {
     $createdView -ne $null;
 };
 
@@ -108,13 +108,13 @@ Assert-Test "Get-XrmDashboards - returns dashboards (actual: $($dashboards.Count
 };
 
 # ============================================================
-# New-XrmCommand + Get-XrmCommands + Remove-XrmCommand
+# Add-XrmCommand + Get-XrmCommands + Remove-XrmCommand
 # ============================================================
 Write-Section "Commands CRUD";
 
 $cmdName = Get-TestName -Prefix "Cmd";
 $cmdUniqueName = "pdo_testcmd_$(Get-Random -Minimum 10000 -Maximum 99999)";
-$cmdRef = $Global:XrmClient | New-XrmCommand `
+$cmdRef = $Global:XrmClient | Add-XrmCommand `
     -Name $cmdName `
     -UniqueName $cmdUniqueName `
     -Type 2 `
@@ -122,7 +122,7 @@ $cmdRef = $Global:XrmClient | New-XrmCommand `
     -ButtonLabelText "Test Button" `
     -Location 0;
 
-Assert-Test "New-XrmCommand - created '$cmdName'" {
+Assert-Test "Add-XrmCommand - created '$cmdName'" {
     $cmdRef -ne $null -and $cmdRef.Id -ne [Guid]::Empty;
 };
 

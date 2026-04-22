@@ -1,6 +1,6 @@
 <#
     Integration Test: Security Roles & Privileges
-    Tests New-XrmSecurityRole, Set-XrmSecurityRole, Copy-XrmSecurityRole, Remove-XrmSecurityRole,
+    Tests Add-XrmSecurityRole, Set-XrmSecurityRole, Copy-XrmSecurityRole, Remove-XrmSecurityRole,
           New-XrmRolePrivilege, Add-XrmSecurityRolePrivileges, Get-XrmRolePrivileges,
           Remove-XrmSecurityRolePrivilege, Set-XrmSecurityRolePrivileges.
 #>
@@ -12,12 +12,12 @@ $roleRef1 = $null;
 $roleRef2 = $null;
 
 # ============================================================
-# New-XrmSecurityRole
+# Add-XrmSecurityRole
 # ============================================================
-Write-Section "New-XrmSecurityRole";
+Write-Section "Add-XrmSecurityRole";
 
-$roleRef1 = New-XrmSecurityRole -Name $roleName1 -Description "Integration test role";
-Assert-Test "New-XrmSecurityRole - role created" {
+$roleRef1 = Add-XrmSecurityRole -Name $roleName1 -Description "Integration test role";
+Assert-Test "Add-XrmSecurityRole - role created" {
     $roleRef1 -ne $null -and $roleRef1.Id -ne [Guid]::Empty;
 };
 Write-Host "    Role: $roleName1 ($($roleRef1.Id))" -ForegroundColor Gray;

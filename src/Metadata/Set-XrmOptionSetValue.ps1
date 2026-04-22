@@ -29,6 +29,12 @@
     .PARAMETER Color
     New hexadecimal color assigned to the option (e.g. "#FF0000").
 
+    .PARAMETER ExternalValue
+    New external source value associated with the option.
+
+    .PARAMETER ParentValues
+    New parent values associated with the option.
+
     .PARAMETER MergeLabels
     Whether to keep text defined for languages not included in the Label. Default: true.
 
@@ -85,6 +91,14 @@ function Set-XrmOptionSetValue {
         $Color,
 
         [Parameter(Mandatory = $false)]
+        [string]
+        $ExternalValue,
+
+        [Parameter(Mandatory = $false)]
+        [int[]]
+        $ParentValues,
+
+        [Parameter(Mandatory = $false)]
         [bool]
         $MergeLabels = $true,
 
@@ -117,6 +131,12 @@ function Set-XrmOptionSetValue {
         }
         if ($PSBoundParameters.ContainsKey('Color')) {
             $request = $request | Add-XrmRequestParameter -Name "Color" -Value $Color;
+        }
+        if ($PSBoundParameters.ContainsKey('ExternalValue')) {
+            $request = $request | Add-XrmRequestParameter -Name "ExternalValue" -Value $ExternalValue;
+        }
+        if ($PSBoundParameters.ContainsKey('ParentValues')) {
+            $request = $request | Add-XrmRequestParameter -Name "ParentValues" -Value $ParentValues;
         }
         $request = $request | Add-XrmRequestParameter -Name "MergeLabels" -Value $MergeLabels;
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {

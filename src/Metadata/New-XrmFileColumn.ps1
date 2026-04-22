@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.FileAttributeMetadata object
-    that can be passed to New-XrmColumn.
+    that can be passed to Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -32,7 +32,7 @@
 
     .EXAMPLE
     $attribute = New-XrmFileColumn -LogicalName "new_contract" -SchemaName "new_Contract" -DisplayName "Contract" -MaxSizeInKb 10240;
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/file-column-data

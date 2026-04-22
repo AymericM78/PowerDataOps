@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.MemoAttributeMetadata object
-    that can be passed to New-XrmColumn.
+    that can be passed to Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -32,7 +32,7 @@
 
     .EXAMPLE
     $attribute = New-XrmMemoColumn -LogicalName "new_notes" -SchemaName "new_Notes" -DisplayName "Notes" -MaxLength 4000;
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns

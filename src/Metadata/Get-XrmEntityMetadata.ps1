@@ -19,6 +19,7 @@
 #>
 function Get-XrmEntityMetadata {
     [CmdletBinding()]
+    [OutputType([Microsoft.Xrm.Sdk.Metadata.EntityMetadata])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -35,7 +36,11 @@ function Get-XrmEntityMetadata {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $RetrieveAsIfPublished = $true
+        $RetrieveAsIfPublished = $true,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $IfExists
 
     )
     begin {   
@@ -43,16 +48,24 @@ function Get-XrmEntityMetadata {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-        
-        $request = [Microsoft.Xrm.Sdk.Messages.RetrieveEntityRequest]::new();
-        $request.EntityFilters = $Filter;
-        $request.LogicalName = $LogicalName;
-        $request.RetrieveAsIfPublished = $RetrieveAsIfPublished;
+        try {
+            $request = [Microsoft.Xrm.Sdk.Messages.RetrieveEntityRequest]::new();
+            $request.EntityFilters = $Filter;
+            $request.LogicalName = $LogicalName;
+            $request.RetrieveAsIfPublished = $RetrieveAsIfPublished;
 
-        $response = Invoke-XrmRequest -XrmClient $XrmClient  -Request $request;
+            $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
 
-        $metadata = $response.Results["EntityMetadata"];
-        $metadata;
+            $metadata = $response.Results["EntityMetadata"];
+            $metadata;
+        }
+        catch {
+            if ($IfExists -and (Test-XrmNotFoundError -ErrorRecord $_)) {
+                return $null;
+            }
+
+            throw;
+        }
     }
     end {
         $StopWatch.Stop();

@@ -7,7 +7,7 @@
 Write-Section "Create SiteMap";
 $name = Get-TestName -Prefix "SiteMap";
 $xml = '<SiteMap><Area Id="SFA" ResourceId="Area_Sales" Icon="" ShowGroups="true"/>';
-$siteMap = New-XrmSiteMap -SiteMapName $name -SiteMapXml $xml;
+$siteMap = Add-XrmSiteMap -SiteMapName $name -SiteMapXml $xml;
 Assert-Test "SiteMap created" { $siteMap -and $siteMap.sitemapid };
 
 Write-Section "Get SiteMaps";

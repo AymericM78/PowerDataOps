@@ -1,6 +1,6 @@
 <#
     Integration Test: Column type constructors
-    Tests typed column constructors used with New-XrmColumn.
+    Tests typed column constructors used with Add-XrmColumn.
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -39,7 +39,7 @@ Assert-Test "Alias New-ImageColumn is exported" {
 
 Write-Section "Setup table";
 
-$createTableResponse = $Global:XrmClient | New-XrmTable `
+$createTableResponse = $Global:XrmClient | Add-XrmTable `
     -LogicalName $tableName `
     -DisplayName $tableDisplay `
     -PluralName "${tableDisplay}s" `
@@ -49,7 +49,7 @@ $createTableResponse = $Global:XrmClient | New-XrmTable `
     -PrimaryAttributeDisplayName "Name" `
     -PrimaryAttributeMaxLength 200;
 
-Assert-Test "New-XrmTable - created '$tableName'" {
+Assert-Test "Add-XrmTable - created '$tableName'" {
     $createTableResponse -ne $null;
 };
 
@@ -65,8 +65,8 @@ $optionSetMeta.OptionSetType = [Microsoft.Xrm.Sdk.Metadata.OptionSetType]::Pickl
 $optionSetMeta.Options.Add([Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new((New-XrmLabel -Text "One"), 100000000));
 $optionSetMeta.Options.Add([Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new((New-XrmLabel -Text "Two"), 100000001));
 
-$createOptionSetResponse = $Global:XrmClient | New-XrmGlobalOptionSet -OptionSetMetadata $optionSetMeta;
-Assert-Test "New-XrmGlobalOptionSet - created '$globalOptionSetName'" {
+$createOptionSetResponse = $Global:XrmClient | Add-XrmGlobalOptionSet -OptionSetMetadata $optionSetMeta;
+Assert-Test "Add-XrmGlobalOptionSet - created '$globalOptionSetName'" {
     $createOptionSetResponse -ne $null;
 };
 $globalOptionSetCreated = $true;
@@ -87,8 +87,8 @@ function Add-ColumnAndAssert {
         $Attribute -is $ExpectedType;
     };
 
-    $createColumnResponse = $Global:XrmClient | New-XrmColumn -EntityLogicalName $tableName -Attribute $Attribute;
-    Assert-Test "New-XrmColumn - created '$($Attribute.LogicalName)'" {
+    $createColumnResponse = $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $Attribute;
+    Assert-Test "Add-XrmColumn - created '$($Attribute.LogicalName)'" {
         $createColumnResponse -ne $null;
     };
 
@@ -158,14 +158,14 @@ Assert-Test "Constructor returns expected type for $($fileAttribute.LogicalName)
     $fileAttribute -is [Microsoft.Xrm.Sdk.Metadata.FileAttributeMetadata];
 };
 try {
-    $createFileResponse = $Global:XrmClient | New-XrmColumn -EntityLogicalName $tableName -Attribute $fileAttribute;
-    Assert-Test "New-XrmColumn - created '$($fileAttribute.LogicalName)'" {
+    $createFileResponse = $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $fileAttribute;
+    Assert-Test "Add-XrmColumn - created '$($fileAttribute.LogicalName)'" {
         $createFileResponse -ne $null;
     };
     $createdColumns.Add($fileAttribute.LogicalName) | Out-Null;
 }
 catch {
-    Assert-Test "New-XrmColumn (File) unsupported in environment - tolerated" {
+    Assert-Test "Add-XrmColumn (File) unsupported in environment - tolerated" {
         $true;
     };
 }
@@ -178,14 +178,14 @@ Assert-Test "Image constructor sets full image flag" {
     $imageAttribute.CanStoreFullImage -eq $true;
 };
 try {
-    $createImageResponse = $Global:XrmClient | New-XrmColumn -EntityLogicalName $tableName -Attribute $imageAttribute;
-    Assert-Test "New-XrmColumn - created '$($imageAttribute.LogicalName)'" {
+    $createImageResponse = $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $imageAttribute;
+    Assert-Test "Add-XrmColumn - created '$($imageAttribute.LogicalName)'" {
         $createImageResponse -ne $null;
     };
     $createdColumns.Add($imageAttribute.LogicalName) | Out-Null;
 }
 catch {
-    Assert-Test "New-XrmColumn (Image) unsupported in environment - tolerated" {
+    Assert-Test "Add-XrmColumn (Image) unsupported in environment - tolerated" {
         $true;
     };
 }
@@ -196,6 +196,17 @@ Assert-Test "Constructor returns expected type for $($lookupAttribute.LogicalNam
 };
 Assert-Test "Lookup constructor sets target" {
     $lookupAttribute.Targets -contains "account";
+};
+
+$lookupCreateBlocked = $false;
+try {
+    $Global:XrmClient | Add-XrmColumn -EntityLogicalName "account" -Attribute $lookupAttribute | Out-Null;
+}
+catch {
+    $lookupCreateBlocked = $_.Exception.Message -like "*Add-XrmOneToManyRelationship*" -and $_.Exception.Message -like "*Add-XrmPolymorphicLookup*";
+}
+Assert-Test "Lookup metadata is rejected by Add-XrmColumn with guidance" {
+    $lookupCreateBlocked;
 };
 
 Write-Section "Cleanup";

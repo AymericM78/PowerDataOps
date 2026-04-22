@@ -12,7 +12,7 @@ $publisherUniqueName = "pdotestlayers${randomSuffix}";
 $publisherDisplayName = "PDO Layers Publisher $randomSuffix";
 $publisherPrefix = "pdl";
 
-$publisherRef = $Global:XrmClient | New-XrmPublisher `
+$publisherRef = $Global:XrmClient | Add-XrmPublisher `
     -UniqueName $publisherUniqueName `
     -DisplayName $publisherDisplayName `
     -Prefix $publisherPrefix `
@@ -26,7 +26,7 @@ Assert-Test "Publisher created" {
 $solutionUniqueName = "pdotestlayerssol${randomSuffix}";
 $solutionDisplayName = "PDO Layers Solution $randomSuffix";
 
-$solutionRef = $Global:XrmClient | New-XrmSolution `
+$solutionRef = $Global:XrmClient | Add-XrmSolution `
     -UniqueName $solutionUniqueName `
     -DisplayName $solutionDisplayName `
     -PublisherReference $publisherRef `

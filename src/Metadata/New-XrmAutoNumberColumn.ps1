@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata object
-    with AutoNumberFormat, ready for New-XrmColumn.
+    with AutoNumberFormat, ready for Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -35,7 +35,7 @@
 
     .EXAMPLE
     $attribute = New-XrmAutoNumberColumn -LogicalName "new_number" -SchemaName "new_Number" -DisplayName "Number" -AutoNumberFormat "ORD-{SEQNUM:5}";
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/define-auto-number-fields

@@ -6,7 +6,7 @@
 
 Write-Section "Create ConnectionRole";
 $name = Get-TestName -Prefix "ConnRole";
-$role = New-XrmConnectionRole -Name $name;
+$role = Add-XrmConnectionRole -Name $name;
 Assert-Test "Role created" { $role -and $role.connectionroleid };
 
 Write-Section "Get ConnectionRoles";

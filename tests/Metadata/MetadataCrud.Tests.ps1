@@ -1,10 +1,10 @@
 <#
     Integration Test: Metadata CRUD
     Tests table, column, global optionset, alternate key, and relationship cmdlets.
-    Cmdlets: New-XrmTable, Remove-XrmTable, New-XrmColumn, Remove-XrmColumn,
-             New-XrmGlobalOptionSet, Remove-XrmGlobalOptionSet,
-             New-XrmAlternateKey, Remove-XrmAlternateKey,
-             New-XrmOneToManyRelationship, New-XrmManyToManyRelationship, Remove-XrmRelationship
+    Cmdlets: Add-XrmTable, Remove-XrmTable, Add-XrmColumn, Remove-XrmColumn,
+             Add-XrmGlobalOptionSet, Remove-XrmGlobalOptionSet,
+             Add-XrmAlternateKey, Remove-XrmAlternateKey,
+             Add-XrmOneToManyRelationship, Add-XrmManyToManyRelationship, Remove-XrmRelationship
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -14,11 +14,11 @@ $tableDisplay = "PDO Test Entity";
 $tableCreated = $false;
 
 # ============================================================
-# New-XrmTable
+# Add-XrmTable
 # ============================================================
-Write-Section "New-XrmTable";
+Write-Section "Add-XrmTable";
 
-$createTableResponse = $Global:XrmClient | New-XrmTable `
+$createTableResponse = $Global:XrmClient | Add-XrmTable `
     -LogicalName $tableName `
     -DisplayName $tableDisplay `
     -PluralName "${tableDisplay}s" `
@@ -28,15 +28,23 @@ $createTableResponse = $Global:XrmClient | New-XrmTable `
     -PrimaryAttributeDisplayName "Name" `
     -PrimaryAttributeMaxLength 200;
 
-Assert-Test "New-XrmTable - created '$tableName'" {
+Assert-Test "Add-XrmTable - created '$tableName'" {
     $createTableResponse -ne $null;
 };
 $tableCreated = $true;
+Assert-Test "Test-XrmTable - created table exists" {
+    $Global:XrmClient | Test-XrmTable -LogicalName $tableName;
+};
+
+$tableMetadata = $Global:XrmClient | Get-XrmEntityMetadata -LogicalName $tableName -Filter ([Microsoft.Xrm.Sdk.Metadata.EntityFilters]::Entity) -IfExists;
+Assert-Test "Get-XrmEntityMetadata -IfExists returns created table metadata" {
+    $tableMetadata -ne $null -and $tableMetadata.LogicalName -eq $tableName;
+};
 
 # ============================================================
-# New-XrmColumn (String)
+# Add-XrmColumn (String)
 # ============================================================
-Write-Section "New-XrmColumn";
+Write-Section "Add-XrmColumn";
 
 $stringAttr = New-Object Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata;
 $stringAttr.SchemaName = "${prefix}_teststring";
@@ -45,12 +53,25 @@ $stringAttr.DisplayName = New-XrmLabel -Text "Test String";
 $stringAttr.MaxLength = 255;
 $stringAttr.RequiredLevel = New-Object Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty([Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::None);
 
-$createColResponse = $Global:XrmClient | New-XrmColumn -EntityLogicalName $tableName -Attribute $stringAttr;
-Assert-Test "New-XrmColumn (String) - created '${prefix}_teststring'" {
+$createColResponse = $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $stringAttr;
+Assert-Test "Add-XrmColumn (String) - created '${prefix}_teststring'" {
     $createColResponse -ne $null;
 };
+Assert-Test "Test-XrmColumn - string column exists with expected type" {
+    $Global:XrmClient | Test-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_teststring" -MetadataType ([Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata]);
+};
 
-# New-XrmColumn (Integer)
+$stringColumn = $Global:XrmClient | Get-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_teststring" -MetadataType ([Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata]) -IfExists;
+Assert-Test "Get-XrmColumn -IfExists returns created string column metadata" {
+    $stringColumn -ne $null -and $stringColumn.LogicalName -eq "${prefix}_teststring";
+};
+
+$wrongTypeColumn = $Global:XrmClient | Get-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_teststring" -MetadataType ([Microsoft.Xrm.Sdk.Metadata.IntegerAttributeMetadata]) -IfExists;
+Assert-Test "Get-XrmColumn -IfExists returns null on metadata type mismatch" {
+    $null -eq $wrongTypeColumn;
+};
+
+# Add-XrmColumn (Integer)
 $intAttr = New-Object Microsoft.Xrm.Sdk.Metadata.IntegerAttributeMetadata;
 $intAttr.SchemaName = "${prefix}_testint";
 $intAttr.LogicalName = "${prefix}_testint";
@@ -59,15 +80,15 @@ $intAttr.MinValue = 0;
 $intAttr.MaxValue = 100000;
 $intAttr.RequiredLevel = New-Object Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty([Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::None);
 
-$createIntResponse = $Global:XrmClient | New-XrmColumn -EntityLogicalName $tableName -Attribute $intAttr;
-Assert-Test "New-XrmColumn (Integer) - created '${prefix}_testint'" {
+$createIntResponse = $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $intAttr;
+Assert-Test "Add-XrmColumn (Integer) - created '${prefix}_testint'" {
     $createIntResponse -ne $null;
 };
 
 # ============================================================
-# New-XrmGlobalOptionSet
+# Add-XrmGlobalOptionSet
 # ============================================================
-Write-Section "New-XrmGlobalOptionSet";
+Write-Section "Add-XrmGlobalOptionSet";
 
 $optionSetName = "${prefix}_testglobalos$(Get-Random -Minimum 10000 -Maximum 99999)";
 $optionSetMeta = New-Object Microsoft.Xrm.Sdk.Metadata.OptionSetMetadata;
@@ -80,15 +101,23 @@ $option2 = New-Object Microsoft.Xrm.Sdk.Metadata.OptionMetadata((New-XrmLabel -T
 $optionSetMeta.Options.Add($option1);
 $optionSetMeta.Options.Add($option2);
 
-$createOsResponse = $Global:XrmClient | New-XrmGlobalOptionSet -OptionSetMetadata $optionSetMeta;
-Assert-Test "New-XrmGlobalOptionSet - created '$optionSetName'" {
+$createOsResponse = $Global:XrmClient | Add-XrmGlobalOptionSet -OptionSetMetadata $optionSetMeta;
+Assert-Test "Add-XrmGlobalOptionSet - created '$optionSetName'" {
     $createOsResponse -ne $null;
+};
+Assert-Test "Test-XrmGlobalOptionSet - global option set exists" {
+    $Global:XrmClient | Test-XrmGlobalOptionSet -Name $optionSetName;
+};
+
+$existingOptionSet = $Global:XrmClient | Get-XrmGlobalOptionSet -Name $optionSetName -IfExists;
+Assert-Test "Get-XrmGlobalOptionSet -IfExists returns created option set metadata" {
+    $existingOptionSet -ne $null -and $existingOptionSet.Name -eq $optionSetName;
 };
 
 # ============================================================
-# New-XrmOneToManyRelationship
+# Add-XrmOneToManyRelationship
 # ============================================================
-Write-Section "New-XrmOneToManyRelationship";
+Write-Section "Add-XrmOneToManyRelationship";
 
 $relationshipSchemaName = "${prefix}_account_${tableName}";
 $lookupSchemaName = "${prefix}_accountid";
@@ -105,8 +134,8 @@ $lookup.LogicalName = $lookupSchemaName.ToLower();
 $lookup.DisplayName = New-XrmLabel -Text "Account Lookup";
 $lookup.RequiredLevel = New-Object Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty([Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::None);
 
-$createRelResponse = $Global:XrmClient | New-XrmOneToManyRelationship -OneToManyRelationship $oneToMany -Lookup $lookup;
-Assert-Test "New-XrmOneToManyRelationship - created '$relationshipSchemaName'" {
+$createRelResponse = $Global:XrmClient | Add-XrmOneToManyRelationship -OneToManyRelationship $oneToMany -Lookup $lookup;
+Assert-Test "Add-XrmOneToManyRelationship - created '$relationshipSchemaName'" {
     $createRelResponse -ne $null;
 };
 
@@ -118,6 +147,9 @@ Write-Section "Remove-XrmColumn";
 $removeColResponse = $Global:XrmClient | Remove-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_teststring";
 Assert-Test "Remove-XrmColumn - removed '${prefix}_teststring'" {
     $removeColResponse -ne $null;
+};
+Assert-Test "Test-XrmColumn - removed string column no longer exists" {
+    -not ($Global:XrmClient | Test-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_teststring");
 };
 
 $removeIntResponse = $Global:XrmClient | Remove-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_testint";
@@ -144,6 +176,9 @@ $removeOsResponse = $Global:XrmClient | Remove-XrmGlobalOptionSet -Name $optionS
 Assert-Test "Remove-XrmGlobalOptionSet - removed '$optionSetName'" {
     $removeOsResponse -ne $null;
 };
+Assert-Test "Test-XrmGlobalOptionSet - removed option set no longer exists" {
+    -not ($Global:XrmClient | Test-XrmGlobalOptionSet -Name $optionSetName);
+};
 
 # ============================================================
 # CLEANUP: Remove-XrmTable
@@ -154,6 +189,9 @@ if ($tableCreated) {
     $removeTableResponse = $Global:XrmClient | Remove-XrmTable -LogicalName $tableName;
     Assert-Test "Remove-XrmTable - removed '$tableName'" {
         $removeTableResponse -ne $null;
+    };
+    Assert-Test "Test-XrmTable - removed table no longer exists" {
+        -not ($Global:XrmClient | Test-XrmTable -LogicalName $tableName);
     };
 }
 

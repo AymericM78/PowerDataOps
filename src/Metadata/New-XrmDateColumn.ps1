@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.DateTimeAttributeMetadata object
-    that can be passed to New-XrmColumn.
+    that can be passed to Add-XrmColumn.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -35,7 +35,7 @@
 
     .EXAMPLE
     $attribute = New-XrmDateColumn -LogicalName "new_startdate" -SchemaName "new_StartDate" -DisplayName "Start Date" -Format DateAndTime -Behavior TimeZoneIndependent;
-    New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/behavior-format-date-time-attribute

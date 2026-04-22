@@ -29,6 +29,12 @@
     .PARAMETER Color
     Hexadecimal color assigned to the option (e.g. "#FF0000").
 
+    .PARAMETER ExternalValue
+    External source value associated with the option.
+
+    .PARAMETER ParentValues
+    Parent values associated with the option.
+
     .PARAMETER SolutionUniqueName
     Solution unique name to associate this option value with.
 
@@ -84,6 +90,14 @@ function Add-XrmOptionSetValue {
 
         [Parameter(Mandatory = $false)]
         [string]
+        $ExternalValue,
+
+        [Parameter(Mandatory = $false)]
+        [int[]]
+        $ParentValues,
+
+        [Parameter(Mandatory = $false)]
+        [string]
         $SolutionUniqueName
     )
     begin {
@@ -111,6 +125,12 @@ function Add-XrmOptionSetValue {
         }
         if ($PSBoundParameters.ContainsKey('Color')) {
             $request = $request | Add-XrmRequestParameter -Name "Color" -Value $Color;
+        }
+        if ($PSBoundParameters.ContainsKey('ExternalValue')) {
+            $request = $request | Add-XrmRequestParameter -Name "ExternalValue" -Value $ExternalValue;
+        }
+        if ($PSBoundParameters.ContainsKey('ParentValues')) {
+            $request = $request | Add-XrmRequestParameter -Name "ParentValues" -Value $ParentValues;
         }
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             $request = $request | Add-XrmRequestParameter -Name "SolutionUniqueName" -Value $SolutionUniqueName;

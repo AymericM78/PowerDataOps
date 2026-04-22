@@ -12,7 +12,7 @@ $publisherUniqueName = "pdotestbatch${randomSuffix}";
 $publisherDisplayName = "PDO Batch Publisher $randomSuffix";
 $publisherPrefix = "pdb";
 
-$publisherRef = $Global:XrmClient | New-XrmPublisher `
+$publisherRef = $Global:XrmClient | Add-XrmPublisher `
     -UniqueName $publisherUniqueName `
     -DisplayName $publisherDisplayName `
     -Prefix $publisherPrefix `
@@ -26,7 +26,7 @@ Assert-Test "Publisher created" {
 $solutionUniqueName = "pdotestbatchsol${randomSuffix}";
 $solutionDisplayName = "PDO Batch Solution $randomSuffix";
 
-$solutionRef = $Global:XrmClient | New-XrmSolution `
+$solutionRef = $Global:XrmClient | Add-XrmSolution `
     -UniqueName $solutionUniqueName `
     -DisplayName $solutionDisplayName `
     -PublisherReference $publisherRef `

@@ -74,7 +74,7 @@ function Import-XrmRibbon {
             $publisherRef = $publisher.Reference;
             $SolutionUniqueName = $tempSolutionName;
 
-            New-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
+            Add-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
 
             $entityMetadata = Get-XrmEntityMetadata -LogicalName $EntityLogicalName;
             Add-XrmSolutionComponent -SolutionUniqueName $tempSolutionName -ComponentId $entityMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $true | Out-Null;
