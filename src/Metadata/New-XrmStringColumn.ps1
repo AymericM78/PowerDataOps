@@ -18,6 +18,9 @@
     .PARAMETER MaxLength
     Maximum text length.
 
+    .PARAMETER Format
+    Text format. Default: Text.
+
     .PARAMETER Description
     Column description label.
 
@@ -31,7 +34,7 @@
     Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata.
 
     .EXAMPLE
-    $attribute = New-XrmStringColumn -LogicalName "new_code" -SchemaName "new_Code" -DisplayName "Code" -MaxLength 100;
+    $attribute = New-XrmStringColumn -LogicalName "new_code" -SchemaName "new_Code" -DisplayName "Code" -MaxLength 100 -Format Email;
     New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
@@ -63,6 +66,11 @@ function New-XrmStringColumn {
         $MaxLength,
 
         [Parameter(Mandatory = $false)]
+        [ValidateSet("Text", "Email", "Url", "TickerSymbol", "Phone")]
+        [string]
+        $Format = "Text",
+
+        [Parameter(Mandatory = $false)]
         [string]
         $Description,
 
@@ -84,6 +92,7 @@ function New-XrmStringColumn {
         $attribute.SchemaName = $SchemaName;
         $attribute.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
         $attribute.MaxLength = $MaxLength;
+        $attribute.Format = [Microsoft.Xrm.Sdk.Metadata.StringFormat]::$Format;
         $attribute.RequiredLevel = [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty]::new($RequiredLevel);
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {

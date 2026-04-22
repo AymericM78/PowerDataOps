@@ -4,7 +4,8 @@
 
     .DESCRIPTION
     Creates a configured Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata object
-    that can be passed to New-XrmColumn or relationship requests.
+    for relationship-based creation requests such as New-XrmOneToManyRelationship
+    or New-XrmPolymorphicLookup.
 
     .PARAMETER LogicalName
     Column logical name.
@@ -32,6 +33,12 @@
 
     .EXAMPLE
     $attribute = New-XrmLookupColumn -LogicalName "new_accountid" -SchemaName "new_AccountId" -DisplayName "Account" -Targets @("account");
+    $relationship = [Microsoft.Xrm.Sdk.Metadata.OneToManyRelationshipMetadata]::new();
+    $relationship.SchemaName = "new_account_contact";
+    $relationship.ReferencedEntity = "account";
+    $relationship.ReferencingEntity = "contact";
+    $relationship.ReferencedAttribute = "accountid";
+    New-XrmOneToManyRelationship -OneToManyRelationship $relationship -Lookup $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/create-edit-entity-relationships

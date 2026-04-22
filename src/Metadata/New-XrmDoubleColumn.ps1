@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Build a BooleanAttributeMetadata for a Dataverse column.
+    Build a DoubleAttributeMetadata for a Dataverse column.
 
     .DESCRIPTION
-    Creates a configured Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata object
+    Creates a configured Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata object
     that can be passed to New-XrmColumn.
 
     .PARAMETER LogicalName
@@ -15,14 +15,14 @@
     .PARAMETER DisplayName
     Column display name.
 
-    .PARAMETER DefaultValue
-    Default boolean value.
+    .PARAMETER Precision
+    Decimal precision.
 
-    .PARAMETER TrueLabel
-    Label used for the true option. Default: Yes.
+    .PARAMETER MinValue
+    Minimum accepted value.
 
-    .PARAMETER FalseLabel
-    Label used for the false option. Default: No.
+    .PARAMETER MaxValue
+    Maximum accepted value.
 
     .PARAMETER Description
     Column description label.
@@ -34,18 +34,18 @@
     Label language code. Default: 1033.
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata.
+    Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata.
 
     .EXAMPLE
-    $attribute = New-XrmBooleanColumn -LogicalName "new_enabled" -SchemaName "new_Enabled" -DisplayName "Enabled" -DefaultValue $false -TrueLabel "Active" -FalseLabel "Inactive";
+    $attribute = New-XrmDoubleColumn -LogicalName "new_ratio" -SchemaName "new_Ratio" -DisplayName "Ratio" -Precision 2 -MinValue 0 -MaxValue 100;
     New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns
 #>
-function New-XrmBooleanColumn {
+function New-XrmDoubleColumn {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata])]
+    [OutputType([Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata])]
     param
     (
         [Parameter(Mandatory = $true)]
@@ -64,18 +64,16 @@ function New-XrmBooleanColumn {
         $DisplayName,
 
         [Parameter(Mandatory = $false)]
-        [bool]
-        $DefaultValue = $false,
+        [int]
+        $Precision = 2,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $TrueLabel = "Yes",
+        [double]
+        $MinValue = 0,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $FalseLabel = "No",
+        [double]
+        $MaxValue = 1000000000,
 
         [Parameter(Mandatory = $false)]
         [string]
@@ -94,25 +92,14 @@ function New-XrmBooleanColumn {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $attribute = [Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata]::new();
+        $attribute = [Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata]::new();
         $attribute.LogicalName = $LogicalName;
         $attribute.SchemaName = $SchemaName;
         $attribute.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
-        $attribute.DefaultValue = $DefaultValue;
+        $attribute.Precision = $Precision;
+        $attribute.MinValue = $MinValue;
+        $attribute.MaxValue = $MaxValue;
         $attribute.RequiredLevel = [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty]::new($RequiredLevel);
-
-        $trueOption = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
-        $trueOption.Label = New-XrmLabel -Text $TrueLabel -LanguageCode $LanguageCode;
-        $trueOption.Value = 1;
-
-        $falseOption = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
-        $falseOption.Label = New-XrmLabel -Text $FalseLabel -LanguageCode $LanguageCode;
-        $falseOption.Value = 0;
-
-        $optionSet = [Microsoft.Xrm.Sdk.Metadata.BooleanOptionSetMetadata]::new();
-        $optionSet.TrueOption = $trueOption;
-        $optionSet.FalseOption = $falseOption;
-        $attribute.OptionSet = $optionSet;
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {
             $attribute.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
@@ -126,5 +113,5 @@ function New-XrmBooleanColumn {
     }
 }
 
-Set-Alias -Name New-BooleanColumn -Value New-XrmBooleanColumn;
-Export-ModuleMember -Function New-XrmBooleanColumn -Alias *;
+Set-Alias -Name New-DoubleColumn -Value New-XrmDoubleColumn;
+Export-ModuleMember -Function New-XrmDoubleColumn -Alias *;

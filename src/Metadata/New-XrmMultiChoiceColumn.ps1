@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Build a PicklistAttributeMetadata for a Dataverse column.
+    Build a MultiSelectPicklistAttributeMetadata for a Dataverse column.
 
     .DESCRIPTION
-    Creates a configured Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata object
+    Creates a configured Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata object
     referencing a global option set or defining local options, ready for New-XrmColumn.
 
     .PARAMETER LogicalName
@@ -34,22 +34,22 @@
     Label language code. Default: 1033.
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata.
+    Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata.
 
     .EXAMPLE
-    $attribute = New-XrmChoiceColumn -LogicalName "new_status" -SchemaName "new_Status" -DisplayName "Status" -GlobalOptionSetName "new_statuschoices";
+    $attribute = New-XrmMultiChoiceColumn -LogicalName "new_tags" -SchemaName "new_Tags" -DisplayName "Tags" -GlobalOptionSetName "new_tagchoices";
     New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .EXAMPLE
-    $attribute = New-XrmChoiceColumn -LogicalName "new_priority" -SchemaName "new_Priority" -DisplayName "Priority" -LocalOptions @("Low", "Medium", "High");
+    $attribute = New-XrmMultiChoiceColumn -LogicalName "new_preferences" -SchemaName "new_Preferences" -DisplayName "Preferences" -LocalOptions @("Phone", "Email", "SMS");
     New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
-    https://learn.microsoft.com/power-apps/developer/data-platform/webapi/reference/picklistattributemetadata
+    https://learn.microsoft.com/power-apps/developer/data-platform/multi-select-picklist
 #>
-function New-XrmChoiceColumn {
+function New-XrmMultiChoiceColumn {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata])]
+    [OutputType([Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata])]
     param
     (
         [Parameter(Mandatory = $true)]
@@ -98,7 +98,7 @@ function New-XrmChoiceColumn {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $attribute = [Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata]::new();
+        $attribute = [Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata]::new();
         $attribute.LogicalName = $LogicalName;
         $attribute.SchemaName = $SchemaName;
         $attribute.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
@@ -141,5 +141,5 @@ function New-XrmChoiceColumn {
     }
 }
 
-Set-Alias -Name New-ChoiceColumn -Value New-XrmChoiceColumn;
-Export-ModuleMember -Function New-XrmChoiceColumn -Alias *;
+Set-Alias -Name New-MultiChoiceColumn -Value New-XrmMultiChoiceColumn;
+Export-ModuleMember -Function New-XrmMultiChoiceColumn -Alias *;

@@ -27,6 +27,15 @@ Assert-Test "Alias New-IntegerColumn is exported" {
 Assert-Test "Alias New-DateColumn is exported" {
     (Get-Command -Name "New-DateColumn" -ErrorAction SilentlyContinue) -ne $null;
 };
+Assert-Test "Alias New-DoubleColumn is exported" {
+    (Get-Command -Name "New-DoubleColumn" -ErrorAction SilentlyContinue) -ne $null;
+};
+Assert-Test "Alias New-MultiChoiceColumn is exported" {
+    (Get-Command -Name "New-MultiChoiceColumn" -ErrorAction SilentlyContinue) -ne $null;
+};
+Assert-Test "Alias New-ImageColumn is exported" {
+    (Get-Command -Name "New-ImageColumn" -ErrorAction SilentlyContinue) -ne $null;
+};
 
 Write-Section "Setup table";
 
@@ -91,7 +100,10 @@ function Add-ColumnAndAssert {
     };
 }
 
-$stringAttribute = New-XrmStringColumn -LogicalName "${prefix}_typestring" -SchemaName "${prefix}_TypeString" -DisplayName "Type String" -MaxLength 200;
+$stringAttribute = New-XrmStringColumn -LogicalName "${prefix}_typestring" -SchemaName "${prefix}_TypeString" -DisplayName "Type String" -MaxLength 200 -Format Email;
+Assert-Test "String constructor sets format" {
+    $stringAttribute.Format -eq [Microsoft.Xrm.Sdk.Metadata.StringFormat]::Email;
+};
 Add-ColumnAndAssert -Attribute $stringAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata]);
 
 $autoNumberAttribute = New-XrmAutoNumberColumn -LogicalName "${prefix}_typeautonumber" -SchemaName "${prefix}_TypeAutoNumber" -DisplayName "Type Auto Number" -AutoNumberFormat "TYP-{SEQNUM:5}";
@@ -100,11 +112,23 @@ Add-ColumnAndAssert -Attribute $autoNumberAttribute -ExpectedType ([Microsoft.Xr
 $memoAttribute = New-XrmMemoColumn -LogicalName "${prefix}_typememo" -SchemaName "${prefix}_TypeMemo" -DisplayName "Type Memo" -MaxLength 2000;
 Add-ColumnAndAssert -Attribute $memoAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.MemoAttributeMetadata]);
 
-$booleanAttribute = New-XrmBooleanColumn -LogicalName "${prefix}_typebool" -SchemaName "${prefix}_TypeBool" -DisplayName "Type Bool" -DefaultValue $true;
+$booleanAttribute = New-XrmBooleanColumn -LogicalName "${prefix}_typebool" -SchemaName "${prefix}_TypeBool" -DisplayName "Type Bool" -DefaultValue $true -TrueLabel "Enabled" -FalseLabel "Disabled";
+Assert-Test "Boolean constructor sets true/false options" {
+    $booleanAttribute.OptionSet -ne $null -and
+    $booleanAttribute.OptionSet.TrueOption -ne $null -and
+    $booleanAttribute.OptionSet.FalseOption -ne $null -and
+    $booleanAttribute.OptionSet.TrueOption.Label.LocalizedLabels[0].Label -eq "Enabled" -and
+    $booleanAttribute.OptionSet.FalseOption.Label.LocalizedLabels[0].Label -eq "Disabled" -and
+    $booleanAttribute.OptionSet.TrueOption.Value -eq 1 -and
+    $booleanAttribute.OptionSet.FalseOption.Value -eq 0;
+};
 Add-ColumnAndAssert -Attribute $booleanAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata]);
 
 $integerAttribute = New-XrmIntegerColumn -LogicalName "${prefix}_typeint" -SchemaName "${prefix}_TypeInt" -DisplayName "Type Int" -MinValue 0 -MaxValue 100;
 Add-ColumnAndAssert -Attribute $integerAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.IntegerAttributeMetadata]);
+
+$doubleAttribute = New-XrmDoubleColumn -LogicalName "${prefix}_typedouble" -SchemaName "${prefix}_TypeDouble" -DisplayName "Type Double" -Precision 3 -MinValue 0 -MaxValue 100;
+Add-ColumnAndAssert -Attribute $doubleAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata]);
 
 $decimalAttribute = New-XrmDecimalColumn -LogicalName "${prefix}_typedecimal" -SchemaName "${prefix}_TypeDecimal" -DisplayName "Type Decimal" -Precision 2 -MinValue 0 -MaxValue 100;
 Add-ColumnAndAssert -Attribute $decimalAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.DecimalAttributeMetadata]);
@@ -112,11 +136,22 @@ Add-ColumnAndAssert -Attribute $decimalAttribute -ExpectedType ([Microsoft.Xrm.S
 $moneyAttribute = New-XrmMoneyColumn -LogicalName "${prefix}_typemoney" -SchemaName "${prefix}_TypeMoney" -DisplayName "Type Money" -Precision 2 -MinValue 0 -MaxValue 1000000;
 Add-ColumnAndAssert -Attribute $moneyAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.MoneyAttributeMetadata]);
 
-$dateAttribute = New-XrmDateColumn -LogicalName "${prefix}_typedate" -SchemaName "${prefix}_TypeDate" -DisplayName "Type Date" -Format "DateOnly";
+$dateAttribute = New-XrmDateColumn -LogicalName "${prefix}_typedate" -SchemaName "${prefix}_TypeDate" -DisplayName "Type Date" -Format "DateAndTime" -Behavior "TimeZoneIndependent";
+Assert-Test "Date constructor sets behavior" {
+    $dateAttribute.DateTimeBehavior -ne $null -and $dateAttribute.DateTimeBehavior.Value -eq "TimeZoneIndependent";
+};
 Add-ColumnAndAssert -Attribute $dateAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.DateTimeAttributeMetadata]);
 
-$choiceAttribute = New-XrmChoiceColumn -LogicalName "${prefix}_typechoice" -SchemaName "${prefix}_TypeChoice" -DisplayName "Type Choice" -GlobalOptionSetName $globalOptionSetName;
+$choiceAttribute = New-XrmChoiceColumn -LogicalName "${prefix}_typechoice" -SchemaName "${prefix}_TypeChoice" -DisplayName "Type Choice" -LocalOptions @("Choice One", "Choice Two");
+Assert-Test "Choice constructor supports local options" {
+    $choiceAttribute.OptionSet -ne $null -and
+    $choiceAttribute.OptionSet.IsGlobal -eq $false -and
+    $choiceAttribute.OptionSet.Options.Count -eq 2;
+};
 Add-ColumnAndAssert -Attribute $choiceAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata]);
+
+$multiChoiceAttribute = New-XrmMultiChoiceColumn -LogicalName "${prefix}_typemultichoice" -SchemaName "${prefix}_TypeMultiChoice" -DisplayName "Type Multi Choice" -GlobalOptionSetName $globalOptionSetName;
+Add-ColumnAndAssert -Attribute $multiChoiceAttribute -ExpectedType ([Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata]);
 
 $fileAttribute = New-XrmFileColumn -LogicalName "${prefix}_typefile" -SchemaName "${prefix}_TypeFile" -DisplayName "Type File" -MaxSizeInKb 10240;
 Assert-Test "Constructor returns expected type for $($fileAttribute.LogicalName)" {
@@ -131,6 +166,26 @@ try {
 }
 catch {
     Assert-Test "New-XrmColumn (File) unsupported in environment - tolerated" {
+        $true;
+    };
+}
+
+$imageAttribute = New-XrmImageColumn -LogicalName "${prefix}_typeimage" -SchemaName "${prefix}_TypeImage" -DisplayName "Type Image" -MaxSizeInKb 10240 -CanStoreFullImage;
+Assert-Test "Constructor returns expected type for $($imageAttribute.LogicalName)" {
+    $imageAttribute -is [Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata];
+};
+Assert-Test "Image constructor sets full image flag" {
+    $imageAttribute.CanStoreFullImage -eq $true;
+};
+try {
+    $createImageResponse = $Global:XrmClient | New-XrmColumn -EntityLogicalName $tableName -Attribute $imageAttribute;
+    Assert-Test "New-XrmColumn - created '$($imageAttribute.LogicalName)'" {
+        $createImageResponse -ne $null;
+    };
+    $createdColumns.Add($imageAttribute.LogicalName) | Out-Null;
+}
+catch {
+    Assert-Test "New-XrmColumn (Image) unsupported in environment - tolerated" {
         $true;
     };
 }

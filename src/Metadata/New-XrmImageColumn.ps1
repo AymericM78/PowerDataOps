@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Build a BooleanAttributeMetadata for a Dataverse column.
+    Build an ImageAttributeMetadata for a Dataverse column.
 
     .DESCRIPTION
-    Creates a configured Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata object
+    Creates a configured Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata object
     that can be passed to New-XrmColumn.
 
     .PARAMETER LogicalName
@@ -15,14 +15,14 @@
     .PARAMETER DisplayName
     Column display name.
 
-    .PARAMETER DefaultValue
-    Default boolean value.
+    .PARAMETER MaxSizeInKb
+    Max image size in kilobytes.
 
-    .PARAMETER TrueLabel
-    Label used for the true option. Default: Yes.
+    .PARAMETER CanStoreFullImage
+    Indicates whether the full image should be stored.
 
-    .PARAMETER FalseLabel
-    Label used for the false option. Default: No.
+    .PARAMETER IsPrimaryImage
+    Indicates whether the column is the primary image.
 
     .PARAMETER Description
     Column description label.
@@ -34,18 +34,18 @@
     Label language code. Default: 1033.
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata.
+    Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata.
 
     .EXAMPLE
-    $attribute = New-XrmBooleanColumn -LogicalName "new_enabled" -SchemaName "new_Enabled" -DisplayName "Enabled" -DefaultValue $false -TrueLabel "Active" -FalseLabel "Inactive";
+    $attribute = New-XrmImageColumn -LogicalName "new_profileimage" -SchemaName "new_ProfileImage" -DisplayName "Profile Image" -MaxSizeInKb 10240 -CanStoreFullImage;
     New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
-    https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns
+    https://learn.microsoft.com/power-apps/developer/data-platform/image-column-data
 #>
-function New-XrmBooleanColumn {
+function New-XrmImageColumn {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata])]
+    [OutputType([Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata])]
     param
     (
         [Parameter(Mandatory = $true)]
@@ -64,18 +64,16 @@ function New-XrmBooleanColumn {
         $DisplayName,
 
         [Parameter(Mandatory = $false)]
-        [bool]
-        $DefaultValue = $false,
+        [int]
+        $MaxSizeInKb = 10240,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $TrueLabel = "Yes",
+        [switch]
+        $CanStoreFullImage,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $FalseLabel = "No",
+        [switch]
+        $IsPrimaryImage,
 
         [Parameter(Mandatory = $false)]
         [string]
@@ -94,25 +92,20 @@ function New-XrmBooleanColumn {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $attribute = [Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata]::new();
+        $attribute = [Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata]::new();
         $attribute.LogicalName = $LogicalName;
         $attribute.SchemaName = $SchemaName;
         $attribute.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
-        $attribute.DefaultValue = $DefaultValue;
+        $attribute.MaxSizeInKB = $MaxSizeInKb;
         $attribute.RequiredLevel = [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty]::new($RequiredLevel);
 
-        $trueOption = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
-        $trueOption.Label = New-XrmLabel -Text $TrueLabel -LanguageCode $LanguageCode;
-        $trueOption.Value = 1;
+        if ($PSBoundParameters.ContainsKey('CanStoreFullImage')) {
+            $attribute.CanStoreFullImage = $CanStoreFullImage.IsPresent;
+        }
 
-        $falseOption = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
-        $falseOption.Label = New-XrmLabel -Text $FalseLabel -LanguageCode $LanguageCode;
-        $falseOption.Value = 0;
-
-        $optionSet = [Microsoft.Xrm.Sdk.Metadata.BooleanOptionSetMetadata]::new();
-        $optionSet.TrueOption = $trueOption;
-        $optionSet.FalseOption = $falseOption;
-        $attribute.OptionSet = $optionSet;
+        if ($PSBoundParameters.ContainsKey('IsPrimaryImage')) {
+            $attribute.IsPrimaryImage = $IsPrimaryImage.IsPresent;
+        }
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {
             $attribute.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
@@ -126,5 +119,5 @@ function New-XrmBooleanColumn {
     }
 }
 
-Set-Alias -Name New-BooleanColumn -Value New-XrmBooleanColumn;
-Export-ModuleMember -Function New-XrmBooleanColumn -Alias *;
+Set-Alias -Name New-ImageColumn -Value New-XrmImageColumn;
+Export-ModuleMember -Function New-XrmImageColumn -Alias *;

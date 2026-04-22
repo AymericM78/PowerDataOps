@@ -5,10 +5,15 @@
     .DESCRIPTION
     Add a new attribute / column to a table using CreateAttributeRequest.
     Use typed constructors such as New-XrmStringColumn, New-XrmBooleanColumn,
-    New-XrmIntegerColumn, New-XrmDecimalColumn, New-XrmMoneyColumn,
-    New-XrmDateColumn, New-XrmChoiceColumn, New-XrmFileColumn,
-    New-XrmLookupColumn, New-XrmMemoColumn, and New-XrmAutoNumberColumn
-    to build the AttributeMetadata object.
+    New-XrmIntegerColumn, New-XrmDecimalColumn, New-XrmDoubleColumn,
+    New-XrmMoneyColumn, New-XrmDateColumn, New-XrmChoiceColumn,
+    New-XrmMultiChoiceColumn, New-XrmFileColumn, New-XrmImageColumn,
+    New-XrmMemoColumn, and New-XrmAutoNumberColumn to build the
+    AttributeMetadata object.
+
+    Relationship-based lookups require specialized SDK messages and should use
+    New-XrmOneToManyRelationship or New-XrmPolymorphicLookup instead of
+    New-XrmColumn.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)

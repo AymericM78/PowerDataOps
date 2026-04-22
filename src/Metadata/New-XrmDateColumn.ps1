@@ -18,6 +18,9 @@
     .PARAMETER Format
     Date format. DateOnly or DateAndTime.
 
+    .PARAMETER Behavior
+    DateTime behavior. UserLocal, DateOnly, or TimeZoneIndependent.
+
     .PARAMETER Description
     Column description label.
 
@@ -31,7 +34,7 @@
     Microsoft.Xrm.Sdk.Metadata.DateTimeAttributeMetadata.
 
     .EXAMPLE
-    $attribute = New-XrmDateColumn -LogicalName "new_startdate" -SchemaName "new_StartDate" -DisplayName "Start Date" -Format DateOnly;
+    $attribute = New-XrmDateColumn -LogicalName "new_startdate" -SchemaName "new_StartDate" -DisplayName "Start Date" -Format DateAndTime -Behavior TimeZoneIndependent;
     New-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
 
     .LINK
@@ -63,6 +66,11 @@ function New-XrmDateColumn {
         $Format = "DateOnly",
 
         [Parameter(Mandatory = $false)]
+        [ValidateSet("UserLocal", "DateOnly", "TimeZoneIndependent")]
+        [string]
+        $Behavior,
+
+        [Parameter(Mandatory = $false)]
         [string]
         $Description,
 
@@ -90,6 +98,10 @@ function New-XrmDateColumn {
         }
         else {
             $attribute.Format = [Microsoft.Xrm.Sdk.Metadata.DateTimeFormat]::DateOnly;
+        }
+
+        if ($PSBoundParameters.ContainsKey('Behavior')) {
+            $attribute.DateTimeBehavior = $Behavior;
         }
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {
