@@ -64,10 +64,14 @@ Command|Synopsis
 [Add-XrmBulkDelete](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmBulkDelete.md)|Create a bulk delete job.<br/>Submit a BulkDeleteRequest to asynchronously delete records matching a given query expression.
 [Add-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmRecord.md)|Create entity record in Microsoft Dataverse.<br/>Add a new row in Microsoft Dataverse table and return created ID (Uniqueidentifier).
 [Connect-XrmClient](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Connect-XrmClient.md)|Connect to Microsoft Dataverse without manually composing a connection string.<br/>Build a Dataverse connection string from explicit authentication parameters or from a URL-only interactive login scenario, then delegate the connection to New-XrmClient.
+[Export-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmDocumentTemplate.md)|Export a Dataverse document template to a local file.<br/>Read the content of a document template record and save it to a file on disk.
+[Export-XrmRecordToWord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmRecordToWord.md)|Export a Dataverse record to a Word document using a document template.<br/>Execute SetWordTemplate, retrieve the generated annotation, and save the document locally.
+[Get-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDocumentTemplate.md)|Retrieve Dataverse document templates.<br/>Get a Dataverse document template by reference or by name, with optional entity disambiguation.
 [Get-XrmDuplicateRules](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDuplicateRules.md)|Retrieve duplicate detection rules from Microsoft Dataverse.<br/>Get duplicaterule records with optional entity filter.
 [Get-XrmMultipleRecords](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmMultipleRecords.md)|Retrieve multiple records with QueryExpression.<br/>Get rows from Microsoft Dataverse table with specified query (QueryBase). <br/>This command use pagination to pull all records.
 [Get-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecord.md)|Search for record with simple query.<br/>Get specific row (Entity record) according to given id, key, or attribute.
 [Get-XrmRecordFileDownload](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecordFileDownload.md)|Download a file from a file or image column.<br/>Download a file stored in a Dataverse file/image column using the InitializeFileBlocksDownload and DownloadBlock SDK messages.
+[Import-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmDocumentTemplate.md)|Import a local file content into a Dataverse document template.<br/>Read a file from disk and update the content of an existing document template record.
 [Invoke-XrmBulkRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequest.md)|Execute Multiple Organization Request.<br/>Send requests to Microsoft Dataverse for bulk execution.
 [Invoke-XrmBulkRequests](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequests.md)|Split and Execute Multiple Organization Requests.<br/>Send requests to Microsoft Dataverse for bulk execution.
 [Invoke-XrmRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmRequest.md)|Execute Organization Request.<br/>Send request to Microsoft Dataverse for execution.
@@ -144,7 +148,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Read-XrmExcelSheet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Read-XrmExcelSheet.md)|Read Excel Sheet.<br/>Get Excel content from given sheet as bi-dimensional array.
+[Read-XrmExcelSheet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Read-XrmExcelSheet.md)|Read Excel Sheet.<br/>Read a worksheet and return objects using the header row as property names.<br/>Use `-AsArray` to keep the legacy raw Excel array behavior.
 [Write-XrmExcelSheet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Write-XrmExcelSheet.md)|Write Excel Sheet.<br/>Push Microsoft Dataverse rows / entity records to Excel file on a specific sheet.
 # `Instances` commands
 
@@ -373,12 +377,14 @@ Command|Synopsis
 [Get-XrmAuthTypes](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAuthTypes.md)|Retrieve authentication type names.<br/>Get available authentication types.
 [Get-XrmBase64](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmBase64.md)|Get base 64 from file content.<br/>Read given file and return its content as base64 content.
 [Get-XrmRegions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRegions.md)|Retrieve region names.<br/>Get available datacenter regions.
+[Initialize-XrmPath](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Initialize-XrmPath.md)|Initialize a local file system path.<br/>Create a directory path if it does not exist, or create the parent directory of a file path.
 [Set-XrmCredentials](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmCredentials.md)|Initialize PSCredential object.<br/>Create PSCredential from given login and password.
 [Split-XrmCollection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Split-XrmCollection.md)|Split given collection into specified sized collections.<br/>Extract chunk collections from given one.
 # `Views` commands
 
 Command|Synopsis
 -------|-----------
+[Export-XrmViewToExcel](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmViewToExcel.md)|Export a Dataverse view to an Excel file.<br/>Execute the ExportToExcel action for a Dataverse view and save the generated workbook locally.
 [Get-XrmQueryFromFetch](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmQueryFromFetch.md)|Retrieve query expression from fetch Xml.<br/>Convert FetchXml to QueryExpression.
 [Get-XrmRecordsFromView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecordsFromView.md)|Retrieve records from a view.<br/>Get records according to given view name.
 [Get-XrmViews](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmViews.md)|Retrieve savedquery records.<br/>Get all saved query according to entity name and predefined columns.

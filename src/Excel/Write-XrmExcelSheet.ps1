@@ -125,7 +125,9 @@ function Write-XrmExcelSheet {
             # Apply table format
             Write-HostAndLog "Formatting Excel table ..." -ForegroundColor Gray;
             $tableName = "Table$SheetName";
-            $sheetContentRange.Worksheet.ListObjects.Add([Microsoft.Office.Interop.Excel.XlListObjectSourceType]::xlSrcRange, $sheetContentRange, [System.Type]::Missing, [Microsoft.Office.Interop.Excel.XlYesNoGuess]::xlYes, [System.Type]::Missing).Name = $tableName;
+            $xlSrcRange = 1;
+            $xlYes = 1;
+            $sheetContentRange.Worksheet.ListObjects.Add($xlSrcRange, $sheetContentRange, [System.Type]::Missing, $xlYes, [System.Type]::Missing).Name = $tableName;
             $sheetContentRange.Select() | Out-Null;
             $sheetContentRange.Worksheet.ListObjects[$tableName].TableStyle = $tableStyle;  
             Write-HostAndLog "Formatting Excel table done!" -ForegroundColor Green;

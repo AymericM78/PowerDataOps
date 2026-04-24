@@ -14,12 +14,16 @@ $testRoot = $PSScriptRoot;
 
 $allTests = @(
     @{ Category = "Types";         File = "Types\TypeHelpers.Tests.ps1" },
+    @{ Category = "Utilities";     File = "Utilities\Initialize-XrmPath.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Connection.Tests.ps1" },
+    @{ Category = "Excel";         File = "Excel\Read-XrmExcelSheet.Tests.ps1" },
     @{ Category = "Query";         File = "Query\QueryExpression.Tests.ps1" },
     @{ Category = "Query";         File = "Query\QueryLinkColumns.Tests.ps1" },
     @{ Category = "Client";        File = "Client\RecordOperations.Tests.ps1" },
     @{ Category = "Client";        File = "Client\AccountCrud.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Associations.Tests.ps1" },
+    @{ Category = "Client";        File = "Client\DocumentTemplateContent.Tests.ps1" },
+    @{ Category = "Client";        File = "Client\Export-XrmRecordToWord.Tests.ps1" },
     @{ Category = "Security";      File = "Security\Security.Tests.ps1" },
     @{ Category = "Security";      File = "Security\SecurityRoles.Tests.ps1" },
     @{ Category = "Organization";  File = "Organization\EnvironmentVariables.Tests.ps1" },
@@ -34,6 +38,7 @@ $allTests = @(
     @{ Category = "Solutions";     File = "Solutions\Add-XrmSolutionComponents.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Test-XrmComponentCustomization.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Get-XrmCustomizedSolutionComponents.Tests.ps1" },
+    @{ Category = "Views";         File = "Views\Export-XrmViewToExcel.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Sync-XrmRecords.Tests.ps1" }
 );
 
