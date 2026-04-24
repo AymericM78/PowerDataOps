@@ -7,11 +7,12 @@
 #>
 
 # Import module
-Import-Module "$PsScriptRoot\..\PowerDataOps.psd1" -Force;
+Import-Module "$PsScriptRoot\..\PowerDataOps.psd1" -Force -DisableNameChecking;
 
 # Connect to test instance (interactive OAuth — will prompt once, then cache token)
 if (-not $Global:XrmClient -or -not $Global:XrmClient.IsReady) {
-    $Global:XrmClient = New-XrmClient -ConnectionString "AuthType=OAuth;Url=https://powerdataops.crm12.dynamics.com/;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d;RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Auto";
+    #$Global:XrmClient = New-XrmClient -ConnectionString "AuthType=OAuth;Url=https://powerdataops.crm12.dynamics.com/;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d;RedirectUri=http://localhost;LoginPrompt=Auto";
+    $Global:XrmClient = Connect-XrmClient -Url "https://powerdataops.crm12.dynamics.com/";
 }
 
 # Counters

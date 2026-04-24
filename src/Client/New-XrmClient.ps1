@@ -62,34 +62,36 @@ function New-XrmClient {
 
         # Initialize CRM Client	
         if ($PSBoundParameters.ContainsKey('ConnectionString')) {
-
-            if ($IsEncrypted) {
-                $ConnectionString = Repair-XrbConnectionString -ConnectionString $ConnectionString;
-            }
-
-            $authType = $ConnectionString | Out-XrmConnectionStringParameter -ParameterName "AuthType";
-            if ($authType -eq "Office365") {
-                
-                # Override O365
-                $ConnectionString = $ConnectionString.Replace("Office365", "OAuth");
-                $ConnectionString = "$ConnectionString;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Auto;";
-            }
+            $ConnectionString = Resolve-XrmClientConnectionStringInternal -ConnectionString $ConnectionString -IsEncrypted $IsEncrypted;
 
             $StopWatchXrmClient = [System.Diagnostics.Stopwatch]::StartNew(); 
             Trace-XrmFunction -Name 'NewDataverseServiceClient' -Stage Start; 
-            $XrmClient = [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]::new($ConnectionString); 
-            $StopWatch.Stop();
+            try {
+                $XrmClient = [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]::new($ConnectionString); 
+            }
+            catch {
+                if($Global:XrmContext){
+                    $Global:XrmContext.IsUserConnected = $false;
+                }
+                $connectionFailure = Get-XrmClientFailureInternal -Exception $_.Exception;
+                throw [System.Exception]::new($connectionFailure.Message, $connectionFailure.Exception);
+            }
+            $StopWatchXrmClient.Stop();
             Trace-XrmFunction -Name 'NewDataverseServiceClient' -Stage Stop -StopWatch $StopWatchXrmClient;  
         }
         else {
-            # TODO : Interactive login with ServiceClient ?           
+            throw "New-XrmClient interactive authentication requires a connection string containing Url=<DataverseUrl>.";
         }
 
         if (-not $XrmClient.IsReady) {
             if($Global:XrmContext){
                 $Global:XrmContext.IsUserConnected = $false;
             }
-            throw $XrmClient.LastCrmError;
+            $clientFailure = Get-XrmClientFailureInternal -Client $XrmClient;
+            if ($null -ne $clientFailure.Exception) {
+                throw [System.Exception]::new($clientFailure.Message, $clientFailure.Exception);
+            }
+            throw $clientFailure.Message;
         }
 
         # Store new context
