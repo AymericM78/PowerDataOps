@@ -7,7 +7,7 @@
 #>
 
 # Import module
-Import-Module "D:\Sources\GitHub\PowerDataOps\PowerDataOps.psd1" -Force;
+Import-Module "$PsScriptRoot\..\PowerDataOps.psd1" -Force;
 
 # Connect to test instance (interactive OAuth — will prompt once, then cache token)
 if (-not $Global:XrmClient -or -not $Global:XrmClient.IsReady) {
