@@ -4,6 +4,7 @@
 
     .DESCRIPTION
     Get appmodule records (model-driven apps) with optional name filter.
+    Use -Unpublished to also retrieve apps that are in draft state.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -14,6 +15,10 @@
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : all columns)
 
+    .PARAMETER Unpublished
+    When specified, uses RetrieveUnpublishedMultiple to include apps that are in draft
+    (unpublished) state. Without this switch only published apps are returned.
+
     .OUTPUTS
     PSCustomObject[]. Array of appmodule records (XrmObject).
 
@@ -21,8 +26,12 @@
     $apps = Get-XrmAppModules;
     $app = Get-XrmAppModules -Name "Sales Hub";
 
+    .EXAMPLE
+    # Include unpublished drafts
+    $allApps = Get-XrmAppModules -Unpublished;
+
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
+    https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest#operations
 #>
 function Get-XrmAppModules {
     [CmdletBinding()]
@@ -41,7 +50,11 @@ function Get-XrmAppModules {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string[]]
-        $Columns = @("*")
+        $Columns = @("*"),
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Unpublished
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -54,8 +67,15 @@ function Get-XrmAppModules {
             $query = $query | Add-XrmQueryCondition -Field "name" -Condition Equal -Values $Name;
         }
 
-        $apps = $XrmClient | Get-XrmMultipleRecords -Query $query;
-        $apps;
+        if ($Unpublished) {
+            $request = New-XrmRequest -Name "RetrieveUnpublishedMultiple";
+            $request | Add-XrmRequestParameter -Name "Query" -Value $query | Out-Null;
+            $response = Protect-XrmCommand -ScriptBlock { $XrmClient.Execute($request) };
+            $response["EntityCollection"].Entities | ConvertTo-XrmObjects;
+        }
+        else {
+            $XrmClient | Get-XrmMultipleRecords -Query $query;
+        }
     }
     end {
         $StopWatch.Stop();

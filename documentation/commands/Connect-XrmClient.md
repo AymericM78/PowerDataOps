@@ -1,4 +1,4 @@
-# Command : `Connect-XrmClient` 
+﻿# Command : `Connect-XrmClient` 
 
 ## Description
 
@@ -10,14 +10,14 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 Url|String|named|true||Dataverse environment URL.
 UserName|String|named|false||User login for OAuth username/password authentication or interactive login hint.
-Password|String|named|false||User password for OAuth username/password authentication.
-ClientId|String|named|false||Application or client ID. Aliases: AppId, ApplicationId.
-ClientSecret|String|named|false||Application client secret.
-CertificateThumbprint|String|named|false||Application certificate thumbprint. Aliases: Thumbprint, CertThumbprint.
+Password|String|named|true||User password for OAuth username/password authentication.
+ClientId|String|named|false||Application or client ID.
+ClientSecret|String|named|true||Application client secret.
+CertificateThumbprint|String|named|true||Application certificate thumbprint.
 RedirectUri|String|named|false||OAuth redirect URI.
-LoginPrompt|String|named|false||OAuth login prompt behavior. Accepted values: Auto, Always, RefreshSession, SelectAccount, Never.
+LoginPrompt|String|named|false||OAuth login prompt behavior.
 IsEncrypted|Boolean|named|false|False|Specify if password or secret are encrypted.
-Quiet|SwitchParameter|named|false|False|Hide the connection confirmation message.
+Quiet|SwitchParameter|named|false|False|
 
 ## Outputs
 Microsoft.PowerPlatform.Dataverse.Client.ServiceClient. Microsoft Dataverse connector.
@@ -25,30 +25,30 @@ Microsoft.PowerPlatform.Dataverse.Client.ServiceClient. Microsoft Dataverse conn
 ## Usage
 
 ```Powershell 
-Connect-XrmClient [-Url] <String> [[-UserName] <String>] [[-ClientId] <String>] [[-RedirectUri] <String>] [[-LoginPrompt] <String>] [[-IsEncrypted] <Boolean>] [-Quiet] [<CommonParameters>]
+Connect-XrmClient -Url <String> [-UserName <String>] [-ClientId <String>] [-RedirectUri <String>] [-LoginPrompt <String>] [-IsEncrypted <Boolean>] 
+[-Quiet] [<CommonParameters>]
 
-Connect-XrmClient [-Url] <String> [-UserName] <String> [-Password] <String> [[-ClientId] <String>] [[-RedirectUri] <String>] [[-LoginPrompt] <String>] [[-IsEncrypted] <Boolean>] [-Quiet] [<CommonParameters>]
+Connect-XrmClient -Url <String> -ClientId <String> -CertificateThumbprint <String> [-IsEncrypted <Boolean>] [-Quiet] [<CommonParameters>]
 
-Connect-XrmClient [-Url] <String> [-ClientId] <String> [-ClientSecret] <String> [[-IsEncrypted] <Boolean>] [-Quiet] [<CommonParameters>]
+Connect-XrmClient -Url <String> -ClientId <String> -ClientSecret <String> [-IsEncrypted <Boolean>] [-Quiet] [<CommonParameters>]
 
-Connect-XrmClient [-Url] <String> [-ClientId] <String> [-CertificateThumbprint] <String> [[-IsEncrypted] <Boolean>] [-Quiet] [<CommonParameters>]
+Connect-XrmClient -Url <String> -UserName <String> -Password <String> [-ClientId <String>] [-RedirectUri <String>] [-LoginPrompt <String>] [-IsEncrypted 
+<Boolean>] [-Quiet] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Connect-XrmClient -Url "https://contoso.crm.dynamics.com";
+``` 
 
-Connect-XrmClient -Url "https://contoso.crm.dynamics.com" -UserName "user@contoso.com";
 
-Connect-XrmClient -Url "https://contoso.crm.dynamics.com" -UserName "user@contoso.com" -Password "MyPass123";
-
-Connect-XrmClient -Url "https://contoso.crm.dynamics.com" -ClientId "<app-id>" -ClientSecret "<secret>";
-
-Connect-XrmClient -Url "https://contoso.crm.dynamics.com" -ClientId "<app-id>" -CertificateThumbprint "<thumbprint>";
+```Powershell 
+" -ClientSecret "<secret>";
 ``` 
 
 ## More informations
 
 https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
+
 

@@ -1,4 +1,4 @@
-# Command : `Initialize-XrmPath` 
+﻿# Command : `Initialize-XrmPath` 
 
 ## Description
 
@@ -24,11 +24,15 @@ Initialize-XrmPath [-Path] <String> [-AsFilePath] [<CommonParameters>]
 
 ```Powershell 
 Initialize-XrmPath -Path "C:\Temp\Exports";
+``` 
 
+
+```Powershell 
 Initialize-XrmPath -Path "C:\Temp\Exports\Accounts.xlsx" -AsFilePath;
 ``` 
 
 ## More informations
 
 https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
+
 

@@ -1,4 +1,4 @@
-# Command : `Import-XrmDocumentTemplate` 
+﻿# Command : `Import-XrmDocumentTemplate` 
 
 ## Description
 
@@ -8,10 +8,10 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|named|false|$Global:XrmClient|Dataverse connection.
-TemplateReference|EntityReference|named|false||EntityReference of the Dataverse document template.
-TemplateName|String|named|false||Name of the Dataverse document template.
-AssociatedEntityLogicalName|String|named|false||Optional logical name of the associated entity. Use it to disambiguate templates with the same name.
+XrmClient|ServiceClient|named|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
+TemplateReference|EntityReference|named|true||EntityReference of the Dataverse document template.
+TemplateName|String|named|true||Name of the Dataverse document template.
+AssociatedEntityLogicalName|String|named|false||Optional logical name of the entity associated with the document template. Use it to disambiguate templates with the same name.
 FilePath|String|named|true||Full path of the local file to import into the template.
 
 ## Outputs
@@ -20,20 +20,20 @@ Microsoft.Xrm.Sdk.EntityReference. The updated document template reference.
 ## Usage
 
 ```Powershell 
-Import-XrmDocumentTemplate [[-XrmClient] <ServiceClient>] [-TemplateReference] <EntityReference> [-FilePath] <String> [<CommonParameters>]
+Import-XrmDocumentTemplate [-XrmClient <ServiceClient>] -TemplateReference <EntityReference> -FilePath <String> [<CommonParameters>]
 
-Import-XrmDocumentTemplate [[-XrmClient] <ServiceClient>] [-TemplateName] <String> [[-AssociatedEntityLogicalName] <String>] [-FilePath] <String> [<CommonParameters>]
+Import-XrmDocumentTemplate [-XrmClient <ServiceClient>] -TemplateName <String> [-AssociatedEntityLogicalName <String>] -FilePath <String> 
+[<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
-Import-XrmDocumentTemplate -TemplateName "Invoice Template" -FilePath "C:\Temp\InvoiceTemplate.docx";
-
-Import-XrmDocumentTemplate -TemplateName "Expense Template" -AssociatedEntityLogicalName "sample_expense" -FilePath "C:\Temp\ExpenseTemplate.docx";
+Import-XrmDocumentTemplate -TemplateName "Facture-Template" -FilePath "C:\Temp\FactureTemplate.docx";
 ``` 
 
 ## More informations
 
 https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
+
 

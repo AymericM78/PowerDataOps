@@ -13,21 +13,6 @@ Command|Synopsis
 [Restore-XrmInstance](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Restore-XrmInstance.md)|Restore instance at given time.<br/>Restore a backup of given instance to itself or another instance.
 [Set-XrmInstanceMode](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmInstanceMode.md)|Enable or disable admin mode on given instance<br/>Administration mode will prevent users to access to instance.
 [Watch-XrmOperation](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Watch-XrmOperation.md)|Monitor operation completion.<br/>Poll operation status from given url until its done.
-# `AppModule` commands
-
-Command|Synopsis
--------|-----------
-[Add-XrmAppComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppComponent.md)|Add components to a model-driven app.<br/>Add one or more components (tables, forms, views, dashboards, BPF, sitemap, etc.) to an existing model-driven app using the AddAppComponents SDK action.
-[Add-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModule.md)|Create a new model-driven app in Microsoft Dataverse.<br/>Create a new appmodule record (model-driven app) with the specified name and properties.
-[Add-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSiteMap.md)|Create a new sitemap in Microsoft Dataverse.<br/>Create a new sitemap record with the given navigation XML. Sitemaps define the navigation structure of model-driven apps.
-[Get-XrmAppComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppComponents.md)|Retrieve components of a model-driven app.<br/>Get all components included in a published model-driven app using the RetrieveAppComponents SDK function.
-[Get-XrmAppModules](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppModules.md)|Retrieve model-driven app records from Microsoft Dataverse.<br/>Get appmodule records (model-driven apps) with optional name filter.
-[Get-XrmSiteMaps](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSiteMaps.md)|Retrieve sitemap records from Microsoft Dataverse.<br/>Get sitemap records with optional name filter. Sitemaps define the navigation structure of model-driven apps.
-[Remove-XrmAppComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppComponent.md)|Remove components from a model-driven app.<br/>Remove one or more components from an existing model-driven app using the RemoveAppComponents SDK action.
-[Remove-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModule.md)|Delete a model-driven app from Microsoft Dataverse.<br/>Remove an appmodule record (model-driven app).
-[Set-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppModule.md)|Update a model-driven app in Microsoft Dataverse.<br/>Update appmodule record properties (name, description, icon).
-[Set-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSiteMap.md)|Update a sitemap in Microsoft Dataverse.<br/>Update the SiteMapXml attribute of an existing sitemap record. The sitemap defines the navigation structure of a model-driven app.
-[Test-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmAppModule.md)|Validate a model-driven app.<br/>Check a model-driven app for missing dependencies using the ValidateApp SDK function.
 # `Attributes` commands
 
 Command|Synopsis
@@ -65,19 +50,19 @@ Command|Synopsis
 [Add-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmRecord.md)|Create entity record in Microsoft Dataverse.<br/>Add a new row in Microsoft Dataverse table and return created ID (Uniqueidentifier).
 [Connect-XrmClient](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Connect-XrmClient.md)|Connect to Microsoft Dataverse without manually composing a connection string.<br/>Build a Dataverse connection string from explicit authentication parameters or from a URL-only interactive login scenario, then delegate the connection to New-XrmClient.
 [Export-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmDocumentTemplate.md)|Export a Dataverse document template to a local file.<br/>Read the content of a document template record and save it to a file on disk.
-[Export-XrmRecordToWord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmRecordToWord.md)|Export a Dataverse record to a Word document using a document template.<br/>Execute SetWordTemplate, retrieve the generated annotation, and save the document locally.
+[Export-XrmRecordToWord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmRecordToWord.md)|Export a Dataverse record to a Word document using a document template.<br/>Execute the SetWordTemplate action for a Dataverse record, retrieve the generated document annotation, and save the generated Word file locally.
 [Get-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDocumentTemplate.md)|Retrieve Dataverse document templates.<br/>Get a Dataverse document template by reference or by name, with optional entity disambiguation.
 [Get-XrmDuplicateRules](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDuplicateRules.md)|Retrieve duplicate detection rules from Microsoft Dataverse.<br/>Get duplicaterule records with optional entity filter.
 [Get-XrmMultipleRecords](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmMultipleRecords.md)|Retrieve multiple records with QueryExpression.<br/>Get rows from Microsoft Dataverse table with specified query (QueryBase). <br/>This command use pagination to pull all records.
 [Get-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecord.md)|Search for record with simple query.<br/>Get specific row (Entity record) according to given id, key, or attribute.
 [Get-XrmRecordFileDownload](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecordFileDownload.md)|Download a file from a file or image column.<br/>Download a file stored in a Dataverse file/image column using the InitializeFileBlocksDownload and DownloadBlock SDK messages.
-[Import-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmDocumentTemplate.md)|Import a local file content into a Dataverse document template.<br/>Read a file from disk and update the content of an existing document template record.
+[Import-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmDocumentTemplate.md)|Import a local file content into a Dataverse document template.<br/>Read a file from disk and update the content of an existing Dataverse document template record.
 [Invoke-XrmBulkRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequest.md)|Execute Multiple Organization Request.<br/>Send requests to Microsoft Dataverse for bulk execution.
 [Invoke-XrmBulkRequests](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequests.md)|Split and Execute Multiple Organization Requests.<br/>Send requests to Microsoft Dataverse for bulk execution.
 [Invoke-XrmRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmRequest.md)|Execute Organization Request.<br/>Send request to Microsoft Dataverse for execution.
 [Join-XrmRecords](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Join-XrmRecords.md)|Associate records in Dataverse.<br/>Add a link between 1 row (Entity record) and multiple rows in Microsoft Dataverse.
 [Merge-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Merge-XrmRecord.md)|Merge two records in Microsoft Dataverse.<br/>Merge a subordinate record into a target record using the Merge SDK message.<br/>The subordinate record is deactivated after the merge.
-[New-XrmClient](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmClient.md)|Initialize CrmServiceClient instance.<br/>Create a new connection to Microsoft Dataverse with a connection string.<br/>If the connection string only contains `Url`, the cmdlet applies interactive OAuth defaults.
+[New-XrmClient](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmClient.md)|Initialize CrmServiceClient instance.<br/>Create a new connection to Microsoft Dataverse with a connectionstring.
 [Out-XrmClient](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Out-XrmClient.md)|Initialize CrmserviceClient instance from instance object.<br/>Create a new connection to Microsoft Dataverse from instance object.
 [Protect-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Protect-XrmCommand.md)|Protect command from API Limit issues.<br/>This cmdlet provide a core method for all API calls to Microsoft Dataverse.<br/>The aim is to provide a retry pattern to prevent technical issues as API Limits or network connectivity
 [Publish-XrmDuplicateRule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Publish-XrmDuplicateRule.md)|Publish a duplicate detection rule.<br/>Publish (activate) a duplicate detection rule using the PublishDuplicateRule SDK action.
@@ -108,35 +93,6 @@ Command|Synopsis
 [ConvertTo-XrmObject](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmObject.md)|Transform Entity to custom object.<br/>Represent Entity object to custom object.
 [ConvertTo-XrmObjects](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmObjects.md)|Transform Entity Collection to custom object collection.<br/>Represent Entity objects to custom objects array.
 [ConvertTo-XrmType](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmType.md)|Convert a value to the appropriate Dataverse SDK type.<br/>Transform a raw value (string, number) to a typed Dataverse attribute value based on the specified type<br/>(int, decimal, datetime, money, bool, guid, optionset, optionsetvalues, entityreference, string).
-# `Customization` commands
-
-Command|Synopsis
--------|-----------
-[Add-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmChart.md)|Create a new chart in Microsoft Dataverse.<br/>Create a new savedqueryvisualization record (system chart).
-[Add-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmCommand.md)|Create a new command bar button in Microsoft Dataverse.<br/>Create a new appaction record (command bar button).
-[Add-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDashboard.md)|Create a new dashboard in Microsoft Dataverse.<br/>Create a new systemform record of type dashboard (type = 0). Delegates to Add-XrmForm.
-[Add-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmForm.md)|Create a new form in Microsoft Dataverse.<br/>Create a new systemform record.
-[Add-XrmFormControl](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmFormControl.md)|Add a PCF custom control to a form field.<br/>Add a Power Apps Component Framework (PCF) custom control binding onto a field in a model-driven app form<br/>by modifying the FormXML of the systemform record.
-[Add-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmView.md)|Create a new view in Microsoft Dataverse.<br/>Create a new savedquery record (system view).
-[Copy-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Copy-XrmForm.md)|Copy an existing form in Microsoft Dataverse.<br/>Clone a systemform record using the CopySystemForm SDK action. Creates an exact copy of the source form with a new name.
-[Export-XrmRibbon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmRibbon.md)|Export the ribbon customization XML for a table.<br/>Export the RibbonDiffXml for a specific table by creating a temporary solution containing the table,<br/>exporting the solution, extracting the customizations.xml, and parsing the RibbonDiffXml node.<br/>This allows reading and modifying classic ribbon customizations programmatically.
-[Get-XrmCharts](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCharts.md)|Retrieve chart records from Microsoft Dataverse.<br/>Get savedqueryvisualization records (system charts) filtered by entity logical name.
-[Get-XrmCommands](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCommands.md)|Retrieve command records from Microsoft Dataverse.<br/>Get appaction records (command bar buttons) optionally filtered by entity context.
-[Get-XrmDashboards](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDashboards.md)|Retrieve dashboard records from Microsoft Dataverse.<br/>Get systemform records filtered to dashboards (type = 0). Delegates to Get-XrmForms.
-[Get-XrmFormControls](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmFormControls.md)|List PCF custom controls configured on a form.<br/>Parse the FormXML of a systemform record and return all custom control bindings (PCF controls).
-[Get-XrmForms](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmForms.md)|Retrieve form records from Microsoft Dataverse.<br/>Get systemform records (forms) filtered by entity logical name and optionally by form type.
-[Import-XrmRibbon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmRibbon.md)|Import ribbon customization XML for a table.<br/>Import a modified RibbonDiffXml for a specific table by creating a temporary solution containing the table,<br/>exporting the solution, replacing the RibbonDiffXml node in customizations.xml, re-zipping, and importing.<br/>This allows modifying classic ribbon customizations (commands, display rules, enable rules) programmatically.
-[Remove-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmChart.md)|Delete a chart from Microsoft Dataverse.<br/>Delete a savedqueryvisualization record (system chart).
-[Remove-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmCommand.md)|Delete a command bar button from Microsoft Dataverse.<br/>Delete an appaction record (command bar button).
-[Remove-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmDashboard.md)|Delete a dashboard from Microsoft Dataverse.<br/>Delete a systemform record (dashboard). Delegates to Remove-XrmForm.
-[Remove-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmForm.md)|Delete a form from Microsoft Dataverse.<br/>Delete a systemform record.
-[Remove-XrmFormControl](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmFormControl.md)|Remove a PCF custom control from a form field.<br/>Remove a Power Apps Component Framework (PCF) custom control binding from a field in a model-driven app form<br/>by modifying the FormXML of the systemform record.
-[Remove-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmView.md)|Delete a view from Microsoft Dataverse.<br/>Delete a savedquery record (system view).
-[Set-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmChart.md)|Update a chart in Microsoft Dataverse.<br/>Update an existing savedqueryvisualization record (system chart).
-[Set-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmCommand.md)|Update a command bar button in Microsoft Dataverse.<br/>Update an existing appaction record (command bar button).
-[Set-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmDashboard.md)|Update a dashboard in Microsoft Dataverse.<br/>Update an existing systemform record (dashboard). Delegates to Set-XrmForm.
-[Set-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmForm.md)|Update a form in Microsoft Dataverse.<br/>Update an existing systemform record.
-[Set-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmView.md)|Update a view in Microsoft Dataverse.<br/>Update an existing savedquery record (system view).
 # `Email` commands
 
 Command|Synopsis
@@ -148,7 +104,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Read-XrmExcelSheet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Read-XrmExcelSheet.md)|Read Excel Sheet.<br/>Read a worksheet and return objects using the header row as property names.<br/>Use `-AsArray` to keep the legacy raw Excel array behavior.
+[Read-XrmExcelSheet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Read-XrmExcelSheet.md)|Read Excel Sheet.<br/>Read a worksheet and return a collection of objects using the header row as property names.<br/>Use -AsArray to keep the legacy raw Excel array behavior.
 [Write-XrmExcelSheet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Write-XrmExcelSheet.md)|Write Excel Sheet.<br/>Push Microsoft Dataverse rows / entity records to Excel file on a specific sheet.
 # `Instances` commands
 
@@ -163,63 +119,6 @@ Command|Synopsis
 -------|-----------
 [Add-XrmLanguagePack](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmLanguagePack.md)|Activate given language.<br/>Install specify language pack to target instance.
 [Remove-XrmLanguagePack](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmLanguagePack.md)|Desactivate given language<br/>Uninstall specify language pack from target instance.
-# `Metadata` commands
-
-Command|Synopsis
--------|-----------
-[Add-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAlternateKey.md)|Create an alternate key on a Microsoft Dataverse table.<br/>Add a new entity key using CreateEntityKeyRequest.
-[Add-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmColumn.md)|Create a new column in Microsoft Dataverse.<br/>Add a new attribute / column to a table using CreateAttributeRequest.<br/>Use typed constructors such as New-XrmStringColumn, New-XrmBooleanColumn,<br/>New-XrmIntegerColumn, New-XrmDecimalColumn, New-XrmDoubleColumn,<br/>New-XrmMoneyColumn, New-XrmDateColumn, New-XrmChoiceColumn,<br/>New-XrmMultiChoiceColumn, New-XrmFileColumn, New-XrmImageColumn,<br/>New-XrmMemoColumn, and New-XrmAutoNumberColumn to build the<br/>AttributeMetadata object.<br/><br/>Relationship-based lookups require specialized SDK messages and should use<br/>Add-XrmOneToManyRelationship or Add-XrmPolymorphicLookup instead of<br/>Add-XrmColumn.
-[Add-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmGlobalOptionSet.md)|Create a global option set in Microsoft Dataverse.<br/>Create a new global option set using CreateOptionSetRequest.
-[Add-XrmManyToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmManyToManyRelationship.md)|Create a many-to-many relationship in Microsoft Dataverse.<br/>Create an N:N relationship using CreateManyToManyRequest.
-[Add-XrmOneToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmOneToManyRelationship.md)|Create a one-to-many relationship in Microsoft Dataverse.<br/>Create a 1:N relationship using CreateOneToManyRequest.
-[Add-XrmOptionSetValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmOptionSetValue.md)|Insert a new option value in an option set.<br/>Insert a new option value in a global or local option set using the InsertOptionValue SDK message.
-[Add-XrmPolymorphicLookup](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmPolymorphicLookup.md)|Create a polymorphic lookup attribute in Microsoft Dataverse.<br/>Create a polymorphic lookup column that can reference multiple table types using the CreatePolymorphicLookupAttribute SDK message.
-[Add-XrmStatusValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmStatusValue.md)|Insert a new status value (status reason) for a table.<br/>Add a new status reason value to a Status attribute using the InsertStatusValue SDK message.
-[Add-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmTable.md)|Create a new table in Microsoft Dataverse.<br/>Create a new entity / table using CreateEntityRequest.
-[Get-XrmAllEntityMetadata](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAllEntityMetadata.md)|Retrieve all entity metadata<br/>Get list of entity / table metadata.
-[Get-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAlternateKey.md)|Retrieve alternate key metadata from Microsoft Dataverse.<br/>Get entity key metadata using RetrieveEntityKeyRequest.
-[Get-XrmAttributesLogicalName](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributesLogicalName.md)|Retrieve entities logicalname attribute.<br/>Get list of columns / attribute logical names from given entity / table.
-[Get-XrmAutoNumberSeed](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAutoNumberSeed.md)|Get the current auto-number seed for a column.<br/>Retrieve the current auto-number seed value for an auto-number column using the GetAutoNumberSeed SDK message.
-[Get-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmColumn.md)|Retrieve column metadata from Microsoft Dataverse.<br/>Get attribute / column metadata using RetrieveAttributeRequest.
-[Get-XrmEntitiesLogicalName](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEntitiesLogicalName.md)|Retrieve entities logicalname<br/>Get list of entity / table logical names.
-[Get-XrmEntityMetadata](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEntityMetadata.md)|Retrieve entity metadata<br/>Get entity / table metadata.
-[Get-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmGlobalOptionSet.md)|Retrieve a global option set from Microsoft Dataverse.<br/>Get global option set metadata using RetrieveOptionSetRequest.
-[Get-XrmRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRelationship.md)|Retrieve relationship metadata from Microsoft Dataverse.<br/>Get relationship metadata using RetrieveRelationshipRequest.
-[New-XrmAutoNumberColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmAutoNumberColumn.md)|Build an auto-number StringAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata object<br/>with AutoNumberFormat, ready for Add-XrmColumn.
-[New-XrmBooleanColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmBooleanColumn.md)|Build a BooleanAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmChoiceColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmChoiceColumn.md)|Build a PicklistAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata object<br/>referencing a global option set or defining local options, ready for Add-XrmColumn.
-[New-XrmDateColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDateColumn.md)|Build a DateTimeAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.DateTimeAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmDecimalColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDecimalColumn.md)|Build a DecimalAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.DecimalAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmDoubleColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDoubleColumn.md)|Build a DoubleAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmFileColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmFileColumn.md)|Build a FileAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.FileAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmImageColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmImageColumn.md)|Build an ImageAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmIntegerColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmIntegerColumn.md)|Build an IntegerAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.IntegerAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmLookupColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmLookupColumn.md)|Build a LookupAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata object<br/>for relationship-based creation requests such as Add-XrmOneToManyRelationship<br/>or Add-XrmPolymorphicLookup. This constructor does not create the lookup<br/>through Add-XrmColumn because Dataverse requires a relationship creation<br/>request for lookup attributes.
-[New-XrmMemoColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMemoColumn.md)|Build a MemoAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.MemoAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmMoneyColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMoneyColumn.md)|Build a MoneyAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.MoneyAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[New-XrmMultiChoiceColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMultiChoiceColumn.md)|Build a MultiSelectPicklistAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata object<br/>referencing a global option set or defining local options, ready for Add-XrmColumn.
-[New-XrmStringColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmStringColumn.md)|Build a StringAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
-[Remove-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAlternateKey.md)|Delete an alternate key from a Microsoft Dataverse table.<br/>Delete an entity key using DeleteEntityKeyRequest.
-[Remove-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmColumn.md)|Delete a column from Microsoft Dataverse.<br/>Delete an attribute / column from a table using DeleteAttributeRequest.
-[Remove-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmGlobalOptionSet.md)|Delete a global option set from Microsoft Dataverse.<br/>Delete a global option set using DeleteOptionSetRequest.
-[Remove-XrmOptionSetValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmOptionSetValue.md)|Delete an option value from an option set.<br/>Delete an option value from a global or local option set using the DeleteOptionValue SDK message.
-[Remove-XrmRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmRelationship.md)|Delete a relationship from Microsoft Dataverse.<br/>Delete a relationship using DeleteRelationshipRequest.
-[Remove-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmTable.md)|Delete a table from Microsoft Dataverse.<br/>Delete an entity / table using DeleteEntityRequest.
-[Set-XrmAutoNumberSeed](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAutoNumberSeed.md)|Set the auto-number seed for a column.<br/>Set the next auto-number value for an auto-number column using the SetAutoNumberSeed SDK message.
-[Set-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmColumn.md)|Update a column in Microsoft Dataverse.<br/>Update an existing attribute / column metadata using UpdateAttributeRequest.
-[Set-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmGlobalOptionSet.md)|Update a global option set in Microsoft Dataverse.<br/>Update an existing global option set using UpdateOptionSetRequest.
-[Set-XrmGlobalOptionSetOptions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmGlobalOptionSetOptions.md)|Synchronize the options of a global option set.<br/>Update the list of options of an existing global option set from a typed OptionMetadata list.<br/>Existing values are updated with Set-XrmOptionSetValue, missing values are created with<br/>Add-XrmOptionSetValue, and extra values can optionally be removed.
-[Set-XrmLocalizedLabel](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmLocalizedLabel.md)|Set localized labels on a Dataverse metadata component.<br/>Update localized labels on a metadata attribute, entity, option value, or relationship using the SetLocLabels SDK message.
-[Set-XrmLocalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmLocalOptionSet.md)|Synchronize the local options of a choice column.<br/>Update the list of options of an existing local choice or multichoice column from a typed<br/>OptionMetadata list. Existing values are updated with Set-XrmOptionSetValue, missing values<br/>are created with Add-XrmOptionSetValue, and extra values can optionally be removed.
-[Set-XrmOptionSetOrder](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOptionSetOrder.md)|Set the display order of option set values.<br/>Reorder the values of a global or local option set using the OrderOption SDK message.
-[Set-XrmOptionSetValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOptionSetValue.md)|Update an option value in an option set.<br/>Update an existing option value in a global or local option set using the UpdateOptionValue SDK message.
-[Set-XrmStateValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmStateValue.md)|Update a state value in a StateAttributeMetadata attribute.<br/>Update the label and description of a statecode option using the UpdateStateValue SDK message.
-[Set-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTable.md)|Update a table in Microsoft Dataverse.<br/>Update an existing entity / table metadata using UpdateEntityRequest.
-[Set-XrmTableIcon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTableIcon.md)|Assign an SVG webresource icon to a Dataverse table.<br/>Validate a Dataverse SVG webresource, assign it to the table vector icon metadata, update the table, and optionally publish the change.
-[Test-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmColumn.md)|Verify whether a Dataverse column exists.<br/>Return $true when a column exists on the specified table. Optionally enforce a specific<br/>metadata type such as [Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata].
-[Test-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmGlobalOptionSet.md)|Verify whether a Dataverse global option set exists.<br/>Return $true when a global option set exists for the specified name.
-[Test-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmTable.md)|Verify whether a Dataverse table exists.<br/>Return $true when a table/entity metadata record exists for the specified logical name.
-[Update-XrmOptionSetColors](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmOptionSetColors.md)|Update option set value colors.<br/>Update the color property of option set values for a given picklist attribute using the UpdateOptionValue SDK message.
 # `Organization` commands
 
 Command|Synopsis
@@ -302,6 +201,73 @@ Command|Synopsis
 [Get-XrmSolutionComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutionComponents.md)|Get Solution Components.<br/>Retrieve components from given solution and expected types.
 [Remove-XrmSolutionComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmSolutionComponent.md)|Remove a component from an unmanaged solution.<br/>Remove given component from specified unmanaged solution using the RemoveSolutionComponent SDK message.<br/>This does not delete the component from the environment, it only removes it from the solution.
 [Update-XrmSolutionComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmSolutionComponent.md)|Update a solution component.<br/>Update a component in an unmanaged solution using the UpdateSolutionComponent SDK message.
+# `AppModule` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmAppComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppComponent.md)|Add components to a model-driven app.<br/>Add one or more components (tables, forms, views, dashboards, BPF, sitemap, etc.) to an existing model-driven app using the AddAppComponents SDK action.
+[Add-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModule.md)|Create a new model-driven app in Microsoft Dataverse.<br/>Create a new appmodule record (model-driven app) with the specified name and properties.
+[Add-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModuleRoles.md)|Assign security roles to a model-driven app.<br/>Grant one or more security roles access to a model-driven app via the<br/>appmoduleroles_association N:N relationship. Users must belong to one of the<br/>assigned roles to see the app in the app picker.
+[Add-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSiteMap.md)|Create a new sitemap in Microsoft Dataverse.<br/>Create a new sitemap record with the given navigation XML. Sitemaps define the navigation structure of model-driven apps.
+[Get-XrmAppComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppComponents.md)|Retrieve components of a model-driven app.<br/>Get all components included in a published model-driven app using the RetrieveAppComponents SDK function.
+[Get-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppModuleRoles.md)|Retrieve security roles assigned to a model-driven app.<br/>Get the list of security roles that have access to a given model-driven app,<br/>via the appmoduleroles_association N:N relationship.
+[Get-XrmAppModules](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppModules.md)|Retrieve model-driven app records from Microsoft Dataverse.<br/>Get appmodule records (model-driven apps) with optional name filter.<br/>Use -Unpublished to also retrieve apps that are in draft state.
+[Get-XrmSiteMaps](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSiteMaps.md)|Retrieve sitemap records from Microsoft Dataverse.<br/>Get sitemap records with optional name filter. Sitemaps define the navigation structure of model-driven apps.
+[Remove-XrmAppComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppComponent.md)|Remove components from a model-driven app.<br/>Remove one or more components from an existing model-driven app using the RemoveAppComponents SDK action.
+[Remove-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModule.md)|Delete a model-driven app from Microsoft Dataverse.<br/>Remove an appmodule record (model-driven app).
+[Remove-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModuleRoles.md)|Remove security roles from a model-driven app.<br/>Revoke access to a model-driven app for one or more security roles by removing<br/>the association via the appmoduleroles_association N:N relationship.
+[Set-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppModule.md)|Update a model-driven app in Microsoft Dataverse.<br/>Update appmodule record properties (name, description, icon).
+[Set-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSiteMap.md)|Update a sitemap in Microsoft Dataverse.<br/>Update the SiteMapXml attribute of an existing sitemap record. The sitemap defines the navigation structure of a model-driven app.
+[Test-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmAppModule.md)|Validate a model-driven app.<br/>Check a model-driven app for missing dependencies using the ValidateApp SDK function.
+# `Charts` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmChart.md)|Create a new chart in Microsoft Dataverse.<br/>Create a new savedqueryvisualization record (system chart).
+[Get-XrmCharts](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCharts.md)|Retrieve chart records from Microsoft Dataverse.<br/>Get savedqueryvisualization records (system charts) filtered by entity logical name.
+[Remove-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmChart.md)|Delete a chart from Microsoft Dataverse.<br/>Delete a savedqueryvisualization record (system chart).
+[Set-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmChart.md)|Update a chart in Microsoft Dataverse.<br/>Update an existing savedqueryvisualization record (system chart).
+# `Commands` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmCommand.md)|Create a new command bar button in Microsoft Dataverse.<br/>Create a new appaction record (command bar button).
+[Get-XrmCommands](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCommands.md)|Retrieve command records from Microsoft Dataverse.<br/>Get appaction records (command bar buttons) optionally filtered by entity context.
+[Import-XrmRibbon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmRibbon.md)|Import ribbon customization XML for a table.<br/>Import a modified RibbonDiffXml for a specific table by creating a temporary solution containing the table,<br/>exporting the solution, replacing the RibbonDiffXml node in customizations.xml, re-zipping, and importing.<br/>This allows modifying classic ribbon customizations (commands, display rules, enable rules) programmatically.
+[Remove-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmCommand.md)|Delete a command bar button from Microsoft Dataverse.<br/>Delete an appaction record (command bar button).
+[Set-XrmCommand](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmCommand.md)|Update a command bar button in Microsoft Dataverse.<br/>Update an existing appaction record (command bar button).
+# `Dashboards` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDashboard.md)|Create a new dashboard in Microsoft Dataverse.<br/>Create a new systemform record of type dashboard (type = 0). Delegates to Add-XrmForm.
+[Get-XrmDashboards](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDashboards.md)|Retrieve dashboard records from Microsoft Dataverse.<br/>Get systemform records filtered to dashboards (type = 0). Delegates to Get-XrmForms.
+[Remove-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmDashboard.md)|Delete a dashboard from Microsoft Dataverse.<br/>Delete a systemform record (dashboard). Delegates to Remove-XrmForm.
+[Set-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmDashboard.md)|Update a dashboard in Microsoft Dataverse.<br/>Update an existing systemform record (dashboard). Delegates to Set-XrmForm.
+# `Forms` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmForm.md)|Create a new form in Microsoft Dataverse.<br/>Create a new systemform record.
+[Add-XrmFormControl](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmFormControl.md)|Add a PCF custom control to a form field.<br/>Add a Power Apps Component Framework (PCF) custom control binding onto a field in a model-driven app form<br/>by modifying the FormXML of the systemform record.
+[Copy-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Copy-XrmForm.md)|Copy an existing form in Microsoft Dataverse.<br/>Clone a systemform record using the CopySystemForm SDK action. Creates an exact copy of the source form with a new name.
+[Get-XrmFormControls](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmFormControls.md)|List PCF custom controls configured on a form.<br/>Parse the FormXML of a systemform record and return all custom control bindings (PCF controls).
+[Get-XrmForms](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmForms.md)|Retrieve form records from Microsoft Dataverse.<br/>Get systemform records (forms) filtered by entity logical name and optionally by form type.
+[Remove-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmForm.md)|Delete a form from Microsoft Dataverse.<br/>Delete a systemform record.
+[Remove-XrmFormControl](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmFormControl.md)|Remove a PCF custom control from a form field.<br/>Remove a Power Apps Component Framework (PCF) custom control binding from a field in a model-driven app form<br/>by modifying the FormXML of the systemform record.
+[Remove-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmView.md)|Delete a view from Microsoft Dataverse.<br/>Delete a savedquery record (system view).
+[Set-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmForm.md)|Update a form in Microsoft Dataverse.<br/>Update an existing systemform record.
+# `Ribbon` commands
+
+Command|Synopsis
+-------|-----------
+[Export-XrmRibbon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmRibbon.md)|Export the ribbon customization XML for a table.<br/>Export the RibbonDiffXml for a specific table by creating a temporary solution containing the table,<br/>exporting the solution, extracting the customizations.xml, and parsing the RibbonDiffXml node.<br/>This allows reading and modifying classic ribbon customizations programmatically.
+# `Views` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmView.md)|Create a new view in Microsoft Dataverse.<br/>Create a new savedquery record (system view).
+[Set-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmView.md)|Update a view in Microsoft Dataverse.<br/>Update an existing savedquery record (system view).
 # `Layers` commands
 
 Command|Synopsis
@@ -310,27 +276,117 @@ Command|Synopsis
 [Get-XrmCustomizedSolutionComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCustomizedSolutionComponents.md)|Get customized solution components from Active layer.<br/>Retrieves solution components from a solution, then keeps only components<br/>with meaningful Active-layer customizations.
 [Remove-XrmActiveCustomizations](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmActiveCustomizations.md)|Remove active customizations.<br/>Performs a cleaning on Active Layer to remove unmanaged customizations for given component.
 [Test-XrmComponentCustomization](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmComponentCustomization.md)|Test active-layer customization for a solution component.<br/>Checks whether a component has meaningful customizations in the Active layer<br/>by querying msdyn_componentlayer and parsing msdyn_changes.
-# `Solutions` commands
+# `AlternateKeys` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAlternateKey.md)|Create an alternate key on a Microsoft Dataverse table.<br/>Add a new entity key using CreateEntityKeyRequest.
+[Get-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAlternateKey.md)|Retrieve alternate key metadata from Microsoft Dataverse.<br/>Get entity key metadata using RetrieveEntityKeyRequest.
+[Remove-XrmAlternateKey](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAlternateKey.md)|Delete an alternate key from a Microsoft Dataverse table.<br/>Delete an entity key using DeleteEntityKeyRequest.
+# `Autonumber` commands
+
+Command|Synopsis
+-------|-----------
+[Get-XrmAutoNumberSeed](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAutoNumberSeed.md)|Get the current auto-number seed for a column.<br/>Retrieve the current auto-number seed value for an auto-number column using the GetAutoNumberSeed SDK message.
+[Set-XrmAutoNumberSeed](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAutoNumberSeed.md)|Set the auto-number seed for a column.<br/>Set the next auto-number value for an auto-number column using the SetAutoNumberSeed SDK message.
+# `Columns` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmColumn.md)|Create a new column in Microsoft Dataverse.<br/>Add a new attribute / column to a table using CreateAttributeRequest.<br/>Use typed constructors such as New-XrmStringColumn, New-XrmBooleanColumn,<br/>New-XrmIntegerColumn, New-XrmDecimalColumn, New-XrmDoubleColumn,<br/>New-XrmMoneyColumn, New-XrmDateColumn, New-XrmChoiceColumn,<br/>New-XrmMultiChoiceColumn, New-XrmFileColumn, New-XrmImageColumn,<br/>New-XrmMemoColumn, and New-XrmAutoNumberColumn to build the<br/>AttributeMetadata object.<br/><br/>Relationship-based lookups require specialized SDK messages and should use<br/>Add-XrmOneToManyRelationship or Add-XrmPolymorphicLookup instead of<br/>Add-XrmColumn.
+[Add-XrmPolymorphicLookup](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmPolymorphicLookup.md)|Create a polymorphic lookup attribute in Microsoft Dataverse.<br/>Create a polymorphic lookup column that can reference multiple table types using the CreatePolymorphicLookupAttribute SDK message.
+[Get-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmColumn.md)|Retrieve column metadata from Microsoft Dataverse.<br/>Get attribute / column metadata using RetrieveAttributeRequest.
+[New-XrmAutoNumberColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmAutoNumberColumn.md)|Build an auto-number StringAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata object<br/>with AutoNumberFormat, ready for Add-XrmColumn.
+[New-XrmBooleanColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmBooleanColumn.md)|Build a BooleanAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmChoiceColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmChoiceColumn.md)|Build a PicklistAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata object<br/>referencing a global option set or defining local options, ready for Add-XrmColumn.
+[New-XrmDateColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDateColumn.md)|Build a DateTimeAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.DateTimeAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmDecimalColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDecimalColumn.md)|Build a DecimalAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.DecimalAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmDoubleColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmDoubleColumn.md)|Build a DoubleAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmFileColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmFileColumn.md)|Build a FileAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.FileAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmImageColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmImageColumn.md)|Build an ImageAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmIntegerColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmIntegerColumn.md)|Build an IntegerAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.IntegerAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmLookupColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmLookupColumn.md)|Build a LookupAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata object<br/>for relationship-based creation requests such as Add-XrmOneToManyRelationship<br/>or Add-XrmPolymorphicLookup. This constructor does not create the lookup<br/>through Add-XrmColumn because Dataverse requires a relationship creation<br/>request for lookup attributes.
+[New-XrmMemoColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMemoColumn.md)|Build a MemoAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.MemoAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmMoneyColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMoneyColumn.md)|Build a MoneyAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.MoneyAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[New-XrmMultiChoiceColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmMultiChoiceColumn.md)|Build a MultiSelectPicklistAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata object<br/>referencing a global option set or defining local options, ready for Add-XrmColumn.
+[New-XrmStringColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmStringColumn.md)|Build a StringAttributeMetadata for a Dataverse column.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata object<br/>that can be passed to Add-XrmColumn.
+[Remove-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmColumn.md)|Delete a column from Microsoft Dataverse.<br/>Delete an attribute / column from a table using DeleteAttributeRequest.
+[Set-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmColumn.md)|Update a column in Microsoft Dataverse.<br/>Update an existing attribute / column metadata using UpdateAttributeRequest.
+[Test-XrmColumn](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmColumn.md)|Verify whether a Dataverse column exists.<br/>Return $true when a column exists on the specified table. Optionally enforce a specific<br/>metadata type such as [Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata].
+# `Status` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmStatusValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmStatusValue.md)|Insert a new status value (status reason) for a table.<br/>Add a new status reason value to a Status attribute using the InsertStatusValue SDK message.
+[Set-XrmStateValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmStateValue.md)|Update a state value in a StateAttributeMetadata attribute.<br/>Update the label and description of a statecode option using the UpdateStateValue SDK message.
+# `OptionSets` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmGlobalOptionSet.md)|Create a global option set in Microsoft Dataverse.<br/>Create a new global option set using CreateOptionSetRequest.
+[Add-XrmOptionSetValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmOptionSetValue.md)|Insert a new option value in an option set.<br/>Insert a new option value in a global or local option set using the InsertOptionValue SDK message.
+[Get-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmGlobalOptionSet.md)|Retrieve a global option set from Microsoft Dataverse.<br/>Get global option set metadata using RetrieveOptionSetRequest.
+[Remove-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmGlobalOptionSet.md)|Delete a global option set from Microsoft Dataverse.<br/>Delete a global option set using DeleteOptionSetRequest.
+[Remove-XrmOptionSetValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmOptionSetValue.md)|Delete an option value from an option set.<br/>Delete an option value from a global or local option set using the DeleteOptionValue SDK message.
+[Set-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmGlobalOptionSet.md)|Update a global option set in Microsoft Dataverse.<br/>Update an existing global option set using UpdateOptionSetRequest.
+[Set-XrmGlobalOptionSetOptions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmGlobalOptionSetOptions.md)|Synchronize the options of a global option set.<br/>Update the list of options of an existing global option set from a typed OptionMetadata list.<br/>Existing values are updated with Set-XrmOptionSetValue, missing values are created with<br/>Add-XrmOptionSetValue, and extra values can optionally be removed.
+[Set-XrmLocalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmLocalOptionSet.md)|Synchronize the local options of a choice column.<br/>Update the list of options of an existing local choice or multichoice column from a typed<br/>OptionMetadata list. Existing values are updated with Set-XrmOptionSetValue, missing values<br/>are created with Add-XrmOptionSetValue, and extra values can optionally be removed.
+[Set-XrmOptionSetOrder](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOptionSetOrder.md)|Set the display order of option set values.<br/>Reorder the values of a global or local option set using the OrderOption SDK message.
+[Set-XrmOptionSetValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOptionSetValue.md)|Update an option value in an option set.<br/>Update an existing option value in a global or local option set using the UpdateOptionValue SDK message.
+[Test-XrmGlobalOptionSet](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmGlobalOptionSet.md)|Verify whether a Dataverse global option set exists.<br/>Return $true when a global option set exists for the specified name.
+[Update-XrmOptionSetColors](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmOptionSetColors.md)|Update option set value colors.<br/>Update the color property of option set values for a given picklist attribute using the UpdateOptionValue SDK message.
+# `RelationShips` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmManyToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmManyToManyRelationship.md)|Create a many-to-many relationship in Microsoft Dataverse.<br/>Create an N:N relationship using CreateManyToManyRequest.
+[Add-XrmOneToManyRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmOneToManyRelationship.md)|Create a one-to-many relationship in Microsoft Dataverse.<br/>Create a 1:N relationship using CreateOneToManyRequest.
+[Get-XrmRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRelationship.md)|Retrieve relationship metadata from Microsoft Dataverse.<br/>Get relationship metadata using RetrieveRelationshipRequest.
+[Remove-XrmRelationship](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmRelationship.md)|Delete a relationship from Microsoft Dataverse.<br/>Delete a relationship using DeleteRelationshipRequest.
+# `Tables` commands
+
+Command|Synopsis
+-------|-----------
+[Add-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmTable.md)|Create a new table in Microsoft Dataverse.<br/>Create a new entity / table using CreateEntityRequest.
+[Remove-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmTable.md)|Delete a table from Microsoft Dataverse.<br/>Delete an entity / table using DeleteEntityRequest.
+[Set-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTable.md)|Update a table in Microsoft Dataverse.<br/>Update an existing entity / table metadata using UpdateEntityRequest.
+[Set-XrmTableIcon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTableIcon.md)|Assign an SVG webresource icon to a Dataverse table.<br/>Validate a Dataverse SVG webresource, assign it to the table IconVectorName metadata property,<br/>update the table metadata, and optionally publish the customization.
+[Test-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmTable.md)|Verify whether a Dataverse table exists.<br/>Return $true when a table/entity metadata record exists for the specified logical name.
+# `Metadata` commands
+
+Command|Synopsis
+-------|-----------
+[Get-XrmAllEntityMetadata](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAllEntityMetadata.md)|Retrieve all entity metadata<br/>Get list of entity / table metadata.
+[Get-XrmAttributesLogicalName](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributesLogicalName.md)|Retrieve entities logicalname attribute.<br/>Get list of columns / attribute logical names from given entity / table.
+[Get-XrmEntitiesLogicalName](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEntitiesLogicalName.md)|Retrieve entities logicalname<br/>Get list of entity / table logical names.
+[Get-XrmEntityMetadata](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEntityMetadata.md)|Retrieve entity metadata<br/>Get entity / table metadata.
+[Set-XrmLocalizedLabel](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmLocalizedLabel.md)|Set localized labels on a Dataverse metadata component.<br/>Update localized labels on a metadata attribute, entity, option value, or relationship using the SetLocLabels SDK message.
+# `Publisher` commands
 
 Command|Synopsis
 -------|-----------
 [Add-XrmPublisher](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmPublisher.md)|Create a new publisher in Microsoft Dataverse.<br/>Create a publisher record with the specified unique name, display name, prefix, and option value prefix.
+[Get-XrmPublisher](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmPublisher.md)|Retrieve publisher record from Microsoft Dataverse.<br/>Get a publisher by its unique name with expected columns.
+[Test-XrmPublisher](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmPublisher.md)|Verify whether a Dataverse publisher exists.<br/>Return $true when a publisher exists for the specified unique name.
+# `Solutions` commands
+
+Command|Synopsis
+-------|-----------
 [Add-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSolution.md)|Create a new unmanaged solution in Microsoft Dataverse.<br/>Create an unmanaged solution with the specified unique name, display name, version, and publisher.
 [Clear-XrmSolutions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Clear-XrmSolutions.md)|Select solutions to uninstall.<br/>Select solutions (managed or unmanaged) and delete them.
 [Export-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmSolution.md)|Export solution.<br/>Export given solution with given settings.
 [Get-XrmBasicSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmBasicSolution.md)|Retrieve basic solution record.<br/>Get basic solution with specified column.
-[Get-XrmPublisher](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmPublisher.md)|Retrieve publisher record from Microsoft Dataverse.<br/>Get a publisher by its unique name with expected columns.
 [Get-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolution.md)|Retrieve solution record.<br/>Get solution by its unique name with expected columns.
 [Get-XrmSolutionHistory](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutionHistory.md)|Retrieve solutions history.<br/>Get solution operation logs.
 [Get-XrmSolutions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutions.md)|Retrieve solutions records.<br/>Get all solutions from instance with expected columns.
 [Get-XrmSolutionVersion](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutionVersion.md)|Get solution version.<br/>Get version number from given solution.
 [Import-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmSolution.md)|Import solution.<br/>Performs solution import to target instance.
 [Invoke-XrmSolutionPackager](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmSolutionPackager.md)|Run solution packager tool.<br/>Pack or unpack given solution file with Solution Packager.
+[Publish-XrmComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Publish-XrmComponent.md)|Publish a specific Dataverse component using a targeted PublishXml request.<br/>Publish one component (app module, entity, option set, web resource, ribbon, etc.)<br/>without triggering a full Publish-XrmCustomizations. Builds the required<br/><importexportxml> payload from the component name and identifier.<br/><br/>Use this instead of Publish-XrmCustomizations when you want to target a single<br/>component and avoid the overhead of a full publish cycle.
 [Publish-XrmCustomizations](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Publish-XrmCustomizations.md)|Publish customizations.<br/>Apply unpublished customizations to active layer to promote UI changes.
 [Select-XrmSolutions](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Select-XrmSolutions.md)|Display solutions selector.<br/>Open gridview view all solutions and select one or many.
 [Set-XrmSolutionVersion](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSolutionVersion.md)|Set solution version.<br/>Update specified solution by its uniquename with given version number.
 [Start-XrmSolutionUpgrade](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Start-XrmSolutionUpgrade.md)|Start delete and promote operation for solution.<br/>Replace managed solution by new one after import.
-[Test-XrmPublisher](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmPublisher.md)|Verify whether a Dataverse publisher exists.<br/>Return $true when a publisher exists for the specified unique name.
 [Test-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmSolution.md)|Verify whether a Dataverse solution exists.<br/>Return $true when a solution exists for the specified unique name.
 [Uninstall-XrmSolution](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Uninstall-XrmSolution.md)|Uninstall a solution from Microsoft Dataverse.<br/>Delete a solution (managed or unmanaged) from the environment by its unique name.<br/>Uses the UninstallSolutionAsync SDK message to avoid timeout issues, then monitors<br/>the async operation via Watch-XrmAsynchOperation until completion.
 [Watch-XrmCurrentSolutionImport](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Watch-XrmCurrentSolutionImport.md)|Monitor current solution import.<br/>Poll latest solution import status until its done and display progress.
@@ -385,7 +441,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Export-XrmViewToExcel](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmViewToExcel.md)|Export a Dataverse view to an Excel file.<br/>Execute the ExportToExcel action for a Dataverse view and save the generated workbook locally.
+[Export-XrmViewToExcel](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmViewToExcel.md)|Export a Dataverse view to an Excel file.<br/>Execute the ExportToExcel action for a Dataverse saved query and save the generated workbook locally.
 [Get-XrmQueryFromFetch](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmQueryFromFetch.md)|Retrieve query expression from fetch Xml.<br/>Convert FetchXml to QueryExpression.
 [Get-XrmRecordsFromView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecordsFromView.md)|Retrieve records from a view.<br/>Get records according to given view name.
 [Get-XrmViews](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmViews.md)|Retrieve savedquery records.<br/>Get all saved query according to entity name and predefined columns.
