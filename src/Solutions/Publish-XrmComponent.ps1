@@ -68,7 +68,7 @@ function Publish-XrmComponent {
         $request = New-XrmRequest -Name "PublishXml";
         $request | Add-XrmRequestParameter -Name "ParameterXml" -Value $xml | Out-Null;
 
-        Protect-XrmCommand -ScriptBlock { $XrmClient.Execute($request) };
+        $XrmClient | Invoke-XrmRequest -Request $request;
     }
     end {
         $StopWatch.Stop();

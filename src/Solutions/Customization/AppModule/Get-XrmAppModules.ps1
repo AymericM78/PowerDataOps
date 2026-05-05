@@ -70,7 +70,7 @@ function Get-XrmAppModules {
         if ($Unpublished) {
             $request = New-XrmRequest -Name "RetrieveUnpublishedMultiple";
             $request | Add-XrmRequestParameter -Name "Query" -Value $query | Out-Null;
-            $response = Protect-XrmCommand -ScriptBlock { $XrmClient.Execute($request) };
+            $response = $XrmClient | Invoke-XrmRequest -Request $request;
             $response["EntityCollection"].Entities | ConvertTo-XrmObjects;
         }
         else {
