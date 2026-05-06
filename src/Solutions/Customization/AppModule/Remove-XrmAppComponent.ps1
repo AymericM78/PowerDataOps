@@ -81,7 +81,8 @@ function Remove-XrmAppComponent {
         $componentEntity = New-XrmEntity -LogicalName $ComponentEntityLogicalName;
         $componentEntity[$ComponentIdAttributeName] = $ComponentId;
 
-        $entityCollection = New-XrmEntityCollection -Entities @($componentEntity);
+        $entityCollection = [Microsoft.Xrm.Sdk.EntityCollection]::new();
+        $entityCollection.Entities.Add($componentEntity) | Out-Null;
 
         $request = New-XrmRequest -Name "RemoveAppComponents";
         $request | Add-XrmRequestParameter -Name "AppId" -Value $AppModuleId | Out-Null;
