@@ -4,6 +4,7 @@
 
     .DESCRIPTION
     Get systemform records (forms) filtered by entity logical name and optionally by form type.
+    Use -Unpublished to also retrieve forms that are in draft state.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -17,6 +18,10 @@
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : all columns)
 
+    .PARAMETER Unpublished
+    When specified, uses RetrieveUnpublishedMultiple to include forms in draft (unpublished) state.
+    Without this switch only published forms are returned.
+
     .OUTPUTS
     PSCustomObject[]. Array of systemform records (XrmObject).
 
@@ -24,6 +29,10 @@
     $forms = Get-XrmForms -EntityLogicalName "account";
     $mainForms = Get-XrmForms -EntityLogicalName "account" -FormType 2;
     $dashboards = Get-XrmForms -FormType 0;
+
+    .EXAMPLE
+    # Include unpublished drafts
+    $allForms = Get-XrmForms -EntityLogicalName "account" -Unpublished;
 #>
 function Get-XrmForms {
     [CmdletBinding()]
@@ -46,7 +55,11 @@ function Get-XrmForms {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string[]]
-        $Columns = @("*")
+        $Columns = @("*"),
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Unpublished
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -63,8 +76,7 @@ function Get-XrmForms {
             $query = $query | Add-XrmQueryCondition -Field "type" -Condition Equal -Values $FormType;
         }
 
-        $forms = $XrmClient | Get-XrmMultipleRecords -Query $query;
-        $forms;
+        $XrmClient | Get-XrmMultipleComponents -Query $query -Unpublished:$Unpublished;
     }
     end {
         $StopWatch.Stop();

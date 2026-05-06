@@ -67,15 +67,7 @@ function Get-XrmAppModules {
             $query = $query | Add-XrmQueryCondition -Field "name" -Condition Equal -Values $Name;
         }
 
-        if ($Unpublished) {
-            $request = New-XrmRequest -Name "RetrieveUnpublishedMultiple";
-            $request | Add-XrmRequestParameter -Name "Query" -Value $query | Out-Null;
-            $response = $XrmClient | Invoke-XrmRequest -Request $request;
-            $response["EntityCollection"].Entities | ConvertTo-XrmObjects;
-        }
-        else {
-            $XrmClient | Get-XrmMultipleRecords -Query $query;
-        }
+        $XrmClient | Get-XrmMultipleComponents -Query $query -Unpublished:$Unpublished;
     }
     end {
         $StopWatch.Stop();

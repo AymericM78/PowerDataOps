@@ -4,6 +4,7 @@
 
     .DESCRIPTION
     Get appaction records (command bar buttons) optionally filtered by entity context.
+    Use -Unpublished to also retrieve commands that are in draft state.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -14,12 +15,20 @@
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : all columns)
 
+    .PARAMETER Unpublished
+    When specified, uses RetrieveUnpublishedMultiple to include commands in draft (unpublished) state.
+    Without this switch only published commands are returned.
+
     .OUTPUTS
     PSCustomObject[]. Array of appaction records (XrmObject).
 
     .EXAMPLE
     $commands = Get-XrmCommands;
     $accountCommands = Get-XrmCommands -EntityLogicalName "account";
+
+    .EXAMPLE
+    # Include unpublished drafts
+    $allCommands = Get-XrmCommands -Unpublished;
 #>
 function Get-XrmCommands {
     [CmdletBinding()]
@@ -37,7 +46,11 @@ function Get-XrmCommands {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string[]]
-        $Columns = @("*")
+        $Columns = @("*"),
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Unpublished
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -50,8 +63,7 @@ function Get-XrmCommands {
             $query = $query | Add-XrmQueryCondition -Field "contextentity" -Condition Equal -Values $EntityLogicalName;
         }
 
-        $commands = $XrmClient | Get-XrmMultipleRecords -Query $query;
-        $commands;
+        $XrmClient | Get-XrmMultipleComponents -Query $query -Unpublished:$Unpublished;
     }
     end {
         $StopWatch.Stop();
