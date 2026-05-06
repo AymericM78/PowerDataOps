@@ -83,7 +83,7 @@ function Add-XrmAppComponent {
         $componentEntity = New-XrmEntity -LogicalName $ComponentEntityLogicalName;
         $componentEntity[$ComponentIdAttributeName] = $ComponentId;
 
-        $entityCollection = New-XrmEntityCollection -Entities @($componentEntity);
+        $entityCollection = [Microsoft.Xrm.Sdk.EntityCollection] (New-XrmEntityCollection -Entities @($componentEntity));
 
         $request = New-XrmRequest -Name "AddAppComponents";
         $request | Add-XrmRequestParameter -Name "AppId" -Value $AppModuleId | Out-Null;
