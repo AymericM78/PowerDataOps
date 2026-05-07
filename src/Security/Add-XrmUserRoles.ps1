@@ -39,12 +39,9 @@ function Add-XrmUserRoles {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        $roleReferences = New-Object -TypeName "Microsoft.Xrm.Sdk.EntityReferenceCollection";
-        $Roles | ForEach-Object {
-            $roleReference = New-XrmEntityReference -LogicalName "role" -Id $_;
-            $roleReferences.Add($roleReference);
-        }
-        Join-XrmRecords -XrmClient $XrmClient -RecordReference $UserReference -RecordReferences $roleReferences  -RelationShipName "systemuserroles_association";
+        $roleRefs = $Roles | ForEach-Object { New-XrmEntityReference -LogicalName "role" -Id $_; };
+        $roleReferences = New-XrmEntityReferenceCollection -EntityReferences @($roleRefs);
+        Join-XrmRecords -XrmClient $XrmClient -RecordReference $UserReference -RecordReferences $roleReferences -RelationShipName "systemuserroles_association";
     }
     end {
         $StopWatch.Stop();

@@ -62,10 +62,7 @@ function Split-XrmRecords {
         $relationShip = New-Object -TypeName "Microsoft.Xrm.Sdk.Relationship" -ArgumentList $RelationShipName;
         $relationShip.PrimaryEntityRole = $RelationShipRole;
         
-        $recordReferenceCollection = New-Object -TypeName "Microsoft.Xrm.Sdk.EntityReferenceCollection";
-        $RecordReferences | ForEach-Object {
-            $recordReferenceCollection.Add($_);
-        }
+        $recordReferenceCollection = New-XrmEntityReferenceCollection -EntityReferences @($RecordReferences);
         
         $XrmClient.Disassociate($RecordReference.LogicalName, $RecordReference.Id, $relationShip, $recordReferenceCollection);        
     }

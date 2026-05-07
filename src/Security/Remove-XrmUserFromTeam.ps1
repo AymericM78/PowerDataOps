@@ -43,10 +43,7 @@ function Remove-XrmUserFromTeam {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        $collection = New-Object -TypeName "Microsoft.Xrm.Sdk.EntityReferenceCollection";
-        $UserReferences | ForEach-Object {
-            $collection.Add($_);
-        };
+        $collection = New-XrmEntityReferenceCollection -EntityReferences $UserReferences;
         Split-XrmRecords -XrmClient $XrmClient -RecordReference $TeamReference -RecordReferences $collection -RelationShipName "teammembership_association";
     }
     end {
