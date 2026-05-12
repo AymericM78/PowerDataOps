@@ -23,11 +23,15 @@
     .PARAMETER Description
     Chart description.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the created chart is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedqueryvisualization record.
 
     .EXAMPLE
     $ref = Add-XrmChart -EntityLogicalName "account" -Name "Revenue Chart" -DataDescription $dataXml -PresentationDescription $presXml;
+    $ref = Add-XrmChart -EntityLogicalName "account" -Name "Revenue Chart" -DataDescription $dataXml -PresentationDescription $presXml -SolutionUniqueName "MySolution";
 #>
 function Add-XrmChart {
     [CmdletBinding()]
@@ -60,7 +64,11 @@ function Add-XrmChart {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $Description
+        $Description,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -79,6 +87,11 @@ function Add-XrmChart {
         }
 
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 59 | Out-Null;
+        }
+
         New-XrmEntityReference -LogicalName "savedqueryvisualization" -Id $id;
     }
     end {

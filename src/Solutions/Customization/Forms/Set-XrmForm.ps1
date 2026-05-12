@@ -20,11 +20,15 @@
     .PARAMETER Description
     Updated description.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the updated form is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the updated systemform record.
 
     .EXAMPLE
     Set-XrmForm -FormReference $formRef -Name "Updated Main Form" -FormXml $newXml;
+    Set-XrmForm -FormReference $formRef -FormXml $newXml -SolutionUniqueName "MySolution";
 #>
 function Set-XrmForm {
     [CmdletBinding()]
@@ -50,7 +54,11 @@ function Set-XrmForm {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $Description
+        $Description,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -70,6 +78,11 @@ function Set-XrmForm {
         }
 
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $FormReference.Id -ComponentType 60 | Out-Null;
+        }
+
         $FormReference;
     }
     end {

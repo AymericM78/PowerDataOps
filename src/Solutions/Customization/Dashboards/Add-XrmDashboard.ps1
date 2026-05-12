@@ -17,11 +17,15 @@
     .PARAMETER Description
     Dashboard description.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the created dashboard is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
 
     .EXAMPLE
     $ref = Add-XrmDashboard -Name "Sales Dashboard" -FormXml $xml;
+    $ref = Add-XrmDashboard -Name "Sales Dashboard" -FormXml $xml -SolutionUniqueName "MySolution";
 #>
 function Add-XrmDashboard {
     [CmdletBinding()]
@@ -44,7 +48,11 @@ function Add-XrmDashboard {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $Description
+        $Description,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -60,6 +68,9 @@ function Add-XrmDashboard {
 
         if ($PSBoundParameters.ContainsKey('Description')) {
             $params["Description"] = $Description;
+        }
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            $params["SolutionUniqueName"] = $SolutionUniqueName;
         }
 
         $ref = Add-XrmForm @params;

@@ -27,6 +27,9 @@
     EntityReference of an existing systemform to initialize from using the InitializeFrom SDK message.
     When provided, the new form is pre-populated with values from the source form, then overridden by provided parameters.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the created form is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
 
@@ -36,7 +39,7 @@
 
     .EXAMPLE
     $sourceRef = New-XrmEntityReference -LogicalName "systemform" -Id $existingFormId;
-    $ref = Add-XrmForm -SourceReference $sourceRef -Name "Copied Form" -FormXml $xml -FormType 2;
+    $ref = Add-XrmForm -SourceReference $sourceRef -Name "Copied Form" -FormXml $xml -FormType 2 -SolutionUniqueName "MySolution";
 
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/initializefrom
@@ -75,13 +78,18 @@ function Add-XrmForm {
 
         [Parameter(Mandatory = $false)]
         [Microsoft.Xrm.Sdk.EntityReference]
-        $SourceReference
+        $SourceReference,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        $formTypeCode = (New-XrmOptionSetValue -Value $FormType);
         if ($PSBoundParameters.ContainsKey('SourceReference')) {
             $initRequest = New-XrmRequest -Name "InitializeFrom";
             $initRequest = $initRequest | Add-XrmRequestParameter -Name "EntityMoniker" -Value $SourceReference;
@@ -91,13 +99,13 @@ function Add-XrmForm {
             $record = $initResponse.Results["Entity"];
             $record.Attributes["name"] = $Name;
             $record.Attributes["formxml"] = $FormXml;
-            $record.Attributes["type"] = $FormType;
+            $record.Attributes["type"] = $formTypeCode;
         }
         else {
             $attributes = @{
                 "name"    = $Name;
                 "formxml" = $FormXml;
-                "type"    = $FormType;
+                "type"    = $formTypeCode;
             };
 
             if ($PSBoundParameters.ContainsKey('EntityLogicalName')) {
@@ -112,6 +120,11 @@ function Add-XrmForm {
         }
 
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 60 | Out-Null;
+        }
+
         New-XrmEntityReference -LogicalName "systemform" -Id $id;
     }
     end {

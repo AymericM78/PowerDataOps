@@ -23,11 +23,15 @@
     .PARAMETER Hidden
     Updated hidden state.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the updated command is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the updated appaction record.
 
     .EXAMPLE
     Set-XrmCommand -CommandReference $cmdRef -ButtonLabelText "Approve Request";
+    Set-XrmCommand -CommandReference $cmdRef -ButtonLabelText "Approve Request" -SolutionUniqueName "MySolution";
 #>
 function Set-XrmCommand {
     [CmdletBinding()]
@@ -57,7 +61,11 @@ function Set-XrmCommand {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $Hidden
+        $Hidden,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -80,6 +88,11 @@ function Set-XrmCommand {
         }
 
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $CommandReference.Id -ComponentType 300 | Out-Null;
+        }
+
         $CommandReference;
     }
     end {

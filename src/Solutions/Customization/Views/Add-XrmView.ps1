@@ -26,11 +26,15 @@
     .PARAMETER Description
     View description.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the created view is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedquery record.
 
     .EXAMPLE
     $ref = Add-XrmView -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml;
+    $ref = Add-XrmView -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml -SolutionUniqueName "MySolution";
 #>
 function Add-XrmView {
     [CmdletBinding()]
@@ -67,7 +71,11 @@ function Add-XrmView {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $Description
+        $Description,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -87,6 +95,11 @@ function Add-XrmView {
         }
 
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 26 | Out-Null;
+        }
+
         New-XrmEntityReference -LogicalName "savedquery" -Id $id;
     }
     end {

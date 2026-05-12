@@ -38,11 +38,15 @@
     .PARAMETER Hidden
     Whether the command is hidden. Default: false.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the created command is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the created appaction record.
 
     .EXAMPLE
     $ref = Add-XrmCommand -Name "Approve" -UniqueName "new_approve" -Type 0 -Context 1 -ContextEntity "account" -ButtonLabelText "Approve";
+    $ref = Add-XrmCommand -Name "Approve" -UniqueName "new_approve" -Type 0 -Context 1 -Location 0 -ButtonLabelText "Approve" -SolutionUniqueName "MySolution";
 #>
 function Add-XrmCommand {
     [CmdletBinding()]
@@ -93,7 +97,11 @@ function Add-XrmCommand {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $Hidden = $false
+        $Hidden = $false,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -123,6 +131,11 @@ function Add-XrmCommand {
         }
 
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 300 | Out-Null;
+        }
+
         New-XrmEntityReference -LogicalName "appaction" -Id $id;
     }
     end {

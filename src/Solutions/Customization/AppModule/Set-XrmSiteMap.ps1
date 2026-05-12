@@ -14,6 +14,9 @@
     .PARAMETER SiteMapXml
     The sitemap XML content defining Areas, Groups, and SubAreas.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the updated sitemap is automatically added to this solution.
+
     .OUTPUTS
     System.Void.
 
@@ -21,6 +24,7 @@
     $sitemaps = Get-XrmSiteMaps -Name "My SiteMap";
     $sitemapRef = $sitemaps[0].Reference;
     Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml;
+    Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml -SolutionUniqueName "MySolution";
 
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
@@ -42,7 +46,11 @@ function Set-XrmSiteMap {
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $SiteMapXml
+        $SiteMapXml,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -54,6 +62,10 @@ function Set-XrmSiteMap {
         $record["sitemapxml"] = $SiteMapXml;
 
         $XrmClient | Update-XrmRecord -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $SiteMapReference.Id -ComponentType 62 | Out-Null;
+        }
     }
     end {
         $StopWatch.Stop();

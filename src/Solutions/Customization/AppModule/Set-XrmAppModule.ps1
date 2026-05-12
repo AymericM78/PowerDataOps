@@ -20,11 +20,15 @@
     .PARAMETER WebResourceId
     New web resource icon Id. Optional.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the updated app is automatically added to this solution.
+
     .OUTPUTS
     System.Void.
 
     .EXAMPLE
     Set-XrmAppModule -AppModuleReference $appRef -Name "Renamed App" -Description "Updated description";
+    Set-XrmAppModule -AppModuleReference $appRef -Name "Renamed App" -SolutionUniqueName "MySolution";
 
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
@@ -54,7 +58,11 @@ function Set-XrmAppModule {
 
         [Parameter(Mandatory = $false)]
         [Guid]
-        $WebResourceId
+        $WebResourceId,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -75,6 +83,10 @@ function Set-XrmAppModule {
         }
 
         $XrmClient | Update-XrmRecord -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $AppModuleReference.Id -ComponentType 80 -DoNotIncludeSubcomponents $false | Out-Null;
+        }
     }
     end {
         $StopWatch.Stop();

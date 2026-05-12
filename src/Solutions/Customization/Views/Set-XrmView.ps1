@@ -23,11 +23,15 @@
     .PARAMETER Description
     Updated description.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the updated view is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedquery record.
 
     .EXAMPLE
     Set-XrmView -ViewReference $viewRef -Name "All Active Accounts" -FetchXml $newFetchXml;
+    Set-XrmView -ViewReference $viewRef -FetchXml $newFetchXml -SolutionUniqueName "MySolution";
 #>
 function Set-XrmView {
     [CmdletBinding()]
@@ -57,7 +61,11 @@ function Set-XrmView {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $Description
+        $Description,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -80,6 +88,11 @@ function Set-XrmView {
         }
 
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $ViewReference.Id -ComponentType 26 | Out-Null;
+        }
+
         $ViewReference;
     }
     end {

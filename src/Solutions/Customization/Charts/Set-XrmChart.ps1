@@ -23,11 +23,15 @@
     .PARAMETER Description
     Updated description.
 
+    .PARAMETER SolutionUniqueName
+    Unmanaged solution unique name. When provided, the updated chart is automatically added to this solution.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedqueryvisualization record.
 
     .EXAMPLE
     Set-XrmChart -ChartReference $chartRef -Name "Updated Revenue Chart";
+    Set-XrmChart -ChartReference $chartRef -DataDescription $newXml -SolutionUniqueName "MySolution";
 #>
 function Set-XrmChart {
     [CmdletBinding()]
@@ -57,7 +61,11 @@ function Set-XrmChart {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $Description
+        $Description,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $SolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -80,6 +88,11 @@ function Set-XrmChart {
         }
 
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
+
+        if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $ChartReference.Id -ComponentType 59 | Out-Null;
+        }
+
         $ChartReference;
     }
     end {
