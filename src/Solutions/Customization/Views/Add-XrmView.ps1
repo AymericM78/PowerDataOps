@@ -97,7 +97,7 @@ function Add-XrmView {
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 26 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 26 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         New-XrmEntityReference -LogicalName "savedquery" -Id $id;

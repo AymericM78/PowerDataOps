@@ -64,7 +64,7 @@ function Set-XrmSiteMap {
         $XrmClient | Update-XrmRecord -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $SiteMapReference.Id -ComponentType 62 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $SiteMapReference.Id -ComponentType 62 -DoNotIncludeSubcomponents $false | Out-Null;
         }
     }
     end {

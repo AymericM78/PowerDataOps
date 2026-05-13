@@ -80,7 +80,7 @@ function Set-XrmForm {
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $FormReference.Id -ComponentType 60 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $FormReference.Id -ComponentType 60 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         $FormReference;

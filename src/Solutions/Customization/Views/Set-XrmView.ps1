@@ -90,7 +90,7 @@ function Set-XrmView {
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $ViewReference.Id -ComponentType 26 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $ViewReference.Id -ComponentType 26 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         $ViewReference;

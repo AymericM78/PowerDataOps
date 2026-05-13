@@ -122,7 +122,7 @@ function Add-XrmForm {
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 60 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 60 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         New-XrmEntityReference -LogicalName "systemform" -Id $id;

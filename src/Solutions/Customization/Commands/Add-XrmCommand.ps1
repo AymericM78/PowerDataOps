@@ -133,7 +133,7 @@ function Add-XrmCommand {
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 300 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 300 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         New-XrmEntityReference -LogicalName "appaction" -Id $id;

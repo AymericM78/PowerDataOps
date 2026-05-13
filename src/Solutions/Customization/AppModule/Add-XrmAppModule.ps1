@@ -147,7 +147,7 @@ function Add-XrmAppModule {
         $record.Id = $XrmClient | Add-XrmRecord -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -SolutionUniqueName $SolutionUniqueName -ComponentId $record.Id -ComponentType 80 -DoNotIncludeSubcomponents $false;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $record.Id -ComponentType 80 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         $record.ToEntityReference();

@@ -90,7 +90,7 @@ function Set-XrmChart {
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $ChartReference.Id -ComponentType 59 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $ChartReference.Id -ComponentType 59 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         $ChartReference;

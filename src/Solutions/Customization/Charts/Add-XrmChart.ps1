@@ -89,7 +89,7 @@ function Add-XrmChart {
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 59 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 59 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         New-XrmEntityReference -LogicalName "savedqueryvisualization" -Id $id;

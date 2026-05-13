@@ -90,7 +90,7 @@ function Set-XrmCommand {
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $CommandReference.Id -ComponentType 300 | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $CommandReference.Id -ComponentType 300 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
         $CommandReference;
