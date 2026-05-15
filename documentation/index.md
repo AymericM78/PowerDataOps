@@ -132,6 +132,7 @@ Command|Synopsis
 [Set-XrmOrganizationClientFeature](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOrganizationClientFeature.md)|Set Organization Client Feature.<br/>Define specific client feature for default organization (see : Get-XrmOrganization)
 [Set-XrmOrganizationDbSetting](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOrganizationDbSetting.md)|Set Organization setting.<br/>Add or update orgdbsetting value.
 [Set-XrmOrganizationFeature](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmOrganizationFeature.md)|Set Organization Feature.<br/>Define specific feature for default organization (see : Get-XrmOrganization)
+[Set-XrmSettingValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSettingValue.md)|Set environment or app setting value.<br/>Call the SaveSettingValue SDK action to create or update a named setting at environment or app level.
 # `Plugins` commands
 
 Command|Synopsis
@@ -217,6 +218,7 @@ Command|Synopsis
 [Remove-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModule.md)|Delete a model-driven app from Microsoft Dataverse.<br/>Remove an appmodule record (model-driven app).
 [Remove-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModuleRoles.md)|Remove security roles from a model-driven app.<br/>Revoke access to a model-driven app for one or more security roles by removing<br/>the association via the appmoduleroles_association N:N relationship.
 [Set-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppModule.md)|Update a model-driven app in Microsoft Dataverse.<br/>Update appmodule record properties (name, description, icon).
+[Set-XrmAppSettingValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppSettingValue.md)|Set model-driven app setting value.<br/>Set a named setting for a specific model-driven app by calling Set-XrmSettingValue with the app scope.
 [Set-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSiteMap.md)|Update a sitemap in Microsoft Dataverse.<br/>Update the SiteMapXml attribute of an existing sitemap record. The sitemap defines the navigation structure of a model-driven app.
 [Test-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmAppModule.md)|Validate a model-driven app.<br/>Check a model-driven app for missing dependencies using the ValidateApp SDK function.
 # `Charts` commands
