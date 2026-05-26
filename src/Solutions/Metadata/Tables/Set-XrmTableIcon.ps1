@@ -44,6 +44,11 @@ function Set-XrmTableIcon {
         [string]
         $EntityLogicalName,
 
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [GUID]
+        $EntityMetadataId,
+
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]
@@ -72,12 +77,17 @@ function Set-XrmTableIcon {
             throw "Webresource '$WebResourceName' must be an SVG webresource (type 11).";
         }
 
-        $entityMetadata = $XrmClient | Get-XrmEntityMetadata -LogicalName $EntityLogicalName -Filter ([Microsoft.Xrm.Sdk.Metadata.EntityFilters]::Entity);
-        $entityMetadata.IconVectorName = $webResource.name;
-
         $setTableParameters = @{
-            EntityMetadata = $entityMetadata;
+            IconVectorName = $webResource.name;
         };
+        if (-not $PSBoundParameters.ContainsKey('EntityMetadataId')) {
+            $entityMetadata = $XrmClient | Get-XrmEntityMetadata -LogicalName $EntityLogicalName -Filter ([Microsoft.Xrm.Sdk.Metadata.EntityFilters]::Entity);
+            $setTableParameters['EntityMetadataId'] = $entityMetadata.MetadataId;
+        }
+        else {
+            $setTableParameters['EntityMetadataId'] = $EntityMetadataId;
+        }
+        
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             $setTableParameters['SolutionUniqueName'] = $SolutionUniqueName;
         }

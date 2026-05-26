@@ -89,7 +89,11 @@ function New-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [int]
-        $LanguageCode = 1033
+        $LanguageCode = 1033,
+        
+        [Parameter(Mandatory = $false)]
+        [string]
+        $IconVectorName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -133,6 +137,10 @@ function New-XrmTable {
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {
             $entityMetadata.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
+        }
+
+        if ($PSBoundParameters.ContainsKey('IconVectorName')) {
+            $entityMetadata.IconVectorName = $IconVectorName;
         }
 
         $entityMetadata;

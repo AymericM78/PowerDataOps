@@ -19,6 +19,7 @@ HasActivities|Boolean|7|false|False|Whether the table has activities enabled. De
 IsActivity|Boolean|8|false|False|Whether the table is an activity entity. Default: false.
 IsAuditEnabled|Boolean|9|false|False|Whether auditing is enabled on the table. Default: false.
 LanguageCode|Int32|10|false|1033|Language code for labels. Default: 1033.
+IconVectorName|String|11|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.Metadata.EntityMetadata.
@@ -28,7 +29,7 @@ Microsoft.Xrm.Sdk.Metadata.EntityMetadata.
 ```Powershell 
 New-XrmTable [[-LogicalName] <String>] [[-DisplayName] <String>] [[-PluralName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | 
 TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] 
-<Boolean>] [[-IsAuditEnabled] <Boolean>] [[-LanguageCode] <Int32>] [<CommonParameters>]
+<Boolean>] [[-IsAuditEnabled] <Boolean>] [[-LanguageCode] <Int32>] [[-IconVectorName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
