@@ -34,7 +34,10 @@
     Whether auditing is enabled on the table. Default: false.
 
     .PARAMETER LanguageCode
-    Language code for labels. Default: 1033.
+    Language code for labels. Default: 1033.    
+
+    .PARAMETER IconVectorName
+    Name of the vector icon to use for the table.
 
     .OUTPUTS
     Microsoft.Xrm.Sdk.Metadata.EntityMetadata.

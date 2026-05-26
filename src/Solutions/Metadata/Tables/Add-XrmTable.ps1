@@ -50,6 +50,9 @@
     .PARAMETER LanguageCode
     Language code for labels. Default: 1033.
 
+    .PARAMETER IconVectorName
+    Name of the vector icon to use for the table.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 
@@ -124,7 +127,11 @@ function Add-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [int]
-        $LanguageCode = 1033
+        $LanguageCode = 1033,
+        
+        [Parameter(Mandatory = $false)]
+        [string]
+        $IconVectorName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -141,7 +148,8 @@ function Add-XrmTable {
             -HasActivities $HasActivities `
             -IsActivity $IsActivity `
             -IsAuditEnabled $IsAuditEnabled `
-            -LanguageCode $LanguageCode;
+            -LanguageCode $LanguageCode `
+            -IconVectorName $IconVectorName;
 
         $primaryAttribute = [Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata]::new();
         $primaryAttribute.SchemaName = $PrimaryAttributeSchemaName;
