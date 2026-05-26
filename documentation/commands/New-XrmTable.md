@@ -9,9 +9,9 @@ that can be passed to Add-XrmTable.
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-LogicalName|String|1|true||Table / Entity logical name.
-DisplayName|String|2|true||Display name for the table.
-PluralName|String|3|true||Plural display name for the table.
+LogicalName|String|1|false||Table / Entity logical name.
+DisplayName|String|2|false||Display name for the table.
+PluralName|String|3|false||Plural display name for the table.
 Description|String|4|false||Table description.
 OwnershipType|OwnershipTypes|5|false|UserOwned|Ownership type (UserOwned or OrganizationOwned). Default: UserOwned.
 HasNotes|Boolean|6|false|False|Whether the table has notes enabled. Default: false.
@@ -26,7 +26,7 @@ Microsoft.Xrm.Sdk.Metadata.EntityMetadata.
 ## Usage
 
 ```Powershell 
-New-XrmTable [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] [[-OwnershipType] {None | UserOwned | 
+New-XrmTable [[-LogicalName] <String>] [[-DisplayName] <String>] [[-PluralName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | 
 TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] 
 <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 

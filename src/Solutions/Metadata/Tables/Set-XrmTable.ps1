@@ -70,6 +70,10 @@ function Set-XrmTable {
         $DisplayCollectionName,
 
         [Parameter(Mandatory = $false)]
+        [string]
+        $Description = "",
+
+        [Parameter(Mandatory = $false)]
         [Microsoft.Xrm.Sdk.Metadata.OwnershipTypes]
         $OwnershipType,
 
@@ -106,36 +110,18 @@ function Set-XrmTable {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $entityMetadata = [Microsoft.Xrm.Sdk.Metadata.EntityMetadata]::new();
+        $tableParams = @{ LanguageCode = $LanguageCode };
+        if ($PSBoundParameters.ContainsKey('DisplayName')) { $tableParams['DisplayName'] = $DisplayName; }
+        if ($PSBoundParameters.ContainsKey('DisplayCollectionName')) { $tableParams['PluralName'] = $DisplayCollectionName; }
+        if ($PSBoundParameters.ContainsKey('Description')) { $tableParams['Description'] = $Description; }
+        if ($PSBoundParameters.ContainsKey('OwnershipType')) { $tableParams['OwnershipType'] = $OwnershipType; }
+        if ($PSBoundParameters.ContainsKey('IsActivity')) { $tableParams['IsActivity'] = $IsActivity; }
+        if ($PSBoundParameters.ContainsKey('HasNotes')) { $tableParams['HasNotes'] = $HasNotes; }
+        if ($PSBoundParameters.ContainsKey('HasActivities')) { $tableParams['HasActivities'] = $HasActivities; }
+        if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) { $tableParams['IsAuditEnabled'] = $IsAuditEnabled; }
+
+        $entityMetadata = New-XrmTable @tableParams;
         $entityMetadata.MetadataId = $MetadataId;
-
-        if ($PSBoundParameters.ContainsKey('DisplayName')) {
-            $entityMetadata.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
-        }
-
-        if ($PSBoundParameters.ContainsKey('DisplayCollectionName')) {
-            $entityMetadata.DisplayCollectionName = New-XrmLabel -Text $DisplayCollectionName -LanguageCode $LanguageCode;
-        }
-
-        if ($PSBoundParameters.ContainsKey('OwnershipType')) {
-            $entityMetadata.OwnershipType = $OwnershipType;
-        }
-
-        if ($PSBoundParameters.ContainsKey('IsActivity')) {
-            $entityMetadata.IsActivity = $IsActivity;
-        }
-
-        if ($PSBoundParameters.ContainsKey('HasNotes')) {
-            $entityMetadata.HasNotes = $HasNotes;
-        }
-
-        if ($PSBoundParameters.ContainsKey('HasActivities')) {
-            $entityMetadata.HasActivities = $HasActivities;
-        }
-
-        if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) {
-            $entityMetadata.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
-        }
 
         $request = [Microsoft.Xrm.Sdk.Messages.UpdateEntityRequest]::new();
         $request.Entity = $entityMetadata;

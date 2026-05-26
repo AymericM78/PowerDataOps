@@ -48,17 +48,17 @@ function New-XrmTable {
     [OutputType([Microsoft.Xrm.Sdk.Metadata.EntityMetadata])]
     param
     (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
         $LogicalName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
         $DisplayName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
         $PluralName,
@@ -97,15 +97,39 @@ function New-XrmTable {
     }
     process {
         $entityMetadata = [Microsoft.Xrm.Sdk.Metadata.EntityMetadata]::new();
-        $entityMetadata.LogicalName = $LogicalName;
-        $entityMetadata.SchemaName = $LogicalName;
-        $entityMetadata.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
-        $entityMetadata.DisplayCollectionName = New-XrmLabel -Text $PluralName -LanguageCode $LanguageCode;
-        $entityMetadata.OwnershipType = $OwnershipType;
-        $entityMetadata.IsActivity = $IsActivity;
-        $entityMetadata.HasNotes = $HasNotes;
-        $entityMetadata.HasActivities = $HasActivities;
-        $entityMetadata.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
+
+        if ($PSBoundParameters.ContainsKey('LogicalName')) {
+            $entityMetadata.LogicalName = $LogicalName;
+            $entityMetadata.SchemaName = $LogicalName;
+        }
+
+        if ($PSBoundParameters.ContainsKey('DisplayName')) {
+            $entityMetadata.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
+        }
+
+        if ($PSBoundParameters.ContainsKey('PluralName')) {
+            $entityMetadata.DisplayCollectionName = New-XrmLabel -Text $PluralName -LanguageCode $LanguageCode;
+        }
+
+        if ($PSBoundParameters.ContainsKey('OwnershipType')) {
+            $entityMetadata.OwnershipType = $OwnershipType;
+        }
+
+        if ($PSBoundParameters.ContainsKey('IsActivity')) {
+            $entityMetadata.IsActivity = $IsActivity;
+        }
+
+        if ($PSBoundParameters.ContainsKey('HasNotes')) {
+            $entityMetadata.HasNotes = $HasNotes;
+        }
+
+        if ($PSBoundParameters.ContainsKey('HasActivities')) {
+            $entityMetadata.HasActivities = $HasActivities;
+        }
+
+        if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) {
+            $entityMetadata.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
+        }
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {
             $entityMetadata.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
