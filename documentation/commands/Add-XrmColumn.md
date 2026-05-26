@@ -22,6 +22,7 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 EntityLogicalName|String|2|true||Table / Entity logical name.
 Attribute|AttributeMetadata|3|true||The AttributeMetadata object defining the column.
 SolutionUniqueName|String|4|false||Solution unique name to add the column to.
+IsAuditEnabled|Boolean|5|false|False|Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateAttribute response.
@@ -30,7 +31,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateAttribute response.
 
 ```Powershell 
 Add-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] 
-[<CommonParameters>]
+[[-IsAuditEnabled] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

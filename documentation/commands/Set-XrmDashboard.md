@@ -13,6 +13,7 @@ DashboardReference|EntityReference|2|true||EntityReference of the systemform (da
 Name|String|3|false||Updated dashboard display name.
 FormXml|String|4|false||Updated dashboard form XML definition.
 Description|String|5|false||Updated description.
+SolutionUniqueName|String|6|false||Unmanaged solution unique name. When provided, the updated dashboard is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the updated systemform record.
@@ -21,13 +22,14 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated systemform record.
 
 ```Powershell 
 Set-XrmDashboard [[-XrmClient] <ServiceClient>] [-DashboardReference] <EntityReference> [[-Name] <String>] [[-FormXml] <String>] [[-Description] 
-<String>] [<CommonParameters>]
+<String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Set-XrmDashboard -DashboardReference $dashRef -Name "Updated Sales Dashboard";
+Set-XrmDashboard -DashboardReference $dashRef -FormXml $newXml -SolutionUniqueName "MySolution";
 ``` 
 
 

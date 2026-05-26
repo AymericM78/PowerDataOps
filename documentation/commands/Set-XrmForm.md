@@ -13,6 +13,7 @@ FormReference|EntityReference|2|true||EntityReference of the systemform to updat
 Name|String|3|false||Updated form display name.
 FormXml|String|4|false||Updated form XML definition.
 Description|String|5|false||Updated description.
+SolutionUniqueName|String|6|false||Unmanaged solution unique name. When provided, the updated form is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the updated systemform record.
@@ -21,13 +22,14 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated systemform record.
 
 ```Powershell 
 Set-XrmForm [[-XrmClient] <ServiceClient>] [-FormReference] <EntityReference> [[-Name] <String>] [[-FormXml] <String>] [[-Description] <String>] 
-[<CommonParameters>]
+[[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Set-XrmForm -FormReference $formRef -Name "Updated Main Form" -FormXml $newXml;
+Set-XrmForm -FormReference $formRef -FormXml $newXml -SolutionUniqueName "MySolution";
 ``` 
 
 

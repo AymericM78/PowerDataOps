@@ -13,6 +13,7 @@ AppModuleReference|EntityReference|2|true||EntityReference of the appmodule reco
 Name|String|3|false||New display name. Optional.
 Description|String|4|false||New description. Optional.
 WebResourceId|Guid|5|false||New web resource icon Id. Optional.
+SolutionUniqueName|String|6|false||Unmanaged solution unique name. When provided, the updated app is automatically added to this solution.
 
 ## Outputs
 System.Void.
@@ -21,13 +22,14 @@ System.Void.
 
 ```Powershell 
 Set-XrmAppModule [[-XrmClient] <ServiceClient>] [-AppModuleReference] <EntityReference> [[-Name] <String>] [[-Description] <String>] [[-WebResourceId] 
-<Guid>] [<CommonParameters>]
+<Guid>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Set-XrmAppModule -AppModuleReference $appRef -Name "Renamed App" -Description "Updated description";
+Set-XrmAppModule -AppModuleReference $appRef -Name "Renamed App" -SolutionUniqueName "MySolution";
 ``` 
 
 ## More informations

@@ -16,6 +16,7 @@ FormType|Int32|5|true|0|Form type (2=Main, 5=Mobile, 6=QuickCreate, 7=QuickView)
 Description|String|6|false||Form description.
 SourceReference|EntityReference|7|false||EntityReference of an existing systemform to initialize from using the InitializeFrom SDK message.
 When provided, the new form is pre-populated with values from the source form, then overridden by provided parameters.
+SolutionUniqueName|String|8|false||Unmanaged solution unique name. When provided, the created form is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
@@ -24,7 +25,7 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
 
 ```Powershell 
 Add-XrmForm [[-XrmClient] <ServiceClient>] [[-EntityLogicalName] <String>] [-Name] <String> [-FormXml] <String> [-FormType] <Int32> [[-Description] 
-<String>] [[-SourceReference] <EntityReference>] [<CommonParameters>]
+<String>] [[-SourceReference] <EntityReference>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -37,7 +38,7 @@ $ref = Add-XrmForm -Name "Sales Dashboard" -FormXml $xml -FormType 0;
 
 ```Powershell 
 $sourceRef = New-XrmEntityReference -LogicalName "systemform" -Id $existingFormId;
-$ref = Add-XrmForm -SourceReference $sourceRef -Name "Copied Form" -FormXml $xml -FormType 2;
+$ref = Add-XrmForm -SourceReference $sourceRef -Name "Copied Form" -FormXml $xml -FormType 2 -SolutionUniqueName "MySolution";
 ``` 
 
 ## More informations

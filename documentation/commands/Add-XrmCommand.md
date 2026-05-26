@@ -19,6 +19,7 @@ ContextValue|String|8|false||Context value string.
 ButtonLabelText|String|9|false||Button label text.
 TooltipTitle|String|10|false||Tooltip title text.
 Hidden|Boolean|11|false|False|Whether the command is hidden. Default: false.
+SolutionUniqueName|String|12|false||Unmanaged solution unique name. When provided, the created command is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created appaction record.
@@ -27,13 +28,15 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created appaction record.
 
 ```Powershell 
 Add-XrmCommand [[-XrmClient] <ServiceClient>] [-Name] <String> [-UniqueName] <String> [-Type] <Int32> [-Context] <Int32> [-Location] <Int32> 
-[[-ContextEntity] <String>] [[-ContextValue] <String>] [[-ButtonLabelText] <String>] [[-TooltipTitle] <String>] [[-Hidden] <Boolean>] [<CommonParameters>]
+[[-ContextEntity] <String>] [[-ContextValue] <String>] [[-ButtonLabelText] <String>] [[-TooltipTitle] <String>] [[-Hidden] <Boolean>] 
+[[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $ref = Add-XrmCommand -Name "Approve" -UniqueName "new_approve" -Type 0 -Context 1 -ContextEntity "account" -ButtonLabelText "Approve";
+$ref = Add-XrmCommand -Name "Approve" -UniqueName "new_approve" -Type 0 -Context 1 -Location 0 -ButtonLabelText "Approve" -SolutionUniqueName "MySolution";
 ``` 
 
 

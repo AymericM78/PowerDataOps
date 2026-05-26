@@ -9,9 +9,17 @@
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
-EntityMetadata|EntityMetadata|2|true||The EntityMetadata object with updated properties.
-SolutionUniqueName|String|3|false||Solution unique name context for the update.
-MergeLabels|Boolean|4|false|True|Whether to merge labels. Default: true.
+MetadataId|Guid|2|true||The MetadataId (GUID) of the table to update.
+DisplayName|String|3|false||New display name for the table.
+DisplayCollectionName|String|4|false||New plural display name for the table.
+OwnershipType|OwnershipTypes|5|false||Ownership type (UserOwned or OrganizationOwned).
+IsActivity|Boolean|6|false|False|Whether the table is an activity entity.
+HasNotes|Boolean|7|false|False|Whether the table has notes enabled.
+HasActivities|Boolean|8|false|False|Whether the table has activities enabled.
+IsAuditEnabled|Boolean|9|false|False|Whether auditing is enabled on the table.
+SolutionUniqueName|String|10|false||Solution unique name context for the update.
+MergeLabels|Boolean|11|false|True|Whether to merge labels. Default: true.
+LanguageCode|Int32|12|false|1033|Language code for labels. Default: 1033.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
@@ -19,16 +27,16 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
 ## Usage
 
 ```Powershell 
-Set-XrmTable [[-XrmClient] <ServiceClient>] [-EntityMetadata] <EntityMetadata> [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] 
+Set-XrmTable [[-XrmClient] <ServiceClient>] [-MetadataId] <Guid> [[-DisplayName] <String>] [[-DisplayCollectionName] <String>] [[-OwnershipType] {None | 
+UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-IsActivity] <Boolean>] [[-HasNotes] <Boolean>] 
+[[-HasActivities] <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [[-LanguageCode] <Int32>] 
 [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
-$metadata = Get-XrmEntityMetadata -LogicalName "account";
-$metadata.DisplayName = New-XrmLabel -Text "Customer";
-Set-XrmTable -EntityMetadata $metadata;
+Set-XrmTable -MetadataId "00000000-0000-0000-0000-000000000001" -DisplayName "Customer" -DisplayCollectionName "Customers";
 ``` 
 
 

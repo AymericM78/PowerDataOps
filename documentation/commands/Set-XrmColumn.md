@@ -13,6 +13,7 @@ EntityLogicalName|String|2|true||Table / Entity logical name.
 Attribute|AttributeMetadata|3|true||The AttributeMetadata object with updated properties.
 SolutionUniqueName|String|4|false||Solution unique name context for the update.
 MergeLabels|Boolean|5|false|True|Whether to merge labels. Default: true.
+IsAuditEnabled|Boolean|6|false|False|Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
@@ -21,7 +22,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
 
 ```Powershell 
 Set-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] 
-[[-MergeLabels] <Boolean>] [<CommonParameters>]
+[[-MergeLabels] <Boolean>] [[-IsAuditEnabled] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

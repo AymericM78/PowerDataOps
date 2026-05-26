@@ -3,6 +3,7 @@
 ## Description
 
 **Retrieve chart records from Microsoft Dataverse.** : Get savedqueryvisualization records (system charts) filtered by entity logical name.
+Use -Unpublished to also retrieve charts that are in draft state.
 
 ## Inputs
 
@@ -11,6 +12,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 EntityLogicalName|String|2|true||Table / Entity logical name to filter charts.
 Columns|String[]|3|false|@("*")|Specify expected columns to retrieve. (Default : all columns)
+Unpublished|SwitchParameter|named|false|False|When specified, uses RetrieveUnpublishedMultiple to include charts in draft (unpublished) state.
+Without this switch only published charts are returned.
 
 ## Outputs
 PSCustomObject[]. Array of savedqueryvisualization records (XrmObject).
@@ -18,13 +21,19 @@ PSCustomObject[]. Array of savedqueryvisualization records (XrmObject).
 ## Usage
 
 ```Powershell 
-Get-XrmCharts [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-Columns] <String[]>] [<CommonParameters>]
+Get-XrmCharts [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-Columns] <String[]>] [-Unpublished] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $charts = Get-XrmCharts -EntityLogicalName "account";
+``` 
+
+
+```Powershell 
+# Include unpublished drafts
+$allCharts = Get-XrmCharts -EntityLogicalName "account" -Unpublished;
 ``` 
 
 

@@ -1,4 +1,4 @@
-# Command : `Set-XrmSettingValue` 
+﻿# Command : `Set-XrmSettingValue` 
 
 ## Description
 
@@ -14,24 +14,31 @@ Value|String|3|true||Value to assign to the setting.
 AppUniqueName|String|4|false||Unique name of the model-driven app this setting applies to. Omit for environment-level setting.
 SolutionUniqueName|String|5|false||Unique name of the solution to associate the change with. Optional.
 
+## Outputs
+[System.Void]
 
 ## Usage
 
 ```Powershell 
-Set-XrmSettingValue [[-XrmClient] <ServiceClient>] [-SettingName] <String> [-Value] <String> [[-AppUniqueName] <String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Set-XrmSettingValue [[-XrmClient] <ServiceClient>] [-SettingName] <String> [-Value] <String> [[-AppUniqueName] <String>] [[-SolutionUniqueName] <String>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples
 
-```Powershell
-# Set an environment-level setting
+```Powershell 
 $xrmClient = New-XrmClient -ConnectionString $connectionString;
 $xrmClient | Set-XrmSettingValue -SettingName "OverrideAppHeaderColor" -Value "#FF0000";
-```
+``` 
 
-```Powershell
-# Set an app-scoped setting with a solution
+
+```Powershell 
 $xrmClient = New-XrmClient -ConnectionString $connectionString;
 $xrmClient | Set-XrmSettingValue -SettingName "OverrideAppHeaderColor" -Value "#FF0000" -AppUniqueName "msdyn_FieldService" -SolutionUniqueName "MySolution";
-```
+``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSettingValue.md
+
 

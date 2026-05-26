@@ -14,6 +14,7 @@ Name|String|3|false||Updated view display name.
 FetchXml|String|4|false||Updated FetchXml query.
 LayoutXml|String|5|false||Updated Layout XML.
 Description|String|6|false||Updated description.
+SolutionUniqueName|String|7|false||Unmanaged solution unique name. When provided, the updated view is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedquery record.
@@ -22,13 +23,14 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedquery record.
 
 ```Powershell 
 Set-XrmView [[-XrmClient] <ServiceClient>] [-ViewReference] <EntityReference> [[-Name] <String>] [[-FetchXml] <String>] [[-LayoutXml] <String>] 
-[[-Description] <String>] [<CommonParameters>]
+[[-Description] <String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Set-XrmView -ViewReference $viewRef -Name "All Active Accounts" -FetchXml $newFetchXml;
+Set-XrmView -ViewReference $viewRef -FetchXml $newFetchXml -SolutionUniqueName "MySolution";
 ``` 
 
 

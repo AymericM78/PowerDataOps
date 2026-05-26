@@ -15,6 +15,7 @@ FetchXml|String|4|true||FetchXml query for the view.
 LayoutXml|String|5|true||Layout XML defining column widths and order.
 QueryType|Int32|6|false|0|View query type. Default: 0 (public view).
 Description|String|7|false||View description.
+SolutionUniqueName|String|8|false||Unmanaged solution unique name. When provided, the created view is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedquery record.
@@ -23,13 +24,14 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedquery record.
 
 ```Powershell 
 Add-XrmView [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Name] <String> [-FetchXml] <String> [-LayoutXml] <String> [[-QueryType] 
-<Int32>] [[-Description] <String>] [<CommonParameters>]
+<Int32>] [[-Description] <String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $ref = Add-XrmView -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml;
+$ref = Add-XrmView -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml -SolutionUniqueName "MySolution";
 ``` 
 
 

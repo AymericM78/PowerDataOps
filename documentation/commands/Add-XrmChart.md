@@ -14,6 +14,7 @@ Name|String|3|true||Chart display name.
 DataDescription|String|4|true||Data description XML defining the chart data source.
 PresentationDescription|String|5|true||Presentation description XML defining the chart visual.
 Description|String|6|false||Chart description.
+SolutionUniqueName|String|7|false||Unmanaged solution unique name. When provided, the created chart is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedqueryvisualization record.
@@ -22,13 +23,14 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedqueryvisualizat
 
 ```Powershell 
 Add-XrmChart [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Name] <String> [-DataDescription] <String> [-PresentationDescription] 
-<String> [[-Description] <String>] [<CommonParameters>]
+<String> [[-Description] <String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $ref = Add-XrmChart -EntityLogicalName "account" -Name "Revenue Chart" -DataDescription $dataXml -PresentationDescription $presXml;
+$ref = Add-XrmChart -EntityLogicalName "account" -Name "Revenue Chart" -DataDescription $dataXml -PresentationDescription $presXml -SolutionUniqueName "MySolution";
 ``` 
 
 

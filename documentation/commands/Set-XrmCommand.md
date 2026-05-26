@@ -14,6 +14,7 @@ Name|String|3|false||Updated command display name.
 ButtonLabelText|String|4|false||Updated button label text.
 TooltipTitle|String|5|false||Updated tooltip title text.
 Hidden|Boolean|6|false|False|Updated hidden state.
+SolutionUniqueName|String|7|false||Unmanaged solution unique name. When provided, the updated command is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the updated appaction record.
@@ -22,13 +23,14 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated appaction record.
 
 ```Powershell 
 Set-XrmCommand [[-XrmClient] <ServiceClient>] [-CommandReference] <EntityReference> [[-Name] <String>] [[-ButtonLabelText] <String>] [[-TooltipTitle] 
-<String>] [[-Hidden] <Boolean>] [<CommonParameters>]
+<String>] [[-Hidden] <Boolean>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Set-XrmCommand -CommandReference $cmdRef -ButtonLabelText "Approve Request";
+Set-XrmCommand -CommandReference $cmdRef -ButtonLabelText "Approve Request" -SolutionUniqueName "MySolution";
 ``` 
 
 

@@ -131,20 +131,17 @@ function Add-XrmTable {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $entityMetadata = [Microsoft.Xrm.Sdk.Metadata.EntityMetadata]::new();
-        $entityMetadata.LogicalName = $LogicalName;
-        $entityMetadata.SchemaName = $LogicalName;
-        $entityMetadata.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
-        $entityMetadata.DisplayCollectionName = New-XrmLabel -Text $PluralName -LanguageCode $LanguageCode;
-        $entityMetadata.OwnershipType = $OwnershipType;
-        $entityMetadata.IsActivity = $IsActivity;
-        $entityMetadata.HasNotes = $HasNotes;
-        $entityMetadata.HasActivities = $HasActivities;
-        $entityMetadata.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
-
-        if (-not [string]::IsNullOrWhiteSpace($Description)) {
-            $entityMetadata.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
-        }
+        $entityMetadata = New-XrmTable `
+            -LogicalName $LogicalName `
+            -DisplayName $DisplayName `
+            -PluralName $PluralName `
+            -Description $Description `
+            -OwnershipType $OwnershipType `
+            -HasNotes $HasNotes `
+            -HasActivities $HasActivities `
+            -IsActivity $IsActivity `
+            -IsAuditEnabled $IsAuditEnabled `
+            -LanguageCode $LanguageCode;
 
         $primaryAttribute = [Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata]::new();
         $primaryAttribute.SchemaName = $PrimaryAttributeSchemaName;

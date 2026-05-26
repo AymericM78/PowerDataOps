@@ -20,8 +20,9 @@ IsActivity|Boolean|9|false|False|Whether the table is an activity entity. Defaul
 PrimaryAttributeSchemaName|String|10|true||Schema name for the primary attribute.
 PrimaryAttributeDisplayName|String|11|true||Display name for the primary attribute.
 PrimaryAttributeMaxLength|Int32|12|false|100|Max length of the primary attribute. Default: 100.
-SolutionUniqueName|String|13|false||Solution unique name to add the table to.
-LanguageCode|Int32|14|false|1033|Language code for labels. Default: 1033.
+IsAuditEnabled|Boolean|13|false|False|Whether auditing is enabled on the table. Default: false.
+SolutionUniqueName|String|14|false||Solution unique name to add the table to.
+LanguageCode|Int32|15|false|1033|Language code for labels. Default: 1033.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
@@ -32,7 +33,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] 
 [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] 
 [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [-PrimaryAttributeDisplayName] <String> 
-[[-PrimaryAttributeMaxLength] <Int32>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [<CommonParameters>]
+[[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples

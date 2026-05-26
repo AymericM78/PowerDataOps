@@ -12,6 +12,7 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Name|String|2|true||Dashboard display name.
 FormXml|String|3|true||Dashboard form XML definition.
 Description|String|4|false||Dashboard description.
+SolutionUniqueName|String|5|false||Unmanaged solution unique name. When provided, the created dashboard is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
@@ -19,13 +20,15 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
 ## Usage
 
 ```Powershell 
-Add-XrmDashboard [[-XrmClient] <ServiceClient>] [-Name] <String> [-FormXml] <String> [[-Description] <String>] [<CommonParameters>]
+Add-XrmDashboard [[-XrmClient] <ServiceClient>] [-Name] <String> [-FormXml] <String> [[-Description] <String>] [[-SolutionUniqueName] <String>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $ref = Add-XrmDashboard -Name "Sales Dashboard" -FormXml $xml;
+$ref = Add-XrmDashboard -Name "Sales Dashboard" -FormXml $xml -SolutionUniqueName "MySolution";
 ``` 
 
 

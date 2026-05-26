@@ -11,6 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 SiteMapReference|EntityReference|2|true||EntityReference of the sitemap record to update.
 SiteMapXml|String|3|true||The sitemap XML content defining Areas, Groups, and SubAreas.
+SolutionUniqueName|String|4|false||Unmanaged solution unique name. When provided, the updated sitemap is automatically added to this solution.
 
 ## Outputs
 System.Void.
@@ -18,7 +19,8 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Set-XrmSiteMap [[-XrmClient] <ServiceClient>] [-SiteMapReference] <EntityReference> [-SiteMapXml] <String> [<CommonParameters>]
+Set-XrmSiteMap [[-XrmClient] <ServiceClient>] [-SiteMapReference] <EntityReference> [-SiteMapXml] <String> [[-SolutionUniqueName] <String>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples
@@ -27,6 +29,7 @@ Set-XrmSiteMap [[-XrmClient] <ServiceClient>] [-SiteMapReference] <EntityReferen
 $sitemaps = Get-XrmSiteMaps -Name "My SiteMap";
 $sitemapRef = $sitemaps[0].Reference;
 Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml;
+Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml -SolutionUniqueName "MySolution";
 ``` 
 
 ## More informations

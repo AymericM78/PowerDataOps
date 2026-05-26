@@ -14,6 +14,7 @@ Name|String|3|false||Updated chart display name.
 DataDescription|String|4|false||Updated data description XML.
 PresentationDescription|String|5|false||Updated presentation description XML.
 Description|String|6|false||Updated description.
+SolutionUniqueName|String|7|false||Unmanaged solution unique name. When provided, the updated chart is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedqueryvisualization record.
@@ -22,13 +23,14 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated savedqueryvisualizat
 
 ```Powershell 
 Set-XrmChart [[-XrmClient] <ServiceClient>] [-ChartReference] <EntityReference> [[-Name] <String>] [[-DataDescription] <String>] 
-[[-PresentationDescription] <String>] [[-Description] <String>] [<CommonParameters>]
+[[-PresentationDescription] <String>] [[-Description] <String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Set-XrmChart -ChartReference $chartRef -Name "Updated Revenue Chart";
+Set-XrmChart -ChartReference $chartRef -DataDescription $newXml -SolutionUniqueName "MySolution";
 ``` 
 
 
