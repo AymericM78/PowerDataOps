@@ -82,10 +82,10 @@ function Set-XrmTableIcon {
         };
         if (-not $PSBoundParameters.ContainsKey('EntityMetadataId')) {
             $entityMetadata = $XrmClient | Get-XrmEntityMetadata -LogicalName $EntityLogicalName -Filter ([Microsoft.Xrm.Sdk.Metadata.EntityFilters]::Entity);
-            $setTableParameters['EntityMetadataId'] = $entityMetadata.MetadataId;
+            $setTableParameters['MetadataId'] = $entityMetadata.MetadataId;
         }
         else {
-            $setTableParameters['EntityMetadataId'] = $EntityMetadataId;
+            $setTableParameters['MetadataId'] = $EntityMetadataId;
         }
         
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
