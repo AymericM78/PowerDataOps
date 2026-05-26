@@ -20,6 +20,9 @@
     .PARAMETER MergeLabels
     Whether to merge labels. Default: true.
 
+    .PARAMETER IsAuditEnabled
+    Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
 
@@ -53,13 +56,21 @@ function Set-XrmColumn {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $MergeLabels = $true
+        $MergeLabels = $true,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsAuditEnabled
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) {
+            $Attribute.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
+        }
+
         $request = [Microsoft.Xrm.Sdk.Messages.UpdateAttributeRequest]::new();
         $request.EntityName = $EntityLogicalName;
         $request.Attribute = $Attribute;

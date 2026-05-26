@@ -17,6 +17,9 @@
     .PARAMETER MergeLabels
     Whether to merge labels. Default: true.
 
+    .PARAMETER IsAuditEnabled
+    Whether auditing is enabled on the table. When specified, overrides the value set on the EntityMetadata.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
 
@@ -45,13 +48,21 @@ function Set-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $MergeLabels = $true
+        $MergeLabels = $true,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsAuditEnabled
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) {
+            $EntityMetadata.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
+        }
+
         $request = [Microsoft.Xrm.Sdk.Messages.UpdateEntityRequest]::new();
         $request.Entity = $EntityMetadata;
         $request.MergeLabels = $MergeLabels;

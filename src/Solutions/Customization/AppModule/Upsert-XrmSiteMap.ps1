@@ -1,15 +1,18 @@
 <#
     .SYNOPSIS
-    Create a new sitemap in Microsoft Dataverse.
+    Create or update a sitemap in Microsoft Dataverse.
 
     .DESCRIPTION
-    Create a new sitemap record with the given navigation XML. Sitemaps define the navigation structure of model-driven apps.
+    Upsert a sitemap record by Id using the Upsert SDK message. If the record exists it is updated; otherwise it is created with the provided Id. Delegates to Upsert-XrmRecord.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
+    .PARAMETER Id
+    Sitemap Id used as the upsert key.
+
     .PARAMETER Name
-    Display name for the sitemap.
+    Display name and unique name for the sitemap.
 
     .PARAMETER SiteMapXml
     The sitemap XML content defining Areas, Groups, and SubAreas.
@@ -18,16 +21,12 @@
     Solution unique name to add the sitemap to. Optional.
 
     .OUTPUTS
-    Microsoft.Xrm.Sdk.EntityReference. Reference to the created sitemap record.
+    Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted sitemap record.
 
     .EXAMPLE
-    $xml = '<SiteMap><Area Id="MyArea" Title="My Area"><Group Id="MyGroup" Title="My Group"><SubArea Id="MySub" Entity="account" /></Group></Area></SiteMap>';
-    $sitemapRef = Add-XrmSiteMap -Name "Custom SiteMap" -SiteMapXml $xml;
-
-    .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
+    $sitemapRef = Upsert-XrmSiteMap -Id $sitemapId -Name "Custom SiteMap" -SiteMapXml $xml -SolutionUniqueName "MySolution";
 #>
-function Add-XrmSiteMap {
+function Upsert-XrmSiteMap {
     [CmdletBinding()]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
@@ -35,6 +34,11 @@ function Add-XrmSiteMap {
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
+
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [Guid]
+        $Id,
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -55,19 +59,21 @@ function Add-XrmSiteMap {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $record = New-XrmEntity -LogicalName "sitemap" -Attributes @{
-            "sitemapname" = $Name;
+        $attributes = @{
+            "sitemapname"       = $Name;
             "sitemapnameunique" = $Name;
-            "sitemapxml"  = $SiteMapXml;
+            "sitemapxml"        = $SiteMapXml;
         };
 
-        $record.Id = $XrmClient | Add-XrmRecord -Record $record;
+        $record = New-XrmEntity -LogicalName "sitemap" -Id $Id -Attributes $attributes;
+
+        $XrmClient | Upsert-XrmRecord -Record $record | Out-Null;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $record.Id -ComponentType 62 -DoNotIncludeSubcomponents $false | Out-Null;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $Id -ComponentType 62 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
-        $record.ToEntityReference();
+        New-XrmEntityReference -LogicalName "sitemap" -Id $Id;
     }
     end {
         $StopWatch.Stop();
@@ -75,4 +81,4 @@ function Add-XrmSiteMap {
     }
 }
 
-Export-ModuleMember -Function Add-XrmSiteMap -Alias *;
+Export-ModuleMember -Function Upsert-XrmSiteMap -Alias *;

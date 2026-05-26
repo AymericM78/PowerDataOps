@@ -27,6 +27,9 @@
     .PARAMETER SolutionUniqueName
     Solution unique name to add the column to.
 
+    .PARAMETER IsAuditEnabled
+    Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The CreateAttribute response.
 
@@ -66,7 +69,11 @@ function Add-XrmColumn {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsAuditEnabled
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -75,6 +82,10 @@ function Add-XrmColumn {
     process {
         if ($Attribute -is [Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata]) {
             throw "LookupAttributeMetadata cannot be created with Add-XrmColumn. New-XrmLookupColumn only builds metadata for relationship-based lookup creation. Use Add-XrmOneToManyRelationship for a single-target lookup or Add-XrmPolymorphicLookup for a multi-target lookup.";
+        }
+
+        if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) {
+            $Attribute.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
         }
 
         $request = [Microsoft.Xrm.Sdk.Messages.CreateAttributeRequest]::new();

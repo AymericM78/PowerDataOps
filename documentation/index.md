@@ -207,6 +207,7 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [Add-XrmAppComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppComponent.md)|Add components to a model-driven app.<br/>Add one or more components (tables, forms, views, dashboards, BPF, sitemap, etc.) to an existing model-driven app using the AddAppComponents SDK action.
+[Add-XrmAppComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppComponents.md)|Add multiple components to a model-driven app in a single SDK call.<br/>Batch version of Add-XrmAppComponent that sends all references in a single AddAppComponents request.
 [Add-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModule.md)|Create a new model-driven app in Microsoft Dataverse.<br/>Create a new appmodule record (model-driven app) with the specified name and properties.
 [Add-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModuleRoles.md)|Assign security roles to a model-driven app.<br/>Grant one or more security roles access to a model-driven app via the<br/>appmoduleroles_association N:N relationship. Users must belong to one of the<br/>assigned roles to see the app in the app picker.
 [Add-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSiteMap.md)|Create a new sitemap in Microsoft Dataverse.<br/>Create a new sitemap record with the given navigation XML. Sitemaps define the navigation structure of model-driven apps.
@@ -215,12 +216,15 @@ Command|Synopsis
 [Get-XrmAppModules](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppModules.md)|Retrieve model-driven app records from Microsoft Dataverse.<br/>Get appmodule records (model-driven apps) with optional name filter.<br/>Use -Unpublished to also retrieve apps that are in draft state.
 [Get-XrmSiteMaps](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSiteMaps.md)|Retrieve sitemap records from Microsoft Dataverse.<br/>Get sitemap records with optional name filter. Sitemaps define the navigation structure of model-driven apps.
 [Remove-XrmAppComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppComponent.md)|Remove components from a model-driven app.<br/>Remove one or more components from an existing model-driven app using the RemoveAppComponents SDK action.
+[Remove-XrmAppComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppComponents.md)|Remove multiple components from a model-driven app in a single SDK call.<br/>Batch version of Remove-XrmAppComponent that sends all references in a single RemoveAppComponents request.
 [Remove-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModule.md)|Delete a model-driven app from Microsoft Dataverse.<br/>Remove an appmodule record (model-driven app).
 [Remove-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModuleRoles.md)|Remove security roles from a model-driven app.<br/>Revoke access to a model-driven app for one or more security roles by removing<br/>the association via the appmoduleroles_association N:N relationship.
 [Set-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppModule.md)|Update a model-driven app in Microsoft Dataverse.<br/>Update appmodule record properties (name, description, icon).
 [Set-XrmAppSettingValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppSettingValue.md)|Set model-driven app setting value.<br/>Set a named setting for a specific model-driven app by calling Set-XrmSettingValue with the app scope.
 [Set-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSiteMap.md)|Update a sitemap in Microsoft Dataverse.<br/>Update the SiteMapXml attribute of an existing sitemap record. The sitemap defines the navigation structure of a model-driven app.
 [Test-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmAppModule.md)|Validate a model-driven app.<br/>Check a model-driven app for missing dependencies using the ValidateApp SDK function.
+[Upsert-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmAppModule.md)|Create or update a model-driven app in Microsoft Dataverse.<br/>Look up an existing appmodule by uniquename. If found, update it; otherwise create a new one.
+[Upsert-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmSiteMap.md)|Create or update a sitemap in Microsoft Dataverse.<br/>Look up an existing sitemap by unique name. If found, update its SiteMapXml; otherwise create a new sitemap.
 # `Charts` commands
 
 Command|Synopsis
@@ -229,6 +233,7 @@ Command|Synopsis
 [Get-XrmCharts](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCharts.md)|Retrieve chart records from Microsoft Dataverse.<br/>Get savedqueryvisualization records (system charts) filtered by entity logical name.
 [Remove-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmChart.md)|Delete a chart from Microsoft Dataverse.<br/>Delete a savedqueryvisualization record (system chart).
 [Set-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmChart.md)|Update a chart in Microsoft Dataverse.<br/>Update an existing savedqueryvisualization record (system chart).
+[Upsert-XrmChart](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmChart.md)|Create or update a chart in Microsoft Dataverse.<br/>Look up an existing savedqueryvisualization by entity and name. If found, update it; otherwise create a new one.
 # `Commands` commands
 
 Command|Synopsis
@@ -246,6 +251,7 @@ Command|Synopsis
 [Get-XrmDashboards](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDashboards.md)|Retrieve dashboard records from Microsoft Dataverse.<br/>Get systemform records filtered to dashboards (type = 0). Delegates to Get-XrmForms.
 [Remove-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmDashboard.md)|Delete a dashboard from Microsoft Dataverse.<br/>Delete a systemform record (dashboard). Delegates to Remove-XrmForm.
 [Set-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmDashboard.md)|Update a dashboard in Microsoft Dataverse.<br/>Update an existing systemform record (dashboard). Delegates to Set-XrmForm.
+[Upsert-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmDashboard.md)|Create or update a dashboard in Microsoft Dataverse.<br/>Look up an existing systemform of type dashboard by name. If found, update it; otherwise create a new one.
 # `Forms` commands
 
 Command|Synopsis
@@ -259,6 +265,7 @@ Command|Synopsis
 [Remove-XrmFormControl](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmFormControl.md)|Remove a PCF custom control from a form field.<br/>Remove a Power Apps Component Framework (PCF) custom control binding from a field in a model-driven app form<br/>by modifying the FormXML of the systemform record.
 [Remove-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmView.md)|Delete a view from Microsoft Dataverse.<br/>Delete a savedquery record (system view).
 [Set-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmForm.md)|Update a form in Microsoft Dataverse.<br/>Update an existing systemform record.
+[Upsert-XrmForm](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmForm.md)|Create or update a form in Microsoft Dataverse.<br/>Look up an existing systemform by entity, name and form type. If found, update it; otherwise create a new one.
 # `Ribbon` commands
 
 Command|Synopsis
@@ -270,6 +277,7 @@ Command|Synopsis
 -------|-----------
 [Add-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmView.md)|Create a new view in Microsoft Dataverse.<br/>Create a new savedquery record (system view).
 [Set-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmView.md)|Update a view in Microsoft Dataverse.<br/>Update an existing savedquery record (system view).
+[Upsert-XrmView](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmView.md)|Create or update a view in Microsoft Dataverse.<br/>Look up an existing savedquery by entity, name and query type. If found, update it; otherwise create a new one.
 # `Layers` commands
 
 Command|Synopsis

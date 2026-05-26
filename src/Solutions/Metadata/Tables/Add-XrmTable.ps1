@@ -41,6 +41,9 @@
     .PARAMETER PrimaryAttributeMaxLength
     Max length of the primary attribute. Default: 100.
 
+    .PARAMETER IsAuditEnabled
+    Whether auditing is enabled on the table. Default: false.
+
     .PARAMETER SolutionUniqueName
     Solution unique name to add the table to.
 
@@ -112,6 +115,10 @@ function Add-XrmTable {
         $PrimaryAttributeMaxLength = 100,
 
         [Parameter(Mandatory = $false)]
+        [bool]
+        $IsAuditEnabled = $false,
+
+        [Parameter(Mandatory = $false)]
         [string]
         $SolutionUniqueName,
 
@@ -133,6 +140,7 @@ function Add-XrmTable {
         $entityMetadata.IsActivity = $IsActivity;
         $entityMetadata.HasNotes = $HasNotes;
         $entityMetadata.HasActivities = $HasActivities;
+        $entityMetadata.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {
             $entityMetadata.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
