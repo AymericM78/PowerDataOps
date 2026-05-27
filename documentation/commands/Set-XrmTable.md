@@ -21,6 +21,7 @@ IsAuditEnabled|Boolean|10|false|False|Whether auditing is enabled on the table.
 SolutionUniqueName|String|11|false||Solution unique name context for the update.
 MergeLabels|Boolean|12|false|True|Whether to merge labels. Default: true.
 LanguageCode|Int32|13|false|1033|Language code for labels. Default: 1033.
+IconVectorName|String|14|false||Name of the vector icon to use for the table.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
@@ -31,7 +32,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
 Set-XrmTable [[-XrmClient] <ServiceClient>] [-MetadataId] <Guid> [[-DisplayName] <String>] [[-DisplayCollectionName] <String>] [[-Description] <String>] 
 [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-IsActivity] <Boolean>] 
 [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] 
-[[-LanguageCode] <Int32>] [<CommonParameters>]
+[[-LanguageCode] <Int32>] [[-IconVectorName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

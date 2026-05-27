@@ -18,6 +18,7 @@ Options|OptionMetadata[]|named|true||Local option metadata objects to embed dire
 StartingValue|Int32|named|false|100000000|Starting integer value for local options. Default: 100000000.
 Description|String|named|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|named|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|named|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -27,13 +28,16 @@ Microsoft.Xrm.Sdk.Metadata.MultiSelectPicklistAttributeMetadata.
 
 ```Powershell 
 New-XrmMultiChoiceColumn -LogicalName <String> -SchemaName <String> -DisplayName <String> -GlobalOptionSetName <String> [-Description <String>] 
-[-RequiredLevel {None | SystemRequired | ApplicationRequired | Recommended}] [-LanguageCode <Int32>] [<CommonParameters>]
+[-RequiredLevel {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] [-LanguageCode <Int32>] 
+[<CommonParameters>]
 
 New-XrmMultiChoiceColumn -LogicalName <String> -SchemaName <String> -DisplayName <String> -LocalOptions <String[]> [-StartingValue <Int32>] [-Description 
-<String>] [-RequiredLevel {None | SystemRequired | ApplicationRequired | Recommended}] [-LanguageCode <Int32>] [<CommonParameters>]
+<String>] [-RequiredLevel {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] [-LanguageCode <Int32>] 
+[<CommonParameters>]
 
 New-XrmMultiChoiceColumn -LogicalName <String> -SchemaName <String> -DisplayName <String> -Options <OptionMetadata[]> [-Description <String>] 
-[-RequiredLevel {None | SystemRequired | ApplicationRequired | Recommended}] [-LanguageCode <Int32>] [<CommonParameters>]
+[-RequiredLevel {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] [-LanguageCode <Int32>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

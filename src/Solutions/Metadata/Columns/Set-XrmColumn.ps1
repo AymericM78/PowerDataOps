@@ -22,6 +22,9 @@
 
     .PARAMETER IsAuditEnabled
     Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
+    
+    .PARAMETER EnableForInteractiveExperience
+    Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
@@ -60,7 +63,11 @@ function Set-XrmColumn {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $IsAuditEnabled
+        $IsAuditEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $EnableForInteractiveExperience
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -69,6 +76,11 @@ function Set-XrmColumn {
     process {
         if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) {
             $Attribute.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
+        }
+
+        if ($EnableForInteractiveExperience.IsPresent) {
+            $Attribute.IsGlobalFilterEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($true);
+            $Attribute.IsSortableEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($true);
         }
 
         $request = [Microsoft.Xrm.Sdk.Messages.UpdateAttributeRequest]::new();

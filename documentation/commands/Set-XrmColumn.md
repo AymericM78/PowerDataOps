@@ -14,6 +14,7 @@ Attribute|AttributeMetadata|3|true||The AttributeMetadata object with updated pr
 SolutionUniqueName|String|4|false||Solution unique name context for the update.
 MergeLabels|Boolean|5|false|True|Whether to merge labels. Default: true.
 IsAuditEnabled|Boolean|6|false|False|Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
@@ -22,7 +23,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
 
 ```Powershell 
 Set-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] 
-[[-MergeLabels] <Boolean>] [[-IsAuditEnabled] <Boolean>] [<CommonParameters>]
+[[-MergeLabels] <Boolean>] [[-IsAuditEnabled] <Boolean>] [-EnableForInteractiveExperience] [<CommonParameters>]
 ``` 
 
 ## Examples

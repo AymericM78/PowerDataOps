@@ -15,6 +15,7 @@ DisplayName|String|3|true||Column display name.
 MaxSizeInKb|Int32|4|false|10240|Max file size in kilobytes.
 Description|String|5|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|6|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|7|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -24,7 +25,8 @@ Microsoft.Xrm.Sdk.Metadata.FileAttributeMetadata.
 
 ```Powershell 
 New-XrmFileColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [[-MaxSizeInKb] <Int32>] [[-Description] <String>] 
-[[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] <Int32>] [<CommonParameters>]
+[[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] [[-LanguageCode] <Int32>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

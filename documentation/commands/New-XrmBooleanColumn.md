@@ -17,6 +17,7 @@ TrueLabel|String|5|false|Yes|Label used for the true option. Default: Yes.
 FalseLabel|String|6|false|No|Label used for the false option. Default: No.
 Description|String|7|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|8|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|9|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -26,8 +27,8 @@ Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata.
 
 ```Powershell 
 New-XrmBooleanColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [[-DefaultValue] <Boolean>] [[-TrueLabel] <String>] 
-[[-FalseLabel] <String>] [[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] 
-<Int32>] [<CommonParameters>]
+[[-FalseLabel] <String>] [[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] 
+[-EnableForInteractiveExperience] [[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples

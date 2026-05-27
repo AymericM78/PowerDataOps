@@ -17,6 +17,7 @@ CanStoreFullImage|SwitchParameter|named|false|False|Indicates whether the full i
 IsPrimaryImage|SwitchParameter|named|false|False|Indicates whether the column is the primary image.
 Description|String|5|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|6|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|7|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -26,7 +27,8 @@ Microsoft.Xrm.Sdk.Metadata.ImageAttributeMetadata.
 
 ```Powershell 
 New-XrmImageColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [[-MaxSizeInKb] <Int32>] [-CanStoreFullImage] [-IsPrimaryImage] 
-[[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] <Int32>] [<CommonParameters>]
+[[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] 
+[[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples

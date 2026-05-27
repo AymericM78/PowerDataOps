@@ -16,6 +16,7 @@ Format|String|4|false|DateOnly|Date format. DateOnly or DateAndTime.
 Behavior|String|5|false||DateTime behavior. UserLocal, DateOnly, or TimeZoneIndependent.
 Description|String|6|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|7|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|8|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -25,7 +26,8 @@ Microsoft.Xrm.Sdk.Metadata.DateTimeAttributeMetadata.
 
 ```Powershell 
 New-XrmDateColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [[-Format] <String>] [[-Behavior] <String>] [[-Description] 
-<String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] <Int32>] [<CommonParameters>]
+<String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] [[-LanguageCode] <Int32>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples

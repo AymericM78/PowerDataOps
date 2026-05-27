@@ -23,6 +23,7 @@ PrimaryAttributeMaxLength|Int32|12|false|100|Max length of the primary attribute
 IsAuditEnabled|Boolean|13|false|False|Whether auditing is enabled on the table. Default: false.
 SolutionUniqueName|String|14|false||Solution unique name to add the table to.
 LanguageCode|Int32|15|false|1033|Language code for labels. Default: 1033.
+IconVectorName|String|16|false||Name of the vector icon to use for the table.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
@@ -33,7 +34,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] 
 [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] 
 [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [-PrimaryAttributeDisplayName] <String> 
-[[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [<CommonParameters>]
+[[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [[-IconVectorName] 
+<String>] [<CommonParameters>]
 ``` 
 
 ## Examples

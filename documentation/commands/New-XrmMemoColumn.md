@@ -15,6 +15,7 @@ DisplayName|String|3|true||Column display name.
 MaxLength|Int32|4|true|0|Maximum text length.
 Description|String|5|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|6|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|7|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -24,7 +25,7 @@ Microsoft.Xrm.Sdk.Metadata.MemoAttributeMetadata.
 
 ```Powershell 
 New-XrmMemoColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [-MaxLength] <Int32> [[-Description] <String>] [[-RequiredLevel] 
-{None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] <Int32>] [<CommonParameters>]
+{None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] [[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples

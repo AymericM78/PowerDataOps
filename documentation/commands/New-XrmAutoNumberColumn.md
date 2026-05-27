@@ -16,6 +16,7 @@ AutoNumberFormat|String|4|true||Auto-number format string.
 MaxLength|Int32|5|false|100|Maximum text length. Default: 100.
 Description|String|6|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|7|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|8|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -25,7 +26,8 @@ Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata.
 
 ```Powershell 
 New-XrmAutoNumberColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [-AutoNumberFormat] <String> [[-MaxLength] <Int32>] 
-[[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] <Int32>] [<CommonParameters>]
+[[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] 
+[[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples

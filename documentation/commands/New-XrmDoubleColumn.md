@@ -17,6 +17,7 @@ MinValue|Double|5|false|0|Minimum accepted value.
 MaxValue|Double|6|false|1000000000|Maximum accepted value.
 Description|String|7|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|8|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|9|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -26,8 +27,8 @@ Microsoft.Xrm.Sdk.Metadata.DoubleAttributeMetadata.
 
 ```Powershell 
 New-XrmDoubleColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [[-Precision] <Int32>] [[-MinValue] <Double>] [[-MaxValue] 
-<Double>] [[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] <Int32>] 
-[<CommonParameters>]
+<Double>] [[-Description] <String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] 
+[[-LanguageCode] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples

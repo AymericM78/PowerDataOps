@@ -16,6 +16,7 @@ MinValue|Int32|4|false|0|Minimum accepted value.
 MaxValue|Int32|5|false|2147483647|Maximum accepted value.
 Description|String|6|false||Column description label.
 RequiredLevel|AttributeRequiredLevel|7|false|None|Required level. Default: None.
+EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 LanguageCode|Int32|8|false|1033|Label language code. Default: 1033.
 
 ## Outputs
@@ -25,7 +26,8 @@ Microsoft.Xrm.Sdk.Metadata.IntegerAttributeMetadata.
 
 ```Powershell 
 New-XrmIntegerColumn [-LogicalName] <String> [-SchemaName] <String> [-DisplayName] <String> [[-MinValue] <Int32>] [[-MaxValue] <Int32>] [[-Description] 
-<String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [[-LanguageCode] <Int32>] [<CommonParameters>]
+<String>] [[-RequiredLevel] {None | SystemRequired | ApplicationRequired | Recommended}] [-EnableForInteractiveExperience] [[-LanguageCode] <Int32>] 
+[<CommonParameters>]
 ``` 
 
 ## Examples
