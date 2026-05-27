@@ -15,7 +15,7 @@
     Form display name.
 
     .PARAMETER Labels
-    Hashtable of language code to display name. Alternative to -Name. The stored 'name' attribute is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Main Form"; 1036 = "Formulaire principal" }
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' attribute is resolved from -LanguageCode (fallback: lowest language code), and every provided language is persisted as a real translation via SetLocLabels so each user sees the label in their own language. Example: @{ 1033 = "Main Form"; 1036 = "Formulaire principal" }
 
     .PARAMETER LanguageCode
     Language code used to pick the stored 'name' from -Labels. Default: 1033.
@@ -142,12 +142,18 @@ function Add-XrmForm {
         }
 
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+        $formReference = New-XrmEntityReference -LogicalName "systemform" -Id $id;
+
+        # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $formReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 60 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
-        New-XrmEntityReference -LogicalName "systemform" -Id $id;
+        $formReference;
     }
     end {
         $StopWatch.Stop();

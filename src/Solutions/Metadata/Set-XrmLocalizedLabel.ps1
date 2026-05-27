@@ -56,19 +56,18 @@ function Set-XrmLocalizedLabel {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $localizedLabels = @();
+        # SetLocLabels expects 'Labels' to be a LocalizedLabel[] (NOT a Label wrapper).
+        # Build a strongly-typed array so the SDK ParameterCollection accepts it
+        # (a raw PowerShell [object[]] would fail the type check).
+        $localizedLabels = [System.Collections.Generic.List[Microsoft.Xrm.Sdk.LocalizedLabel]]::new();
         foreach ($langCode in $Labels.Keys) {
-            $localizedLabels += New-Object "Microsoft.Xrm.Sdk.LocalizedLabel" -ArgumentList @($Labels[$langCode], [int]$langCode);
-        }
-        $labelCollection = New-Object "Microsoft.Xrm.Sdk.Label";
-        foreach ($ll in $localizedLabels) {
-            $labelCollection.LocalizedLabels.Add($ll);
+            $localizedLabels.Add((New-Object "Microsoft.Xrm.Sdk.LocalizedLabel" -ArgumentList @($Labels[$langCode], [int]$langCode)));
         }
 
         $request = New-XrmRequest -Name "SetLocLabels";
         $request | Add-XrmRequestParameter -Name "EntityMoniker" -Value $EntityMoniker | Out-Null;
         $request | Add-XrmRequestParameter -Name "AttributeName" -Value $AttributeName | Out-Null;
-        $request | Add-XrmRequestParameter -Name "Labels" -Value $labelCollection | Out-Null;
+        $request | Add-XrmRequestParameter -Name "Labels" -Value $localizedLabels.ToArray() | Out-Null;
 
         $response = $XrmClient | Invoke-XrmRequest -Request $request;
         $response;

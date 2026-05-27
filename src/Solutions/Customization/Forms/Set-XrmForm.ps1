@@ -96,6 +96,11 @@ function Set-XrmForm {
 
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
 
+        # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
+        if ($PSBoundParameters.ContainsKey('Labels')) {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $FormReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
+
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $FormReference.Id -ComponentType 60 -DoNotIncludeSubcomponents $false | Out-Null;
         }

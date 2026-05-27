@@ -115,12 +115,18 @@ function Upsert-XrmForm {
         $record = New-XrmEntity -LogicalName "systemform" -Id $Id -Attributes $attributes;
 
         $XrmClient | Upsert-XrmRecord -Record $record | Out-Null;
+        $formReference = New-XrmEntityReference -LogicalName "systemform" -Id $Id;
+
+        # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $formReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $Id -ComponentType 60 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
-        New-XrmEntityReference -LogicalName "systemform" -Id $Id;
+        $formReference;
     }
     end {
         $StopWatch.Stop();

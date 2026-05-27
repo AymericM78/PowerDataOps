@@ -114,12 +114,18 @@ function Upsert-XrmChart {
         $record = New-XrmEntity -LogicalName "savedqueryvisualization" -Id $Id -Attributes $attributes;
 
         $XrmClient | Upsert-XrmRecord -Record $record | Out-Null;
+        $chartReference = New-XrmEntityReference -LogicalName "savedqueryvisualization" -Id $Id;
+
+        # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $chartReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $Id -ComponentType 59 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
-        New-XrmEntityReference -LogicalName "savedqueryvisualization" -Id $Id;
+        $chartReference;
     }
     end {
         $StopWatch.Stop();

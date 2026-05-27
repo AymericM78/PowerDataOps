@@ -15,7 +15,7 @@
     View display name.
 
     .PARAMETER Labels
-    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Active accounts"; 1036 = "Comptes actifs" }
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and every provided language is persisted as a real translation via SetLocLabels so each user sees the label in their own language. Example: @{ 1033 = "Active accounts"; 1036 = "Comptes actifs" }
 
     .PARAMETER LanguageCode
     Language code used to pick the stored 'name' from -Labels. Default: 1033.
@@ -117,12 +117,18 @@ function Add-XrmView {
         }
 
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+        $viewReference = New-XrmEntityReference -LogicalName "savedquery" -Id $id;
+
+        # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $viewReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 26 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
-        New-XrmEntityReference -LogicalName "savedquery" -Id $id;
+        $viewReference;
     }
     end {
         $StopWatch.Stop();

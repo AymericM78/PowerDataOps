@@ -15,7 +15,7 @@
     Updated dashboard display name.
 
     .PARAMETER Labels
-    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided.
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and every provided language is persisted as a real translation via SetLocLabels (delegated to Set-XrmForm). -Name takes precedence for the base 'name' if both are provided.
 
     .PARAMETER LanguageCode
     Language code used to pick the stored 'name' from -Labels. Default: 1033.

@@ -15,7 +15,7 @@
     Chart display name.
 
     .PARAMETER Labels
-    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Revenue"; 1036 = "Chiffre d'affaires" }
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and every provided language is persisted as a real translation via SetLocLabels so each user sees the label in their own language. Example: @{ 1033 = "Revenue"; 1036 = "Chiffre d'affaires" }
 
     .PARAMETER LanguageCode
     Language code used to pick the stored 'name' from -Labels. Default: 1033.
@@ -109,12 +109,18 @@ function Add-XrmChart {
         }
 
         $id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+        $chartReference = New-XrmEntityReference -LogicalName "savedqueryvisualization" -Id $id;
+
+        # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $chartReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $id -ComponentType 59 -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
-        New-XrmEntityReference -LogicalName "savedqueryvisualization" -Id $id;
+        $chartReference;
     }
     end {
         $StopWatch.Stop();

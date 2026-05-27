@@ -106,6 +106,11 @@ function Set-XrmView {
 
         Update-XrmRecord -XrmClient $XrmClient -Record $record;
 
+        # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
+        if ($PSBoundParameters.ContainsKey('Labels')) {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $ViewReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
+
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $ViewReference.Id -ComponentType 26 -DoNotIncludeSubcomponents $false | Out-Null;
         }
