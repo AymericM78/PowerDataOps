@@ -11,6 +11,12 @@
     .PARAMETER Name
     Display name for the app.
 
+    .PARAMETER Labels
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "My App"; 1036 = "Mon application" }
+
+    .PARAMETER LanguageCode
+    Language code used to pick the stored 'name' from -Labels. Default: 1033.
+
     .PARAMETER UniqueName
     Unique name for the app (auto-prefixed with publisher prefix).
 
@@ -51,11 +57,14 @@
     $pubRef = Get-XrmPublisher -PublisherUniqueName "mypublisher";
     $appRef = Add-XrmAppModule -Name "My App" -UniqueName "myapp" -PublisherReference $pubRef.Reference -ClientType 4 -FormFactor 1 -NavigationType 0 -SolutionUniqueName "MySolution";
 
+    .EXAMPLE
+    $appRef = Add-XrmAppModule -Labels @{ 1033 = "My App"; 1036 = "Mon application" } -LanguageCode 1036 -UniqueName "myapp";
+
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest
 #>
 function Add-XrmAppModule {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "ByName")]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (
@@ -63,10 +72,19 @@ function Add-XrmAppModule {
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = "ByName")]
         [ValidateNotNullOrEmpty()]
         [string]
         $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "ByLabels")]
+        [ValidateNotNullOrEmpty()]
+        [Hashtable]
+        $Labels,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $LanguageCode = 1033,
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -114,6 +132,10 @@ function Add-XrmAppModule {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            $Name = Get-XrmLabelText -Labels $Labels -LanguageCode $LanguageCode;
+        }
+
         $record = New-XrmEntity -LogicalName "appmodule" -Attributes @{
             "name"       = $Name;
             "uniquename" = $UniqueName;

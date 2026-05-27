@@ -8,14 +8,16 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
-Id|Guid|2|true||Form (systemform) Id used as the upsert key.
-EntityLogicalName|String|3|false||Table / Entity logical name the form belongs to. Optional for dashboards.
-Name|String|4|true||Form display name.
-FormXml|String|5|true||Form XML definition.
-FormType|Int32|6|true|0|Form type (0=Dashboard, 2=Main, 5=Mobile, 6=QuickCreate, 7=QuickView).
-Description|String|7|false||Form description.
-SolutionUniqueName|String|8|false||Unmanaged solution unique name. When provided, the form is added to this solution.
+XrmClient|ServiceClient|named|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
+Id|Guid|named|true||Form (systemform) Id used as the upsert key.
+EntityLogicalName|String|named|false||Table / Entity logical name the form belongs to. Optional for dashboards.
+Name|String|named|true||Form display name.
+Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Main Form"; 1036 = "Formulaire principal" }
+LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
+FormXml|String|named|true||Form XML definition.
+FormType|Int32|named|true|0|Form type (0=Dashboard, 2=Main, 5=Mobile, 6=QuickCreate, 7=QuickView).
+Description|String|named|false||Form description.
+SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the form is added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted systemform record.
@@ -23,8 +25,11 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted systemform record.
 ## Usage
 
 ```Powershell 
-Upsert-XrmForm [[-XrmClient] <ServiceClient>] [-Id] <Guid> [[-EntityLogicalName] <String>] [-Name] <String> [-FormXml] <String> [-FormType] <Int32> 
-[[-Description] <String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Upsert-XrmForm [-XrmClient <ServiceClient>] -Id <Guid> [-EntityLogicalName <String>] -Name <String> [-LanguageCode <Int32>] -FormXml <String> -FormType 
+<Int32> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+
+Upsert-XrmForm [-XrmClient <ServiceClient>] -Id <Guid> [-EntityLogicalName <String>] -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> 
+-FormType <Int32> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

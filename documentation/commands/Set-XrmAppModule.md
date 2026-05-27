@@ -11,9 +11,11 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 AppModuleReference|EntityReference|2|true||EntityReference of the appmodule record to update.
 Name|String|3|false||New display name. Optional.
-Description|String|4|false||New description. Optional.
-WebResourceId|Guid|5|false||New web resource icon Id. Optional.
-SolutionUniqueName|String|6|false||Unmanaged solution unique name. When provided, the updated app is automatically added to this solution.
+Labels|Hashtable|4|false||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided.
+LanguageCode|Int32|5|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
+Description|String|6|false||New description. Optional.
+WebResourceId|Guid|7|false||New web resource icon Id. Optional.
+SolutionUniqueName|String|8|false||Unmanaged solution unique name. When provided, the updated app is automatically added to this solution.
 
 ## Outputs
 System.Void.
@@ -21,8 +23,8 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Set-XrmAppModule [[-XrmClient] <ServiceClient>] [-AppModuleReference] <EntityReference> [[-Name] <String>] [[-Description] <String>] [[-WebResourceId] 
-<Guid>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Set-XrmAppModule [[-XrmClient] <ServiceClient>] [-AppModuleReference] <EntityReference> [[-Name] <String>] [[-Labels] <Hashtable>] [[-LanguageCode] 
+<Int32>] [[-Description] <String>] [[-WebResourceId] <Guid>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

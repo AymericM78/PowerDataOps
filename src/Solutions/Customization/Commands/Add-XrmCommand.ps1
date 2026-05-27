@@ -11,6 +11,12 @@
     .PARAMETER Name
     Command display name.
 
+    .PARAMETER Labels
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Note: this sets the command's 'name' attribute; the button text shown to users is -ButtonLabelText. Example: @{ 1033 = "Approve"; 1036 = "Approuver" }
+
+    .PARAMETER LanguageCode
+    Language code used to pick the stored 'name' from -Labels. Default: 1033.
+
     .PARAMETER UniqueName
     Unique name for the command.
 
@@ -47,9 +53,12 @@
     .EXAMPLE
     $ref = Add-XrmCommand -Name "Approve" -UniqueName "new_approve" -Type 0 -Context 1 -ContextEntity "account" -ButtonLabelText "Approve";
     $ref = Add-XrmCommand -Name "Approve" -UniqueName "new_approve" -Type 0 -Context 1 -Location 0 -ButtonLabelText "Approve" -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $ref = Add-XrmCommand -Labels @{ 1033 = "Approve"; 1036 = "Approuver" } -LanguageCode 1036 -UniqueName "new_approve" -Type 0 -Context 1 -Location 0 -ButtonLabelText "Approuver";
 #>
 function Add-XrmCommand {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "ByName")]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (
@@ -57,10 +66,19 @@ function Add-XrmCommand {
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = "ByName")]
         [ValidateNotNullOrEmpty()]
         [string]
         $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "ByLabels")]
+        [ValidateNotNullOrEmpty()]
+        [Hashtable]
+        $Labels,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $LanguageCode = 1033,
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -108,6 +126,10 @@ function Add-XrmCommand {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            $Name = Get-XrmLabelText -Labels $Labels -LanguageCode $LanguageCode;
+        }
+
         $record = New-XrmEntity -LogicalName "appaction" -Attributes @{
             "name"       = $Name;
             "uniquename" = $UniqueName;

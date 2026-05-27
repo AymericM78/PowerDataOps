@@ -41,6 +41,15 @@
     .PARAMETER LanguageCode
     Language code for labels. Default: 1033.
 
+    .PARAMETER DisplayNameLabels
+    Hashtable of language code to display name for multilingual labels. Takes precedence over -DisplayName. Example: @{ 1033 = "Customer"; 1036 = "Client" }
+
+    .PARAMETER PluralNameLabels
+    Hashtable of language code to plural display name for multilingual labels. Takes precedence over -DisplayCollectionName.
+
+    .PARAMETER DescriptionLabels
+    Hashtable of language code to description for multilingual labels. Takes precedence over -Description.
+
     .PARAMETER IconVectorName
     Name of the vector icon to use for the table.
 
@@ -49,6 +58,9 @@
 
     .EXAMPLE
     Set-XrmTable -MetadataId "00000000-0000-0000-0000-000000000001" -DisplayName "Customer" -DisplayCollectionName "Customers";
+
+    .EXAMPLE
+    Set-XrmTable -MetadataId $metadataId -DisplayNameLabels @{ 1033 = "Customer"; 1036 = "Client" } -PluralNameLabels @{ 1033 = "Customers"; 1036 = "Clients" };
 #>
 function Set-XrmTable {
     [CmdletBinding()]
@@ -107,7 +119,19 @@ function Set-XrmTable {
         [Parameter(Mandatory = $false)]
         [int]
         $LanguageCode = 1033,
-        
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DisplayNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $PluralNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DescriptionLabels,
+
         [Parameter(Mandatory = $false)]
         [string]
         $IconVectorName
@@ -127,6 +151,9 @@ function Set-XrmTable {
         if ($PSBoundParameters.ContainsKey('HasActivities')) { $tableParams['HasActivities'] = $HasActivities; }
         if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) { $tableParams['IsAuditEnabled'] = $IsAuditEnabled; }
         if ($PSBoundParameters.ContainsKey('IconVectorName')) { $tableParams['IconVectorName'] = $IconVectorName; }
+        if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) { $tableParams['DisplayNameLabels'] = $DisplayNameLabels; }
+        if ($PSBoundParameters.ContainsKey('PluralNameLabels')) { $tableParams['PluralNameLabels'] = $PluralNameLabels; }
+        if ($PSBoundParameters.ContainsKey('DescriptionLabels')) { $tableParams['DescriptionLabels'] = $DescriptionLabels; }
 
         $entityMetadata = New-XrmTable @tableParams;
         $entityMetadata.MetadataId = $MetadataId;

@@ -50,6 +50,18 @@
     .PARAMETER LanguageCode
     Language code for labels. Default: 1033.
 
+    .PARAMETER DisplayNameLabels
+    Hashtable of language code to display name for multilingual labels. Takes precedence over -DisplayName. Example: @{ 1033 = "Project"; 1036 = "Projet" }
+
+    .PARAMETER PluralNameLabels
+    Hashtable of language code to plural display name for multilingual labels. Takes precedence over -PluralName.
+
+    .PARAMETER DescriptionLabels
+    Hashtable of language code to description for multilingual labels. Takes precedence over -Description.
+
+    .PARAMETER PrimaryAttributeDisplayNameLabels
+    Hashtable of language code to primary attribute display name for multilingual labels. Takes precedence over -PrimaryAttributeDisplayName.
+
     .PARAMETER IconVectorName
     Name of the vector icon to use for the table.
 
@@ -58,6 +70,9 @@
 
     .EXAMPLE
     $response = Add-XrmTable -LogicalName "new_project" -DisplayName "Project" -PluralName "Projects" -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayName "Name";
+
+    .EXAMPLE
+    $response = Add-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" } -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayNameLabels @{ 1033 = "Name"; 1036 = "Nom" };
 #>
 function Add-XrmTable {
     [CmdletBinding()]
@@ -128,7 +143,23 @@ function Add-XrmTable {
         [Parameter(Mandatory = $false)]
         [int]
         $LanguageCode = 1033,
-        
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DisplayNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $PluralNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DescriptionLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $PrimaryAttributeDisplayNameLabels,
+
         [Parameter(Mandatory = $false)]
         [string]
         $IconVectorName
@@ -138,24 +169,35 @@ function Add-XrmTable {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $entityMetadata = New-XrmTable `
-            -LogicalName $LogicalName `
-            -DisplayName $DisplayName `
-            -PluralName $PluralName `
-            -Description $Description `
-            -OwnershipType $OwnershipType `
-            -HasNotes $HasNotes `
-            -HasActivities $HasActivities `
-            -IsActivity $IsActivity `
-            -IsAuditEnabled $IsAuditEnabled `
-            -LanguageCode $LanguageCode `
-            -IconVectorName $IconVectorName;
+        $tableParams = @{
+            LogicalName     = $LogicalName;
+            DisplayName     = $DisplayName;
+            PluralName      = $PluralName;
+            Description     = $Description;
+            OwnershipType   = $OwnershipType;
+            HasNotes        = $HasNotes;
+            HasActivities   = $HasActivities;
+            IsActivity      = $IsActivity;
+            IsAuditEnabled  = $IsAuditEnabled;
+            LanguageCode    = $LanguageCode;
+            IconVectorName  = $IconVectorName;
+        };
+        if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) { $tableParams['DisplayNameLabels'] = $DisplayNameLabels; }
+        if ($PSBoundParameters.ContainsKey('PluralNameLabels')) { $tableParams['PluralNameLabels'] = $PluralNameLabels; }
+        if ($PSBoundParameters.ContainsKey('DescriptionLabels')) { $tableParams['DescriptionLabels'] = $DescriptionLabels; }
+
+        $entityMetadata = New-XrmTable @tableParams;
 
         $primaryAttribute = [Microsoft.Xrm.Sdk.Metadata.StringAttributeMetadata]::new();
         $primaryAttribute.SchemaName = $PrimaryAttributeSchemaName;
         $primaryAttribute.RequiredLevel = [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty]::new([Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::ApplicationRequired);
         $primaryAttribute.MaxLength = $PrimaryAttributeMaxLength;
-        $primaryAttribute.DisplayName = New-XrmLabel -Text $PrimaryAttributeDisplayName -LanguageCode $LanguageCode;
+        if ($PSBoundParameters.ContainsKey('PrimaryAttributeDisplayNameLabels')) {
+            $primaryAttribute.DisplayName = New-XrmLabel -Labels $PrimaryAttributeDisplayNameLabels;
+        }
+        else {
+            $primaryAttribute.DisplayName = New-XrmLabel -Text $PrimaryAttributeDisplayName -LanguageCode $LanguageCode;
+        }
 
         $request = [Microsoft.Xrm.Sdk.Messages.CreateEntityRequest]::new();
         $request.Entity = $entityMetadata;

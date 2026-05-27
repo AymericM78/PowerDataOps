@@ -8,14 +8,16 @@
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
-Id|Guid|2|true||Chart (savedqueryvisualization) Id used as the upsert key.
-EntityLogicalName|String|3|true||Table / Entity logical name the chart belongs to.
-Name|String|4|true||Chart display name.
-DataDescription|String|5|true||Data description XML defining the chart data source.
-PresentationDescription|String|6|true||Presentation description XML defining the chart visual.
-Description|String|7|false||Chart description.
-SolutionUniqueName|String|8|false||Unmanaged solution unique name. When provided, the chart is added to this solution.
+XrmClient|ServiceClient|named|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
+Id|Guid|named|true||Chart (savedqueryvisualization) Id used as the upsert key.
+EntityLogicalName|String|named|true||Table / Entity logical name the chart belongs to.
+Name|String|named|true||Chart display name.
+Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Revenue"; 1036 = "Chiffre d'affaires" }
+LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
+DataDescription|String|named|true||Data description XML defining the chart data source.
+PresentationDescription|String|named|true||Presentation description XML defining the chart visual.
+Description|String|named|false||Chart description.
+SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the chart is added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted savedqueryvisualization record.
@@ -23,8 +25,11 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted savedqueryvisualiza
 ## Usage
 
 ```Powershell 
-Upsert-XrmChart [[-XrmClient] <ServiceClient>] [-Id] <Guid> [-EntityLogicalName] <String> [-Name] <String> [-DataDescription] <String> 
-[-PresentationDescription] <String> [[-Description] <String>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Upsert-XrmChart [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Name <String> [-LanguageCode <Int32>] -DataDescription <String> 
+-PresentationDescription <String> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+
+Upsert-XrmChart [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Labels <Hashtable> [-LanguageCode <Int32>] -DataDescription <String> 
+-PresentationDescription <String> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

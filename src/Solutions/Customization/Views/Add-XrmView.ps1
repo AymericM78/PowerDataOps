@@ -14,6 +14,12 @@
     .PARAMETER Name
     View display name.
 
+    .PARAMETER Labels
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Active accounts"; 1036 = "Comptes actifs" }
+
+    .PARAMETER LanguageCode
+    Language code used to pick the stored 'name' from -Labels. Default: 1033.
+
     .PARAMETER FetchXml
     FetchXml query for the view.
 
@@ -35,9 +41,12 @@
     .EXAMPLE
     $ref = Add-XrmView -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml;
     $ref = Add-XrmView -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $ref = Add-XrmView -EntityLogicalName "account" -Labels @{ 1033 = "Active accounts"; 1036 = "Comptes actifs" } -LanguageCode 1036 -FetchXml $fetchXml -LayoutXml $layoutXml;
 #>
 function Add-XrmView {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "ByName")]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (
@@ -50,10 +59,19 @@ function Add-XrmView {
         [string]
         $EntityLogicalName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = "ByName")]
         [ValidateNotNullOrEmpty()]
         [string]
         $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "ByLabels")]
+        [ValidateNotNullOrEmpty()]
+        [Hashtable]
+        $Labels,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $LanguageCode = 1033,
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -82,6 +100,10 @@ function Add-XrmView {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            $Name = Get-XrmLabelText -Labels $Labels -LanguageCode $LanguageCode;
+        }
+
         $record = New-XrmEntity -LogicalName "savedquery" -Attributes @{
             "returnedtypecode" = $EntityLogicalName;
             "name"             = $Name;

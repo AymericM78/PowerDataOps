@@ -30,6 +30,12 @@
     .PARAMETER IsAuditEnabled
     Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
 
+    .PARAMETER DisplayNameLabels
+    Hashtable of language code to display name for multilingual labels. When provided, overrides the DisplayName set on the AttributeMetadata. Example: @{ 1033 = "Code"; 1036 = "Code" }
+
+    .PARAMETER DescriptionLabels
+    Hashtable of language code to description for multilingual labels. When provided, overrides the Description set on the AttributeMetadata.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The CreateAttribute response.
 
@@ -44,6 +50,10 @@
     .EXAMPLE
     $attr = New-XrmBooleanColumn -LogicalName "new_enabled" -SchemaName "new_Enabled" -DisplayName "Enabled" -DefaultValue $true;
     Add-XrmColumn -EntityLogicalName "account" -Attribute $attr;
+
+    .EXAMPLE
+    $attr = New-XrmStringColumn -LogicalName "new_code" -SchemaName "new_Code" -DisplayName "Code" -MaxLength 100;
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attr -DisplayNameLabels @{ 1033 = "Code"; 1036 = "Code projet" };
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns
@@ -73,7 +83,15 @@ function Add-XrmColumn {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $IsAuditEnabled
+        $IsAuditEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DisplayNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DescriptionLabels
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -86,6 +104,14 @@ function Add-XrmColumn {
 
         if ($PSBoundParameters.ContainsKey('IsAuditEnabled')) {
             $Attribute.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
+        }
+
+        if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) {
+            $Attribute.DisplayName = New-XrmLabel -Labels $DisplayNameLabels;
+        }
+
+        if ($PSBoundParameters.ContainsKey('DescriptionLabels')) {
+            $Attribute.Description = New-XrmLabel -Labels $DescriptionLabels;
         }
 
         $request = [Microsoft.Xrm.Sdk.Messages.CreateAttributeRequest]::new();

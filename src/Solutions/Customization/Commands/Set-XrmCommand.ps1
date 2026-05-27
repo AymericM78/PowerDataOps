@@ -14,6 +14,12 @@
     .PARAMETER Name
     Updated command display name.
 
+    .PARAMETER Labels
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided. Note: the button text shown to users is -ButtonLabelText.
+
+    .PARAMETER LanguageCode
+    Language code used to pick the stored 'name' from -Labels. Default: 1033.
+
     .PARAMETER ButtonLabelText
     Updated button label text.
 
@@ -52,6 +58,14 @@ function Set-XrmCommand {
         $Name,
 
         [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $Labels,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $LanguageCode = 1033,
+
+        [Parameter(Mandatory = $false)]
         [string]
         $ButtonLabelText,
 
@@ -76,6 +90,9 @@ function Set-XrmCommand {
 
         if ($PSBoundParameters.ContainsKey('Name')) {
             $record.Attributes["name"] = $Name;
+        }
+        elseif ($PSBoundParameters.ContainsKey('Labels')) {
+            $record.Attributes["name"] = Get-XrmLabelText -Labels $Labels -LanguageCode $LanguageCode;
         }
         if ($PSBoundParameters.ContainsKey('ButtonLabelText')) {
             $record.Attributes["buttonlabeltext"] = $ButtonLabelText;

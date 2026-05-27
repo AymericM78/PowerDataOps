@@ -23,7 +23,11 @@ PrimaryAttributeMaxLength|Int32|12|false|100|Max length of the primary attribute
 IsAuditEnabled|Boolean|13|false|False|Whether auditing is enabled on the table. Default: false.
 SolutionUniqueName|String|14|false||Solution unique name to add the table to.
 LanguageCode|Int32|15|false|1033|Language code for labels. Default: 1033.
-IconVectorName|String|16|false||Name of the vector icon to use for the table.
+DisplayNameLabels|Hashtable|16|false||Hashtable of language code to display name for multilingual labels. Takes precedence over -DisplayName. Example: @{ 1033 = "Project"; 1036 = "Projet" }
+PluralNameLabels|Hashtable|17|false||Hashtable of language code to plural display name for multilingual labels. Takes precedence over -PluralName.
+DescriptionLabels|Hashtable|18|false||Hashtable of language code to description for multilingual labels. Takes precedence over -Description.
+PrimaryAttributeDisplayNameLabels|Hashtable|19|false||Hashtable of language code to primary attribute display name for multilingual labels. Takes precedence over -PrimaryAttributeDisplayName.
+IconVectorName|String|20|false||Name of the vector icon to use for the table.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
@@ -34,7 +38,8 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] 
 [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] 
 [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [-PrimaryAttributeDisplayName] <String> 
-[[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [[-IconVectorName] 
+[[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] 
+<Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-PrimaryAttributeDisplayNameLabels] <Hashtable>] [[-IconVectorName] 
 <String>] [<CommonParameters>]
 ``` 
 
@@ -42,6 +47,11 @@ Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayNam
 
 ```Powershell 
 $response = Add-XrmTable -LogicalName "new_project" -DisplayName "Project" -PluralName "Projects" -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayName "Name";
+``` 
+
+
+```Powershell 
+$response = Add-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" } -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayNameLabels @{ 1033 = "Name"; 1036 = "Nom" };
 ``` 
 
 

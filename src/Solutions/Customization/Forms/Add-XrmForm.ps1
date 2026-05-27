@@ -14,6 +14,12 @@
     .PARAMETER Name
     Form display name.
 
+    .PARAMETER Labels
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' attribute is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Main Form"; 1036 = "Formulaire principal" }
+
+    .PARAMETER LanguageCode
+    Language code used to pick the stored 'name' from -Labels. Default: 1033.
+
     .PARAMETER FormXml
     Form XML definition.
 
@@ -41,11 +47,14 @@
     $sourceRef = New-XrmEntityReference -LogicalName "systemform" -Id $existingFormId;
     $ref = Add-XrmForm -SourceReference $sourceRef -Name "Copied Form" -FormXml $xml -FormType 2 -SolutionUniqueName "MySolution";
 
+    .EXAMPLE
+    $ref = Add-XrmForm -EntityLogicalName "account" -Labels @{ 1033 = "Main Form"; 1036 = "Formulaire principal" } -LanguageCode 1036 -FormXml $xml -FormType 2;
+
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/initializefrom
 #>
 function Add-XrmForm {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "ByName")]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (
@@ -58,10 +67,19 @@ function Add-XrmForm {
         [string]
         $EntityLogicalName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = "ByName")]
         [ValidateNotNullOrEmpty()]
         [string]
         $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "ByLabels")]
+        [ValidateNotNullOrEmpty()]
+        [Hashtable]
+        $Labels,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $LanguageCode = 1033,
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -89,6 +107,10 @@ function Add-XrmForm {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            $Name = Get-XrmLabelText -Labels $Labels -LanguageCode $LanguageCode;
+        }
+
         $formTypeCode = (New-XrmOptionSetValue -Value $FormType);
         if ($PSBoundParameters.ContainsKey('SourceReference')) {
             $initRequest = New-XrmRequest -Name "InitializeFrom";

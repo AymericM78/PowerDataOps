@@ -26,6 +26,12 @@
     .PARAMETER EnableForInteractiveExperience
     Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 
+    .PARAMETER DisplayNameLabels
+    Hashtable of language code to display name for multilingual labels. When provided, overrides the DisplayName set on the AttributeMetadata. Example: @{ 1033 = "Project Code"; 1036 = "Code projet" }
+
+    .PARAMETER DescriptionLabels
+    Hashtable of language code to description for multilingual labels. When provided, overrides the Description set on the AttributeMetadata.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
 
@@ -33,6 +39,10 @@
     $attr = Get-XrmColumn -EntityLogicalName "account" -LogicalName "new_code";
     $attr.DisplayName = New-XrmLabel -Text "Project Code";
     Set-XrmColumn -EntityLogicalName "account" -Attribute $attr;
+
+    .EXAMPLE
+    $attr = Get-XrmColumn -EntityLogicalName "account" -LogicalName "new_code";
+    Set-XrmColumn -EntityLogicalName "account" -Attribute $attr -DisplayNameLabels @{ 1033 = "Project Code"; 1036 = "Code projet" };
 #>
 function Set-XrmColumn {
     [CmdletBinding()]
@@ -67,7 +77,15 @@ function Set-XrmColumn {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $EnableForInteractiveExperience
+        $EnableForInteractiveExperience,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DisplayNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DescriptionLabels
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -81,6 +99,14 @@ function Set-XrmColumn {
         if ($EnableForInteractiveExperience.IsPresent) {
             $Attribute.IsGlobalFilterEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($true);
             $Attribute.IsSortableEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($true);
+        }
+
+        if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) {
+            $Attribute.DisplayName = New-XrmLabel -Labels $DisplayNameLabels;
+        }
+
+        if ($PSBoundParameters.ContainsKey('DescriptionLabels')) {
+            $Attribute.Description = New-XrmLabel -Labels $DescriptionLabels;
         }
 
         $request = [Microsoft.Xrm.Sdk.Messages.UpdateAttributeRequest]::new();

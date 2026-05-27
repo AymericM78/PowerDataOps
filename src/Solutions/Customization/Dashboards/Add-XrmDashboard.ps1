@@ -11,6 +11,12 @@
     .PARAMETER Name
     Dashboard display name.
 
+    .PARAMETER Labels
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Sales Dashboard"; 1036 = "Tableau de bord des ventes" }
+
+    .PARAMETER LanguageCode
+    Language code used to pick the stored 'name' from -Labels. Default: 1033.
+
     .PARAMETER FormXml
     Dashboard form XML definition.
 
@@ -26,9 +32,12 @@
     .EXAMPLE
     $ref = Add-XrmDashboard -Name "Sales Dashboard" -FormXml $xml;
     $ref = Add-XrmDashboard -Name "Sales Dashboard" -FormXml $xml -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $ref = Add-XrmDashboard -Labels @{ 1033 = "Sales Dashboard"; 1036 = "Tableau de bord des ventes" } -LanguageCode 1036 -FormXml $xml;
 #>
 function Add-XrmDashboard {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "ByName")]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (
@@ -36,10 +45,19 @@ function Add-XrmDashboard {
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = "ByName")]
         [ValidateNotNullOrEmpty()]
         [string]
         $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "ByLabels")]
+        [ValidateNotNullOrEmpty()]
+        [Hashtable]
+        $Labels,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $LanguageCode = 1033,
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -61,10 +79,17 @@ function Add-XrmDashboard {
     process {
         $params = @{
             XrmClient = $XrmClient;
-            Name      = $Name;
             FormXml   = $FormXml;
             FormType  = 0;
         };
+
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            $params["Labels"] = $Labels;
+            $params["LanguageCode"] = $LanguageCode;
+        }
+        else {
+            $params["Name"] = $Name;
+        }
 
         if ($PSBoundParameters.ContainsKey('Description')) {
             $params["Description"] = $Description;

@@ -14,6 +14,12 @@
     .PARAMETER Name
     Updated form display name.
 
+    .PARAMETER Labels
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided.
+
+    .PARAMETER LanguageCode
+    Language code used to pick the stored 'name' from -Labels. Default: 1033.
+
     .PARAMETER FormXml
     Updated form XML definition.
 
@@ -49,6 +55,14 @@ function Set-XrmForm {
         $Name,
 
         [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $Labels,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $LanguageCode = 1033,
+
+        [Parameter(Mandatory = $false)]
         [string]
         $FormXml,
 
@@ -69,6 +83,9 @@ function Set-XrmForm {
 
         if ($PSBoundParameters.ContainsKey('Name')) {
             $record.Attributes["name"] = $Name;
+        }
+        elseif ($PSBoundParameters.ContainsKey('Labels')) {
+            $record.Attributes["name"] = Get-XrmLabelText -Labels $Labels -LanguageCode $LanguageCode;
         }
         if ($PSBoundParameters.ContainsKey('FormXml')) {
             $record.Attributes["formxml"] = $FormXml;

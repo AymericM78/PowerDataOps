@@ -19,7 +19,10 @@ HasActivities|Boolean|7|false|False|Whether the table has activities enabled. De
 IsActivity|Boolean|8|false|False|Whether the table is an activity entity. Default: false.
 IsAuditEnabled|Boolean|9|false|False|Whether auditing is enabled on the table. Default: false.
 LanguageCode|Int32|10|false|1033|Language code for labels. Default: 1033.
-IconVectorName|String|11|false||Name of the vector icon to use for the table.
+DisplayNameLabels|Hashtable|11|false||Hashtable of language code to display name for multilingual labels. Takes precedence over -DisplayName. Example: @{ 1033 = "Project"; 1036 = "Projet" }
+PluralNameLabels|Hashtable|12|false||Hashtable of language code to plural display name for multilingual labels. Takes precedence over -PluralName.
+DescriptionLabels|Hashtable|13|false||Hashtable of language code to description for multilingual labels. Takes precedence over -Description.
+IconVectorName|String|14|false||Name of the vector icon to use for the table.
 
 ## Outputs
 Microsoft.Xrm.Sdk.Metadata.EntityMetadata.
@@ -29,7 +32,8 @@ Microsoft.Xrm.Sdk.Metadata.EntityMetadata.
 ```Powershell 
 New-XrmTable [[-LogicalName] <String>] [[-DisplayName] <String>] [[-PluralName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | 
 TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] 
-<Boolean>] [[-IsAuditEnabled] <Boolean>] [[-LanguageCode] <Int32>] [[-IconVectorName] <String>] [<CommonParameters>]
+<Boolean>] [[-IsAuditEnabled] <Boolean>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] 
+[[-DescriptionLabels] <Hashtable>] [[-IconVectorName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -37,6 +41,11 @@ TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[
 ```Powershell 
 $metadata = New-XrmTable -LogicalName "new_project" -DisplayName "Project" -PluralName "Projects";
 Add-XrmTable -EntityMetadata $metadata -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayName "Name";
+``` 
+
+
+```Powershell 
+$metadata = New-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" };
 ``` 
 
 

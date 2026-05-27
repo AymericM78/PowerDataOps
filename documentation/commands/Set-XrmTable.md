@@ -21,7 +21,10 @@ IsAuditEnabled|Boolean|10|false|False|Whether auditing is enabled on the table.
 SolutionUniqueName|String|11|false||Solution unique name context for the update.
 MergeLabels|Boolean|12|false|True|Whether to merge labels. Default: true.
 LanguageCode|Int32|13|false|1033|Language code for labels. Default: 1033.
-IconVectorName|String|14|false||Name of the vector icon to use for the table.
+DisplayNameLabels|Hashtable|14|false||Hashtable of language code to display name for multilingual labels. Takes precedence over -DisplayName. Example: @{ 1033 = "Customer"; 1036 = "Client" }
+PluralNameLabels|Hashtable|15|false||Hashtable of language code to plural display name for multilingual labels. Takes precedence over -DisplayCollectionName.
+DescriptionLabels|Hashtable|16|false||Hashtable of language code to description for multilingual labels. Takes precedence over -Description.
+IconVectorName|String|17|false||Name of the vector icon to use for the table.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
@@ -32,13 +35,19 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
 Set-XrmTable [[-XrmClient] <ServiceClient>] [-MetadataId] <Guid> [[-DisplayName] <String>] [[-DisplayCollectionName] <String>] [[-Description] <String>] 
 [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-IsActivity] <Boolean>] 
 [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] 
-[[-LanguageCode] <Int32>] [[-IconVectorName] <String>] [<CommonParameters>]
+[[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-IconVectorName] 
+<String>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 Set-XrmTable -MetadataId "00000000-0000-0000-0000-000000000001" -DisplayName "Customer" -DisplayCollectionName "Customers";
+``` 
+
+
+```Powershell 
+Set-XrmTable -MetadataId $metadataId -DisplayNameLabels @{ 1033 = "Customer"; 1036 = "Client" } -PluralNameLabels @{ 1033 = "Customers"; 1036 = "Clients" };
 ``` 
 
 

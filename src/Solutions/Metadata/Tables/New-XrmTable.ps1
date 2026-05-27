@@ -34,7 +34,16 @@
     Whether auditing is enabled on the table. Default: false.
 
     .PARAMETER LanguageCode
-    Language code for labels. Default: 1033.    
+    Language code for labels. Default: 1033.
+
+    .PARAMETER DisplayNameLabels
+    Hashtable of language code to display name for multilingual labels. Takes precedence over -DisplayName. Example: @{ 1033 = "Project"; 1036 = "Projet" }
+
+    .PARAMETER PluralNameLabels
+    Hashtable of language code to plural display name for multilingual labels. Takes precedence over -PluralName.
+
+    .PARAMETER DescriptionLabels
+    Hashtable of language code to description for multilingual labels. Takes precedence over -Description.
 
     .PARAMETER IconVectorName
     Name of the vector icon to use for the table.
@@ -45,6 +54,9 @@
     .EXAMPLE
     $metadata = New-XrmTable -LogicalName "new_project" -DisplayName "Project" -PluralName "Projects";
     Add-XrmTable -EntityMetadata $metadata -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayName "Name";
+
+    .EXAMPLE
+    $metadata = New-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" };
 #>
 function New-XrmTable {
     [CmdletBinding()]
@@ -93,7 +105,19 @@ function New-XrmTable {
         [Parameter(Mandatory = $false)]
         [int]
         $LanguageCode = 1033,
-        
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DisplayNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $PluralNameLabels,
+
+        [Parameter(Mandatory = $false)]
+        [Hashtable]
+        $DescriptionLabels,
+
         [Parameter(Mandatory = $false)]
         [string]
         $IconVectorName
@@ -110,11 +134,17 @@ function New-XrmTable {
             $entityMetadata.SchemaName = $LogicalName;
         }
 
-        if ($PSBoundParameters.ContainsKey('DisplayName')) {
+        if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) {
+            $entityMetadata.DisplayName = New-XrmLabel -Labels $DisplayNameLabels;
+        }
+        elseif ($PSBoundParameters.ContainsKey('DisplayName')) {
             $entityMetadata.DisplayName = New-XrmLabel -Text $DisplayName -LanguageCode $LanguageCode;
         }
 
-        if ($PSBoundParameters.ContainsKey('PluralName')) {
+        if ($PSBoundParameters.ContainsKey('PluralNameLabels')) {
+            $entityMetadata.DisplayCollectionName = New-XrmLabel -Labels $PluralNameLabels;
+        }
+        elseif ($PSBoundParameters.ContainsKey('PluralName')) {
             $entityMetadata.DisplayCollectionName = New-XrmLabel -Text $PluralName -LanguageCode $LanguageCode;
         }
 
@@ -138,7 +168,10 @@ function New-XrmTable {
             $entityMetadata.IsAuditEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($IsAuditEnabled);
         }
 
-        if (-not [string]::IsNullOrWhiteSpace($Description)) {
+        if ($PSBoundParameters.ContainsKey('DescriptionLabels')) {
+            $entityMetadata.Description = New-XrmLabel -Labels $DescriptionLabels;
+        }
+        elseif (-not [string]::IsNullOrWhiteSpace($Description)) {
             $entityMetadata.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
         }
 

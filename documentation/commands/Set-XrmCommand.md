@@ -11,10 +11,12 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 CommandReference|EntityReference|2|true||EntityReference of the appaction to update.
 Name|String|3|false||Updated command display name.
-ButtonLabelText|String|4|false||Updated button label text.
-TooltipTitle|String|5|false||Updated tooltip title text.
-Hidden|Boolean|6|false|False|Updated hidden state.
-SolutionUniqueName|String|7|false||Unmanaged solution unique name. When provided, the updated command is automatically added to this solution.
+Labels|Hashtable|4|false||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided. Note: the button text shown to users is -ButtonLabelText.
+LanguageCode|Int32|5|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
+ButtonLabelText|String|6|false||Updated button label text.
+TooltipTitle|String|7|false||Updated tooltip title text.
+Hidden|Boolean|8|false|False|Updated hidden state.
+SolutionUniqueName|String|9|false||Unmanaged solution unique name. When provided, the updated command is automatically added to this solution.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the updated appaction record.
@@ -22,8 +24,8 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated appaction record.
 ## Usage
 
 ```Powershell 
-Set-XrmCommand [[-XrmClient] <ServiceClient>] [-CommandReference] <EntityReference> [[-Name] <String>] [[-ButtonLabelText] <String>] [[-TooltipTitle] 
-<String>] [[-Hidden] <Boolean>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Set-XrmCommand [[-XrmClient] <ServiceClient>] [-CommandReference] <EntityReference> [[-Name] <String>] [[-Labels] <Hashtable>] [[-LanguageCode] <Int32>] 
+[[-ButtonLabelText] <String>] [[-TooltipTitle] <String>] [[-Hidden] <Boolean>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
