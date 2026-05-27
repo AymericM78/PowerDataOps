@@ -20,11 +20,26 @@
     .PARAMETER SolutionUniqueName
     Solution unique name to add the sitemap to. Optional.
 
+    .PARAMETER EnableCollapsibleGroups
+    Whether navigation groups can be collapsed. Maps to the enablecollapsiblegroups attribute.
+
+    .PARAMETER ShowHome
+    Whether the Home button is shown in the navigation bar. Maps to the showhome attribute.
+
+    .PARAMETER ShowPinned
+    Whether the Pinned items section is shown in the navigation bar. Maps to the showpinned attribute.
+
+    .PARAMETER ShowRecents
+    Whether the Recent items section is shown in the navigation bar. Maps to the showrecents attribute.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted sitemap record.
 
     .EXAMPLE
     $sitemapRef = Upsert-XrmSiteMap -Id $sitemapId -Name "Custom SiteMap" -SiteMapXml $xml -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $sitemapRef = Upsert-XrmSiteMap -Id $sitemapId -Name "Custom SiteMap" -SiteMapXml $xml -ShowHome $true -ShowPinned $true -ShowRecents $true -EnableCollapsibleGroups $false;
 #>
 function Upsert-XrmSiteMap {
     [CmdletBinding()]
@@ -52,7 +67,23 @@ function Upsert-XrmSiteMap {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $EnableCollapsibleGroups,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ShowHome,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ShowPinned,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ShowRecents
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -64,6 +95,11 @@ function Upsert-XrmSiteMap {
             "sitemapnameunique" = $Name;
             "sitemapxml"        = $SiteMapXml;
         };
+
+        if ($PSBoundParameters.ContainsKey('EnableCollapsibleGroups')) { $attributes["enablecollapsiblegroups"] = $EnableCollapsibleGroups; }
+        if ($PSBoundParameters.ContainsKey('ShowHome')) { $attributes["showhome"] = $ShowHome; }
+        if ($PSBoundParameters.ContainsKey('ShowPinned')) { $attributes["showpinned"] = $ShowPinned; }
+        if ($PSBoundParameters.ContainsKey('ShowRecents')) { $attributes["showrecents"] = $ShowRecents; }
 
         $record = New-XrmEntity -LogicalName "sitemap" -Id $Id -Attributes $attributes;
 

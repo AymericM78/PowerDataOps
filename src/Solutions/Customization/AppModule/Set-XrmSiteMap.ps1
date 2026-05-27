@@ -3,7 +3,8 @@
     Update a sitemap in Microsoft Dataverse.
 
     .DESCRIPTION
-    Update the SiteMapXml attribute of an existing sitemap record. The sitemap defines the navigation structure of a model-driven app.
+    Update an existing sitemap record. Supports updating the SiteMapXml content as well as navigation bar options
+    (EnableCollapsibleGroups, ShowHome, ShowPinned, ShowRecents). Only provided parameters are written.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -17,6 +18,18 @@
     .PARAMETER SolutionUniqueName
     Unmanaged solution unique name. When provided, the updated sitemap is automatically added to this solution.
 
+    .PARAMETER EnableCollapsibleGroups
+    Whether navigation groups can be collapsed. Maps to the enablecollapsiblegroups attribute.
+
+    .PARAMETER ShowHome
+    Whether the Home button is shown in the navigation bar. Maps to the showhome attribute.
+
+    .PARAMETER ShowPinned
+    Whether the Pinned items section is shown in the navigation bar. Maps to the showpinned attribute.
+
+    .PARAMETER ShowRecents
+    Whether the Recent items section is shown in the navigation bar. Maps to the showrecents attribute.
+
     .OUTPUTS
     System.Void.
 
@@ -25,6 +38,9 @@
     $sitemapRef = $sitemaps[0].Reference;
     Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml;
     Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    Set-XrmSiteMap -SiteMapReference $sitemapRef -SiteMapXml $newXml -ShowHome $true -ShowPinned $true -ShowRecents $true -EnableCollapsibleGroups $false;
 
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
@@ -43,14 +59,29 @@ function Set-XrmSiteMap {
         [Microsoft.Xrm.Sdk.EntityReference]
         $SiteMapReference,
 
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory = $false)]
         [string]
         $SiteMapXml,
 
         [Parameter(Mandatory = $false)]
         [string]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $EnableCollapsibleGroups,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ShowHome,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ShowPinned,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ShowRecents
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -59,7 +90,12 @@ function Set-XrmSiteMap {
     process {
         $record = New-XrmEntity -LogicalName "sitemap";
         $record.Id = $SiteMapReference.Id;
-        $record["sitemapxml"] = $SiteMapXml;
+
+        if ($PSBoundParameters.ContainsKey('SiteMapXml')) { $record["sitemapxml"] = $SiteMapXml; }
+        if ($PSBoundParameters.ContainsKey('EnableCollapsibleGroups')) { $record["enablecollapsiblegroups"] = $EnableCollapsibleGroups; }
+        if ($PSBoundParameters.ContainsKey('ShowHome')) { $record["showhome"] = $ShowHome; }
+        if ($PSBoundParameters.ContainsKey('ShowPinned')) { $record["showpinned"] = $ShowPinned; }
+        if ($PSBoundParameters.ContainsKey('ShowRecents')) { $record["showrecents"] = $ShowRecents; }
 
         $XrmClient | Update-XrmRecord -Record $record;
 

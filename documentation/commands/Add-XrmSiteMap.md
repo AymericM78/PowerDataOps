@@ -1,4 +1,4 @@
-﻿# Command : `Add-XrmSiteMap` 
+# Command : `Add-XrmSiteMap` 
 
 ## Description
 
@@ -12,6 +12,10 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Name|String|2|true||Display name for the sitemap.
 SiteMapXml|String|3|true||The sitemap XML content defining Areas, Groups, and SubAreas.
 SolutionUniqueName|String|4|false||Solution unique name to add the sitemap to. Optional.
+EnableCollapsibleGroups|bool|5|false||Whether navigation groups can be collapsed.
+ShowHome|bool|6|false||Whether the Home button is shown in the navigation bar.
+ShowPinned|bool|7|false||Whether the Pinned items section is shown in the navigation bar.
+ShowRecents|bool|8|false||Whether the Recent items section is shown in the navigation bar.
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created sitemap record.
@@ -19,18 +23,21 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created sitemap record.
 ## Usage
 
 ```Powershell 
-Add-XrmSiteMap [[-XrmClient] <ServiceClient>] [-Name] <String> [-SiteMapXml] <String> [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmSiteMap [[-XrmClient] <ServiceClient>] [-Name] <String> [-SiteMapXml] <String> [[-SolutionUniqueName] <String>] [[-EnableCollapsibleGroups] <bool>] [[-ShowHome] <bool>] [[-ShowPinned] <bool>] [[-ShowRecents] <bool>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
-<Area Id="MyArea" Title="My Area"><Group Id="MyGroup" Title="My Group"><SubArea Id="MySub" Entity="account" /></Group></Area></SiteMap>';
+$xml = '<SiteMap><Area Id="MyArea" Title="My Area"><Group Id="MyGroup" Title="My Group"><SubArea Id="MySub" Entity="account" /></Group></Area></SiteMap>';
 $sitemapRef = Add-XrmSiteMap -Name "Custom SiteMap" -SiteMapXml $xml;
+``` 
+
+```Powershell 
+$sitemapRef = Add-XrmSiteMap -Name "Custom SiteMap" -SiteMapXml $xml -ShowHome $true -ShowPinned $true -ShowRecents $true -EnableCollapsibleGroups $false;
 ``` 
 
 ## More informations
 
 https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
-
 
