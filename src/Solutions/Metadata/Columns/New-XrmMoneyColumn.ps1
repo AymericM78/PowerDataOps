@@ -30,6 +30,9 @@
     .PARAMETER RequiredLevel
     Required level. Default: None.
 
+    .PARAMETER EnableForInteractiveExperience
+    Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
+
     .PARAMETER LanguageCode
     Label language code. Default: 1033.
 
@@ -85,6 +88,10 @@ function New-XrmMoneyColumn {
         $RequiredLevel = [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::None,
 
         [Parameter(Mandatory = $false)]
+        [switch]
+        $EnableForInteractiveExperience,
+
+        [Parameter(Mandatory = $false)]
         [int]
         $LanguageCode = 1033
     )
@@ -104,6 +111,11 @@ function New-XrmMoneyColumn {
 
         if (-not [string]::IsNullOrWhiteSpace($Description)) {
             $attribute.Description = New-XrmLabel -Text $Description -LanguageCode $LanguageCode;
+        }
+
+        if ($EnableForInteractiveExperience.IsPresent) {
+            $attribute.IsGlobalFilterEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($true);
+            $attribute.IsSortableEnabled = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($true);
         }
 
         $attribute;
