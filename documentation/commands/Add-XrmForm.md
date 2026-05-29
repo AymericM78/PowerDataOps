@@ -11,7 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|named|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 EntityLogicalName|String|named|false||Table / Entity logical name the form belongs to. Optional for dashboards.
 Name|String|named|true||Form display name.
-Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' attribute is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Main Form"; 1036 = "Formulaire principal" }
+Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' attribute is resolved from -LanguageCode (fallback: lowest language code), and every provided language is persisted as a real translation via SetLocLabels so each user sees the label in their own language. Example: @{ 1033 = "Main Form"; 1036 = "Formulaire principal" }
 LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
 FormXml|String|named|true||Form XML definition.
 FormType|Int32|named|true|0|Form type (2=Main, 5=Mobile, 6=QuickCreate, 7=QuickView).

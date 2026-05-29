@@ -11,7 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|named|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 EntityLogicalName|String|named|true||Table / Entity logical name the view belongs to.
 Name|String|named|true||View display name.
-Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "Active accounts"; 1036 = "Comptes actifs" }
+Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and every provided language is persisted as a real translation via SetLocLabels so each user sees the label in their own language. Example: @{ 1033 = "Active accounts"; 1036 = "Comptes actifs" }
 LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
 FetchXml|String|named|true||FetchXml query for the view.
 LayoutXml|String|named|true||Layout XML defining column widths and order.

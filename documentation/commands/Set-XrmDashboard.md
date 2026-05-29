@@ -11,7 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 DashboardReference|EntityReference|2|true||EntityReference of the systemform (dashboard) to update.
 Name|String|3|false||Updated dashboard display name.
-Labels|Hashtable|4|false||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided.
+Labels|Hashtable|4|false||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and every provided language is persisted as a real translation via SetLocLabels (delegated to Set-XrmForm). -Name takes precedence for the base 'name' if both are provided.
 LanguageCode|Int32|5|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
 FormXml|String|6|false||Updated dashboard form XML definition.
 Description|String|7|false||Updated description.
