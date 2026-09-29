@@ -4,6 +4,7 @@
 
     .DESCRIPTION
     Remove an appmodule record (model-driven app).
+    Publishing an app makes the platform add Dataverse search rows (dvtablesearch) for it: M365_Primary_model_<unique name>, which prevents the app deletion, and new_dvtablesearch_aiplugin_model_<unique name>, which the app deletion leaves behind. These rows are deleted first.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -18,7 +19,7 @@
     Remove-XrmAppModule -AppModuleReference $appRef;
 
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModule.md
 #>
 function Remove-XrmAppModule {
     [CmdletBinding(SupportsShouldProcess)]
@@ -39,7 +40,19 @@ function Remove-XrmAppModule {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $XrmClient | Remove-XrmRecord -Record (New-XrmEntity -LogicalName "appmodule" -Attributes @{ "appmoduleid" = $AppModuleReference.Id });
+        if (Test-XrmTable -XrmClient $XrmClient -LogicalName "dvtablesearch") {
+            # m365appmoduleid blocks the delete; appmoduleid (no relationship) would stay orphaned
+            $query = New-XrmQueryExpression -LogicalName "dvtablesearch" -Columns "name";
+            $query.Criteria.FilterOperator = [Microsoft.Xrm.Sdk.Query.LogicalOperator]::Or;
+            $query = $query | Add-XrmQueryCondition -Field "m365appmoduleid" -Condition Equal -Values $AppModuleReference.Id;
+            $query = $query | Add-XrmQueryCondition -Field "m365appmoduleidsecondary" -Condition Equal -Values $AppModuleReference.Id;
+            $query = $query | Add-XrmQueryCondition -Field "appmoduleid" -Condition Equal -Values $AppModuleReference.Id;
+            $searchRows = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $query -AsArray;
+            foreach ($searchRow in $searchRows) {
+                $XrmClient | Remove-XrmRecord -LogicalName "dvtablesearch" -Id $searchRow.Id -IfExists;
+            }
+        }
+        $XrmClient | Remove-XrmRecord -LogicalName "appmodule" -Id $AppModuleReference.Id;
     }
     end {
         $StopWatch.Stop();

@@ -3,6 +3,7 @@
 ## Description
 
 **Delete a model-driven app from Microsoft Dataverse.** : Remove an appmodule record (model-driven app).
+Publishing an app makes the platform add Dataverse search rows (dvtablesearch) for it: M365_Primary_model_<unique name>, which prevents the app deletion, and new_dvtablesearch_aiplugin_model_<unique name>, which the app deletion leaves behind. These rows are deleted first.
 
 ## Inputs
 
@@ -30,6 +31,6 @@ Remove-XrmAppModule -AppModuleReference $appRef;
 
 ## More informations
 
-https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmAppModule.md
 
 

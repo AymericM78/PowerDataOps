@@ -40,18 +40,10 @@ New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Name "L
 $Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, "Logs");
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
 
-$module = Get-Module -Name PowerDataOps -ListAvailable;
-if (-not $module) {
-    return;
-}
-if ($module.Count -gt 1) {
-    Write-Host "Multiple PowerDataOps modules installed!" -ForegroundColor Yellow;
-    foreach ($version in $module) {
-        $moduleVersion = $version.Version.ToString();
-        Write-Host " - version $moduleVersion";
-    }
-}
-else {
-    $moduleVersion = $module.Version.ToString();
-    Write-Host "PowerDataOps version = $moduleVersion";
+# Show the version being loaded (read from the manifest next to this file), then the other installed versions
+$loadedVersion = (Import-PowerShellDataFile -Path "$PSScriptRoot\PowerDataOps.psd1").ModuleVersion;
+Write-Host "PowerDataOps version = $loadedVersion";
+$otherVersions = @(Get-Module -Name PowerDataOps -ListAvailable | Where-Object { $_.Version.ToString() -ne $loadedVersion } | ForEach-Object { $_.Version.ToString() } | Select-Object -Unique);
+if ($otherVersions.Count -gt 0) {
+    Write-Host "Other PowerDataOps versions installed: $($otherVersions -join ', ')" -ForegroundColor Yellow;
 }

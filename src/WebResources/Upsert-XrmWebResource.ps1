@@ -166,7 +166,12 @@ function Upsert-XrmWebResource {
         $ignore = $true;
         $existingWebResource = Get-XrmRecord -XrmClient $XrmClient -LogicalName "webresource" -AttributeName "name" -Value $webResourceName -Columns "content";
         if (-not $existingWebResource) {
-            $webresourceRecord.Id = $XrmClient | Add-XrmRecord -Record $webresourceRecord;
+            $createdId = $XrmClient | Add-XrmRecord -Record $webresourceRecord;
+            # Skipped by -WhatIf, or failed (the error is already written)
+            if (-not $createdId) {
+                return;
+            }
+            $webresourceRecord.Id = $createdId;
             $ignore = $false;
         }
         else {

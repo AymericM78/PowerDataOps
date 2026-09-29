@@ -100,7 +100,9 @@ foreach ($webResourceId in $webResourceIds) { $Global:XrmClient | Remove-XrmReco
 foreach ($appId in $appIds) {
     $query = New-XrmQueryExpression -LogicalName "appsetting" -Columns "appsettingid" | Add-XrmQueryCondition -Field "parentappmoduleid" -Condition Equal -Values $appId;
     foreach ($appSetting in @(Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query $query)) { $Global:XrmClient | Remove-XrmRecord -LogicalName "appsetting" -Id $appSetting.Id -IfExists; }
-    $Global:XrmClient | Remove-XrmRecord -LogicalName "appmodule" -Id $appId -IfExists;
+    if (@(Get-XrmAppModules -XrmClient $Global:XrmClient -Id $appId -Unpublished -Columns "name").Count -gt 0) {
+        $Global:XrmClient | Remove-XrmAppModule -AppModuleReference (New-XrmEntityReference -LogicalName "appmodule" -Id $appId);
+    }
 }
 Remove-Item -Path $exportFolder -Recurse -Force -ErrorAction SilentlyContinue;
 Assert-Test "Apps removed" { @($appIds | Where-Object { @(Get-XrmAppModules -XrmClient $Global:XrmClient -Id $_ -Unpublished -Columns "name").Count -gt 0 }).Count -eq 0 };

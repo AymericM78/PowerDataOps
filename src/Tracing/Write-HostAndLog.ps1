@@ -21,9 +21,25 @@
     .PARAMETER Level
     Indicates  log verbosity level. (Default : INFO)
     Values : VERB, INFO, WARN, FAIL, SUCCESS
+
+    .PARAMETER LogFilePath
+    File to append the message to. (Default: the execution log of the session, $Global:LogFilePath)
+
+    .OUTPUTS
+    System.Void.
+
+    .EXAMPLE
+    Write-HostAndLog -Message "Import started" -Level INFO;
+
+    .EXAMPLE
+    Write-HostAndLog -Message "12 rows rejected" -Level WARN -LogFilePath ".\logs\import.log";
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Write-HostAndLog.md
 #>
 function Write-HostAndLog {
     [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (        
         [Parameter(Mandatory = $true)]
@@ -41,7 +57,11 @@ function Write-HostAndLog {
 
         [Parameter(Mandatory = $False)]
         [ValidateSet("VERB", "INFO", "WARN", "FAIL", "SUCCESS")]
-        [String] $Level = "INFO"
+        [String] $Level = "INFO",
+
+        [Parameter(Mandatory = $False)]
+        [ValidateNotNullOrEmpty()]
+        [String] $LogFilePath
     )
     begin {       
     }    
@@ -72,7 +92,8 @@ function Write-HostAndLog {
             $logMessage += [Environment]::NewLine;
         }
     
-        $logMessage | Out-File -FilePath $Global:LogFilePath -Encoding utf8 -Append -Force;
+        $targetLogFilePath = $(if ($PSBoundParameters.ContainsKey('LogFilePath')) { $LogFilePath } else { $Global:LogFilePath });
+        $logMessage | Out-File -FilePath $targetLogFilePath -Encoding utf8 -Append -Force;
         
         if ($level -eq "VERB") {
             Write-Verbose $Message;

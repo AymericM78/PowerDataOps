@@ -60,10 +60,26 @@ Assert-Test "Component removed (view gone, sitemap kept)" {
 };
 
 Write-Section "Cleanup";
+# Publishing added Dataverse search rows (dvtablesearch) for the app, one of which blocks a plain delete: Remove-XrmAppModule deletes them first
+$searchQuery = New-XrmQueryExpression -LogicalName "dvtablesearch" -Columns "name";
+$searchQuery.Criteria.FilterOperator = [Microsoft.Xrm.Sdk.Query.LogicalOperator]::Or;
+$searchQuery = $searchQuery | Add-XrmQueryCondition -Field "m365appmoduleid" -Condition Equal -Values $appRef.Id;
+$searchQuery = $searchQuery | Add-XrmQueryCondition -Field "appmoduleid" -Condition Equal -Values $appRef.Id;
+# The published app's row is written after PublishXml returns: wait for it, or the app delete races with its creation
+$searchRows = @();
+for ($attempt = 0; $attempt -lt 12; $attempt++) {
+    $searchRows = Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query $searchQuery -AsArray;
+    if (@($searchRows | Where-Object { $_.name -like "M365_Primary_*" }).Count -gt 0) { break; }
+    Start-Sleep -Seconds 5;
+}
+Write-Host "  dvtablesearch rows of the app: $(($searchRows | ForEach-Object { $_.name }) -join ', ')" -ForegroundColor DarkGray;
 $cleanupErrors = [System.Collections.Generic.List[string]]::new();
-try { $Global:XrmClient | Remove-XrmRecord -LogicalName "appmodule" -Id $appRef.Id -ErrorAction Stop; } catch { $cleanupErrors.Add("app: $($_.Exception.Message)"); }
+try { $Global:XrmClient | Remove-XrmAppModule -AppModuleReference $appRef -ErrorAction Stop; } catch { $cleanupErrors.Add("app: $($_.Exception.Message)"); }
 try { $Global:XrmClient | Remove-XrmRecord -LogicalName "sitemap" -Id $siteMapRef.Id -ErrorAction Stop; } catch { $cleanupErrors.Add("sitemap: $($_.Exception.Message)"); }
 Assert-Test "Cleanup complete (app and sitemap deleted) $($cleanupErrors -join ' | ')" {
     $cleanupErrors.Count -eq 0 -and @(Get-XrmAppModules -XrmClient $Global:XrmClient -Id $appRef.Id -Unpublished -Columns "name").Count -eq 0;
+};
+Assert-Test "Remove-XrmAppModule deleted the dvtablesearch rows of the app" {
+    (Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query $searchQuery -AsArray).Count -eq 0;
 };
 Write-TestSummary;

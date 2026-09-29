@@ -17,6 +17,7 @@ $allTests = @(
     @{ Category = "Converters";    File = "Converters\ConvertTo-XrmType.Tests.ps1" },
     @{ Category = "Utilities";     File = "Utilities\Initialize-XrmPath.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Connection.Tests.ps1" },
+    @{ Category = "Client";        File = "Client\ConnectionString.Tests.ps1" },
     @{ Category = "Excel";         File = "Excel\Read-XrmExcelSheet.Tests.ps1" },
     @{ Category = "Metadata";      File = "Metadata\Set-XrmTableIcon.Tests.ps1" },
     @{ Category = "Query";         File = "Query\QueryExpression.Tests.ps1" },

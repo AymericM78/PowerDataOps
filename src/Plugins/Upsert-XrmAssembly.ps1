@@ -69,7 +69,12 @@ function Upsert-XrmAssembly {
                 sourcetype     = (New-XrmOptionSetValue -Value $SourceType)
                 isolationmode  = (New-XrmOptionSetValue -Value $IsolationMode)
             };
-            $assemblyRecord.Id = $XrmClient | Add-XrmRecord -Record $assemblyRecord;            
+            $createdId = $XrmClient | Add-XrmRecord -Record $assemblyRecord;
+            # Skipped by -WhatIf, or failed (the error is already written)
+            if (-not $createdId) {
+                return;
+            }
+            $assemblyRecord.Id = $createdId;
         }
         else {
             $assemblyRecord = New-XrmEntity -LogicalName "pluginassembly" -Id $existingAssembly.Id -Attributes @{

@@ -64,7 +64,12 @@ function Add-XrmConnectionRole {
             $record["description"] = $Description;
         }
 
-        $record.Id = $XrmClient | Add-XrmRecord -Record $record;
+        $createdId = $XrmClient | Add-XrmRecord -Record $record;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if (-not $createdId) {
+            return;
+        }
+        $record.Id = $createdId;
         $record.ToEntityReference();
     }
     end {

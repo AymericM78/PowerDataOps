@@ -72,7 +72,12 @@ function Add-XrmSecurityRole {
             $record.Attributes["description"] = $Description;
         }
 
-        $record.Id = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+        $createdId = Add-XrmRecord -XrmClient $XrmClient -Record $record;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if (-not $createdId) {
+            return;
+        }
+        $record.Id = $createdId;
         $record.ToEntityReference();
     }
     end {

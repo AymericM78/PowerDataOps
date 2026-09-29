@@ -107,7 +107,12 @@ function Add-XrmSiteMap {
 
         $record = New-XrmEntity -LogicalName "sitemap" -Attributes $attributes;
 
-        $record.Id = $XrmClient | Add-XrmRecord -Record $record;
+        $createdId = $XrmClient | Add-XrmRecord -Record $record;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if (-not $createdId) {
+            return;
+        }
+        $record.Id = $createdId;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $record.Id -ComponentType 62 -DoNotIncludeSubcomponents $false | Out-Null;

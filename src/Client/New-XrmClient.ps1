@@ -16,11 +16,23 @@
     .PARAMETER IsEncrypted
     Specify if password or secret are encrypted.
 
+    .PARAMETER Quiet
+    Do not display the connection message.
+
+    .PARAMETER ConfigPath
+    Configuration file holding the connection string, in the standard .NET format (connectionStrings.config, app.config...), with ConnectionName, instead of ConnectionString. See Get-XrmConnectionString.
+
+    .PARAMETER ConnectionName
+    Name of the connection string entry in ConfigPath.
+
     .OUTPUTS
     Microsoft.PowerPlatform.Dataverse.Client.ServiceClient. Microsoft Dataverse connector.
 
     .EXAMPLE
     $xrmClient = New-XrmClient -ConnectionString $connectionString;
+
+    .EXAMPLE
+    $xrmClient = New-XrmClient -ConfigPath ".\connectionStrings.config" -ConnectionName "Dev";
 
     .LINK
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
@@ -45,13 +57,34 @@ function New-XrmClient {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Quiet = $false
+        $Quiet = $false,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $ConfigPath,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $ConnectionName
     )
-    begin {   
-        $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
-        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
-    }    
+    begin {
+        $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
+    }
     process {
+        if ($PSBoundParameters.ContainsKey('ConfigPath') -or $PSBoundParameters.ContainsKey('ConnectionName')) {
+            if ($PSBoundParameters.ContainsKey('ConnectionString')) {
+                throw "Use either ConnectionString or ConfigPath with ConnectionName.";
+            }
+            if (-not ($PSBoundParameters.ContainsKey('ConfigPath') -and $PSBoundParameters.ContainsKey('ConnectionName'))) {
+                throw "ConfigPath and ConnectionName go together.";
+            }
+            $ConnectionString = Get-XrmConnectionString -ConfigPath $ConfigPath -Name $ConnectionName;
+            $PSBoundParameters["ConnectionString"] = $ConnectionString;
+        }
+
         # Optimizations
         [System.Net.ServicePointManager]::Expect100Continue = $false;
         [System.Net.ServicePointManager]::UseNagleAlgorithm = $false;
