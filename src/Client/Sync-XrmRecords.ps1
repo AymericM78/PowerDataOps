@@ -143,13 +143,17 @@ function Sync-XrmRecords {
 
         [System.Collections.ArrayList]$summary = @();
 
+        # Read here: inside the ForEach-ObjectWithProgress scriptblocks, $PSBoundParameters is the scriptblock one
+        $hasTopCount = $PSBoundParameters.ContainsKey("TopCount");
+        $hasOrderByField = $PSBoundParameters.ContainsKey("OrderByField");
+
         ForEach-ObjectWithProgress -Collection $LogicalNames -OperationName "Synchronizing entities" -ScriptBlock {
             param($logicalName)
 
             $entityStopWatch = [System.Diagnostics.Stopwatch]::StartNew();
             $readCount = 0;
-            $upsertedCount = 0;
-            $failedCount = 0;
+            # Counters in a hashtable: the nested scriptblock runs in a child scope
+            $counters = @{ Upserted = 0; Failed = 0 };
             [System.Collections.ArrayList]$errorMessages = @();
 
             try {
@@ -190,12 +194,12 @@ function Sync-XrmRecords {
                     "LogicalName" = $logicalName;
                     "Columns" = $Columns;
                 };
-                if ($PSBoundParameters.ContainsKey("TopCount")) {
+                if ($hasTopCount) {
                     $queryArguments["TopCount"] = $TopCount;
                 }
 
                 $query = New-XrmQueryExpression @queryArguments;
-                if ($PSBoundParameters.ContainsKey("OrderByField")) {
+                if ($hasOrderByField) {
                     $query = $query | Add-XrmQueryOrder -Field $OrderByField -OrderType $OrderType;
                 }
 
@@ -277,7 +281,7 @@ function Sync-XrmRecords {
                             $TargetXrmClient | Upsert-XrmRecord -Record $targetRecord -BypassCustomPluginExecution:$BypassCustomPluginExecution | Out-Null;
 
                             if ($passIndex -eq $passCount) {
-                                $upsertedCount++;
+                                $counters.Upserted++;
                             }
 
                             if ($passIndex -eq $passCount -and $StateHandling -ne "Ignore" -and $hasStateCode) {
@@ -303,7 +307,7 @@ function Sync-XrmRecords {
                             }
                         }
                         catch {
-                            $failedCount++;
+                            $counters.Failed++;
                             $errorMessages.Add($_.Exception.Message) | Out-Null;
                             if (-not $ContinueOnError) {
                                 throw $_.Exception;
@@ -313,7 +317,7 @@ function Sync-XrmRecords {
                 }
             }
             catch {
-                $failedCount++;
+                $counters.Failed++;
                 $errorMessages.Add($_.Exception.Message) | Out-Null;
                 if (-not $ContinueOnError) {
                     throw $_.Exception;
@@ -324,8 +328,8 @@ function Sync-XrmRecords {
                 $summaryItem = [pscustomobject]@{
                     "LogicalName"   = $logicalName;
                     "ReadCount"     = $readCount;
-                    "UpsertedCount" = $upsertedCount;
-                    "FailedCount"   = $failedCount;
+                    "UpsertedCount" = $counters.Upserted;
+                    "FailedCount"   = $counters.Failed;
                     "Duration"      = $entityStopWatch.Elapsed;
                     "Errors"        = @($errorMessages);
                 };

@@ -140,7 +140,8 @@ function Import-XrmSolution {
             $asyncOperationId = $importSolutionResponse.AsyncJobId;
 
             $importJob = $null;
-            $lastProgressValue = $null;
+            # Hashtable: the watcher scriptblock runs in a child scope, a plain variable would not keep the value between polls
+            $importProgress = @{ Last = $null };
             $importStatus = $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -ScriptBlock {
                 param($asyncOperation)
 
@@ -151,13 +152,13 @@ function Import-XrmSolution {
                     # First import job retrieve could failed if the delay is too short
                     return;
                 }
-                if ($importJob.progress -ne $lastProgressValue) {                    
+                if ($importJob.progress -ne $importProgress.Last) {                    
                     Write-HostAndLog " > $SolutionUniqueName import in progress... ($($importJob.progress) %)" -ForegroundColor Cyan;
                     Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Status "Importing solution $SolutionUniqueName...($($importJob.progress) %)" -PercentComplete $importJob.progress_Value -Id 1052;
                     $progressValue = $importJob.progress_Value -as [int];
                     Write-Host "##vso[task.setprogress value=$progressValue;]Solution Import Progress";
                 }
-                $lastProgressValue = $importJob.progress;
+                $importProgress.Last = $importJob.progress;
             }
 
             $importJob = $XrmClient | Get-XrmRecord -LogicalName "importjob" -Id $importJobId -Columns "completedon", "data", "progress";

@@ -61,13 +61,13 @@ function Import-XrmRibbon {
         $SolutionUniqueName,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $PublisherUniqueName,
+        [bool]
+        $Publish = $true,
 
         [Parameter(Mandatory = $false)]
-        [bool]
-        $Publish = $true
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $PublisherUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();

@@ -15,8 +15,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 EntityLogicalName|String|2|true||Logical name of the table whose ribbon to update.
 RibbonDiffXml|Object|3|true||The RibbonDiffXml content, as a string or as an XmlElement (e.g. the output of Export-XrmRibbon), containing CustomActions, CommandDefinitions, RuleDefinitions, etc.
 SolutionUniqueName|String|4|false||Existing solution unique name to use for import. If provided, uses this solution instead of creating a temporary one.
-PublisherUniqueName|String|5|false||Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
-Publish|Boolean|6|false|True|Publish customizations after import. Default: true.
+Publish|Boolean|5|false|True|Publish customizations after import. Default: true.
+PublisherUniqueName|String|6|false||Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
 
 ## Outputs
 System.Void.
@@ -24,7 +24,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-PublisherUniqueName] <String>] [[-Publish] <Boolean>] [<CommonParameters>]
+Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-Publish] <Boolean>] [[-PublisherUniqueName] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples

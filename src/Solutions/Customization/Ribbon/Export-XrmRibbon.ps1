@@ -55,13 +55,13 @@ function Export-XrmRibbon {
         $SolutionUniqueName,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
         [string]
-        $PublisherUniqueName,
+        $OutputPath = $env:TEMP,
 
         [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
         [string]
-        $OutputPath = $env:TEMP
+        $PublisherUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
