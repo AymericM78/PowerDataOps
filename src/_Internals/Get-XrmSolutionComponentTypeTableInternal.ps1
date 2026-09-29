@@ -60,6 +60,7 @@ function Get-XrmSolutionComponentTypeTableInternal {
     $componentTypeDefinitions[65] = "Hierarchy Rule";
     $componentTypeDefinitions[70] = "Field Security Profile";
     $componentTypeDefinitions[71] = "Field Permission";
+    $componentTypeDefinitions[80] = "AppModule";
     $componentTypeDefinitions[90] = "Plugin Type";
     $componentTypeDefinitions[91] = "Plugin Assembly";
     $componentTypeDefinitions[92] = "SDK Message Processing Step";

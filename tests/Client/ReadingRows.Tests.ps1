@@ -79,6 +79,15 @@ $typeError = $null;
 try { Get-XrmAttributeValue -Record "not a row" -Name "name" | Out-Null; } catch { $typeError = $_.Exception.Message; }
 Assert-Test "Another object type raises an error" { $typeError -like "*Entity*" };
 
+Assert-Test "Parameter aliases -Row / -Column" { (Get-XrmRowValue -Row $row1 -Column "donotemail") -eq $true };
+# Scripts that defined their own Get-XrmRowValue (-Row -Column) or Get-XrmAttributeValue (-Record -Attribute) before the module had the alias
+$shadowed = & {
+    function Get-XrmRowValue { param($Row, $Column) "caller helper"; }
+    function Get-XrmAttributeValue { param($Record, $Attribute) "caller helper"; }
+    Get-XrmRowValue -Row $row1 -Column "donotemail";
+};
+Assert-Test "The alias reaches the module command even when the caller defines functions with the same names" { $shadowed -is [bool] -and $shadowed -eq $true };
+
 # ============================================================
 # L04 Get-XrmMetadataValue
 # ============================================================

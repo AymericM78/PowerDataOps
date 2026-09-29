@@ -6,13 +6,13 @@
     Extract entity attribute value from record / table row.
     The record can be an Entity or a row returned by Get-XrmRecord / Get-XrmMultipleRecords (its Record property is read, so the value is the typed one, not the display label).
     A missing column, or a $null record, gives $null.
-    Alias: Get-XrmRowValue.
+    Alias: Get-XrmRowValue. The alias always runs this command, even in a script that defines its own Get-XrmRowValue or Get-XrmAttributeValue function (PowerShell resolves an alias before a function).
 
     .PARAMETER Record
-    Entity record / table row (Entity), or a row converted by the module (custom object with a Record property). $null is accepted.
+    Entity record / table row (Entity), or a row converted by the module (custom object with a Record property). $null is accepted. Alias: Row.
 
     .PARAMETER Name
-    Attribute (Column) name.
+    Attribute (Column) name. Alias: Column.
 
     .PARAMETER FormattedValue
     Specify if expected value should be provided from FormattedValues <> raw value.
@@ -48,11 +48,13 @@ function Get-XrmAttributeValue {
     (
         [Parameter(Mandatory = $true, ValueFromPipeline)]
         [AllowNull()]
+        [Alias("Row")]
         [Object]
         $Record,
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
+        [Alias("Column")]
         [String]
         $Name,
 
@@ -142,7 +144,8 @@ function Get-XrmAttributeValue {
 }
 
 Set-Alias GetAttributeValue Get-XrmAttributeValue;
-Set-Alias Get-XrmRowValue Get-XrmAttributeValue;
+# Module-qualified: an alias wins over a function of the same name, and its target is resolved from the caller's scope
+Set-Alias Get-XrmRowValue PowerDataOps\Get-XrmAttributeValue;
 Export-ModuleMember -Function Get-XrmAttributeValue -Alias *;
 
 Register-ArgumentCompleter -CommandName Get-XrmAttributeValue -ParameterName "Name" -ScriptBlock {

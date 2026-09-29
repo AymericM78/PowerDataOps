@@ -17,7 +17,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Get-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributeValue.md)|Read entity attribute.<br/>Extract entity attribute value from record / table row.<br/>The record can be an Entity or a row returned by Get-XrmRecord / Get-XrmMultipleRecords (its Record property is read, so the value is the typed one, not the display label).<br/>A missing column, or a $null record, gives $null.<br/>Alias: Get-XrmRowValue.
+[Get-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributeValue.md)|Read entity attribute.<br/>Extract entity attribute value from record / table row.<br/>The record can be an Entity or a row returned by Get-XrmRecord / Get-XrmMultipleRecords (its Record property is read, so the value is the typed one, not the display label).<br/>A missing column, or a $null record, gives $null.<br/>Alias: Get-XrmRowValue. The alias always runs this command, even in a script that defines its own Get-XrmRowValue or Get-XrmAttributeValue function (PowerShell resolves an alias before a function).
 [Set-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAttributeValue.md)|Set entity attribute value.<br/>Add or update attribute value.<br/>The value is normalized for the SDK: the PowerShell PSObject adapter (objects built with New-Object or emitted by a pipeline) is removed, and a homogeneous Object[] is typed. Without this, the request fails at serialization.
 # `Audit` commands
 

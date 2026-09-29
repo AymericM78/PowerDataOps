@@ -5,14 +5,14 @@
 **Read entity attribute.** : Extract entity attribute value from record / table row.
 The record can be an Entity or a row returned by Get-XrmRecord / Get-XrmMultipleRecords (its Record property is read, so the value is the typed one, not the display label).
 A missing column, or a $null record, gives $null.
-Alias: Get-XrmRowValue.
+Alias: Get-XrmRowValue. The alias always runs this command, even in a script that defines its own Get-XrmRowValue or Get-XrmAttributeValue function (PowerShell resolves an alias before a function).
 
 ## Inputs
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-Record|Object|1|true||Entity record / table row (Entity), or a row converted by the module (custom object with a Record property). $null is accepted.
-Name|String|2|true||Attribute (Column) name.
+Record|Object|1|true||Entity record / table row (Entity), or a row converted by the module (custom object with a Record property). $null is accepted. Alias: Row.
+Name|String|2|true||Attribute (Column) name. Alias: Column.
 FormattedValue|SwitchParameter|named|false|False|Specify if expected value should be provided from FormattedValues <> raw value.
 RaiseErrorIfMissing|Boolean|3|false|False|If true, throws an exception if attribute/column is not present in row / record. Else, ignore.
 Raw|SwitchParameter|named|false|False|Return a plain .NET value: OptionSetValue => int, OptionSetValueCollection => int[], Money => decimal, AliasedValue => inner value, BooleanManagedProperty => bool. Lookups stay EntityReference (see AsId).

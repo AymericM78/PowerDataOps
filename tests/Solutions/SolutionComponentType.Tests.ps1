@@ -29,6 +29,9 @@ Assert-Test "-Cache: filled by the caller's hashtable" { $cache.Count -eq 2 -and
 
 Write-Section "Get-XrmSolutionComponentName";
 Assert-Test "Classic type without client: 26 => SavedQuery" { (Get-XrmSolutionComponentName -SolutionComponentType 26) -eq "SavedQuery" };
+Assert-Test "App module: 80 => AppModule, and back" {
+    (Get-XrmSolutionComponentName -XrmClient $Global:XrmClient -SolutionComponentType 80) -eq "AppModule" -and (Get-XrmSolutionComponentType -XrmClient $Global:XrmClient -Name "AppModule") -eq 80;
+};
 Assert-Test "Organization type: name from solutioncomponentdefinition (was 'Unknown solution component type')" {
     (Get-XrmSolutionComponentName -XrmClient $Global:XrmClient -SolutionComponentType $expectedConnectionReferenceType) -eq $definition["name"];
 };
