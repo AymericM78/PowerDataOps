@@ -11,6 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 Name|String|2|true||Relationship schema name.
 RetrieveAsIfPublished|Boolean|3|false|True|Retrieve metadata as if published. Default: true.
+IfExists|SwitchParameter|named|false|False|Return $null instead of raising an error when the relationship does not exist.
 
 ## Outputs
 Microsoft.Xrm.Sdk.Metadata.RelationshipMetadataBase. The relationship metadata.
@@ -18,7 +19,7 @@ Microsoft.Xrm.Sdk.Metadata.RelationshipMetadataBase. The relationship metadata.
 ## Usage
 
 ```Powershell 
-Get-XrmRelationship [[-XrmClient] <ServiceClient>] [-Name] <String> [[-RetrieveAsIfPublished] <Boolean>] [<CommonParameters>]
+Get-XrmRelationship [[-XrmClient] <ServiceClient>] [-Name] <String> [[-RetrieveAsIfPublished] <Boolean>] [-IfExists] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -26,5 +27,14 @@ Get-XrmRelationship [[-XrmClient] <ServiceClient>] [-Name] <String> [[-RetrieveA
 ```Powershell 
 $rel = Get-XrmRelationship -Name "new_account_contact";
 ``` 
+
+
+```Powershell 
+if (-not (Get-XrmRelationship -XrmClient $xrmClient -Name "new_account_contact" -IfExists)) { Write-Host "Missing"; }
+``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRelationship.md
 
 

@@ -7,7 +7,7 @@
     hashtable of language code to text for multilingual labels.
 
     .PARAMETER Text
-    The label text (single language).
+    The label text (single language). An empty text is accepted (e.g. to clear a description).
 
     .PARAMETER LanguageCode
     Language code for the label. Default: 1033 (English).
@@ -23,6 +23,9 @@
 
     .EXAMPLE
     $label = New-XrmLabel -Labels @{ 1033 = "Account"; 1036 = "Compte" };
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmLabel.md
 #>
 function New-XrmLabel {
     [CmdletBinding(DefaultParameterSetName = "Single")]
@@ -30,7 +33,7 @@ function New-XrmLabel {
     param
     (
         [Parameter(Mandatory = $true, ParameterSetName = "Single")]
-        [ValidateNotNullOrEmpty()]
+        [AllowEmptyString()]
         [string]
         $Text,
 

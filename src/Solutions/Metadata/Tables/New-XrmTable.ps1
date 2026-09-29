@@ -48,12 +48,33 @@
     .PARAMETER IconVectorName
     Name of the vector icon to use for the table.
 
+    .PARAMETER IsAvailableOffline
+    Whether the table is available offline.
+
+    .PARAMETER IsQuickCreateEnabled
+    Whether quick create forms are enabled.
+
+    .PARAMETER IsConnectionsEnabled
+    Whether connections are enabled (BooleanManagedProperty).
+
+    .PARAMETER IsDocumentManagementEnabled
+    Whether SharePoint document management is enabled.
+
+    .PARAMETER IsMailMergeEnabled
+    Whether mail merge is enabled (BooleanManagedProperty).
+
+    .PARAMETER ChangeTrackingEnabled
+    Whether change tracking is enabled (required by some synchronizations).
+
+    .PARAMETER SyncToExternalSearchIndex
+    Whether the table is indexed by Dataverse search.
+
     .OUTPUTS
-    Microsoft.Xrm.Sdk.Metadata.EntityMetadata.
+    Microsoft.Xrm.Sdk.Metadata.EntityMetadata. Only the given properties are set, so the object can serve a minimal update.
 
     .EXAMPLE
+    # The metadata that Add-XrmTable and Set-XrmTable send
     $metadata = New-XrmTable -LogicalName "new_project" -DisplayName "Project" -PluralName "Projects";
-    Add-XrmTable -EntityMetadata $metadata -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayName "Name";
 
     .EXAMPLE
     $metadata = New-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" };
@@ -120,7 +141,35 @@ function New-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $IconVectorName
+        $IconVectorName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsAvailableOffline,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsQuickCreateEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsConnectionsEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsDocumentManagementEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsMailMergeEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ChangeTrackingEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $SyncToExternalSearchIndex
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -177,6 +226,16 @@ function New-XrmTable {
 
         if ($PSBoundParameters.ContainsKey('IconVectorName')) {
             $entityMetadata.IconVectorName = $IconVectorName;
+        }
+        foreach ($flag in "IsAvailableOffline", "IsQuickCreateEnabled", "IsDocumentManagementEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex") {
+            if ($PSBoundParameters.ContainsKey($flag)) {
+                $entityMetadata.$flag = $PSBoundParameters[$flag];
+            }
+        }
+        foreach ($managedFlag in "IsConnectionsEnabled", "IsMailMergeEnabled") {
+            if ($PSBoundParameters.ContainsKey($managedFlag)) {
+                $entityMetadata.$managedFlag = [Microsoft.Xrm.Sdk.BooleanManagedProperty]::new($PSBoundParameters[$managedFlag]);
+            }
         }
 
         $entityMetadata;

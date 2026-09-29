@@ -17,11 +17,20 @@
     .PARAMETER RetrieveAsIfPublished
     Retrieve metadata as if published. Default: true.
 
+    .PARAMETER IfExists
+    Return $null instead of raising an error when the alternate key does not exist.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.Metadata.EntityKeyMetadata. The alternate key metadata.
 
     .EXAMPLE
     $key = Get-XrmAlternateKey -EntityLogicalName "account" -LogicalName "new_accountcode";
+
+    .EXAMPLE
+    if (-not (Get-XrmAlternateKey -XrmClient $xrmClient -EntityLogicalName "account" -LogicalName "new_accountcode" -IfExists)) { Write-Host "Missing"; }
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAlternateKey.md
 #>
 function Get-XrmAlternateKey {
     [CmdletBinding()]
@@ -44,7 +53,11 @@ function Get-XrmAlternateKey {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $RetrieveAsIfPublished = $true
+        $RetrieveAsIfPublished = $true,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $IfExists
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -56,8 +69,23 @@ function Get-XrmAlternateKey {
         $request.LogicalName = $LogicalName;
         $request.RetrieveAsIfPublished = $RetrieveAsIfPublished;
 
-        $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
-        $response.Results["EntityKeyMetadata"];
+        if ($IfExists) {
+            try {
+                $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request -ErrorAction Stop;
+            }
+            catch {
+                if (Test-XrmNotFoundError -ErrorRecord $_) {
+                    return $null;
+                }
+                throw;
+            }
+        }
+        else {
+            $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+        }
+        if ($null -ne $response) {
+            $response.Results["EntityKeyMetadata"];
+        }
     }
     end {
         $StopWatch.Stop();

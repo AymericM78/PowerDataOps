@@ -17,5 +17,8 @@ Merge-XrmRecord -TargetReference (New-XrmEntityReference -LogicalName "account" 
 Assert-Test "Merged (no error)" { $true };
 
 Write-Section "Cleanup";
-$Global:XrmClient | Remove-XrmRecord -LogicalName "account" -Id $rec1.Id;
+# The merge deactivates the subordinate account: it must be deleted too
+$Global:XrmClient | Remove-XrmRecord -LogicalName "account" -Id $rec1.Id -IfExists;
+$Global:XrmClient | Remove-XrmRecord -LogicalName "account" -Id $rec2.Id -IfExists;
+Assert-Test "Both accounts deleted" { $null -eq ($Global:XrmClient | Get-XrmRecord -LogicalName "account" -Id $rec2.Id -IfExists) };
 Write-TestSummary;

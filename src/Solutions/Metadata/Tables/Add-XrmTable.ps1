@@ -12,10 +12,10 @@
     Table / Entity logical name.
 
     .PARAMETER DisplayName
-    Display name for the table.
+    Display name for the table. DisplayName or DisplayNameLabels is required.
 
     .PARAMETER PluralName
-    Plural display name for the table.
+    Plural display name for the table. PluralName or PluralNameLabels is required.
 
     .PARAMETER Description
     Table description.
@@ -36,7 +36,7 @@
     Schema name for the primary attribute.
 
     .PARAMETER PrimaryAttributeDisplayName
-    Display name for the primary attribute.
+    Display name for the primary attribute. PrimaryAttributeDisplayName or PrimaryAttributeDisplayNameLabels is required.
 
     .PARAMETER PrimaryAttributeMaxLength
     Max length of the primary attribute. Default: 100.
@@ -65,6 +65,27 @@
     .PARAMETER IconVectorName
     Name of the vector icon to use for the table.
 
+    .PARAMETER IsAvailableOffline
+    Whether the table is available offline. An activity table requires IsAvailableOffline and HasNotes set to true (checked before sending).
+
+    .PARAMETER IsQuickCreateEnabled
+    Whether quick create forms are enabled.
+
+    .PARAMETER IsConnectionsEnabled
+    Whether connections are enabled.
+
+    .PARAMETER IsDocumentManagementEnabled
+    Whether SharePoint document management is enabled.
+
+    .PARAMETER IsMailMergeEnabled
+    Whether mail merge is enabled.
+
+    .PARAMETER ChangeTrackingEnabled
+    Whether change tracking is enabled.
+
+    .PARAMETER SyncToExternalSearchIndex
+    Whether the table is indexed by Dataverse search.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 
@@ -73,6 +94,13 @@
 
     .EXAMPLE
     $response = Add-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" } -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayNameLabels @{ 1033 = "Name"; 1036 = "Nom" };
+
+    .EXAMPLE
+    # Activity table: the primary column of an activity is its subject
+    $response = Add-XrmTable -LogicalName "new_visit" -DisplayName "Visit" -PluralName "Visits" -IsActivity $true -HasNotes $true -IsAvailableOffline $true -IsQuickCreateEnabled $true -PrimaryAttributeSchemaName "Subject" -PrimaryAttributeDisplayName "Subject";
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmTable.md
 #>
 function Add-XrmTable {
     [CmdletBinding(SupportsShouldProcess)]
@@ -88,12 +116,12 @@ function Add-XrmTable {
         [string]
         $LogicalName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
         $DisplayName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
         $PluralName,
@@ -123,7 +151,7 @@ function Add-XrmTable {
         [string]
         $PrimaryAttributeSchemaName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
         $PrimaryAttributeDisplayName,
@@ -162,17 +190,53 @@ function Add-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $IconVectorName
+        $IconVectorName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsAvailableOffline,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsQuickCreateEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsConnectionsEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsDocumentManagementEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsMailMergeEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $ChangeTrackingEnabled,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $SyncToExternalSearchIndex
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        # Platform rules for activity tables, checked before sending (the platform reports them one at a time)
+        if ($IsActivity -and (-not $HasNotes -or -not $IsAvailableOffline)) {
+            throw "An activity table requires -HasNotes `$true and -IsAvailableOffline `$true.";
+        }
+        # Each name is given as a single text or as labels by language
+        foreach ($pair in @("DisplayName", "DisplayNameLabels"), @("PluralName", "PluralNameLabels"), @("PrimaryAttributeDisplayName", "PrimaryAttributeDisplayNameLabels")) {
+            if (-not $PSBoundParameters.ContainsKey($pair[0]) -and -not $PSBoundParameters.ContainsKey($pair[1])) {
+                throw "$($pair[0]) or $($pair[1]) is required.";
+            }
+        }
         $tableParams = @{
             LogicalName     = $LogicalName;
-            DisplayName     = $DisplayName;
-            PluralName      = $PluralName;
             Description     = $Description;
             OwnershipType   = $OwnershipType;
             HasNotes        = $HasNotes;
@@ -182,9 +246,14 @@ function Add-XrmTable {
             LanguageCode    = $LanguageCode;
             IconVectorName  = $IconVectorName;
         };
+        if ($PSBoundParameters.ContainsKey('DisplayName')) { $tableParams['DisplayName'] = $DisplayName; }
+        if ($PSBoundParameters.ContainsKey('PluralName')) { $tableParams['PluralName'] = $PluralName; }
         if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) { $tableParams['DisplayNameLabels'] = $DisplayNameLabels; }
         if ($PSBoundParameters.ContainsKey('PluralNameLabels')) { $tableParams['PluralNameLabels'] = $PluralNameLabels; }
         if ($PSBoundParameters.ContainsKey('DescriptionLabels')) { $tableParams['DescriptionLabels'] = $DescriptionLabels; }
+        foreach ($flag in "IsAvailableOffline", "IsQuickCreateEnabled", "IsConnectionsEnabled", "IsDocumentManagementEnabled", "IsMailMergeEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex") {
+            if ($PSBoundParameters.ContainsKey($flag)) { $tableParams[$flag] = $PSBoundParameters[$flag]; }
+        }
 
         $entityMetadata = New-XrmTable @tableParams;
 

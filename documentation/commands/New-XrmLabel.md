@@ -9,7 +9,7 @@ hashtable of language code to text for multilingual labels.
 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
-Text|String|named|true||The label text (single language).
+Text|String|named|true||The label text (single language). An empty text is accepted (e.g. to clear a description).
 LanguageCode|Int32|named|false|1033|Language code for the label. Default: 1033 (English).
 Labels|Hashtable|named|true||Hashtable of language code to label text for multilingual labels. Example: @{ 1033 = "Account"; 1036 = "Compte" }
 
@@ -34,5 +34,9 @@ $label = New-XrmLabel -Text "Account" -LanguageCode 1033;
 ```Powershell 
 $label = New-XrmLabel -Labels @{ 1033 = "Account"; 1036 = "Compte" };
 ``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmLabel.md
 
 

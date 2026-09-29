@@ -75,11 +75,7 @@ function Get-XrmLocalizedLabel {
         if (-not $AsHashtable) {
             return $label;
         }
-        $labels = @{};
-        foreach ($localizedLabel in $label.LocalizedLabels) {
-            $labels[$localizedLabel.LanguageCode] = $localizedLabel.Label;
-        }
-        $labels;
+        ConvertFrom-XrmLabel -Label $label;
     }
     end {
         $StopWatch.Stop();

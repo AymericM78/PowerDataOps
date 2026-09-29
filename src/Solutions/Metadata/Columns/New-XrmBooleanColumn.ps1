@@ -36,12 +36,23 @@
     .PARAMETER LanguageCode
     Label language code. Default: 1033.
 
+    .PARAMETER TrueLabels
+    Label of the true option by language code (e.g. @{ 1033 = "Active"; 1036 = "Actif" }), instead of TrueLabel.
+
+    .PARAMETER FalseLabels
+    Label of the false option by language code, instead of FalseLabel.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.Metadata.BooleanAttributeMetadata.
 
     .EXAMPLE
     $attribute = New-XrmBooleanColumn -LogicalName "new_enabled" -SchemaName "new_Enabled" -DisplayName "Enabled" -DefaultValue $false -TrueLabel "Active" -FalseLabel "Inactive";
     Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute;
+
+    .EXAMPLE
+    # Multilingual: the column labels go through Add-XrmColumn -DisplayNameLabels, the option labels through the constructor
+    $attribute = New-XrmBooleanColumn -LogicalName "new_enabled" -SchemaName "new_Enabled" -DisplayName "Enabled" -TrueLabels @{ 1033 = "Active"; 1036 = "Actif" } -FalseLabels @{ 1033 = "Inactive"; 1036 = "Inactif" };
+    Add-XrmColumn -EntityLogicalName "account" -Attribute $attribute -DisplayNameLabels @{ 1033 = "Enabled"; 1036 = "Active" };
 
     .LINK
     https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns
@@ -94,7 +105,17 @@ function New-XrmBooleanColumn {
 
         [Parameter(Mandatory = $false)]
         [int]
-        $LanguageCode = 1033
+        $LanguageCode = 1033,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [Hashtable]
+        $TrueLabels,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [Hashtable]
+        $FalseLabels
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -109,11 +130,11 @@ function New-XrmBooleanColumn {
         $attribute.RequiredLevel = [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty]::new($RequiredLevel);
 
         $trueOption = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
-        $trueOption.Label = New-XrmLabel -Text $TrueLabel -LanguageCode $LanguageCode;
+        $trueOption.Label = $(if ($PSBoundParameters.ContainsKey('TrueLabels')) { New-XrmLabel -Labels $TrueLabels } else { New-XrmLabel -Text $TrueLabel -LanguageCode $LanguageCode });
         $trueOption.Value = 1;
 
         $falseOption = [Microsoft.Xrm.Sdk.Metadata.OptionMetadata]::new();
-        $falseOption.Label = New-XrmLabel -Text $FalseLabel -LanguageCode $LanguageCode;
+        $falseOption.Label = $(if ($PSBoundParameters.ContainsKey('FalseLabels')) { New-XrmLabel -Labels $FalseLabels } else { New-XrmLabel -Text $FalseLabel -LanguageCode $LanguageCode });
         $falseOption.Value = 0;
 
         $optionSet = [Microsoft.Xrm.Sdk.Metadata.BooleanOptionSetMetadata]::new();

@@ -25,15 +25,15 @@ function Get-LabelText {
 # ============================================================
 Write-Section "New-XrmLabel multilingual";
 
-$label = New-XrmLabel -Labels @{ 1033 = "Account"; 1036 = "Compte" };
+$multiLabel = New-XrmLabel -Labels @{ 1033 = "Account"; 1036 = "Compte" };
 Assert-Test "New-XrmLabel -Labels builds 2 localized labels" {
-    $label.LocalizedLabels.Count -eq 2;
+    $multiLabel.LocalizedLabels.Count -eq 2;
 };
 Assert-Test "New-XrmLabel -Labels keeps 1033 text" {
-    (Get-LabelText -Label $label -LanguageCode 1033) -eq "Account";
+    (Get-LabelText -Label $multiLabel -LanguageCode 1033) -eq "Account";
 };
 Assert-Test "New-XrmLabel -Labels keeps 1036 text" {
-    (Get-LabelText -Label $label -LanguageCode 1036) -eq "Compte";
+    (Get-LabelText -Label $multiLabel -LanguageCode 1036) -eq "Compte";
 };
 
 # ============================================================
@@ -143,9 +143,10 @@ Assert-Test "View name resolved from -Labels using -LanguageCode 1036" {
 Write-Section "Component labels - Set-XrmView -Labels (redefine)";
 
 $Global:XrmClient | Set-XrmView -ViewReference $viewRef -Labels @{ 1033 = "ML View EN2"; 1036 = "Vue ML FR2" } | Out-Null;
-$viewRecord2 = $Global:XrmClient | Get-XrmRecord -LogicalName "savedquery" -Id $viewRef.Id -Columns "name";
-Assert-Test "Set-XrmView -Labels redefined name (default 1033)" {
-    $viewRecord2.name -eq "ML View EN2";
+# Retrieve keeps returning the name stored at creation: the translations are read with Get-XrmLocalizedLabel
+$viewLabels = Get-XrmLocalizedLabel -XrmClient $Global:XrmClient -EntityMoniker $viewRef -AttributeName "name" -AsHashtable;
+Assert-Test "Set-XrmView -Labels redefined the name in both languages" {
+    $viewLabels[1033] -eq "ML View EN2" -and $viewLabels[1036] -eq "Vue ML FR2";
 };
 
 # ============================================================

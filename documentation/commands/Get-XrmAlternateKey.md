@@ -12,6 +12,7 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 EntityLogicalName|String|2|true||Table / Entity logical name.
 LogicalName|String|3|true||Alternate key logical name.
 RetrieveAsIfPublished|Boolean|4|false|True|Retrieve metadata as if published. Default: true.
+IfExists|SwitchParameter|named|false|False|Return $null instead of raising an error when the alternate key does not exist.
 
 ## Outputs
 Microsoft.Xrm.Sdk.Metadata.EntityKeyMetadata. The alternate key metadata.
@@ -19,8 +20,7 @@ Microsoft.Xrm.Sdk.Metadata.EntityKeyMetadata. The alternate key metadata.
 ## Usage
 
 ```Powershell 
-Get-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-LogicalName] <String> [[-RetrieveAsIfPublished] <Boolean>] 
-[<CommonParameters>]
+Get-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-LogicalName] <String> [[-RetrieveAsIfPublished] <Boolean>] [-IfExists] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -28,5 +28,14 @@ Get-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String>
 ```Powershell 
 $key = Get-XrmAlternateKey -EntityLogicalName "account" -LogicalName "new_accountcode";
 ``` 
+
+
+```Powershell 
+if (-not (Get-XrmAlternateKey -XrmClient $xrmClient -EntityLogicalName "account" -LogicalName "new_accountcode" -IfExists)) { Write-Host "Missing"; }
+``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAlternateKey.md
 
 
