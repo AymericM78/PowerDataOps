@@ -56,6 +56,22 @@ Assert-Test "New-XrmEntityCollection - 2 entities" {
     $collection.Entities.Count -eq 2;
 };
 
+Assert-Test "New-XrmEntityCollection - returns an EntityCollection, not a List" {
+    $collection.GetType().FullName -eq "Microsoft.Xrm.Sdk.EntityCollection";
+};
+
+$emptyCollection = New-XrmEntityCollection;
+Assert-Test "New-XrmEntityCollection - no argument gives an empty collection" {
+    $emptyCollection -is [Microsoft.Xrm.Sdk.EntityCollection] -and $emptyCollection.Entities.Count -eq 0;
+};
+
+$email = New-XrmEntity -LogicalName "email" -Attributes @{ "to" = $collection };
+$serializer = [System.Runtime.Serialization.DataContractSerializer]::new([Microsoft.Xrm.Sdk.Entity]);
+Assert-Test "New-XrmEntityCollection - stored in an attribute, the entity serializes" {
+    $serializer.WriteObject([System.IO.MemoryStream]::new(), $email);
+    $true;
+};
+
 # ============================================================
 # New-XrmLabel
 # ============================================================

@@ -168,6 +168,22 @@ Assert-Test "Local option set sync updates labels and removes missing values" {
 };
 
 # ============================================================
+# Update-XrmOptionSetColors
+# ============================================================
+Write-Section "Update-XrmOptionSetColors";
+
+$Global:XrmClient | Update-XrmOptionSetColors -EntityLogicalName $tableName -AttributeLogicalName $localChoiceLogicalName -Colors @{ 100000002 = "#123456" };
+$colorCheck = $Global:XrmClient | Get-XrmColumn -EntityLogicalName $tableName -LogicalName $localChoiceLogicalName -MetadataType ([Microsoft.Xrm.Sdk.Metadata.PicklistAttributeMetadata]) -IfExists;
+$colorOption = $colorCheck.OptionSet.Options | Where-Object { $_.Value -eq 100000002 };
+$labelOption = $colorCheck.OptionSet.Options | Where-Object { $_.Value -eq 100000001 };
+Assert-Test "Update-XrmOptionSetColors - color updated (UpdateOptionValue with MergeLabels)" {
+    $null -ne $colorOption -and $colorOption.Color -eq "#123456";
+};
+Assert-Test "Update-XrmOptionSetColors - labels kept" {
+    $colorOption.Label.LocalizedLabels[0].Label -eq "Local C" -and $labelOption.Label.LocalizedLabels[0].Label -eq "Local B Updated";
+};
+
+# ============================================================
 # CLEANUP
 # ============================================================
 Write-Section "Cleanup";

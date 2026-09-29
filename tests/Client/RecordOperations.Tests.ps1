@@ -94,18 +94,64 @@ for ($i = 1; $i -le 5; $i++) {
     $requests += $req;
 }
 
-$Global:XrmClient | Invoke-XrmBulkRequests -Requests $requests -ContinueOnError $false -ReturnResponses $true;
-
-# Retrieve to verify
-$query = New-XrmQueryExpression -LogicalName "account" -Columns "name";
-$query = $query | Add-XrmQueryCondition -Field "name" -Condition BeginsWith -Values @("Bulk_IntTest_");
-$bulkResults = $Global:XrmClient | Get-XrmMultipleRecords -Query $query;
-Assert-Test "Bulk create - at least 5 accounts created (actual: $($bulkResults.Count))" {
-    $bulkResults.Count -ge 5;
+# BatchSize 2 => 3 ExecuteMultiple calls (2 + 2 + 1)
+$bulkResponses = @($Global:XrmClient | Invoke-XrmBulkRequests -Requests $requests -BatchSize 2 -ContinueOnError $false -ReturnResponses $true -Quiet);
+Assert-Test "Bulk create - one OrganizationResponse per request, no index leaked (actual: $($bulkResponses.Count))" {
+    $bulkResponses.Count -eq 5 -and @($bulkResponses | Where-Object { $_ -isnot [Microsoft.Xrm.Sdk.OrganizationResponse] }).Count -eq 0;
 };
 
 # Store Ids for cleanup
-$bulkIds = $bulkResults | ForEach-Object { $_.Id };
+$bulkIds = @($bulkResponses | ForEach-Object { $_.Results["id"] });
+
+# Retrieve to verify
+$query = New-XrmQueryExpression -LogicalName "account" -Columns "name";
+$query = $query | Add-XrmQueryCondition -Field "accountid" -Condition In -Values $bulkIds;
+$bulkResults = @($Global:XrmClient | Get-XrmMultipleRecords -Query $query);
+Assert-Test "Bulk create - 5 accounts created (actual: $($bulkResults.Count))" {
+    $bulkResults.Count -eq 5;
+};
+
+$firstName = $requests[0].Parameters["Target"]["name"];
+$firstCheck = $Global:XrmClient | Get-XrmRecord -LogicalName "account" -Id $bulkIds[0] -Columns "name";
+Assert-Test "Bulk create - responses are in request order" {
+    $firstCheck.name -eq $firstName;
+};
+
+Write-Section "Invoke-XrmBulkRequests - faults";
+
+# Third request targets a missing record: batch 2, relative index 0, global index 2
+$faultRequests = @();
+foreach ($id in @($bulkIds[0], $bulkIds[1], [Guid]::NewGuid())) {
+    $updateEntity = New-XrmEntity -LogicalName "account" -Id $id -Attributes @{ "description" = "Bulk fault test" };
+    $req = New-XrmRequest -Name "Update";
+    $req | Add-XrmRequestParameter -Name "Target" -Value $updateEntity | Out-Null;
+    $faultRequests += $req;
+}
+
+$faultResponses = @($Global:XrmClient | Invoke-XrmBulkRequests -Requests $faultRequests -BatchSize 2 -ContinueOnError $true -ReturnResponses $true -Quiet -ErrorVariable bulkErrors -ErrorAction SilentlyContinue);
+$faults = @($bulkErrors | ForEach-Object { $_.TargetObject });
+Assert-Test "ContinueOnError - one fault, with its global index and request name" {
+    $faults.Count -eq 1 -and $faults[0].Index -eq 2 -and $faults[0].Count -eq 1 -and $faults[0].RequestName -eq "Update" -and -not [string]::IsNullOrWhiteSpace($faults[0].Message);
+};
+Assert-Test "ContinueOnError - responses aligned on requests (`$null for the fault)" {
+    $faultResponses.Count -eq 3 -and $null -ne $faultResponses[0] -and $null -ne $faultResponses[1] -and $null -eq $faultResponses[2];
+};
+
+$bulkErrorMessage = $null;
+try {
+    $Global:XrmClient | Invoke-XrmBulkRequests -Requests $faultRequests -BatchSize 2 -Quiet | Out-Null;
+}
+catch {
+    $bulkErrorMessage = $_.Exception.Message;
+}
+Assert-Test "Without ContinueOnError - the error names the faulted request" {
+    $bulkErrorMessage -like "Request #2 (Update) failed:*";
+};
+
+$emptyResponses = @($Global:XrmClient | Invoke-XrmBulkRequests -Requests @() -Quiet);
+Assert-Test "Empty request list returns nothing" {
+    $emptyResponses.Count -eq 0;
+};
 
 # ============================================================
 # CLEANUP

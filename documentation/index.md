@@ -18,7 +18,7 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [Get-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributeValue.md)|Read entity attribute.<br/>Extract entity attribute value from record / table row.
-[Set-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAttributeValue.md)|Set entity attribute value.<br/>Add or update attribute value.
+[Set-XrmAttributeValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAttributeValue.md)|Set entity attribute value.<br/>Add or update attribute value.<br/>The value is normalized for the SDK: the PowerShell PSObject adapter (objects built with New-Object or emitted by a pipeline) is removed, and a homogeneous Object[] is typed. Without this, the request fails at serialization.
 # `Audit` commands
 
 Command|Synopsis
@@ -59,7 +59,7 @@ Command|Synopsis
 [Get-XrmRecordFileDownload](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRecordFileDownload.md)|Download a file from a file or image column.<br/>Download a file stored in a Dataverse file/image column using the InitializeFileBlocksDownload and DownloadBlock SDK messages.
 [Import-XrmDocumentTemplate](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmDocumentTemplate.md)|Import a local file content into a Dataverse document template.<br/>Read a file from disk and update the content of an existing Dataverse document template record.
 [Invoke-XrmBulkRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequest.md)|Execute Multiple Organization Request.<br/>Send requests to Microsoft Dataverse for bulk execution.
-[Invoke-XrmBulkRequests](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequests.md)|Split and Execute Multiple Organization Requests.<br/>Send requests to Microsoft Dataverse for bulk execution.
+[Invoke-XrmBulkRequests](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmBulkRequests.md)|Split and Execute Multiple Organization Requests.<br/>Send requests to Microsoft Dataverse for bulk execution, in ExecuteMultiple batches of BatchSize requests.<br/>Without ContinueOnError, the first fault stops the processing and raises an error that names the faulted request (global index and request name); the requests before it were executed.<br/>With ContinueOnError, every request is processed. The faults are reported at the end in one non-terminating error whose TargetObject holds one object per fault: Index (0-based, global to the Requests array), Count (1, or the batch size when a whole batch was refused), RequestName and Message. Capture them with -ErrorVariable.
 [Invoke-XrmRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Invoke-XrmRequest.md)|Execute Organization Request.<br/>Send request to Microsoft Dataverse for execution.
 [Join-XrmRecords](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Join-XrmRecords.md)|Associate records in Dataverse.<br/>Add a link between 1 row (Entity record) and multiple rows in Microsoft Dataverse.
 [Merge-XrmRecord](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Merge-XrmRecord.md)|Merge two records in Microsoft Dataverse.<br/>Merge a subordinate record into a target record using the Merge SDK message.<br/>The subordinate record is deactivated after the merge.
@@ -93,7 +93,7 @@ Command|Synopsis
 -------|-----------
 [ConvertTo-XrmObject](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmObject.md)|Transform Entity to custom object.<br/>Represent Entity object to custom object.
 [ConvertTo-XrmObjects](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmObjects.md)|Transform Entity Collection to custom object collection.<br/>Represent Entity objects to custom objects array.
-[ConvertTo-XrmType](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmType.md)|Convert a value to the appropriate Dataverse SDK type.<br/>Transform a raw value (string, number) to a typed Dataverse attribute value based on the specified type<br/>(int, decimal, datetime, money, bool, guid, optionset, optionsetvalues, entityreference, string).
+[ConvertTo-XrmType](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmType.md)|Convert a value to the appropriate Dataverse SDK type.<br/>Transform a raw value (string, number) to a typed Dataverse attribute value based on the specified type<br/>(int, decimal, datetime, money, bool, guid, optionset, optionsetvalues, entityreference, string).<br/>Strings are parsed with the current culture unless Culture is given; values that are already numbers or dates are cast, not parsed.<br/>A bool is read from a bool, a number (0 = false) or a string matched against TrueValues / FalseValues; any other string raises an error.
 # `Email` commands
 
 Command|Synopsis
@@ -162,7 +162,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Add-XrmRequestParameter](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmRequestParameter.md)|Add parameter to request.<br/>Add parameter name and value to given request.
+[Add-XrmRequestParameter](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmRequestParameter.md)|Add parameter to request.<br/>Add parameter name and value to given request.<br/>The value is normalized for the SDK: the PowerShell PSObject adapter is removed and a homogeneous Object[] is typed (e.g. @($query) becomes QueryExpression[]). A PSCustomObject or a hashtable cannot be sent to Dataverse and raises an error that names the parameter.
 [New-XrmRequest](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmRequest.md)|Initialize Request object instance.<br/>Get a new Organization Request object instance.
 # `Security` commands
 
@@ -199,7 +199,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Add-XrmSolutionComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSolutionComponent.md)|Add Solution Component.<br/>Add given component to specified solution.
+[Add-XrmSolutionComponent](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSolutionComponent.md)|Add Solution Component.<br/>Add given component to specified solution.<br/>Raises an error that names the component and the solution when the platform refuses the addition.
 [Add-XrmSolutionComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSolutionComponents.md)|Add multiple components to a solution.<br/>Adds a batch of components to the specified unmanaged solution and returns<br/>one result object per component.
 [Copy-XrmSolutionComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Copy-XrmSolutionComponents.md)|Copy Solution Components.<br/>Add all components from source solution to target one.
 [Get-XrmSolutionComponentName](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutionComponentName.md)|Get Solution Component name from Id.<br/>Retrieve component name from its number.
@@ -436,7 +436,7 @@ Command|Synopsis
 [Get-XrmLabelText](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmLabelText.md)|Resolve a single label text from a multilingual labels hashtable.<br/>Pick the label text for a given language code from a hashtable of language code to text.<br/>If the requested language is not present, falls back to the lowest language code available.<br/>Used by component cmdlets (forms, views, charts, dashboards, commands, app modules, sitemaps)<br/>that store a single 'name' attribute but accept a multilingual -Labels hashtable for a<br/>consistent authoring experience.
 [New-XrmContext](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmContext.md)|Initialize new object that represent a Xrm Context.<br/>Core module cmdlet that create new object to store context information.
 [New-XrmEntity](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntity.md)|Initialize Entity object instance.<br/>Create a new Microsoft Dataverse Entity object.
-[New-XrmEntityCollection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityCollection.md)|Initialize EntityCollection object instance.<br/>Get new Entity Collection object from entities array.
+[New-XrmEntityCollection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityCollection.md)|Initialize EntityCollection object instance.<br/>Get new Entity Collection object from entities array.<br/>The collection is built with its constructor, so it carries no PowerShell PSObject adapter and can be stored as is in an attribute or a request parameter.
 [New-XrmEntityReference](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityReference.md)|Initialize EntityReference object instance.<br/>Get new EntityReference object from lookup information.
 [New-XrmEntityReferenceCollection](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmEntityReferenceCollection.md)|Initialize EntityReferenceCollection object instance.<br/>Get new EntityReferenceCollection object from entity references array.
 [New-XrmLabel](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmLabel.md)|Create a Label object for Dataverse metadata.<br/>Build a Microsoft.Xrm.Sdk.Label from a single text value and language code, or from a<br/>hashtable of language code to text for multilingual labels.
@@ -477,6 +477,8 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
+[Add-XrmFilterConditionInternal](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmFilterConditionInternal.md)|<br/>
+[ConvertTo-XrmSdkValueInternal](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmSdkValueInternal.md)|<br/>
 [Sync-XrmOptionSetOptionsInternal](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Sync-XrmOptionSetOptionsInternal.md)|<br/>
 [Test-XrmNotFoundError](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmNotFoundError.md)|<br/>
 

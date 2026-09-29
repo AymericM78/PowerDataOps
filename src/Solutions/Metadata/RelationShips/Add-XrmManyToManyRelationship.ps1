@@ -12,7 +12,7 @@
     The ManyToManyRelationshipMetadata object defining the relationship.
 
     .PARAMETER IntersectEntityName
-    Logical name for the intersect entity.
+    Schema name of the intersect entity (sent as CreateManyToManyRequest.IntersectEntitySchemaName). Alias: IntersectEntitySchemaName.
 
     .PARAMETER SolutionUniqueName
     Solution unique name to add the relationship to.
@@ -43,6 +43,7 @@ function Add-XrmManyToManyRelationship {
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
+        [Alias("IntersectEntitySchemaName")]
         [string]
         $IntersectEntityName,
 
@@ -57,7 +58,7 @@ function Add-XrmManyToManyRelationship {
     process {
         $request = [Microsoft.Xrm.Sdk.Messages.CreateManyToManyRequest]::new();
         $request.ManyToManyRelationship = $ManyToManyRelationship;
-        $request.IntersectEntityName = $IntersectEntityName;
+        $request.IntersectEntitySchemaName = $IntersectEntityName;
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             $request.Parameters["SolutionUniqueName"] = $SolutionUniqueName;

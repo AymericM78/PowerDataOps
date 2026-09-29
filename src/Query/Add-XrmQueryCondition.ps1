@@ -18,7 +18,17 @@
     Specify if column filter should be evaluated according to another column.
 
     .PARAMETER Values
-    Value to apply in column filter (single object or array)
+    Value to apply in column filter (single object or array). Values are unwrapped from their PowerShell PSObject adapter. An empty array with In matches no row; an empty array with NotIn adds no condition.
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.Query.QueryExpression. The query, for pipeline chaining.
+
+    .EXAMPLE
+    $query = New-XrmQueryExpression -LogicalName "account" -Columns "name";
+    $query = $query | Add-XrmQueryCondition -Field "statecode" -Condition Equal -Values 0;
+
+    .EXAMPLE
+    $query = $query | Add-XrmQueryCondition -Field "accountid" -Condition In -Values $accountIds;
 #>
 function Add-XrmQueryCondition {
     [CmdletBinding()]    
@@ -45,26 +55,16 @@ function Add-XrmQueryCondition {
         $CompareFieldValue = $false,
 
         [Parameter(Mandatory = $false)]
+        [AllowEmptyCollection()]
         [System.Object[]]
         $Values
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
-        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
-    }    
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
+    }
     process {
-        
-        if ($PSBoundParameters.ContainsKey('Values')) {
-            if ($PSBoundParameters.ContainsKey('CompareFieldValue')) {
-                $Query.Criteria.AddCondition($Field, $Condition, $true, $Values);
-            }
-            else {
-                $Query.Criteria.AddCondition($Field, $Condition, $Values);
-            }
-        }
-        else {
-            $Query.Criteria.AddCondition($Field, $Condition);
-        }
+        Add-XrmFilterConditionInternal -Filter $Query.Criteria -Field $Field -Condition $Condition -HasValues $PSBoundParameters.ContainsKey('Values') -Values $Values -CompareFieldValue $CompareFieldValue.IsPresent;
         $Query;
     }
     end {

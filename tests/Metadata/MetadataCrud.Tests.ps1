@@ -140,6 +140,40 @@ Assert-Test "Add-XrmOneToManyRelationship - created '$relationshipSchemaName'" {
 };
 
 # ============================================================
+# Add-XrmManyToManyRelationship
+# ============================================================
+Write-Section "Add-XrmManyToManyRelationship";
+
+$manyToManySchemaName = "${prefix}_${tableName}_contact";
+$intersectSchemaName = "${prefix}_${tableName}_contact";
+
+$manyToMany = [Microsoft.Xrm.Sdk.Metadata.ManyToManyRelationshipMetadata]::new();
+$manyToMany.SchemaName = $manyToManySchemaName;
+$manyToMany.Entity1LogicalName = $tableName;
+$manyToMany.Entity2LogicalName = "contact";
+$manyToMany.Entity1AssociatedMenuConfiguration = [Microsoft.Xrm.Sdk.Metadata.AssociatedMenuConfiguration]::new();
+$manyToMany.Entity1AssociatedMenuConfiguration.Behavior = [Microsoft.Xrm.Sdk.Metadata.AssociatedMenuBehavior]::UseCollectionName;
+$manyToMany.Entity1AssociatedMenuConfiguration.Group = [Microsoft.Xrm.Sdk.Metadata.AssociatedMenuGroup]::Details;
+$manyToMany.Entity2AssociatedMenuConfiguration = [Microsoft.Xrm.Sdk.Metadata.AssociatedMenuConfiguration]::new();
+$manyToMany.Entity2AssociatedMenuConfiguration.Behavior = [Microsoft.Xrm.Sdk.Metadata.AssociatedMenuBehavior]::UseCollectionName;
+$manyToMany.Entity2AssociatedMenuConfiguration.Group = [Microsoft.Xrm.Sdk.Metadata.AssociatedMenuGroup]::Details;
+
+$createNnResponse = $Global:XrmClient | Add-XrmManyToManyRelationship -ManyToManyRelationship $manyToMany -IntersectEntityName $intersectSchemaName;
+Assert-Test "Add-XrmManyToManyRelationship - created '$manyToManySchemaName'" {
+    $null -ne $createNnResponse -and $createNnResponse.Results["ManyToManyRelationshipId"] -ne [Guid]::Empty;
+};
+
+$nnCheck = $Global:XrmClient | Get-XrmRelationship -Name $manyToManySchemaName;
+Assert-Test "Get-XrmRelationship - N:N intersect entity is '$($intersectSchemaName.ToLower())'" {
+    $null -ne $nnCheck -and $nnCheck.IntersectEntityName -eq $intersectSchemaName.ToLower();
+};
+
+$removeNnResponse = $Global:XrmClient | Remove-XrmRelationship -Name $manyToManySchemaName;
+Assert-Test "Remove-XrmRelationship - removed '$manyToManySchemaName'" {
+    $removeNnResponse -ne $null;
+};
+
+# ============================================================
 # Remove-XrmColumn
 # ============================================================
 Write-Section "Remove-XrmColumn";

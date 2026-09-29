@@ -89,7 +89,43 @@ Assert-Test "Solution now contains account entity component" {
     $containsAccountEntity;
 };
 
+Write-Section "Add-XrmSolutionComponent - DoNotIncludeSubcomponents default by type";
+
+$webResourceQuery = New-XrmQueryExpression -LogicalName "webresource" -Columns "name" -TopCount 2;
+$webResources = @($Global:XrmClient | Get-XrmMultipleRecords -Query $webResourceQuery);
+
+$singleResponse = $Global:XrmClient | Add-XrmSolutionComponent -SolutionUniqueName $solutionUniqueName -ComponentId $webResources[0].Id -ComponentType 61;
+Assert-Test "Web resource (type 61) added without DoNotIncludeSubcomponents" {
+    $null -ne $singleResponse;
+};
+
+$batchResults = @($Global:XrmClient | Add-XrmSolutionComponents -SolutionUniqueName $solutionUniqueName -Components @(
+        [pscustomobject]@{ ComponentId = $webResources[1].Id; ComponentType = 61 }
+    ));
+Assert-Test "Add-XrmSolutionComponents - web resource added with the default" {
+    $batchResults.Count -eq 1 -and $batchResults[0].Success -eq $true;
+};
+
+$addErrorMessage = $null;
+try {
+    $Global:XrmClient | Add-XrmSolutionComponent -SolutionUniqueName "pdomissing$randomSuffix" -ComponentId $webResources[0].Id -ComponentType 61 | Out-Null;
+}
+catch {
+    $addErrorMessage = $_.Exception.Message;
+}
+Assert-Test "Refused addition raises an error naming the solution" {
+    $addErrorMessage -like "*pdomissing$randomSuffix*";
+};
+
 Write-Section "Cleanup";
+
+foreach ($webResource in $webResources) {
+    try {
+        $Global:XrmClient | Remove-XrmSolutionComponent -SolutionUniqueName $solutionUniqueName -ComponentId $webResource.Id -ComponentType 61;
+    }
+    catch {
+    }
+}
 
 try {
     $Global:XrmClient | Remove-XrmSolutionComponent -SolutionUniqueName $solutionUniqueName -ComponentId $accountMetadataId -ComponentType 1;

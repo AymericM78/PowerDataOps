@@ -65,6 +65,7 @@ function Update-XrmOptionSetColors {
             $request | Add-XrmRequestParameter -Name "AttributeLogicalName" -Value $AttributeLogicalName | Out-Null;
             $request | Add-XrmRequestParameter -Name "Value" -Value ([int]$optionValue) | Out-Null;
             $request | Add-XrmRequestParameter -Name "Color" -Value $color | Out-Null;
+            $request | Add-XrmRequestParameter -Name "MergeLabels" -Value $true | Out-Null;
             Invoke-XrmRequest -XrmClient $XrmClient -Request $request | Out-Null;
         };
 

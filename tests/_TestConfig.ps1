@@ -9,9 +9,16 @@
 # Import module
 Import-Module "$PsScriptRoot\..\PowerDataOps.psd1" -Force -DisableNameChecking;
 
-# Connect to test instance (interactive OAuth — will prompt once, then cache token)
+# Connect to test instance.
+# Unattended runs: set $env:PDO_TEST_CONNECTIONSTRING (e.g. AuthType=ClientSecret;Url=...;ClientId=...;ClientSecret=...).
+# Never commit that value. Without it, interactive OAuth prompts once, then caches the token.
 if (-not $Global:XrmClient -or -not $Global:XrmClient.IsReady) {
-    $Global:XrmClient = Connect-XrmClient -Url "https://powerdataops.crm12.dynamics.com/";
+    if (-not [string]::IsNullOrWhiteSpace($env:PDO_TEST_CONNECTIONSTRING)) {
+        $Global:XrmClient = New-XrmClient -ConnectionString $env:PDO_TEST_CONNECTIONSTRING;
+    }
+    else {
+        $Global:XrmClient = Connect-XrmClient -Url "https://powerdataops.crm12.dynamics.com/";
+    }
 }
 
 # Counters

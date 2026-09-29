@@ -15,7 +15,14 @@
     Condition operator to apply to column (ConditionOperator)
 
     .PARAMETER Values
-    Value to apply in column filter (single object or array)
+    Value to apply in column filter (single object or array). Values are unwrapped from their PowerShell PSObject adapter. An empty array with In matches no row; an empty array with NotIn adds no condition.
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.Query.LinkEntity. The link, for pipeline chaining.
+
+    .EXAMPLE
+    $link = $query | Add-XrmQueryLink -ToEntityName "teammembership" -FromAttributeName "systemuserid" -ToAttributeName "systemuserid";
+    $link | Add-XrmQueryLinkCondition -Field "teamid" -Condition Equal -Values $teamId | Out-Null;
 #>
 function Add-XrmQueryLinkCondition {
     [CmdletBinding()]
@@ -38,22 +45,16 @@ function Add-XrmQueryLinkCondition {
         $Condition,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
+        [AllowEmptyCollection()]
         [System.Object[]]
         $Values
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
-        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
-    }    
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
+    }
     process {
-        
-        if ($Values) {
-            $Link.LinkCriteria.AddCondition($Field, $Condition, $Values);
-        }
-        else {
-            $Link.LinkCriteria.AddCondition($Field, $Condition);
-        }
+        Add-XrmFilterConditionInternal -Filter $Link.LinkCriteria -Field $Field -Condition $Condition -HasValues ($PSBoundParameters.ContainsKey('Values') -and $null -ne $Values) -Values $Values;
         $Link;
     }
     end {

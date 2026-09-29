@@ -14,7 +14,7 @@ SolutionUniqueName|String|2|true||Unmanaged solution unique name where component
 Components|Object[]|3|true||Collection of component descriptors. Supported input shapes:
 - @{ ComponentId = <Guid>; ComponentType = <int> }
 - solutioncomponent rows with objectid and componenttype/componenttype_Value
-DoNotIncludeSubcomponents|Boolean|4|false|True|Indicates whether subcomponents should be included. Default: true.
+DoNotIncludeSubcomponents|Boolean|4|false|False|Indicates whether subcomponents should be excluded, for every component. The platform accepts true only for tables (ComponentType 1). Default: true for tables, false for any other component type.
 AddRequiredComponents|Boolean|5|false|False|Indicates whether required components should be included. Default: false.
 ContinueOnError|Boolean|6|false|True|Continue processing remaining components when one component fails. Default: true.
 
@@ -24,15 +24,14 @@ PSCustomObject array.
 ## Usage
 
 ```Powershell 
-Add-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-Components] <Object[]> [[-DoNotIncludeSubcomponents] <Boolean>] 
-[[-AddRequiredComponents] <Boolean>] [[-ContinueOnError] <Boolean>] [<CommonParameters>]
+Add-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-Components] <Object[]> [[-DoNotIncludeSubcomponents] <Boolean>] [[-AddRequiredComponents] <Boolean>] [[-ContinueOnError] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $components = @(
-[pscustomobject]@{ ComponentId = $entityId; ComponentType = 1 },
+    [pscustomobject]@{ ComponentId = $entityId; ComponentType = 1 },
     [pscustomobject]@{ ComponentId = $viewId; ComponentType = 26 }
 );
 Add-XrmSolutionComponents -SolutionUniqueName "MySolution" -Components $components;

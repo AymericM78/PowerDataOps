@@ -18,7 +18,7 @@
     - solutioncomponent rows with objectid and componenttype/componenttype_Value
 
     .PARAMETER DoNotIncludeSubcomponents
-    Indicates whether subcomponents should be included. Default: true.
+    Indicates whether subcomponents should be excluded, for every component. The platform accepts true only for tables (ComponentType 1). Default: true for tables, false for any other component type.
 
     .PARAMETER AddRequiredComponents
     Indicates whether required components should be included. Default: false.
@@ -57,7 +57,7 @@ function Add-XrmSolutionComponents {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $DoNotIncludeSubcomponents = $true,
+        $DoNotIncludeSubcomponents,
 
         [Parameter(Mandatory = $false)]
         [bool]
@@ -77,6 +77,8 @@ function Add-XrmSolutionComponents {
         if (-not $Components -or $Components.Count -eq 0) {
             return $results;
         }
+
+        $hasDoNotIncludeSubcomponents = $PSBoundParameters.ContainsKey('DoNotIncludeSubcomponents');
 
         ForEach-ObjectWithProgress -Collection $Components -OperationName "Adding components to $SolutionUniqueName" -ScriptBlock {
             param($component)
@@ -137,12 +139,16 @@ function Add-XrmSolutionComponents {
             }
 
             try {
-                $response = $XrmClient | Add-XrmSolutionComponent `
-                    -SolutionUniqueName $SolutionUniqueName `
-                    -ComponentId $componentId `
-                    -ComponentType $componentType `
-                    -DoNotIncludeSubcomponents $DoNotIncludeSubcomponents `
-                    -AddRequiredComponents $AddRequiredComponents;
+                $addParameters = @{
+                    SolutionUniqueName    = $SolutionUniqueName;
+                    ComponentId           = $componentId;
+                    ComponentType         = $componentType;
+                    AddRequiredComponents = $AddRequiredComponents;
+                };
+                if ($hasDoNotIncludeSubcomponents) {
+                    $addParameters.DoNotIncludeSubcomponents = $DoNotIncludeSubcomponents;
+                }
+                $response = $XrmClient | Add-XrmSolutionComponent @addParameters;
 
                 $result = [pscustomobject]@{
                     "ComponentId"   = $componentId;

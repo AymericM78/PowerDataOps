@@ -4,12 +4,23 @@
 
     .DESCRIPTION
     Add parameter name and value to given request.
+    The value is normalized for the SDK: the PowerShell PSObject adapter is removed and a homogeneous Object[] is typed (e.g. @($query) becomes QueryExpression[]). A PSCustomObject or a hashtable cannot be sent to Dataverse and raises an error that names the parameter.
+
+    .PARAMETER Request
+    Organization request to complete.
 
     .PARAMETER Name
     Parameter name.
 
     .PARAMETER Value
-    Parameter value.
+    Parameter value. $null is accepted.
+
+    .OUTPUTS
+    Microsoft.Xrm.Sdk.OrganizationRequest. The request, for pipeline chaining.
+
+    .EXAMPLE
+    $request = New-XrmRequest -Name "WhoAmI";
+    $request = $request | Add-XrmRequestParameter -Name "Target" -Value $reference;
 #>
 function Add-XrmRequestParameter {
     [CmdletBinding()]
@@ -25,6 +36,7 @@ function Add-XrmRequestParameter {
         $Name,
 
         [Parameter(Mandatory = $true)]
+        [AllowNull()]
         [object]
         $Value
     )
@@ -37,7 +49,12 @@ function Add-XrmRequestParameter {
             throw "Request parameter '$Name' already added!"
         }
 
-        $Request.Parameters.Add($Name, $Value);
+        $sdkValue = ConvertTo-XrmSdkValueInternal -Value $Value;
+        if ($sdkValue -is [System.Management.Automation.PSCustomObject] -or $sdkValue -is [hashtable]) {
+            throw "Request parameter '$Name': a value of type '$($sdkValue.GetType().Name)' cannot be sent to Dataverse. Pass an SDK type (Entity, EntityReference, OptionSetValue, typed array...).";
+        }
+
+        $Request.Parameters.Add($Name, $sdkValue);
         return $Request;
     }
     end {

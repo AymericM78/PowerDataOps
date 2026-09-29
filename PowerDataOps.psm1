@@ -12,7 +12,7 @@ foreach ($scriptFile in $scriptFiles) {
     }
     catch {
         $errorMessage = $_.Exception.Message;
-        Write-Verbose " > Loading function file '$scriptPath' => KO ! Reason = '$errorMessage'";
+        Write-Warning "PowerDataOps: cannot load '$scriptPath', its commands are unavailable. Reason = '$errorMessage'";
     }
 }
 

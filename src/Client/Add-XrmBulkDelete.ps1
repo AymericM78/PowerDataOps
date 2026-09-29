@@ -9,7 +9,7 @@
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Query
-    QueryExpression defining the records to delete.
+    QueryExpression (or array of QueryExpression) defining the records to delete.
 
     .PARAMETER JobName
     Name of the bulk delete job. (Default: "Bulk Delete")
@@ -18,10 +18,10 @@
     Whether to send email notification when the job completes. (Default: false)
 
     .PARAMETER ToRecipients
-    Array of system user entity references to receive email notification. (Default: empty)
+    Array of system user ids to receive email notification. (Default: empty)
 
     .PARAMETER CCRecipients
-    Array of system user entity references to receive email notification in CC. (Default: empty)
+    Array of system user ids to receive email notification in CC. (Default: empty)
 
     .PARAMETER RecurrencePattern
     Recurrence pattern for the bulk delete job. Empty string for one-time execution. (Default: "")
@@ -44,14 +44,16 @@
 #>
 function Add-XrmBulkDelete {
     [CmdletBinding()]
+    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
-    (        
+    (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
         [Parameter(Mandatory = $true)]
-        [Microsoft.Xrm.Sdk.Query.QueryExpression]
+        [ValidateNotNullOrEmpty()]
+        [Microsoft.Xrm.Sdk.Query.QueryExpression[]]
         $Query,
 
         [Parameter(Mandatory = $false)]
@@ -89,7 +91,7 @@ function Add-XrmBulkDelete {
     }    
     process {
         $request = New-XrmRequest -Name "BulkDelete";
-        $request | Add-XrmRequestParameter -Name "QuerySet" -Value @($Query) | Out-Null;
+        $request | Add-XrmRequestParameter -Name "QuerySet" -Value ([Microsoft.Xrm.Sdk.Query.QueryExpression[]]$Query) | Out-Null;
         $request | Add-XrmRequestParameter -Name "JobName" -Value $JobName | Out-Null;
         $request | Add-XrmRequestParameter -Name "SendEmailNotification" -Value $SendEmailNotification | Out-Null;
         $request | Add-XrmRequestParameter -Name "ToRecipients" -Value $ToRecipients | Out-Null;

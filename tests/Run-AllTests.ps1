@@ -14,6 +14,7 @@ $testRoot = $PSScriptRoot;
 
 $allTests = @(
     @{ Category = "Types";         File = "Types\TypeHelpers.Tests.ps1" },
+    @{ Category = "Converters";    File = "Converters\ConvertTo-XrmType.Tests.ps1" },
     @{ Category = "Utilities";     File = "Utilities\Initialize-XrmPath.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Connection.Tests.ps1" },
     @{ Category = "Excel";         File = "Excel\Read-XrmExcelSheet.Tests.ps1" },
@@ -21,6 +22,7 @@ $allTests = @(
     @{ Category = "Query";         File = "Query\QueryExpression.Tests.ps1" },
     @{ Category = "Query";         File = "Query\QueryLinkColumns.Tests.ps1" },
     @{ Category = "Client";        File = "Client\RecordOperations.Tests.ps1" },
+    @{ Category = "Client";        File = "Client\SdkValues.Tests.ps1" },
     @{ Category = "Client";        File = "Client\AccountCrud.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Associations.Tests.ps1" },
     @{ Category = "Client";        File = "Client\DocumentTemplateContent.Tests.ps1" },

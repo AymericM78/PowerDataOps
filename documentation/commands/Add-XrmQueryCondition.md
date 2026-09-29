@@ -12,24 +12,27 @@ Query|QueryExpression|1|true||QueryExpression where condition should be add.
 Field|String|2|true||Column / attribute logical name to filter.
 Condition|ConditionOperator|3|true||Condition operator to apply to column (ConditionOperator)
 CompareFieldValue|SwitchParameter|named|false|False|Specify if column filter should be evaluated according to another column.
-Values|Object[]|4|false||Value to apply in column filter (single object or array)
+Values|Object[]|4|false||Value to apply in column filter (single object or array). Values are unwrapped from their PowerShell PSObject adapter. An empty array with In matches no row; an empty array with NotIn adds no condition.
 
 ## Outputs
-Microsoft.Xrm.Sdk.Query.QueryExpression
+Microsoft.Xrm.Sdk.Query.QueryExpression. The query, for pipeline chaining.
 
 ## Usage
 
 ```Powershell 
-Add-XrmQueryCondition [-Query] <QueryExpression> [-Field] <String> [-Condition] {Equal | NotEqual | GreaterThan | LessThan | GreaterEqual | LessEqual | 
-Like | NotLike | In | NotIn | Between | NotBetween | Null | NotNull | Yesterday | Today | Tomorrow | Last7Days | Next7Days | LastWeek | ThisWeek | 
-NextWeek | LastMonth | ThisMonth | NextMonth | On | OnOrBefore | OnOrAfter | LastYear | ThisYear | NextYear | LastXHours | NextXHours | LastXDays | 
-NextXDays | LastXWeeks | NextXWeeks | LastXMonths | NextXMonths | LastXYears | NextXYears | EqualUserId | NotEqualUserId | EqualBusinessId | 
-NotEqualBusinessId | ChildOf | Mask | NotMask | MasksSelect | Contains | DoesNotContain | EqualUserLanguage | NotOn | OlderThanXMonths | BeginsWith | 
-DoesNotBeginWith | EndsWith | DoesNotEndWith | ThisFiscalYear | ThisFiscalPeriod | NextFiscalYear | NextFiscalPeriod | LastFiscalYear | LastFiscalPeriod 
-| LastXFiscalYears | LastXFiscalPeriods | NextXFiscalYears | NextXFiscalPeriods | InFiscalYear | InFiscalPeriod | InFiscalPeriodAndYear | 
-InOrBeforeFiscalPeriodAndYear | InOrAfterFiscalPeriodAndYear | EqualUserTeams | EqualUserOrUserTeams | Under | NotUnder | UnderOrEqual | Above | 
-AboveOrEqual | EqualUserOrUserHierarchy | EqualUserOrUserHierarchyAndTeams | OlderThanXYears | OlderThanXWeeks | OlderThanXDays | OlderThanXHours | 
-OlderThanXMinutes | ContainValues | DoesNotContainValues | EqualRoleBusinessId} [-CompareFieldValue] [[-Values] <Object[]>] [<CommonParameters>]
+Add-XrmQueryCondition [-Query] <QueryExpression> [-Field] <String> [-Condition] {Equal | NotEqual | GreaterThan | LessThan | GreaterEqual | LessEqual | Like | NotLike | In | NotIn | Between | NotBetween | Null | NotNull | Yesterday | Today | Tomorrow | Last7Days | Next7Days | LastWeek | ThisWeek | NextWeek | LastMonth | ThisMonth | NextMonth | On | OnOrBefore | OnOrAfter | LastYear | ThisYear | NextYear | LastXHours | NextXHours | LastXDays | NextXDays | LastXWeeks | NextXWeeks | LastXMonths | NextXMonths | LastXYears | NextXYears | EqualUserId | NotEqualUserId | EqualBusinessId | NotEqualBusinessId | ChildOf | Mask | NotMask | MasksSelect | Contains | DoesNotContain | EqualUserLanguage | NotOn | OlderThanXMonths | BeginsWith | DoesNotBeginWith | EndsWith | DoesNotEndWith | ThisFiscalYear | ThisFiscalPeriod | NextFiscalYear | NextFiscalPeriod | LastFiscalYear | LastFiscalPeriod | LastXFiscalYears | LastXFiscalPeriods | NextXFiscalYears | NextXFiscalPeriods | InFiscalYear | InFiscalPeriod | InFiscalPeriodAndYear | InOrBeforeFiscalPeriodAndYear | InOrAfterFiscalPeriodAndYear | EqualUserTeams | EqualUserOrUserTeams | Under | NotUnder | UnderOrEqual | Above | AboveOrEqual | EqualUserOrUserHierarchy | EqualUserOrUserHierarchyAndTeams | OlderThanXYears | OlderThanXWeeks | OlderThanXDays | OlderThanXHours | OlderThanXMinutes | ContainValues | DoesNotContainValues | EqualRoleBusinessId} [-CompareFieldValue] [[-Values] <Object[]>] [<CommonParameters>]
+``` 
+
+## Examples
+
+```Powershell 
+$query = New-XrmQueryExpression -LogicalName "account" -Columns "name";
+$query = $query | Add-XrmQueryCondition -Field "statecode" -Condition Equal -Values 0;
+``` 
+
+
+```Powershell 
+$query = $query | Add-XrmQueryCondition -Field "accountid" -Condition In -Values $accountIds;
 ``` 
 
 

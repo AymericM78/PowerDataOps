@@ -4,6 +4,7 @@
 
     .DESCRIPTION
     Add given component to specified solution.
+    Raises an error that names the component and the solution when the platform refuses the addition.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -18,7 +19,7 @@
     Component type number (see Get-XrmSolutionComponentName to get name from type number).
 
     .PARAMETER DoNotIncludeSubcomponents
-    Indicates whether the subcomponents should be included. (Default : true = no subcomponents)
+    Indicates whether the subcomponents should be excluded. The platform accepts true only for tables (ComponentType 1). (Default : true for a table, false for any other component type)
     
     .PARAMETER AddRequiredComponents
     Gets or sets a value that indicates whether other solution components that are required by the solution component that you are adding should also be added to the unmanaged solution. Required. (Default : false = do not add required components)
@@ -54,9 +55,8 @@ function Add-XrmSolutionComponent {
         $ComponentType,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]        
         [bool]
-        $DoNotIncludeSubcomponents = $true,
+        $DoNotIncludeSubcomponents,
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
@@ -69,6 +69,10 @@ function Add-XrmSolutionComponent {
     }    
     process {
 
+        if (-not $PSBoundParameters.ContainsKey('DoNotIncludeSubcomponents')) {
+            $DoNotIncludeSubcomponents = ($ComponentType -eq 1);
+        }
+
         $addComponentRequest = New-XrmRequest -Name "AddSolutionComponent";
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "SolutionUniqueName" -Value $SolutionUniqueName;
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "ComponentId" -Value $ComponentId;
@@ -76,7 +80,12 @@ function Add-XrmSolutionComponent {
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "AddRequiredComponents" -Value $AddRequiredComponents;
         $addComponentRequest = $addComponentRequest | Add-XrmRequestParameter -Name "DoNotIncludeSubcomponents" -Value $DoNotIncludeSubcomponents;
 
-        $response = $XrmClient | Invoke-XrmRequest -Request $addComponentRequest;
+        try {
+            $response = $XrmClient | Invoke-XrmRequest -Request $addComponentRequest;
+        }
+        catch {
+            throw [System.InvalidOperationException]::new("Cannot add component '$ComponentId' (type $ComponentType) to solution '$SolutionUniqueName': $($_.Exception.Message)", $_.Exception);
+        }
         $response;
     }
     end {
