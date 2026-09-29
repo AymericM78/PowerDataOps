@@ -223,6 +223,9 @@ function Invoke-XrmParallelRequests {
 
         if ($PSVersionTable.PSVersion.Major -ge 7 -and $threads -gt 1) {
             $clients = [System.Collections.Generic.List[object]]::new();
+            # The clones share this setting with the caller's client: restore it at the end, or the caller's
+            # next requests lose server affinity (metadata just created then not found on another server)
+            $callerAffinityCookie = $XrmClient.EnableAffinityCookie;
             try {
                 for ($i = 0; $i -lt $threads; $i++) {
                     $clone = $XrmClient.Clone();
@@ -239,6 +242,7 @@ function Invoke-XrmParallelRequests {
                 foreach ($clone in $clients) {
                     $clone.Dispose();
                 }
+                $XrmClient.EnableAffinityCookie = $callerAffinityCookie;
             }
         }
         else {

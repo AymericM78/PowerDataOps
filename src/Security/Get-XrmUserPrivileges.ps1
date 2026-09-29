@@ -1,28 +1,29 @@
 <#
     .SYNOPSIS
-    Retrieve security role privileges.
+    Retrieve the privileges of a user.
 
     .DESCRIPTION
-    Get role privileges from given role (RetrieveRolePrivilegesRole): one RolePrivilege per privilege, with its depth.
+    Get the privileges a user holds through their security roles (RetrieveUserPrivileges): one RolePrivilege per privilege and depth.
     Each RolePrivilege also carries EntityLogicalName and AccessRight (see Get-XrmPrivileges), and its PrivilegeName is filled when the platform leaves it empty.
+    To check a single privilege, Test-XrmUserPrivilege is cheaper.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
-    .PARAMETER RoleId
-    Role unique identifier.
+    .PARAMETER UserId
+    System user unique identifier. (Default: current user)
 
     .OUTPUTS
-    Microsoft.Crm.Sdk.Messages.RolePrivilege[]. Privileges of the role, with the EntityLogicalName and AccessRight note properties.
+    Microsoft.Crm.Sdk.Messages.RolePrivilege[]. Privileges of the user, with the EntityLogicalName and AccessRight note properties.
 
     .EXAMPLE
-    $privileges = Get-XrmRolePrivileges -XrmClient $xrmClient -RoleId $role.Id;
+    $privileges = Get-XrmUserPrivileges -XrmClient $xrmClient -UserId $user.Id;
     $privileges | Where-Object { $_.EntityLogicalName -eq "account" } | Select-Object PrivilegeName, AccessRight, Depth;
 
     .LINK
-    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRolePrivileges.md
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmUserPrivileges.md
 #>
-function Get-XrmRolePrivileges {
+function Get-XrmUserPrivileges {
     [CmdletBinding()]
     [OutputType([Microsoft.Crm.Sdk.Messages.RolePrivilege[]])]
     param
@@ -31,26 +32,36 @@ function Get-XrmRolePrivileges {
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
         [Guid]
-        $RoleId
+        $UserId
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $request = New-XrmRequest -Name "RetrieveRolePrivilegesRole";
-        $request = $request | Add-XrmRequestParameter -Name "RoleId" -Value $RoleId;
-        $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+        if (-not $PSBoundParameters.ContainsKey('UserId')) {
+            $UserId = Get-XrmWhoAmI -XrmClient $XrmClient;
+        }
+
+        $request = New-XrmRequest -Name "RetrieveUserPrivileges";
+        $request = $request | Add-XrmRequestParameter -Name "UserId" -Value $UserId;
+        $response = $XrmClient | Invoke-XrmRequest -Request $request;
         if ($null -eq $response) {
             return;
         }
-        $privileges = $response.Results["RolePrivileges"];
+        $privileges = @($response.Results["RolePrivileges"]);
+        if ($privileges.Count -eq 0) {
+            return;
+        }
 
-        # Names (sometimes empty in the response), tables and access rights
+        # Names, tables and access rights: by id when they are few, else every privilege in one read
+        $privilegeIds = @($privileges | ForEach-Object { $_.PrivilegeId } | Select-Object -Unique);
         $privilegeInfos = @{};
-        foreach ($privilegeInfo in (Get-XrmPrivileges -XrmClient $XrmClient -RoleId $RoleId)) {
+        $definitions = $(if ($privilegeIds.Count -le 500) { Get-XrmPrivileges -XrmClient $XrmClient -Id $privilegeIds } else { Get-XrmPrivileges -XrmClient $XrmClient });
+        foreach ($privilegeInfo in $definitions) {
             $privilegeInfos[$privilegeInfo.Id] = $privilegeInfo;
         }
         foreach ($privilege in $privileges) {
@@ -68,4 +79,5 @@ function Get-XrmRolePrivileges {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
     }
 }
-Export-ModuleMember -Function Get-XrmRolePrivileges -Alias *;
+
+Export-ModuleMember -Function Get-XrmUserPrivileges -Alias *;

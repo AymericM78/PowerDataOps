@@ -20,8 +20,10 @@ $ids = @(1..60 | ForEach-Object { [Guid]::NewGuid() });
 $createRequests = @(for ($i = 0; $i -lt 60; $i++) {
         Add-XrmRecord -Record (New-XrmEntity -LogicalName "account" -Id $ids[$i] -Attributes @{ name = "$prefix-$i" }) -AsRequest;
     });
+$affinityBefore = $Global:XrmClient.EnableAffinityCookie;
 $createFaults = @(Invoke-XrmParallelRequests -XrmClient $Global:XrmClient -Requests $createRequests -BatchSize 5 -ThreadCount 4 -BypassBusinessLogicExecution CustomSync -Quiet);
 Assert-Test "60 creations on 4 threads: no fault returned" { $createFaults.Count -eq 0 };
+Assert-Test "Caller's client keeps its affinity cookie setting ($affinityBefore)" { $Global:XrmClient.EnableAffinityCookie -eq $affinityBefore };
 Assert-Test "60 accounts created" { (Get-PrefixCount) -eq 60 };
 Assert-Test "Options added to every request" { @($createRequests | Where-Object { $_.Parameters["BypassBusinessLogicExecution"] -ne "CustomSync" }).Count -eq 0 };
 

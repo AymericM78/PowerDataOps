@@ -19,9 +19,22 @@
 
     .PARAMETER ExportPrivileges
     Specify if privileges are retrieved or not. (Default : false = No privileges)
+
+    .PARAMETER Name
+    Role name. Wildcards * are accepted (e.g. "Contoso*"). A role exists once per business unit: combine with OnlyRoots or BusinessUnitId to get one row. (Default: all)
+
+    .OUTPUTS
+    PSCustomObject[]. Role rows (XrmObject), with a Privileges property when ExportPrivileges is set.
+
+    .EXAMPLE
+    $role = Get-XrmRoles -XrmClient $xrmClient -Name "Salesperson" -OnlyRoots;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmRoles.md
 #>
 function Get-XrmRoles {
     [CmdletBinding()]
+    [OutputType([PSCustomObject[]])]
     param
     ( 
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -43,7 +56,12 @@ function Get-XrmRoles {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $ExportPrivileges = $false
+        $ExportPrivileges = $false,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $Name
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -57,6 +75,14 @@ function Get-XrmRoles {
         if ($OnlyRoots) {           
             $parentBusinessUnit = $XrmClient | Get-XrmRootBusinessUnit;
             $queryRoles = $queryRoles | Add-XrmQueryCondition -Field "businessunitid" -Condition Equal -Values  $parentBusinessUnit.Id;
+        }
+        if ($PSBoundParameters.ContainsKey('Name')) {
+            if ($Name.Contains("*")) {
+                $queryRoles = $queryRoles | Add-XrmQueryCondition -Field "name" -Condition Like -Values $Name.Replace("*", "%");
+            }
+            else {
+                $queryRoles = $queryRoles | Add-XrmQueryCondition -Field "name" -Condition Equal -Values $Name;
+            }
         }
         $roles = $XrmClient | Get-XrmMultipleRecords -Query $queryRoles;
 
