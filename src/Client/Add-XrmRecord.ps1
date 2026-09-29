@@ -110,6 +110,10 @@ function Add-XrmRecord {
         }
 
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if ($null -eq $response) {
+            return;
+        }
         $id = $response.Results["id"];
         $id;
     }

@@ -39,9 +39,9 @@ Assert-Test "Solution created" {
 
 Write-Section "Empty solution behavior";
 
-$emptyResults = @($Global:XrmClient | Get-XrmCustomizedSolutionComponents -SolutionUniqueName $solutionUniqueName -IncludeDetails);
-Assert-Test "Empty solution returns no customized components" {
-    $emptyResults.Count -eq 0;
+$emptyResults = @($Global:XrmClient | Get-XrmCustomizedSolutionComponents -SolutionUniqueName $solutionUniqueName -IncludeDetails -ErrorVariable emptyErrors);
+Assert-Test "Empty solution returns no customized components, without error (no -ComponentTypes)" {
+    $emptyResults.Count -eq 0 -and $emptyErrors.Count -eq 0;
 };
 
 Write-Section "Optional positive probe from existing Active-layer component";

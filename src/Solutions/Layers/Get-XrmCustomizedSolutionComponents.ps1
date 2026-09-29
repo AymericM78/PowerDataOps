@@ -116,7 +116,7 @@ function Get-XrmCustomizedSolutionComponents {
             }
 
             try {
-                $componentTypeName = Get-XrmSolutionComponentName -SolutionComponentType $componentType;
+                $componentTypeName = Get-XrmSolutionComponentName -XrmClient $XrmClient -SolutionComponentType $componentType;
             }
             catch {
                 return;

@@ -1,10 +1,11 @@
 <#
     .SYNOPSIS
-    Retrieve environment variable value.
+    Retrieve an environment variable: definition, value and effective value.
 
     .DESCRIPTION
-    Get the current value of a Dataverse environment variable by its schema name.
-    When a value record (override) exists, its value is returned, even when it is empty; otherwise the definition default value is returned.
+    Read an environment variable definition and its value record (override) in one query, and return a summary:
+    SchemaName, DisplayName, Type (String, Number, Boolean, JSON, DataSource, Secret), DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
+    EffectiveValue is the override when a value record exists (even empty), else the default value.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -16,21 +17,18 @@
     Return $null when the definition does not exist, instead of raising an error.
 
     .OUTPUTS
-    String. Current environment variable value or default value if no current value is set.
+    PSCustomObject. SchemaName, DisplayName, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
 
     .EXAMPLE
-    $xrmClient = New-XrmClient -ConnectionString $connectionString;
-    $value = Get-XrmEnvironmentVariableValue -XrmClient $xrmClient -Name "df_SynchTrackingFunctionUrl";
-
-    .EXAMPLE
-    $value = Get-XrmEnvironmentVariableValue -XrmClient $xrmClient -Name "df_OptionalSetting" -IfExists;
+    $variable = Get-XrmEnvironmentVariable -XrmClient $xrmClient -Name "new_ApiUrl";
+    if ($variable.HasOverride) { Write-Host "Overridden: $($variable.Value)"; }
 
     .LINK
-    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEnvironmentVariableValue.md
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEnvironmentVariable.md
 #>
-function Get-XrmEnvironmentVariableValue {
+function Get-XrmEnvironmentVariable {
     [CmdletBinding()]
-    [OutputType([String])]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -58,9 +56,7 @@ function Get-XrmEnvironmentVariableValue {
             }
             throw "Environment variable definition '$Name' not found.";
         }
-
-        # An override exists when a value record exists: it is returned even when empty
-        $variable.EffectiveValue;
+        $variable;
     }
     end {
         $StopWatch.Stop();
@@ -68,4 +64,4 @@ function Get-XrmEnvironmentVariableValue {
     }
 }
 
-Export-ModuleMember -Function Get-XrmEnvironmentVariableValue -Alias *;
+Export-ModuleMember -Function Get-XrmEnvironmentVariable -Alias *;

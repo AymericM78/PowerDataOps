@@ -56,6 +56,10 @@ function Copy-XrmForm {
         $request | Add-XrmRequestParameter -Name "Target" -Value $target | Out-Null;
 
         $response = $XrmClient | Invoke-XrmRequest -Request $request;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if ($null -eq $response) {
+            return;
+        }
         $newFormId = $response.Results["Id"];
 
         New-XrmEntityReference -LogicalName "systemform" -Id $newFormId;

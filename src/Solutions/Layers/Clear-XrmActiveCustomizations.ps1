@@ -41,7 +41,7 @@ function Clear-XrmActiveCustomizations {
         ForEach-ObjectWithProgress -Collection $components -OperationName "Clearing active customizations for $SolutionUniqueName solution" -ScriptBlock {
             param($component)
 
-            $componentName = Get-XrmSolutionComponentName -SolutionComponentType $component.componenttype_Value.Value;
+            $componentName = Get-XrmSolutionComponentName -XrmClient $XrmClient -SolutionComponentType $component.componenttype_Value.Value;
             try {
                 Remove-XrmActiveCustomizations -XrmClient $XrmClient -SolutionComponentName $componentName -ComponentId $component.objectid | Out-Null;
             }

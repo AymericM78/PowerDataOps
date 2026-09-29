@@ -28,7 +28,7 @@ function Get-XrmSolutionComponents {
         $SolutionUniqueName,
 
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
+        [AllowEmptyCollection()]
         [int[]]
         $ComponentTypes = @()
     )

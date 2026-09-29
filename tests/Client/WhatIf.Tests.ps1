@@ -15,9 +15,12 @@ $accountRef = New-XrmEntityReference -LogicalName "account" -Id $accountId;
 function Get-Description { ($Global:XrmClient | Get-XrmRecord -LogicalName "account" -Id $accountId -Columns "description").description }
 
 Write-Section "Direct writes";
-$whatIfId = $Global:XrmClient | Add-XrmRecord -Record (New-XrmEntity -LogicalName "account" -Attributes @{ name = "$prefix-whatif" }) -WhatIf;
+$whatIfId = $Global:XrmClient | Add-XrmRecord -Record (New-XrmEntity -LogicalName "account" -Attributes @{ name = "$prefix-whatif" }) -WhatIf -ErrorVariable addErrors;
 $whatIfRow = $Global:XrmClient | Get-XrmRecord -LogicalName "account" -AttributeName "name" -Value "$prefix-whatif";
-Assert-Test "Add-XrmRecord -WhatIf: nothing created, nothing returned" { $null -eq $whatIfId -and $null -eq $whatIfRow };
+Assert-Test "Add-XrmRecord -WhatIf: nothing created, nothing returned, no error" { $null -eq $whatIfId -and $null -eq $whatIfRow -and $addErrors.Count -eq 0 };
+
+$copiedForm = $Global:XrmClient | Copy-XrmForm -SourceFormId ([Guid]::NewGuid()) -NewName "$prefix-form" -WhatIf -ErrorVariable copyErrors;
+Assert-Test "Copy-XrmForm -WhatIf: nothing returned, no error" { $null -eq $copiedForm -and $copyErrors.Count -eq 0 };
 
 $Global:XrmClient | Update-XrmRecord -Record (New-XrmEntity -LogicalName "account" -Id $accountId -Attributes @{ description = "changed" }) -WhatIf;
 Assert-Test "Update-XrmRecord -WhatIf: unchanged" { (Get-Description) -eq "original" };

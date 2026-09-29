@@ -4,6 +4,8 @@
 
     .DESCRIPTION
     Create or update the current value of a Dataverse environment variable by its schema name.
+    Nothing is written when the current value (override) already equals Value (case-sensitive comparison).
+    Use Remove-XrmEnvironmentVariableValue to remove the override and go back to the default value.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -45,31 +47,23 @@ function Set-XrmEnvironmentVariableValue {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }    
     process {
-        # Retrieve the environment variable definition
-        $definitionQuery = New-XrmQueryExpression -LogicalName "environmentvariabledefinition" -Columns "environmentvariabledefinitionid", "schemaname" -TopCount 1;
-        $definitionQuery | Add-XrmQueryCondition -Field "schemaname" -Condition Equal -Values $Name | Out-Null;
-        $definitions = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $definitionQuery;
-        $definition = $definitions | Select-Object -First 1;
-
-        if (-not $definition) {
+        $variable = Get-XrmEnvironmentVariablesInternal -XrmClient $XrmClient -Name $Name | Select-Object -First 1;
+        if (-not $variable) {
             throw "Environment variable definition '$Name' not found.";
         }
+        $definitionId = $variable.DefinitionId;
 
-        $definitionId = $definition.environmentvariabledefinitionid;
-
-        # Check if a value record already exists
-        $valueQuery = New-XrmQueryExpression -LogicalName "environmentvariablevalue" -Columns "environmentvariablevalueid", "value" -TopCount 1;
-        $valueQuery | Add-XrmQueryCondition -Field "environmentvariabledefinitionid" -Condition Equal -Values $definitionId | Out-Null;
-        $existingValues = Get-XrmMultipleRecords -XrmClient $XrmClient -Query $valueQuery;
-        $existingValue = $existingValues | Select-Object -First 1;
-
-        if ($existingValue) {
-            # Update existing value
-            $updateRecord = New-XrmEntity -LogicalName "environmentvariablevalue" -Id $existingValue.environmentvariablevalueid -Attributes @{
+        if ($variable.HasOverride) {
+            $valueReference = New-XrmEntityReference -LogicalName "environmentvariablevalue" -Id $variable.ValueId;
+            # Same value: nothing to write
+            if ([string]$variable.Value -ceq $Value) {
+                return $valueReference;
+            }
+            $updateRecord = New-XrmEntity -LogicalName "environmentvariablevalue" -Id $variable.ValueId -Attributes @{
                 "value" = $Value;
             };
             Update-XrmRecord -XrmClient $XrmClient -Record $updateRecord;
-            New-XrmEntityReference -LogicalName "environmentvariablevalue" -Id $existingValue.environmentvariablevalueid;
+            $valueReference;
         }
         else {
             # Create new value
@@ -78,7 +72,9 @@ function Set-XrmEnvironmentVariableValue {
                 "value" = $Value;
             };
             $newId = Add-XrmRecord -XrmClient $XrmClient -Record $newRecord;
-            New-XrmEntityReference -LogicalName "environmentvariablevalue" -Id $newId;
+            if ($newId) {
+                New-XrmEntityReference -LogicalName "environmentvariablevalue" -Id $newId;
+            }
         }
     }
     end {

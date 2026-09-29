@@ -3,6 +3,8 @@
 ## Description
 
 **Set environment variable value.** : Create or update the current value of a Dataverse environment variable by its schema name.
+Nothing is written when the current value (override) already equals Value (case-sensitive comparison).
+Use Remove-XrmEnvironmentVariableValue to remove the override and go back to the default value.
 
 ## Inputs
 

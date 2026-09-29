@@ -25,6 +25,39 @@ if ($workflows.Count -gt 0) {
 }
 
 # ============================================================
+# Get-XrmWorkflows filters (brief W01)
+# ============================================================
+Write-Section "Get-XrmWorkflows filters";
+
+$filterColumns = "name", "category", "type", "primaryentity", "statecode";
+$definitions = @($Global:XrmClient | Get-XrmWorkflows -Columns $filterColumns -Category 0, 5 -Type 1 -State 0, 1);
+Assert-Test "-Category -Type -State: every row matches (actual: $($definitions.Count))" {
+    @($definitions | Where-Object { $_.category_Value.Value -notin 0, 5 -or $_.type_Value.Value -ne 1 -or $_.statecode_Value.Value -notin 0, 1 }).Count -eq 0;
+};
+
+$sample = $definitions | Where-Object { $_.primaryentity_Value -and $_.primaryentity_Value -ne "none" } | Select-Object -First 1;
+if ($sample) {
+    $sampleEntity = $sample.primaryentity_Value;
+    $byEntity = @($Global:XrmClient | Get-XrmWorkflows -Columns $filterColumns -Type 1 -PrimaryEntity $sampleEntity);
+    Assert-Test "-PrimaryEntity '$sampleEntity': every row matches" {
+        $byEntity.Count -ge 1 -and @($byEntity | Where-Object { $_.primaryentity_Value -ne $sampleEntity }).Count -eq 0;
+    };
+
+    $byName = @($Global:XrmClient | Get-XrmWorkflows -Columns $filterColumns -Type 1 -Name $sample.name);
+    Assert-Test "-Name (exact): found" { @($byName | Where-Object { $_.Id -eq $sample.Id }).Count -eq 1 };
+
+    $pattern = "$($sample.name.Substring(0, [Math]::Min(4, $sample.name.Length)))*";
+    $byPattern = @($Global:XrmClient | Get-XrmWorkflows -Columns $filterColumns -Type 1 -Name $pattern);
+    Assert-Test "-Name '$pattern' (wildcard): found, every row matches" {
+        @($byPattern | Where-Object { $_.Id -eq $sample.Id }).Count -eq 1 -and @($byPattern | Where-Object { $_.name -notlike $pattern }).Count -eq 0;
+    };
+}
+else {
+    Write-Host "  [SKIP] No workflow definition bound to a table" -ForegroundColor Yellow;
+    Assert-Test "-PrimaryEntity / -Name - skipped (no sample)" { $true };
+}
+
+# ============================================================
 # Enable-XrmWorkflow / Disable-XrmWorkflow
 # ============================================================
 Write-Section "Enable/Disable Workflow";
