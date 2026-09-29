@@ -36,11 +36,17 @@
     .PARAMETER AsRequest
     Return the DeleteRequest without sending it.
 
+    .PARAMETER IfExists
+    Do nothing, without error, when the row does not exist (idempotent cleanup). Other errors are written as usual.
+
     .OUTPUTS
     System.Void. With AsRequest: Microsoft.Xrm.Sdk.Messages.DeleteRequest.
 
     .EXAMPLE
     Remove-XrmRecord -XrmClient $xrmClient -LogicalName "account" -Id $accountId;
+
+    .EXAMPLE
+    Remove-XrmRecord -XrmClient $xrmClient -LogicalName "account" -Id $accountId -IfExists;
 
     .EXAMPLE
     $requests = $ids | ForEach-Object { Remove-XrmRecord -LogicalName "account" -Id $_ -BypassBusinessLogicExecution CustomSync -AsRequest };
@@ -94,7 +100,11 @@ function Remove-XrmRecord {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsRequest
+        $AsRequest,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $IfExists
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -112,6 +122,17 @@ function Remove-XrmRecord {
             return $request;
         }
 
+        if ($IfExists) {
+            try {
+                $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request -ErrorAction Stop;
+            }
+            catch {
+                if (-not (Test-XrmNotFoundError -ErrorRecord $_)) {
+                    $PSCmdlet.WriteError($_);
+                }
+            }
+            return;
+        }
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
     }
     end {

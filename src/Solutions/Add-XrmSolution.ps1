@@ -86,6 +86,10 @@ function Add-XrmSolution {
 
         $solution = New-XrmEntity -LogicalName "solution" -Attributes $attributes;
         $solutionId = $XrmClient | Add-XrmRecord -Record $solution;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if (-not $solutionId) {
+            return;
+        }
         $solutionReference = New-XrmEntityReference -LogicalName "solution" -Id $solutionId;
         $solutionReference;
     }

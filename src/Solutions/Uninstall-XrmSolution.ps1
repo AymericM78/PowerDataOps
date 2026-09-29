@@ -17,6 +17,12 @@
     .PARAMETER PassThru
     Return the status of the uninstall system job (see Watch-XrmAsynchOperation). (Default: nothing is returned)
 
+    .PARAMETER OnlyIfEmpty
+    Keep the solution, without error, when it still has components (an unmanaged solution used as a container).
+
+    .PARAMETER IfExists
+    Do nothing, without error, when the solution does not exist.
+
     .OUTPUTS
     PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMessage of the uninstall system job.
 
@@ -26,8 +32,12 @@
     .EXAMPLE
     $status = Uninstall-XrmSolution -XrmClient $xrmClient -SolutionUniqueName "contoso_crm" -PassThru;
 
+    .EXAMPLE
+    # Idempotent cleanup of a temporary container solution (alias Remove-XrmSolution)
+    Remove-XrmSolution -XrmClient $xrmClient -SolutionUniqueName "contoso_temp" -OnlyIfEmpty -IfExists;
+
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/data-platform/uninstall-delete-solution
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Uninstall-XrmSolution.md
 #>
 function Uninstall-XrmSolution {
     [CmdletBinding(SupportsShouldProcess)]
@@ -45,7 +55,15 @@ function Uninstall-XrmSolution {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $PassThru
+        $PassThru,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $OnlyIfEmpty,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $IfExists
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -54,7 +72,17 @@ function Uninstall-XrmSolution {
     process {
         $solution = $XrmClient | Get-XrmSolution -SolutionUniqueName $SolutionUniqueName -Columns @("solutionid", "uniquename");
         if (-not $solution) {
+            if ($IfExists) {
+                return;
+            }
             throw "Solution '$SolutionUniqueName' not found!";
+        }
+        if ($OnlyIfEmpty) {
+            $components = @(Get-XrmSolutionComponents -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -IfExists);
+            if ($components.Count -gt 0) {
+                Write-Verbose "Solution '$SolutionUniqueName' kept: it has $($components.Count) component(s).";
+                return;
+            }
         }
 
         $uninstallRequest = New-XrmRequest -Name "UninstallSolutionAsync";
@@ -86,6 +114,7 @@ function Uninstall-XrmSolution {
     }
 }
 
+Set-Alias -Name Remove-XrmSolution -Value Uninstall-XrmSolution;
 Export-ModuleMember -Function Uninstall-XrmSolution -Alias *;
 
 Register-ArgumentCompleter -CommandName Uninstall-XrmSolution -ParameterName "SolutionUniqueName" -ScriptBlock {

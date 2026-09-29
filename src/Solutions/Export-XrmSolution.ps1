@@ -12,7 +12,10 @@
     Solution unique name to export.
 
     .PARAMETER Managed
-    Specify if solution should be export as managed or unmanaged. (Default: true = managed)
+    Specify if solution should be export as managed or unmanaged. (Default: false = unmanaged)
+
+    .PARAMETER ExportPath
+    Folder where the solution file is written. (Default: TEMP folder)
 
     .PARAMETER ExportCalendarSettings
     Specify if exported solution should include Calendar settings (Default: false)
@@ -46,9 +49,32 @@
 
     .PARAMETER ForceSyncExport
     Specify if solution should be exported synchronously. (Default: false)
+
+    .PARAMETER TimeoutInMinutes
+    Maximum wait for the asynchronous export. (Default: 10)
+
+    .PARAMETER Unpack
+    Extract the solution file into a folder and return the folder path instead of the file path.
+
+    .PARAMETER UnpackPath
+    Folder to extract into, with Unpack. Files already there are overwritten. (Default: the solution file path without the .zip extension)
+
+    .OUTPUTS
+    System.String. Path of the solution file, or of the extracted folder with Unpack.
+
+    .EXAMPLE
+    $zipPath = Export-XrmSolution -XrmClient $xrmClient -SolutionUniqueName "ContosoCore" -ExportPath "C:\Temp";
+
+    .EXAMPLE
+    $folder = Export-XrmSolution -XrmClient $xrmClient -SolutionUniqueName "ContosoCore" -ExportPath "C:\Temp" -Unpack;
+    [xml]$customizations = Get-Content -Path (Join-Path $folder "customizations.xml") -Raw;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmSolution.md
 #>
 function Export-XrmSolution {
     [CmdletBinding()]
+    [OutputType([String])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -115,7 +141,16 @@ function Export-XrmSolution {
 
         [Parameter(Mandatory = $false)]
         [int]
-        $TimeoutInMinutes = 10
+        $TimeoutInMinutes = 10,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Unpack,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $UnpackPath
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -194,6 +229,12 @@ function Export-XrmSolution {
 
         # Save solution file
         [System.IO.File]::WriteAllBytes($solutionFilePath, $solutionBinaries);
+
+        if ($Unpack) {
+            $folderPath = $(if ($PSBoundParameters.ContainsKey('UnpackPath')) { $UnpackPath } else { [System.IO.Path]::ChangeExtension($solutionFilePath, $null) });
+            Expand-Archive -Path $solutionFilePath -DestinationPath $folderPath -Force;
+            return $folderPath;
+        }
 
         # Output solution file path
         $solutionFilePath;

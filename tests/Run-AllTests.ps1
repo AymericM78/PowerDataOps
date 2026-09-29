@@ -53,6 +53,8 @@ $allTests = @(
     @{ Category = "Solutions";     File = "Solutions\Solutions.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Add-XrmSolutionComponents.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\SolutionComponentType.Tests.ps1" },
+    @{ Category = "Solutions";     File = "Solutions\SolutionManagement.Tests.ps1" },
+    @{ Category = "Solutions";     File = "Solutions\ComponentDependencies.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Test-XrmComponentCustomization.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Get-XrmCustomizedSolutionComponents.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Remove-XrmActiveCustomizations.Tests.ps1" },

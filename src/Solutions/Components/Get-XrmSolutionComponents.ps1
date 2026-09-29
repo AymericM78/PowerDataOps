@@ -13,9 +13,25 @@
 
     .PARAMETER ComponentTypes
     Array of component types number to retrieve. (Default: none = retrieve all components)
+
+    .PARAMETER IfExists
+    Return $null silently when the solution does not exist. Without it, a FAIL line is logged before returning $null.
+
+    .OUTPUTS
+    PSCustomObject[]. Solution component rows (XrmObject) with objectid and componenttype.
+
+    .EXAMPLE
+    $views = Get-XrmSolutionComponents -XrmClient $xrmClient -SolutionUniqueName "MySolution" -ComponentTypes 26;
+
+    .EXAMPLE
+    $components = Get-XrmSolutionComponents -XrmClient $xrmClient -SolutionUniqueName "MaybeThere" -IfExists;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSolutionComponents.md
 #>
 function Get-XrmSolutionComponents {
     [CmdletBinding()]
+    [OutputType([PSCustomObject[]])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -30,7 +46,11 @@ function Get-XrmSolutionComponents {
         [Parameter(Mandatory = $false)]
         [AllowEmptyCollection()]
         [int[]]
-        $ComponentTypes = @()
+        $ComponentTypes = @(),
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $IfExists
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -39,7 +59,9 @@ function Get-XrmSolutionComponents {
     process {
         $solution = $XrmClient | Get-XrmRecord -LogicalName "solution" -AttributeName "uniquename" -Value $SolutionUniqueName;
         if (-not $solution) {
-            Write-HostAndLog -Message "Solution $SolutionUniqueName not found" -Level FAIL;
+            if (-not $IfExists) {
+                Write-HostAndLog -Message "Solution $SolutionUniqueName not found" -Level FAIL;
+            }
             return $null;
         }
         

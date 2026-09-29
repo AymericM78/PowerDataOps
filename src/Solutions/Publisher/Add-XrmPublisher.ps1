@@ -83,6 +83,10 @@ function Add-XrmPublisher {
 
         $publisher = New-XrmEntity -LogicalName "publisher" -Attributes $attributes;
         $publisherId = $XrmClient | Add-XrmRecord -Record $publisher;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if (-not $publisherId) {
+            return;
+        }
         $publisherReference = New-XrmEntityReference -LogicalName "publisher" -Id $publisherId;
         $publisherReference;
     }
