@@ -44,6 +44,10 @@ $allTests = @(
     @{ Category = "Solutions";     File = "Solutions\Add-XrmSolutionComponents.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Test-XrmComponentCustomization.Tests.ps1" },
     @{ Category = "Solutions";     File = "Solutions\Get-XrmCustomizedSolutionComponents.Tests.ps1" },
+    @{ Category = "Solutions";     File = "Solutions\Remove-XrmActiveCustomizations.Tests.ps1" },
+    @{ Category = "WebResources";  File = "WebResources\WebResources.Tests.ps1" },
+    @{ Category = "AppModule";     File = "AppModule\SiteMap.Tests.ps1" },
+    @{ Category = "AppModule";     File = "AppModule\AppComponent.Tests.ps1" },
     @{ Category = "Views";         File = "Views\Export-XrmViewToExcel.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Sync-XrmRecords.Tests.ps1" }
 );

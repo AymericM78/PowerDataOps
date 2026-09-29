@@ -58,6 +58,40 @@ Assert-Test "Set-XrmEnvironmentVariableValue - set to empty" {
     $setEmptyResponse -ne $null;
 };
 
+$retrievedEmpty = $Global:XrmClient | Get-XrmEnvironmentVariableValue -Name $envVarName;
+Assert-Test "Get-XrmEnvironmentVariableValue - an empty override is returned, not the default value" {
+    $retrievedEmpty -eq "";
+};
+
+# ============================================================
+# Get-XrmEnvironmentVariableValue -IfExists
+# ============================================================
+Write-Section "Get-XrmEnvironmentVariableValue -IfExists";
+
+$missingName = "pdo_missing_envvar_$(Get-Random -Minimum 10000 -Maximum 99999)";
+$missingValue = "not set";
+$missingError = $null;
+try {
+    $missingValue = $Global:XrmClient | Get-XrmEnvironmentVariableValue -Name $missingName -IfExists;
+}
+catch {
+    $missingError = $_.Exception.Message;
+}
+Assert-Test "-IfExists - missing definition returns `$null without error" {
+    $null -eq $missingError -and $null -eq $missingValue;
+};
+
+$missingError = $null;
+try {
+    $Global:XrmClient | Get-XrmEnvironmentVariableValue -Name $missingName | Out-Null;
+}
+catch {
+    $missingError = $_.Exception.Message;
+}
+Assert-Test "Without -IfExists - missing definition raises an error" {
+    $missingError -like "*$missingName*not found*";
+};
+
 # ============================================================
 # CLEANUP
 # ============================================================

@@ -32,6 +32,9 @@
     .PARAMETER ShowRecents
     Whether the Recent items section is shown in the navigation bar. Maps to the showrecents attribute.
 
+    .PARAMETER UniqueName
+    Unique name (sitemapnameunique): letters and digits only, 40 characters at most. (Default: Name without accents and without any other character than letters and digits, cut to 40)
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted sitemap record.
 
@@ -83,7 +86,12 @@ function Upsert-XrmSiteMap {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $ShowRecents
+        $ShowRecents,
+
+        [Parameter(Mandatory = $false)]
+        [ValidatePattern('^[a-zA-Z0-9]{1,40}$')]
+        [string]
+        $UniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -92,7 +100,7 @@ function Upsert-XrmSiteMap {
     process {
         $attributes = @{
             "sitemapname"       = $Name;
-            "sitemapnameunique" = $Name;
+            "sitemapnameunique" = $(if ($PSBoundParameters.ContainsKey('UniqueName')) { $UniqueName } else { ConvertTo-XrmUniqueNameInternal -Name $Name -MaxLength 40 });
             "sitemapxml"        = $SiteMapXml;
         };
 

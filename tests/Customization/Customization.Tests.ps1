@@ -103,6 +103,17 @@ Assert-Test "Get-XrmCharts (account) - returns charts (actual: $($charts.Count))
 Write-Section "Get-XrmDashboards";
 
 $dashboards = $Global:XrmClient | Get-XrmDashboards -Columns "name", "formid";
+$classicDashboards = @($Global:XrmClient | Get-XrmDashboards -Columns "name", "type" -Type 0);
+$interactiveDashboards = @($Global:XrmClient | Get-XrmDashboards -Columns "name", "type" -Type 10);
+Assert-Test "Get-XrmDashboards - default returns classic ($($classicDashboards.Count)) and interactive ($($interactiveDashboards.Count)) dashboards" {
+    @($dashboards).Count -eq ($classicDashboards.Count + $interactiveDashboards.Count);
+};
+if ($interactiveDashboards.Count -eq 0) {
+    Write-Host "  [SKIP] No interactive experience dashboard on this instance: type 10 not exercised" -ForegroundColor Yellow;
+}
+Assert-Test "Get-XrmDashboards -Type 10 - only interactive experience dashboards" {
+    @($interactiveDashboards | Where-Object { $_.type_Value.Value -ne 10 }).Count -eq 0;
+};
 Assert-Test "Get-XrmDashboards - returns dashboards (actual: $($dashboards.Count))" {
     $dashboards.Count -ge 0;
 };

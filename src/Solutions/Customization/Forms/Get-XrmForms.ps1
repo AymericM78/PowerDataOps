@@ -13,7 +13,7 @@
     Table / Entity logical name to filter forms. Optional.
 
     .PARAMETER FormType
-    Form type filter (0=Dashboard, 2=Main, 5=Mobile, 6=QuickCreate, 7=QuickView). Optional.
+    Form type filter, one value or several (0=Dashboard, 2=Main, 5=Mobile, 6=QuickCreate, 7=QuickView, 10=InteractiveExperience dashboard). Optional.
 
     .PARAMETER Columns
     Specify expected columns to retrieve. (Default : all columns)
@@ -49,7 +49,8 @@ function Get-XrmForms {
         $EntityLogicalName,
 
         [Parameter(Mandatory = $false)]
-        [int]
+        [ValidateNotNullOrEmpty()]
+        [int[]]
         $FormType,
 
         [Parameter(Mandatory = $false)]
@@ -73,7 +74,7 @@ function Get-XrmForms {
         }
 
         if ($PSBoundParameters.ContainsKey('FormType')) {
-            $query = $query | Add-XrmQueryCondition -Field "type" -Condition Equal -Values $FormType;
+            $query = $query | Add-XrmQueryCondition -Field "type" -Condition In -Values $FormType;
         }
 
         $XrmClient | Get-XrmMultipleComponents -Query $query -Unpublished:$Unpublished;

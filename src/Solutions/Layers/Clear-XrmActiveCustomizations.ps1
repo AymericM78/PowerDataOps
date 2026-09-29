@@ -42,7 +42,13 @@ function Clear-XrmActiveCustomizations {
             param($component)
 
             $componentName = Get-XrmSolutionComponentName -SolutionComponentType $component.componenttype_Value.Value;
-            Remove-XrmActiveCustomizations -XrmClient $XrmClient -SolutionComponentName $componentName -ComponentId $component.objectid;
+            try {
+                Remove-XrmActiveCustomizations -XrmClient $XrmClient -SolutionComponentName $componentName -ComponentId $component.objectid | Out-Null;
+            }
+            catch {
+                # One failing component must not stop the cleaning of the others
+                Write-HostAndLog -Message "Clear-XrmActiveCustomizations: $($_.Exception.Message)" -Level WARN;
+            }
         }
     }
     end {

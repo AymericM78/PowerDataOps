@@ -42,6 +42,20 @@ Assert-Test "Get-XrmEntityMetadata -IfExists returns created table metadata" {
 };
 
 # ============================================================
+# Set-XrmTable -HasNotes / -HasActivities
+# ============================================================
+Write-Section "Set-XrmTable -HasNotes -HasActivities";
+
+$Global:XrmClient | Set-XrmTable -MetadataId $tableMetadata.MetadataId -HasNotes $true -HasActivities $true | Out-Null;
+$notesMetadata = $Global:XrmClient | Get-XrmEntityMetadata -LogicalName $tableName -Filter ([Microsoft.Xrm.Sdk.Metadata.EntityFilters]::Entity);
+Assert-Test "Set-XrmTable - notes enabled (HasNotes = $($notesMetadata.HasNotes))" {
+    $notesMetadata.HasNotes -eq $true;
+};
+Assert-Test "Set-XrmTable - activities enabled (HasActivities = $($notesMetadata.HasActivities))" {
+    $notesMetadata.HasActivities -eq $true;
+};
+
+# ============================================================
 # Add-XrmColumn (String)
 # ============================================================
 Write-Section "Add-XrmColumn";

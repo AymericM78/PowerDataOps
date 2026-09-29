@@ -262,7 +262,7 @@ function Upsert-XrmBusinessProcessFlow {
         }
 
         if ($Activate) {
-            Enable-XrmWorkflow -XrmClient $XrmClient -WorkflowReference $workflowReference;
+            Enable-XrmWorkflow -XrmClient $XrmClient -WorkflowReference $workflowReference | Out-Null;
         }
 
         $workflowReference;

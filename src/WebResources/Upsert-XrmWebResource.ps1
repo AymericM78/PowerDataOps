@@ -5,6 +5,8 @@
     .DESCRIPTION
     Check if webresource exists or not. If not exists create it and add it to specified solution.
     If webresource exists, compare content and update it if different.
+    By default, returns the webresource id only when it was created or updated (to build a publish request), and skips silently a file whose name does not start with the prefix.
+    With PassThru, always returns an object: Id, Name, Changed, Skipped.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -16,13 +18,33 @@
     Microsoft Dataverse solution unique name where to add new webressource.
 
     .PARAMETER Prefix
-    Publisher customization prefix for newly created webresource.
+    Publisher customization prefix for newly created webresource. (Default: prefix of the solution publisher)
+
+    .PARAMETER DisplayName
+    Webresource display name. (Default: file name)
+
+    .PARAMETER PassThru
+    Always return an object: Id, Name, Changed (created or updated), Skipped (name without the prefix, nothing done).
+
+    .OUTPUTS
+    Guid. The webresource id, when created or updated. With PassThru: PSCustomObject (Id, Name, Changed, Skipped).
+
+    .EXAMPLE
+    $webResourceId = Upsert-XrmWebResource -XrmClient $xrmClient -FilePath "C:\Sources\WebResources\new_\scripts\account.js" -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $result = Upsert-XrmWebResource -XrmClient $xrmClient -FilePath $path -SolutionUniqueName "MySolution" -PassThru;
+    if ($result.Changed) { Publish-XrmComponent -XrmClient $xrmClient -ComponentName "webresource" -ComponentId $result.Id; }
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmWebResource.md
 #>
 
 function Upsert-XrmWebResource {
-    [CmdletBinding()]    
+    [CmdletBinding()]
+    [OutputType([Guid], [PSCustomObject])]
     param
-    (        
+    (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
         $XrmClient = $Global:XrmClient,
@@ -46,12 +68,16 @@ function Upsert-XrmWebResource {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $DisplayName
+        $DisplayName,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $PassThru
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
-        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
-    }    
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
+    }
     process {
 
         if (-not $PSBoundParameters.Prefix) {
@@ -60,7 +86,7 @@ function Upsert-XrmWebResource {
             $publisher = $XrmClient | Get-XrmRecord -LogicalName "publisher" -Id $solution.publisherid_Value.Id -Columns "customizationprefix";
             $Prefix = "$($publisher.customizationprefix)_";
         }
-                
+
         # Handle prefix in file name
         $fileInfo = New-Object -TypeName System.IO.FileInfo -ArgumentList $filePath;
         $webResourcePath = $fileInfo.FullName;
@@ -76,9 +102,18 @@ function Upsert-XrmWebResource {
         }
 
         if (!$webResourceName.StartsWith($Prefix)) {
-            # Ignore this file
+            # Ignore this file: its name (or path) does not contain the publisher prefix
+            Write-Verbose "Webresource file '$webResourcePath' skipped: name does not start with prefix '$Prefix'.";
+            if ($PassThru) {
+                [PSCustomObject]@{
+                    Id      = $null;
+                    Name    = $webResourceName;
+                    Changed = $false;
+                    Skipped = $true;
+                };
+            }
             return;
-        } 
+        }
 
         # Load webresource object from path
         if (!$DisplayName) {
@@ -143,10 +178,18 @@ function Upsert-XrmWebResource {
         }
 
         if ($PSBoundParameters.SolutionUniqueName) {
-            Add-XrmSolutionComponent -XrmClient $XrmClient -ComponentId $webresourceRecord.Id -ComponentType 61 -SolutionUniqueName $SolutionUniqueName -DoNotIncludeSubcomponents $false;
+            Add-XrmSolutionComponent -XrmClient $XrmClient -ComponentId $webresourceRecord.Id -ComponentType 61 -SolutionUniqueName $SolutionUniqueName -DoNotIncludeSubcomponents $false | Out-Null;
         }
 
-        if (-not $ignore) {   
+        if ($PassThru) {
+            [PSCustomObject]@{
+                Id      = $webresourceRecord.Id;
+                Name    = $webResourceName;
+                Changed = (-not $ignore);
+                Skipped = $false;
+            };
+        }
+        elseif (-not $ignore) {
             # Return webresource id if created/updated in order to add it to a publish request
             $webresourceRecord.Id;
         }
@@ -154,7 +197,7 @@ function Upsert-XrmWebResource {
     end {
         $StopWatch.Stop();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
-    }    
+    }
 }
 
 Export-ModuleMember -Function Upsert-XrmWebResource -Alias *;

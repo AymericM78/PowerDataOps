@@ -70,9 +70,9 @@ function Sync-XrmWebResources {
         $publisher = $XrmClient | Get-XrmRecord -LogicalName "publisher" -Id $solution.publisherid_Value.Id -Columns "customizationprefix";
         $prefix = "$($publisher.customizationprefix)_";
                 
-        $publishXmlRequest = "<importexportxml><webresources>";
-        $needToPublish = $false;
-        
+        # Collected through a reference type: the ForEach-ObjectWithProgress scriptblock runs in a child scope
+        $changedWebResourceIds = [System.Collections.Generic.List[Guid]]::new();
+
         # Load last modified webresources and process files
         $fullSync = ($SynchronizationMode -eq "Full");
         if ($fullSync) {
@@ -87,7 +87,7 @@ function Sync-XrmWebResources {
         ForEach-ObjectWithProgress -Collection $webResourceFilePaths -OperationName "Synchronize Webresources" -ScriptBlock {
             param($webResourceFilePath)
 
-            if ($webResourceFilePath.PSIsContainer) { continue; }
+            if ($webResourceFilePath.PSIsContainer) { return; }
 
             $webResourcePath = $webResourceFilePath.FullName;
             $webResourceName = $webResourceFilePath.Name;
@@ -99,15 +99,16 @@ function Sync-XrmWebResources {
             $webresourceId = Upsert-XrmWebResource -XrmClient $XrmClient -FilePath $webResourcePath -SolutionUniqueName $SolutionUniqueName -Prefix $prefix;
             if ($webresourceId) {
                 Write-HostAndLog "[OK]" -NoTimeStamp -ForegroundColor Green;
-                $needToPublish = $true;
-                $publishXmlRequest += "<webresource>$webresourceId</webresource>";
+                $changedWebResourceIds.Add($webresourceId);
             }
             else {
                 Write-HostAndLog "[Skipped]" -NoTimeStamp -ForegroundColor DarkGray;
             }            
         }
-        $publishXmlRequest += "</webresources></importexportxml>";
-        if ($needToPublish) {
+        if ($changedWebResourceIds.Count -gt 0) {
+            $publishXmlRequest = "<importexportxml><webresources>";
+            $changedWebResourceIds | ForEach-Object { $publishXmlRequest += "<webresource>$_</webresource>"; };
+            $publishXmlRequest += "</webresources></importexportxml>";
             Publish-XrmCustomizations -XrmClient $XrmClient -ParameterXml $publishXmlRequest;
         }
     }

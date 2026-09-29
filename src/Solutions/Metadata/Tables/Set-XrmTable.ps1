@@ -162,6 +162,10 @@ function Set-XrmTable {
         $request.Entity = $entityMetadata;
         $request.MergeLabels = $MergeLabels;
 
+        # Notes and activities are enabled through the request: the platform ignores them on the metadata
+        if ($PSBoundParameters.ContainsKey('HasNotes')) { $request.HasNotes = $HasNotes; }
+        if ($PSBoundParameters.ContainsKey('HasActivities')) { $request.HasActivities = $HasActivities; }
+
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             $request.Parameters["SolutionUniqueName"] = $SolutionUniqueName;
         }

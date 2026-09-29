@@ -58,6 +58,31 @@ Assert-Test 'Table IconVectorName updated' {
     $refreshedMetadata.IconVectorName -eq $webResourceName;
 };
 
+Write-Section 'Table not customizable';
+
+$systemTable = 'privilege';
+$systemMetadata = $Global:XrmClient | Get-XrmEntityMetadata -LogicalName $systemTable -Filter ([Microsoft.Xrm.Sdk.Metadata.EntityFilters]::Entity);
+if ($systemMetadata.IsCustomizable.Value) {
+    Write-Host "  [SKIP] '$systemTable' is customizable on this instance" -ForegroundColor Yellow;
+}
+else {
+    $systemError = $null;
+    try {
+        Set-XrmTableIcon -XrmClient $Global:XrmClient -EntityLogicalName $systemTable -WebResourceName $webResourceName -PublishChanges $false | Out-Null;
+    }
+    catch {
+        $systemError = $_.Exception.Message;
+    }
+    Assert-Test "Not customizable table raises an actionable error" {
+        $systemError -like "*$systemTable*not customizable*";
+    };
+
+    $skipped = @(Set-XrmTableIcon -XrmClient $Global:XrmClient -EntityLogicalName $systemTable -WebResourceName $webResourceName -PublishChanges $false -SkipSystemTables -WarningAction SilentlyContinue);
+    Assert-Test "-SkipSystemTables skips it without error" {
+        $skipped.Count -eq 0;
+    };
+}
+
 Write-Section 'Cleanup';
 
 if ($tableCreated) {

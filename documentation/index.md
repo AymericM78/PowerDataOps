@@ -125,7 +125,7 @@ Command|Synopsis
 
 Command|Synopsis
 -------|-----------
-[Get-XrmEnvironmentVariableValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEnvironmentVariableValue.md)|Retrieve environment variable value.<br/>Get the current value of a Dataverse environment variable by its schema name.
+[Get-XrmEnvironmentVariableValue](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmEnvironmentVariableValue.md)|Retrieve environment variable value.<br/>Get the current value of a Dataverse environment variable by its schema name.<br/>When a value record (override) exists, its value is returned, even when it is empty; otherwise the definition default value is returned.
 [Get-XrmOrganization](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmOrganization.md)|Get Organization object.<br/>Retrieve default organization record from target instance.
 [Get-XrmOrganizationClientFeatures](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmOrganizationClientFeatures.md)|Get Organization Client Features.<br/>Retrieve all or specified client features from default organization (see : Get-XrmOrganization)
 [Get-XrmOrganizationDbSetting](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmOrganizationDbSetting.md)|Get Organization setting.<br/>Retrieve organization setting (orgdbsetting) from target instance.
@@ -215,7 +215,7 @@ Command|Synopsis
 [Add-XrmAppModule](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModule.md)|Create a new model-driven app in Microsoft Dataverse.<br/>Create a new appmodule record (model-driven app) with the specified name and properties.
 [Add-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModuleRoles.md)|Assign security roles to a model-driven app.<br/>Grant one or more security roles access to a model-driven app via the<br/>appmoduleroles_association N:N relationship. Users must belong to one of the<br/>assigned roles to see the app in the app picker.
 [Add-XrmSiteMap](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmSiteMap.md)|Create a new sitemap in Microsoft Dataverse.<br/>Create a new sitemap record with the given navigation XML. Sitemaps define the navigation structure of model-driven apps.
-[Get-XrmAppComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppComponents.md)|Retrieve components of a model-driven app.<br/>Get all components included in a published model-driven app using the RetrieveAppComponents SDK function.
+[Get-XrmAppComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppComponents.md)|Retrieve components of a model-driven app.<br/>Get all components included in a published model-driven app using the RetrieveAppComponents SDK function.<br/>RetrieveAppComponents fails on an app that was never published ("appmodule ... Does Not Exist"). With Unpublished, the components are read from the appmodulecomponent table instead, which holds them as soon as they are added.<br/>Web resources are never app components: the platform refuses to add them to an app.
 [Get-XrmAppModuleRoles](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppModuleRoles.md)|Retrieve security roles assigned to a model-driven app.<br/>Get the list of security roles that have access to a given model-driven app,<br/>via the appmoduleroles_association N:N relationship.
 [Get-XrmAppModules](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppModules.md)|Retrieve model-driven app records from Microsoft Dataverse.<br/>Get appmodule records (model-driven apps) with optional name filter.<br/>Use -Unpublished to also retrieve apps that are in draft state.
 [Get-XrmSiteMaps](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmSiteMaps.md)|Retrieve sitemap records from Microsoft Dataverse.<br/>Get sitemap records with optional name filter. Sitemaps define the navigation structure of model-driven apps.<br/>Use -Unpublished to also retrieve sitemaps that are in draft state.
@@ -252,7 +252,7 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [Add-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDashboard.md)|Create a new dashboard in Microsoft Dataverse.<br/>Create a new systemform record of type dashboard (type = 0). Delegates to Add-XrmForm.
-[Get-XrmDashboards](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDashboards.md)|Retrieve dashboard records from Microsoft Dataverse.<br/>Get systemform records filtered to dashboards (type = 0). Delegates to Get-XrmForms.<br/>Use -Unpublished to also retrieve dashboards that are in draft state.
+[Get-XrmDashboards](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmDashboards.md)|Retrieve dashboard records from Microsoft Dataverse.<br/>Get systemform records filtered to dashboards: classic dashboards (type = 0) and interactive experience dashboards (type = 10). Delegates to Get-XrmForms.<br/>Use -Unpublished to also retrieve dashboards that are in draft state.
 [Remove-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmDashboard.md)|Delete a dashboard from Microsoft Dataverse.<br/>Delete a systemform record (dashboard). Delegates to Remove-XrmForm.
 [Set-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmDashboard.md)|Update a dashboard in Microsoft Dataverse.<br/>Update an existing systemform record (dashboard). Delegates to Set-XrmForm.
 [Upsert-XrmDashboard](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmDashboard.md)|Create or update a dashboard in Microsoft Dataverse.<br/>Upsert a systemform record of type dashboard (type = 0) by Id. Delegates to Upsert-XrmForm.
@@ -290,7 +290,7 @@ Command|Synopsis
 -------|-----------
 [Clear-XrmActiveCustomizations](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Clear-XrmActiveCustomizations.md)|Clear active customizations for given solution components.<br/>Performs a cleaning on Active Layer to remove unmanaged customizations for given component types.
 [Get-XrmCustomizedSolutionComponents](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmCustomizedSolutionComponents.md)|Get customized solution components from Active layer.<br/>Retrieves solution components from a solution, then keeps only components<br/>with meaningful Active-layer customizations.
-[Remove-XrmActiveCustomizations](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmActiveCustomizations.md)|Remove active customizations.<br/>Performs a cleaning on Active Layer to remove unmanaged customizations for given component.
+[Remove-XrmActiveCustomizations](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmActiveCustomizations.md)|Remove active customizations.<br/>Performs a cleaning on Active Layer to remove unmanaged customizations for given component.<br/>Returns the RemoveActiveCustomizations response. A failure raises an error, except a "not found" error when IgnoreMissing is set (a warning is written and $null is returned).
 [Test-XrmComponentCustomization](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmComponentCustomization.md)|Test active-layer customization for a solution component.<br/>Checks whether a component has meaningful customizations in the Active layer<br/>by querying msdyn_componentlayer and parsing msdyn_changes.
 # `AlternateKeys` commands
 
@@ -367,7 +367,7 @@ Command|Synopsis
 [New-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/New-XrmTable.md)|Build an EntityMetadata object for a Dataverse table.<br/>Creates a configured Microsoft.Xrm.Sdk.Metadata.EntityMetadata object<br/>that can be passed to Add-XrmTable.
 [Remove-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmTable.md)|Delete a table from Microsoft Dataverse.<br/>Delete an entity / table using DeleteEntityRequest.
 [Set-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTable.md)|Update a table in Microsoft Dataverse.<br/>Update an existing entity / table metadata using UpdateEntityRequest.
-[Set-XrmTableIcon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTableIcon.md)|Assign an SVG webresource icon to a Dataverse table.<br/>Validate a Dataverse SVG webresource, assign it to the table IconVectorName metadata property,<br/>update the table metadata, and optionally publish the customization.
+[Set-XrmTableIcon](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTableIcon.md)|Assign an SVG webresource icon to a Dataverse table.<br/>Validate a Dataverse SVG webresource, assign it to the table IconVectorName metadata property,<br/>update the table metadata, and optionally publish the customization.<br/>A table that is not customizable raises an error, or is skipped with a warning when SkipSystemTables is set.
 [Test-XrmTable](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmTable.md)|Verify whether a Dataverse table exists.<br/>Return $true when a table/entity metadata record exists for the specified logical name.
 # `Metadata` commands
 
@@ -461,7 +461,7 @@ Command|Synopsis
 Command|Synopsis
 -------|-----------
 [Sync-XrmWebResources](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Sync-XrmWebResources.md)|Synchronize a webresource folder to Microsoft Dataverse.<br/>Create or update each webresource content based on local directory.
-[Upsert-XrmWebResource](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmWebResource.md)|Create or update webresource.<br/>Check if webresource exists or not. If not exists create it and add it to specified solution.<br/>If webresource exists, compare content and update it if different.
+[Upsert-XrmWebResource](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmWebResource.md)|Create or update webresource.<br/>Check if webresource exists or not. If not exists create it and add it to specified solution.<br/>If webresource exists, compare content and update it if different.<br/>By default, returns the webresource id only when it was created or updated (to build a publish request), and skips silently a file whose name does not start with the prefix.<br/>With PassThru, always returns an object: Id, Name, Changed, Skipped.
 # `Workflows` commands
 
 Command|Synopsis
@@ -479,6 +479,7 @@ Command|Synopsis
 -------|-----------
 [Add-XrmFilterConditionInternal](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmFilterConditionInternal.md)|<br/>
 [ConvertTo-XrmSdkValueInternal](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmSdkValueInternal.md)|<br/>
+[ConvertTo-XrmUniqueNameInternal](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/ConvertTo-XrmUniqueNameInternal.md)|<br/>
 [Sync-XrmOptionSetOptionsInternal](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Sync-XrmOptionSetOptionsInternal.md)|<br/>
 [Test-XrmNotFoundError](https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Test-XrmNotFoundError.md)|<br/>
 
