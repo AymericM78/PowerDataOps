@@ -37,9 +37,9 @@ function Get-XrmRecordsFromView {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {        
-        $selectedView = Get-XrmViews -EntityLogicalName $EntityLogicalName -Columns "name", "layoutxml", "fetchxml" | Where-Object -Property "name" -EQ $ViewName;
-        $fetchQuery = Get-XrmQueryFromFetch -FetchXml $selectedView.fetchxml;
-        $records = Get-XrmMultipleRecords -Query $fetchQuery;
+        $selectedView = $XrmClient | Get-XrmViews -EntityLogicalName $EntityLogicalName -Columns "name", "layoutxml", "fetchxml" | Where-Object -Property "name" -EQ $ViewName;
+        $fetchQuery = $XrmClient | Get-XrmQueryFromFetch -FetchXml $selectedView.fetchxml;
+        $records = $XrmClient | Get-XrmMultipleRecords -Query $fetchQuery;
         $records;
     }
     end {

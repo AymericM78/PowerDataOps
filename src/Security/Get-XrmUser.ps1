@@ -41,7 +41,7 @@ function Get-XrmUser {
             $UserId = Get-XrmWhoAmI -XrmClient $XrmClient;
         }
 
-        $user = Get-XrmRecord -Logicalname "systemuser" -Id $UserId -Columns $Columns;
+        $user = $XrmClient | Get-XrmRecord -LogicalName "systemuser" -Id $UserId -Columns $Columns;
         $user;
     }
     end {

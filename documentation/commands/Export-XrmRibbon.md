@@ -5,6 +5,7 @@
 **Export the ribbon customization XML for a table.** : Export the RibbonDiffXml for a specific table by creating a temporary solution containing the table,
 exporting the solution, extracting the customizations.xml, and parsing the RibbonDiffXml node.
 This allows reading and modifying classic ribbon customizations programmatically.
+The temporary solution uses the publisher given by PublisherUniqueName, or the organization default publisher (publisher of the Default solution). It is removed at the end, even on failure.
 
 ## Inputs
 
@@ -13,7 +14,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 EntityLogicalName|String|2|true||Logical name of the table whose ribbon to export.
 SolutionUniqueName|String|3|false||Existing solution unique name containing the table. If provided, exports from this solution instead of creating a temporary one.
-OutputPath|String|4|false|$env:TEMP|Folder path where extracted files will be stored. Optional. Defaults to temp folder.
+PublisherUniqueName|String|4|false||Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
+OutputPath|String|5|false|$env:TEMP|Folder path where extracted files will be stored. Optional. Defaults to temp folder.
 
 ## Outputs
 System.Xml.XmlElement. The RibbonDiffXml node for the specified entity.
@@ -21,8 +23,7 @@ System.Xml.XmlElement. The RibbonDiffXml node for the specified entity.
 ## Usage
 
 ```Powershell 
-Export-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-SolutionUniqueName] <String>] [[-OutputPath] <String>] 
-[<CommonParameters>]
+Export-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-SolutionUniqueName] <String>] [[-PublisherUniqueName] <String>] [[-OutputPath] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -30,6 +31,11 @@ Export-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[
 ```Powershell 
 $ribbonXml = Export-XrmRibbon -EntityLogicalName "account";
 $ribbonXml = Export-XrmRibbon -EntityLogicalName "contact" -SolutionUniqueName "MySolution";
+``` 
+
+
+```Powershell 
+$ribbonXml = Export-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "account" -PublisherUniqueName "contoso";
 ``` 
 
 ## More informations

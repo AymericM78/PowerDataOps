@@ -137,9 +137,11 @@ Assert-Test "Remove-XrmSolutionComponent - no entity components remain (actual: 
 # ============================================================
 Write-Section "Cleanup";
 
-# Delete solution record directly (unmanaged solution)
-$Global:XrmClient | Remove-XrmRecord -LogicalName "solution" -Id $solutionRef.Id;
-Assert-Test "Solution deleted" { $true };
+# Uninstall the (unmanaged) solution through UninstallSolutionAsync and the watcher
+$uninstallStatus = $Global:XrmClient | Uninstall-XrmSolution -SolutionUniqueName $solutionUniqueName -PassThru;
+Assert-Test "Uninstall-XrmSolution -PassThru - job status Succeeded" {
+    $null -ne $uninstallStatus -and $uninstallStatus.Status -eq "Succeeded" -and $uninstallStatus.StatusCode -eq 30;
+};
 Assert-Test "Test-XrmSolution - solution absent after delete" {
     -not ($Global:XrmClient | Test-XrmSolution -SolutionUniqueName $solutionUniqueName);
 };

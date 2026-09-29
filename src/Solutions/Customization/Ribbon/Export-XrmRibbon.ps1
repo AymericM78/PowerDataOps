@@ -6,6 +6,7 @@
     Export the RibbonDiffXml for a specific table by creating a temporary solution containing the table,
     exporting the solution, extracting the customizations.xml, and parsing the RibbonDiffXml node.
     This allows reading and modifying classic ribbon customizations programmatically.
+    The temporary solution uses the publisher given by PublisherUniqueName, or the organization default publisher (publisher of the Default solution). It is removed at the end, even on failure.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -16,6 +17,9 @@
     .PARAMETER SolutionUniqueName
     Existing solution unique name containing the table. If provided, exports from this solution instead of creating a temporary one.
 
+    .PARAMETER PublisherUniqueName
+    Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
+
     .PARAMETER OutputPath
     Folder path where extracted files will be stored. Optional. Defaults to temp folder.
 
@@ -25,6 +29,9 @@
     .EXAMPLE
     $ribbonXml = Export-XrmRibbon -EntityLogicalName "account";
     $ribbonXml = Export-XrmRibbon -EntityLogicalName "contact" -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $ribbonXml = Export-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "account" -PublisherUniqueName "contoso";
 
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/customize-commands-ribbon
@@ -48,6 +55,11 @@ function Export-XrmRibbon {
         $SolutionUniqueName,
 
         [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $PublisherUniqueName,
+
+        [Parameter(Mandatory = $false)]
         [string]
         $OutputPath = $env:TEMP
     )
@@ -58,23 +70,36 @@ function Export-XrmRibbon {
     process {
         $useTempSolution = (-not $PSBoundParameters.ContainsKey('SolutionUniqueName'));
         $tempSolutionName = "RibbonExport_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
-
-        if ($useTempSolution) {
-            # Create temporary solution
-            $publisher = Get-XrmPublisher | Select-Object -First 1;
-            $publisherRef = $publisher.Reference;
-            $SolutionUniqueName = $tempSolutionName;
-
-            Add-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
-
-            # Add entity to solution (ComponentType 1 = Entity)
-            $entityMetadata = Get-XrmEntityMetadata -LogicalName $EntityLogicalName;
-            Add-XrmSolutionComponent -SolutionUniqueName $tempSolutionName -ComponentId $entityMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $true | Out-Null;
-        }
+        $tempSolutionCreated = $false;
+        $solutionFilePath = $null;
+        $extractPath = $null;
 
         try {
+            if ($useTempSolution) {
+                # Create temporary solution
+                if ($PSBoundParameters.ContainsKey('PublisherUniqueName')) {
+                    $publisher = $XrmClient | Get-XrmPublisher -PublisherUniqueName $PublisherUniqueName;
+                    if (-not $publisher) {
+                        throw "Publisher '$PublisherUniqueName' not found.";
+                    }
+                    $publisherRef = $publisher.Reference;
+                }
+                else {
+                    $defaultSolution = $XrmClient | Get-XrmSolution -SolutionUniqueName "Default" -Columns "publisherid";
+                    $publisherRef = $defaultSolution.publisherid_Value;
+                }
+                $SolutionUniqueName = $tempSolutionName;
+
+                $XrmClient | Add-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
+                $tempSolutionCreated = $true;
+
+                # Add entity to solution (ComponentType 1 = Entity)
+                $entityMetadata = $XrmClient | Get-XrmEntityMetadata -LogicalName $EntityLogicalName;
+                $XrmClient | Add-XrmSolutionComponent -SolutionUniqueName $tempSolutionName -ComponentId $entityMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $true | Out-Null;
+            }
+
             # Export solution
-            $solutionFilePath = Export-XrmSolution -SolutionUniqueName $SolutionUniqueName -Managed $false -ExportPath $OutputPath;
+            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $SolutionUniqueName -Managed $false -ExportPath $OutputPath;
 
             # Extract zip
             $extractPath = Join-Path $OutputPath "RibbonExtract_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
@@ -101,17 +126,22 @@ function Export-XrmRibbon {
             $ribbonDiffXml;
         }
         finally {
-            # Cleanup temp solution
-            if ($useTempSolution) {
-                $tempSolution = Get-XrmSolution -SolutionUniqueName $tempSolutionName;
-                if ($tempSolution) {
-                    Uninstall-XrmSolution -SolutionUniqueName $tempSolutionName;
+            # Cleanup temp solution: a cleanup failure is reported but does not hide the original error
+            if ($tempSolutionCreated) {
+                try {
+                    $XrmClient | Uninstall-XrmSolution -SolutionUniqueName $tempSolutionName;
+                }
+                catch {
+                    Write-Warning "Temporary solution '$tempSolutionName' was not removed: $($_.Exception.Message)";
                 }
             }
 
             # Cleanup extracted files
-            if ((Test-Path $extractPath)) {
+            if ($extractPath -and (Test-Path $extractPath)) {
                 Remove-Item -Path $extractPath -Recurse -Force -ErrorAction SilentlyContinue;
+            }
+            if ($useTempSolution -and $solutionFilePath -and (Test-Path $solutionFilePath)) {
+                Remove-Item -Path $solutionFilePath -Force -ErrorAction SilentlyContinue;
             }
         }
     }

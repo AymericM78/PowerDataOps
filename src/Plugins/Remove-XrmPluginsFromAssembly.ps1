@@ -29,7 +29,7 @@ function Remove-XrmPluginsFromAssembly {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);       
     }    
     process {
-        $assembly = Get-XrmRecord -LogicalName "pluginassembly" -AttributeName "name" -Value $AssemblyName;
+        $assembly = $XrmClient | Get-XrmRecord -LogicalName "pluginassembly" -AttributeName "name" -Value $AssemblyName;
         if (-not $assembly) {
             return;
         }        
@@ -66,7 +66,7 @@ function Remove-XrmPluginsFromAssembly {
                         </entity>
                     </fetch>';
         $fetchXml = $fetchXml.Replace("[AssemblyId]", $assembly.Id);
-        $queryTypes = Get-XrmQueryFromFetch -FetchXml $fetchXml;
+        $queryTypes = $XrmClient | Get-XrmQueryFromFetch -FetchXml $fetchXml;
         $types = $XrmClient | Get-XrmMultipleRecords -Query $queryTypes;
 
         if ($types) {

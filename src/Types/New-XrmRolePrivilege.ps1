@@ -17,6 +17,10 @@
     .PARAMETER BusinessUnitId
     Business unit unique identifier. Optional, defaults to Guid.Empty.
 
+    .PARAMETER XrmClient
+    Xrm connector initialized to target instance, used to resolve PrivilegeName. Use latest one by default. (Dataverse ServiceClient)
+    Declared last to keep the existing positional parameters.
+
     .OUTPUTS
     Microsoft.Crm.Sdk.Messages.RolePrivilege. The constructed RolePrivilege object.
 
@@ -49,7 +53,11 @@ function New-XrmRolePrivilege {
 
         [Parameter(Mandatory = $false)]
         [Guid]
-        $BusinessUnitId = [Guid]::Empty
+        $BusinessUnitId = [Guid]::Empty,
+
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
+        [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
+        $XrmClient = $Global:XrmClient
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -67,7 +75,7 @@ function New-XrmRolePrivilege {
             # Resolve PrivilegeId from PrivilegeName
             $query = New-XrmQueryExpression -LogicalName "privilege" -Columns "privilegeid", "name" -TopCount 1;
             $query = $query | Add-XrmQueryCondition -Field "name" -Condition Equal -Values @($PrivilegeName);
-            $results = Get-XrmMultipleRecords -Query $query;
+            $results = $XrmClient | Get-XrmMultipleRecords -Query $query;
             $privRecord = $results | Select-Object -First 1;
             if (-not $privRecord) {
                 throw "Privilege '$PrivilegeName' not found.";

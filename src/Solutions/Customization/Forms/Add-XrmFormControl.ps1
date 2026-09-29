@@ -132,7 +132,7 @@ function Add-XrmFormControl {
         $XrmClient | Update-XrmRecord -Record $updateRecord;
 
         if ($Publish) {
-            Publish-XrmCustomizations;
+            $XrmClient | Publish-XrmCustomizations;
         }
     }
     end {

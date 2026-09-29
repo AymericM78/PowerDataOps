@@ -55,7 +55,7 @@ function Get-XrmRoles {
             $queryRoles = $queryRoles | Add-XrmQueryCondition -Field "businessunitid" -Condition Equal -Values $BusinessUnitId;
         }
         if ($OnlyRoots) {           
-            $parentBusinessUnit = Get-XrmRootBusinessUnit;
+            $parentBusinessUnit = $XrmClient | Get-XrmRootBusinessUnit;
             $queryRoles = $queryRoles | Add-XrmQueryCondition -Field "businessunitid" -Condition Equal -Values  $parentBusinessUnit.Id;
         }
         $roles = $XrmClient | Get-XrmMultipleRecords -Query $queryRoles;

@@ -6,6 +6,7 @@
     Import a modified RibbonDiffXml for a specific table by creating a temporary solution containing the table,
     exporting the solution, replacing the RibbonDiffXml node in customizations.xml, re-zipping, and importing.
     This allows modifying classic ribbon customizations (commands, display rules, enable rules) programmatically.
+    The temporary solution uses the publisher given by PublisherUniqueName, or the organization default publisher (publisher of the Default solution). It is removed at the end, even on failure.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -14,10 +15,13 @@
     Logical name of the table whose ribbon to update.
 
     .PARAMETER RibbonDiffXml
-    The RibbonDiffXml content as string or XmlElement containing CustomActions, CommandDefinitions, RuleDefinitions, etc.
+    The RibbonDiffXml content, as a string or as an XmlElement (e.g. the output of Export-XrmRibbon), containing CustomActions, CommandDefinitions, RuleDefinitions, etc.
 
     .PARAMETER SolutionUniqueName
     Existing solution unique name to use for import. If provided, uses this solution instead of creating a temporary one.
+
+    .PARAMETER PublisherUniqueName
+    Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
 
     .PARAMETER Publish
     Publish customizations after import. Default: true.
@@ -28,7 +32,7 @@
     .EXAMPLE
     $ribbonXml = Export-XrmRibbon -EntityLogicalName "account";
     # Modify $ribbonXml as needed...
-    Import-XrmRibbon -EntityLogicalName "account" -RibbonDiffXml $ribbonXml.OuterXml;
+    Import-XrmRibbon -EntityLogicalName "account" -RibbonDiffXml $ribbonXml;
 
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/customize-commands-ribbon
@@ -49,12 +53,17 @@ function Import-XrmRibbon {
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [string]
+        [object]
         $RibbonDiffXml,
 
         [Parameter(Mandatory = $false)]
         [string]
         $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $PublisherUniqueName,
 
         [Parameter(Mandatory = $false)]
         [bool]
@@ -65,24 +74,40 @@ function Import-XrmRibbon {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        # An XmlElement converted to [string] gives its type name, not its XML
+        $ribbonXmlText = if ($RibbonDiffXml -is [System.Xml.XmlNode]) { $RibbonDiffXml.OuterXml } else { [string]$RibbonDiffXml };
+
         $workPath = Join-Path $env:TEMP "RibbonImport_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
         $useTempSolution = (-not $PSBoundParameters.ContainsKey('SolutionUniqueName'));
         $tempSolutionName = "RibbonImport_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
-
-        if ($useTempSolution) {
-            $publisher = Get-XrmPublisher | Select-Object -First 1;
-            $publisherRef = $publisher.Reference;
-            $SolutionUniqueName = $tempSolutionName;
-
-            Add-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
-
-            $entityMetadata = Get-XrmEntityMetadata -LogicalName $EntityLogicalName;
-            Add-XrmSolutionComponent -SolutionUniqueName $tempSolutionName -ComponentId $entityMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $true | Out-Null;
-        }
+        $tempSolutionCreated = $false;
+        $solutionFilePath = $null;
+        $importZipPath = $null;
 
         try {
+            if ($useTempSolution) {
+                if ($PSBoundParameters.ContainsKey('PublisherUniqueName')) {
+                    $publisher = $XrmClient | Get-XrmPublisher -PublisherUniqueName $PublisherUniqueName;
+                    if (-not $publisher) {
+                        throw "Publisher '$PublisherUniqueName' not found.";
+                    }
+                    $publisherRef = $publisher.Reference;
+                }
+                else {
+                    $defaultSolution = $XrmClient | Get-XrmSolution -SolutionUniqueName "Default" -Columns "publisherid";
+                    $publisherRef = $defaultSolution.publisherid_Value;
+                }
+                $SolutionUniqueName = $tempSolutionName;
+
+                $XrmClient | Add-XrmSolution -DisplayName $tempSolutionName -UniqueName $tempSolutionName -PublisherReference $publisherRef | Out-Null;
+                $tempSolutionCreated = $true;
+
+                $entityMetadata = $XrmClient | Get-XrmEntityMetadata -LogicalName $EntityLogicalName;
+                $XrmClient | Add-XrmSolutionComponent -SolutionUniqueName $tempSolutionName -ComponentId $entityMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $true | Out-Null;
+            }
+
             # Export solution
-            $solutionFilePath = Export-XrmSolution -SolutionUniqueName $SolutionUniqueName -Managed $false -ExportPath $env:TEMP;
+            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $SolutionUniqueName -Managed $false -ExportPath $env:TEMP;
 
             # Extract zip
             Expand-Archive -Path $solutionFilePath -DestinationPath $workPath -Force;
@@ -104,9 +129,11 @@ function Import-XrmRibbon {
             }
 
             # Replace RibbonDiffXml
-            [xml]$ribbonFragment = "<RibbonDiffXml>$RibbonDiffXml</RibbonDiffXml>";
-            if ($RibbonDiffXml.TrimStart().StartsWith("<RibbonDiffXml")) {
-                [xml]$ribbonFragment = $RibbonDiffXml;
+            if ($ribbonXmlText.TrimStart().StartsWith("<RibbonDiffXml")) {
+                [xml]$ribbonFragment = $ribbonXmlText;
+            }
+            else {
+                [xml]$ribbonFragment = "<RibbonDiffXml>$ribbonXmlText</RibbonDiffXml>";
             }
 
             $importedNode = $customizationsXml.ImportNode($ribbonFragment.DocumentElement, $true);
@@ -128,28 +155,33 @@ function Import-XrmRibbon {
             [System.IO.Compression.ZipFile]::CreateFromDirectory($workPath, $importZipPath);
 
             # Import solution
-            Import-XrmSolution -SolutionUniqueName $SolutionUniqueName -SolutionFilePath $importZipPath -OverwriteUnmanagedCustomizations $true;
+            $XrmClient | Import-XrmSolution -SolutionUniqueName $SolutionUniqueName -SolutionFilePath $importZipPath -OverwriteUnmanagedCustomizations $true;
 
             # Publish
             if ($Publish) {
-                Publish-XrmCustomizations;
+                $XrmClient | Publish-XrmCustomizations;
             }
         }
         finally {
-            # Cleanup temp solution
-            if ($useTempSolution) {
-                $tempSolution = Get-XrmSolution -SolutionUniqueName $tempSolutionName;
-                if ($tempSolution) {
-                    Uninstall-XrmSolution -SolutionUniqueName $tempSolutionName;
+            # Cleanup temp solution: a cleanup failure is reported but does not hide the original error
+            if ($tempSolutionCreated) {
+                try {
+                    $XrmClient | Uninstall-XrmSolution -SolutionUniqueName $tempSolutionName;
+                }
+                catch {
+                    Write-Warning "Temporary solution '$tempSolutionName' was not removed: $($_.Exception.Message)";
                 }
             }
 
             # Cleanup work files
-            if ((Test-Path $workPath)) {
+            if (Test-Path $workPath) {
                 Remove-Item -Path $workPath -Recurse -Force -ErrorAction SilentlyContinue;
             }
-            if ((Test-Path $importZipPath)) {
+            if ($importZipPath -and (Test-Path $importZipPath)) {
                 Remove-Item -Path $importZipPath -Force -ErrorAction SilentlyContinue;
+            }
+            if ($solutionFilePath -and (Test-Path $solutionFilePath)) {
+                Remove-Item -Path $solutionFilePath -Force -ErrorAction SilentlyContinue;
             }
         }
     }

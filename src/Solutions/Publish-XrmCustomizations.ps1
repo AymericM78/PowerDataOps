@@ -3,16 +3,36 @@
     Publish customizations.
 
     .DESCRIPTION
-    Apply unpublished customizations to active layer to promote UI changes.    
+    Apply unpublished customizations to active layer to promote UI changes.
+    PublishAllXmlAsync is monitored until completion and raises an error if the publish job fails. PublishXml (ParameterXml given) and PublishAllXml (Async = false) are synchronous.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
+    .PARAMETER ParameterXml
+    Publish only the components described by this importexportxml (PublishXml message). (Default: publish all)
+
     .PARAMETER TimeOutInMinutes
     Specify timeout duration in minute. (Default : 5 min)
+
+    .PARAMETER Async
+    Publish all with PublishAllXmlAsync and wait for the system job. Ignored when ParameterXml is given. (Default: true)
+
+    .OUTPUTS
+    System.Void.
+
+    .EXAMPLE
+    Publish-XrmCustomizations -XrmClient $xrmClient;
+
+    .EXAMPLE
+    Publish-XrmCustomizations -XrmClient $xrmClient -ParameterXml "<importexportxml><entities><entity>account</entity></entities></importexportxml>";
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Publish-XrmCustomizations.md
 #>
 function Publish-XrmCustomizations {
     [CmdletBinding()]
+    [OutputType([System.Void])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -51,9 +71,9 @@ function Publish-XrmCustomizations {
         
         $response = $XrmClient | Invoke-XrmRequest -Request $publishRequest;
 
-        if ($Async) {
-            $asyncOperationId = $response.Results["AsyncOperationId"]
-            Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -TimeoutInMinutes $TimeOutInMinutes;
+        if ($Async -and -not $ParameterXml) {
+            $asyncOperationId = $response.Results["AsyncOperationId"];
+            $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -TimeoutInMinutes $TimeOutInMinutes -MissingMeansSucceeded -ThrowOnFailure | Out-Null;
         }
     }
     end {

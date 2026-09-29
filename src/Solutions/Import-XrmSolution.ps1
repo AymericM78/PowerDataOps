@@ -34,9 +34,22 @@
 
     .PARAMETER StageAndUpgrade
     Import solution, stage it for upgrade, and apply the upgrade in one action. (Default : false)
+
+    .PARAMETER PassThru
+    Return the status of the import system job (see Watch-XrmAsynchOperation). (Default: nothing is returned)
+
+    .OUTPUTS
+    PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMessage of the import system job.
+
+    .EXAMPLE
+    $status = Import-XrmSolution -XrmClient $xrmClient -SolutionUniqueName "contoso_crm" -SolutionFilePath "C:\Temp\contoso_crm.zip" -PassThru;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmSolution.md
 #>
 function Import-XrmSolution {
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -80,7 +93,11 @@ function Import-XrmSolution {
 
         [Parameter(Mandatory = $false)]
         [Boolean]
-        $StageAndUpgrade = $false
+        $StageAndUpgrade = $false,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $PassThru
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -124,7 +141,7 @@ function Import-XrmSolution {
 
             $importJob = $null;
             $lastProgressValue = $null;
-            Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -ScriptBlock {
+            $importStatus = $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -ScriptBlock {
                 param($asyncOperation)
 
                 try {
@@ -138,7 +155,7 @@ function Import-XrmSolution {
                     Write-HostAndLog " > $SolutionUniqueName import in progress... ($($importJob.progress) %)" -ForegroundColor Cyan;
                     Write-Progress -Activity $($MyInvocation.MyCommand.Name) -Status "Importing solution $SolutionUniqueName...($($importJob.progress) %)" -PercentComplete $importJob.progress_Value -Id 1052;
                     $progressValue = $importJob.progress_Value -as [int];
-                    Write-Output "##vso[task.setprogress value=$progressValue;]Solution Import Progress"
+                    Write-Host "##vso[task.setprogress value=$progressValue;]Solution Import Progress";
                 }
                 $lastProgressValue = $importJob.progress;
             }
@@ -146,8 +163,11 @@ function Import-XrmSolution {
             $importJob = $XrmClient | Get-XrmRecord -LogicalName "importjob" -Id $importJobId -Columns "completedon", "data", "progress";
             $xmlData = [xml] $importJob.data;
             $resultNode = $xmlData.importexportxml.solutionManifests.solutionManifest.result;
-            if ($resultNode.result -eq "failure") {        
+            if ($resultNode.result -eq "failure") {
                 throw "$($resultNode.errorcode): $($resultNode.errortext)";
+            }
+            if ($importStatus.StatusCode -ne 30) {
+                throw "Import system job ended with status $($importStatus.Status): $($importStatus.Message)";
             }
         }
         catch {
@@ -158,7 +178,11 @@ function Import-XrmSolution {
         }  
 
         if ($StartUpgrade) {
-            Start-XrmSolutionUpgrade -SolutionUniqueName $SolutionUniqueName;
+            $XrmClient | Start-XrmSolutionUpgrade -SolutionUniqueName $SolutionUniqueName;
+        }
+
+        if ($PassThru) {
+            $importStatus;
         }
     }
     end {

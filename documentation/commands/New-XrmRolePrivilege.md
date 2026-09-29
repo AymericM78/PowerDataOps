@@ -12,6 +12,8 @@ PrivilegeId|Guid|1|false||Unique identifier of the privilege.
 PrivilegeName|String|2|false||Name of the privilege (e.g. "prvReadAccount"). Used to resolve the PrivilegeId automatically if PrivilegeId is not provided.
 Depth|PrivilegeDepth|3|true||Depth of the privilege (Basic, Local, Deep, Global).
 BusinessUnitId|Guid|4|false|[Guid]::Empty|Business unit unique identifier. Optional, defaults to Guid.Empty.
+XrmClient|ServiceClient|5|false|$Global:XrmClient|Xrm connector initialized to target instance, used to resolve PrivilegeName. Use latest one by default. (Dataverse ServiceClient)
+Declared last to keep the existing positional parameters.
 
 ## Outputs
 Microsoft.Crm.Sdk.Messages.RolePrivilege. The constructed RolePrivilege object.
@@ -19,8 +21,7 @@ Microsoft.Crm.Sdk.Messages.RolePrivilege. The constructed RolePrivilege object.
 ## Usage
 
 ```Powershell 
-New-XrmRolePrivilege [[-PrivilegeId] <Guid>] [[-PrivilegeName] <String>] [-Depth] {Basic | Local | Deep | Global | RecordFilter} [[-BusinessUnitId] 
-<Guid>] [<CommonParameters>]
+New-XrmRolePrivilege [[-PrivilegeId] <Guid>] [[-PrivilegeName] <String>] [-Depth] {Basic | Local | Deep | Global | RecordFilter} [[-BusinessUnitId] <Guid>] [[-XrmClient] <ServiceClient>] [<CommonParameters>]
 ``` 
 
 ## Examples

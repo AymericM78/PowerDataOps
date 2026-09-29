@@ -18,14 +18,25 @@ Upgrade|Boolean|7|false|False|Gets or sets whether to import the solution as a h
 SkipProductUpdateDependencies|Boolean|8|false|True|Gets or sets whether enforcement of dependencies related to product updates should be skipped. (Default : false)
 StartUpgrade|Boolean|9|false|False|Start Upgrade operation immediatly after solution import. (Default : false)
 StageAndUpgrade|Boolean|10|false|False|Import solution, stage it for upgrade, and apply the upgrade in one action. (Default : false)
+PassThru|SwitchParameter|named|false|False|Return the status of the import system job (see Watch-XrmAsynchOperation). (Default: nothing is returned)
 
+## Outputs
+PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMessage of the import system job.
 
 ## Usage
 
 ```Powershell 
-Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] 
-[[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] 
-[[-StartUpgrade] <Boolean>] [[-StageAndUpgrade] <Boolean>] [<CommonParameters>]
+Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [[-StageAndUpgrade] <Boolean>] [-PassThru] [<CommonParameters>]
 ``` 
+
+## Examples
+
+```Powershell 
+$status = Import-XrmSolution -XrmClient $xrmClient -SolutionUniqueName "contoso_crm" -SolutionFilePath "C:\Temp\contoso_crm.zip" -PassThru;
+``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmSolution.md
 
 

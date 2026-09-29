@@ -6,6 +6,7 @@
     Delete a solution (managed or unmanaged) from the environment by its unique name.
     Uses the UninstallSolutionAsync SDK message to avoid timeout issues, then monitors
     the async operation via Watch-XrmAsynchOperation until completion.
+    Raises an error when the uninstall system job fails or is canceled.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -13,18 +14,24 @@
     .PARAMETER SolutionUniqueName
     Solution unique name to uninstall.
 
+    .PARAMETER PassThru
+    Return the status of the uninstall system job (see Watch-XrmAsynchOperation). (Default: nothing is returned)
+
     .OUTPUTS
-    System.Void.
+    PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMessage of the uninstall system job.
 
     .EXAMPLE
     Uninstall-XrmSolution -SolutionUniqueName "contoso_crm";
+
+    .EXAMPLE
+    $status = Uninstall-XrmSolution -XrmClient $xrmClient -SolutionUniqueName "contoso_crm" -PassThru;
 
     .LINK
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/uninstall-delete-solution
 #>
 function Uninstall-XrmSolution {
     [CmdletBinding()]
-    [OutputType([System.Void])]
+    [OutputType([PSCustomObject])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -34,7 +41,11 @@ function Uninstall-XrmSolution {
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $PassThru
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -52,7 +63,7 @@ function Uninstall-XrmSolution {
         try {
             $response = $XrmClient | Invoke-XrmRequest -Request $uninstallRequest;
             $asyncOperationId = $response.Results["AsyncOperationId"];
-            Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -ScriptBlock {
+            $uninstallStatus = $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -MissingMeansSucceeded -ThrowOnFailure -ScriptBlock {
                 param($asyncOperation)
 
                 Write-HostAndLog " > Uninstalling '$SolutionUniqueName' solution : Asyncoperation $($asyncOperation.Id) | Status = $($asyncOperation.statuscode)" -ForegroundColor Cyan;
@@ -62,6 +73,10 @@ function Uninstall-XrmSolution {
             $errorMessage = $_.Exception.Message;
             Write-HostAndLog "$($MyInvocation.MyCommand.Name) => KO : [Error: $errorMessage]" -ForegroundColor Red -Level FAIL;
             throw $errorMessage;
+        }
+
+        if ($PassThru) {
+            $uninstallStatus;
         }
     }
     end {

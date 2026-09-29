@@ -178,7 +178,7 @@ function Export-XrmSolution {
             $exportJobId = $exportSolutionResponse.Results["ExportJobId"];
 
             # Monitor request execution
-            $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -TimeoutInMinutes $TimeoutInMinutes;
+            $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -TimeoutInMinutes $TimeoutInMinutes -ThrowOnFailure | Out-Null;
 
             # Retrieve solution file binary
             $downloadSolutionExportDataRequest = New-XrmRequest -Name "DownloadSolutionExportData";

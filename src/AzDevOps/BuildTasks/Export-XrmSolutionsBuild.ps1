@@ -137,7 +137,7 @@ function Export-XrmSolutionsBuild {
         $query = $query | Add-XrmQueryCondition -Field "ishidden" -Condition Equal -Values $false;
         $query = $query | Add-XrmQueryCondition -Field "iscustomizable" -Condition Equal -Values $true;
 
-        $steps = Get-XrmMultipleRecords -Query $query;
+        $steps = $XrmClient | Get-XrmMultipleRecords -Query $query;
         foreach($step in $steps){
             
             Write-HostAndLog -Message " > Step '$($step.name)' contains filtering attributes" -Level WARN;  
@@ -145,7 +145,7 @@ function Export-XrmSolutionsBuild {
             $stepUpdate = New-XrmEntity -LogicalName $step.LogicalName -Id $step.id -Attributes @{
                 "filteringattributes" = $null;
             };
-            Update-XrmRecord -Record $stepUpdate;
+            $XrmClient | Update-XrmRecord -Record $stepUpdate;
         }
         Write-HostAndLog -Message "$($steps.Count) step(s) updated!" -Level WARN;  
         # =========================================================================================================

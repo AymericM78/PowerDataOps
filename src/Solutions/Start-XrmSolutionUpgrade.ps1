@@ -36,7 +36,7 @@ function Start-XrmSolutionUpgrade {
         try {            
             $deleteAndPromoteResponse = $XrmClient | Invoke-XrmRequest -Request $deleteAndPromoteRequest -Async;
             $asyncOperationId = $deleteAndPromoteResponse.AsyncJobId;
-            Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId;
+            $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -ThrowOnFailure | Out-Null;
         }
         catch {
             $errorMessage = $_.Exception.Message;
