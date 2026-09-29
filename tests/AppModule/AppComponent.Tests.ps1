@@ -60,7 +60,10 @@ Assert-Test "Component removed (view gone, sitemap kept)" {
 };
 
 Write-Section "Cleanup";
-try { $Global:XrmClient | Remove-XrmRecord -LogicalName "appmodule" -Id $appRef.Id; } catch { }
-try { $Global:XrmClient | Remove-XrmRecord -LogicalName "sitemap" -Id $siteMapRef.Id; } catch { }
-Assert-Test "Cleanup complete" { $true };
+$cleanupErrors = [System.Collections.Generic.List[string]]::new();
+try { $Global:XrmClient | Remove-XrmRecord -LogicalName "appmodule" -Id $appRef.Id -ErrorAction Stop; } catch { $cleanupErrors.Add("app: $($_.Exception.Message)"); }
+try { $Global:XrmClient | Remove-XrmRecord -LogicalName "sitemap" -Id $siteMapRef.Id -ErrorAction Stop; } catch { $cleanupErrors.Add("sitemap: $($_.Exception.Message)"); }
+Assert-Test "Cleanup complete (app and sitemap deleted) $($cleanupErrors -join ' | ')" {
+    $cleanupErrors.Count -eq 0 -and @(Get-XrmAppModules -XrmClient $Global:XrmClient -Id $appRef.Id -Unpublished -Columns "name").Count -eq 0;
+};
 Write-TestSummary;

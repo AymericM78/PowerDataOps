@@ -38,11 +38,20 @@
     .PARAMETER SolutionUniqueName
     Unmanaged solution unique name. When provided, the view is added to this solution.
 
+    .PARAMETER IsDefault
+    Make the view the default one of its type for the table. With $true, the flag is cleared on the previous default views of the same table and type (the platform keeps it otherwise).
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted savedquery record.
 
     .EXAMPLE
     $ref = Upsert-XrmView -Id $viewId -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $ref = Upsert-XrmView -XrmClient $xrmClient -Id $viewId -EntityLogicalName "account" -Name "My Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml -IsDefault $true;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmView.md
 #>
 function Upsert-XrmView {
     [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
@@ -97,7 +106,11 @@ function Upsert-XrmView {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsDefault
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -118,11 +131,22 @@ function Upsert-XrmView {
         if ($PSBoundParameters.ContainsKey('Description')) {
             $attributes["description"] = $Description;
         }
+        if ($PSBoundParameters.ContainsKey('IsDefault')) {
+            $attributes["isdefault"] = $IsDefault;
+        }
 
         $record = New-XrmEntity -LogicalName "savedquery" -Id $Id -Attributes $attributes;
 
         $XrmClient | Upsert-XrmRecord -Record $record | Out-Null;
         $viewReference = New-XrmEntityReference -LogicalName "savedquery" -Id $Id;
+
+        # The platform keeps the previous default view flagged: clear it, one default per table and view type
+        if ($PSBoundParameters.ContainsKey('IsDefault') -and $IsDefault) {
+            $previousDefaults = @(Get-XrmViews -XrmClient $XrmClient -EntityLogicalName $EntityLogicalName -QueryType $QueryType -IsDefault -Columns "savedqueryid" | Where-Object { $_.Id -ne $Id });
+            foreach ($previousDefault in $previousDefaults) {
+                $XrmClient | Update-XrmRecord -Record (New-XrmEntity -LogicalName "savedquery" -Id $previousDefault.Id -Attributes @{ isdefault = $false });
+            }
+        }
 
         # Persist the multilingual name as real translations (SetLocLabels) so each language sees its own label.
         if ($PSCmdlet.ParameterSetName -eq "ByLabels") {

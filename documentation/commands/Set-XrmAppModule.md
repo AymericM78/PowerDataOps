@@ -11,7 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 AppModuleReference|EntityReference|2|true||EntityReference of the appmodule record to update.
 Name|String|3|false||New display name. Optional.
-Labels|Hashtable|4|false||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided.
+Labels|Hashtable|4|false||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and each language is set as a translation (SetLocLabels). -Name takes precedence for the stored name if both are provided.
 LanguageCode|Int32|5|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
 Description|String|6|false||New description. Optional.
 WebResourceId|Guid|7|false||New web resource icon Id. Optional.
@@ -37,6 +37,6 @@ Set-XrmAppModule -AppModuleReference $appRef -Name "Renamed App" -SolutionUnique
 
 ## More informations
 
-https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppModule.md
 
 

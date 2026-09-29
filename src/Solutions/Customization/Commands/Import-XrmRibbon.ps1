@@ -26,6 +26,9 @@
     .PARAMETER Publish
     Publish customizations after import. Default: true.
 
+    .PARAMETER TargetSolutionUniqueName
+    Unmanaged solution to add the table to after the import (the ribbon belongs to the table component), distinct from the temporary or exported solution.
+
     .OUTPUTS
     System.Void.
 
@@ -34,8 +37,12 @@
     # Modify $ribbonXml as needed...
     Import-XrmRibbon -EntityLogicalName "account" -RibbonDiffXml $ribbonXml;
 
+    .EXAMPLE
+    # Temporary solution with the publisher of the target solution, table added to the target afterwards
+    Import-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "account" -RibbonDiffXml $ribbonXml -PublisherUniqueName "contoso" -TargetSolutionUniqueName "ContosoCore";
+
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/customize-commands-ribbon
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmRibbon.md
 #>
 function Import-XrmRibbon {
     [CmdletBinding(SupportsShouldProcess)]
@@ -67,7 +74,12 @@ function Import-XrmRibbon {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $PublisherUniqueName
+        $PublisherUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $TargetSolutionUniqueName
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -156,6 +168,10 @@ function Import-XrmRibbon {
 
             # Import solution
             $XrmClient | Import-XrmSolution -SolutionUniqueName $SolutionUniqueName -SolutionFilePath $importZipPath -OverwriteUnmanagedCustomizations $true;
+            if ($PSBoundParameters.ContainsKey('TargetSolutionUniqueName')) {
+                $tableMetadata = $XrmClient | Get-XrmEntityMetadata -LogicalName $EntityLogicalName -Filter Entity;
+                $XrmClient | Add-XrmSolutionComponent -SolutionUniqueName $TargetSolutionUniqueName -ComponentId $tableMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $true | Out-Null;
+            }
 
             # Publish
             if ($Publish) {

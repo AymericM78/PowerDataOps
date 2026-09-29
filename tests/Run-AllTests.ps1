@@ -65,6 +65,8 @@ $allTests = @(
     @{ Category = "WebResources";  File = "WebResources\WebResources.Tests.ps1" },
     @{ Category = "AppModule";     File = "AppModule\SiteMap.Tests.ps1" },
     @{ Category = "AppModule";     File = "AppModule\AppComponent.Tests.ps1" },
+    @{ Category = "AppModule";     File = "AppModule\AppModuleLifecycle.Tests.ps1" },
+    @{ Category = "Customization"; File = "Customization\ViewsAndRibbons.Tests.ps1" },
     @{ Category = "Views";         File = "Views\Export-XrmViewToExcel.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Sync-XrmRecords.Tests.ps1" }
 );

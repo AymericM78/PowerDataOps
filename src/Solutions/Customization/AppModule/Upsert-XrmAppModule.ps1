@@ -3,7 +3,9 @@
     Create or update a model-driven app in Microsoft Dataverse.
 
     .DESCRIPTION
-    Upsert an appmodule record by Id using the Upsert SDK message. If the record exists it is updated; otherwise it is created with the provided Id. Delegates to Upsert-XrmRecord.
+    Create or update an appmodule record by Id: when the app exists, published or not (a new app stays unpublished until it is published), it is updated; otherwise it is created with the provided Id.
+    The SDK Upsert message is not used: it does not see unpublished apps and tries to create them again.
+    With -Labels, the name is also set in each language (SetLocLabels).
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -15,7 +17,7 @@
     Display name for the app.
 
     .PARAMETER Labels
-    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "My App"; 1036 = "Mon application" }
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and each language is set as a translation. Example: @{ 1033 = "My App"; 1036 = "Mon application" }
 
     .PARAMETER LanguageCode
     Language code used to pick the stored 'name' from -Labels. Default: 1033.
@@ -55,6 +57,9 @@
 
     .EXAMPLE
     $appRef = Upsert-XrmAppModule -Id $appId -Name "My Custom App" -UniqueName "myapp" -SolutionUniqueName "MySolution";
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmAppModule.md
 #>
 function Upsert-XrmAppModule {
     [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
@@ -165,7 +170,19 @@ function Upsert-XrmAppModule {
 
         $record = New-XrmEntity -LogicalName "appmodule" -Id $Id -Attributes $attributes;
 
-        $XrmClient | Upsert-XrmRecord -Record $record | Out-Null;
+        $existing = @(Get-XrmAppModules -XrmClient $XrmClient -Id $Id -Columns "appmoduleid");
+        if ($existing.Count -eq 0) {
+            $existing = @(Get-XrmAppModules -XrmClient $XrmClient -Id $Id -Columns "appmoduleid" -Unpublished);
+        }
+        if ($existing.Count -gt 0) {
+            $XrmClient | Update-XrmRecord -Record $record -ErrorAction Stop;
+        }
+        else {
+            $XrmClient | Add-XrmRecord -Record $record -ErrorAction Stop | Out-Null;
+        }
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker (New-XrmEntityReference -LogicalName "appmodule" -Id $Id) -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $Id -ComponentType 80 -DoNotIncludeSubcomponents $false | Out-Null;

@@ -12,7 +12,7 @@
     Display name for the app.
 
     .PARAMETER Labels
-    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "My App"; 1036 = "Mon application" }
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and each language is set as a translation (SetLocLabels). Example: @{ 1033 = "My App"; 1036 = "Mon application" }
 
     .PARAMETER LanguageCode
     Language code used to pick the stored 'name' from -Labels. Default: 1033.
@@ -47,6 +47,9 @@
     .PARAMETER SolutionUniqueName
     Solution unique name to add the app to. Optional.
 
+    .PARAMETER Id
+    Id of the new app, to keep the same Id across environments. (Default: generated)
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the created appmodule record.
 
@@ -61,7 +64,7 @@
     $appRef = Add-XrmAppModule -Labels @{ 1033 = "My App"; 1036 = "Mon application" } -LanguageCode 1036 -UniqueName "myapp";
 
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModule.md
 #>
 function Add-XrmAppModule {
     [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
@@ -125,7 +128,12 @@ function Add-XrmAppModule {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [Guid]
+        $Id
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -166,7 +174,19 @@ function Add-XrmAppModule {
             $record["isfeatured"] = $IsFeatured;
         }
 
-        $record.Id = $XrmClient | Add-XrmRecord -Record $record;
+        if ($PSBoundParameters.ContainsKey('Id')) {
+            $record.Id = $Id;
+        }
+        $createdId = $XrmClient | Add-XrmRecord -Record $record;
+        # Skipped by -WhatIf, or failed (the error is already written)
+        if (-not $createdId) {
+            return;
+        }
+        $record.Id = $createdId;
+
+        if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $record.ToEntityReference() -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $record.Id -ComponentType 80 -DoNotIncludeSubcomponents $false | Out-Null;

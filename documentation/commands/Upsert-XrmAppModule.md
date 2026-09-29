@@ -2,7 +2,9 @@
 
 ## Description
 
-**Create or update a model-driven app in Microsoft Dataverse.** : Upsert an appmodule record by Id using the Upsert SDK message. If the record exists it is updated; otherwise it is created with the provided Id. Delegates to Upsert-XrmRecord.
+**Create or update a model-driven app in Microsoft Dataverse.** : Create or update an appmodule record by Id: when the app exists, published or not (a new app stays unpublished until it is published), it is updated; otherwise it is created with the provided Id.
+The SDK Upsert message is not used: it does not see unpublished apps and tries to create them again.
+With -Labels, the name is also set in each language (SetLocLabels).
 
 ## Inputs
 
@@ -11,7 +13,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|named|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 Id|Guid|named|true||App (appmodule) Id used as the upsert key.
 Name|String|named|true||Display name for the app.
-Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "My App"; 1036 = "Mon application" }
+Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and each language is set as a translation. Example: @{ 1033 = "My App"; 1036 = "Mon application" }
 LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
 UniqueName|String|named|true||Unique name for the app.
 Description|String|named|false||App description. Optional.
@@ -42,5 +44,9 @@ Upsert-XrmAppModule [-XrmClient <ServiceClient>] -Id <Guid> -Labels <Hashtable> 
 ```Powershell 
 $appRef = Upsert-XrmAppModule -Id $appId -Name "My Custom App" -UniqueName "myapp" -SolutionUniqueName "MySolution";
 ``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmAppModule.md
 
 

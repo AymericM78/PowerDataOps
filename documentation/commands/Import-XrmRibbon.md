@@ -17,6 +17,7 @@ RibbonDiffXml|Object|3|true||The RibbonDiffXml content, as a string or as an Xml
 SolutionUniqueName|String|4|false||Existing solution unique name to use for import. If provided, uses this solution instead of creating a temporary one.
 Publish|Boolean|5|false|True|Publish customizations after import. Default: true.
 PublisherUniqueName|String|6|false||Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
+TargetSolutionUniqueName|String|7|false||Unmanaged solution to add the table to after the import (the ribbon belongs to the table component), distinct from the temporary or exported solution.
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
@@ -26,7 +27,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-Publish] <Boolean>] [[-PublisherUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-Publish] <Boolean>] [[-PublisherUniqueName] <String>] [[-TargetSolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -37,8 +38,14 @@ $ribbonXml = Export-XrmRibbon -EntityLogicalName "account";
 Import-XrmRibbon -EntityLogicalName "account" -RibbonDiffXml $ribbonXml;
 ``` 
 
+
+```Powershell 
+# Temporary solution with the publisher of the target solution, table added to the target afterwards
+Import-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "account" -RibbonDiffXml $ribbonXml -PublisherUniqueName "contoso" -TargetSolutionUniqueName "ContosoCore";
+``` 
+
 ## More informations
 
-https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/customize-commands-ribbon
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmRibbon.md
 
 

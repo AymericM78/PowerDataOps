@@ -70,10 +70,7 @@ function Update-XrmOptionSetColors {
         };
 
         if ($PublishChanges) {
-            $publishRequest = New-XrmRequest -Name "PublishXml";
-            $publishXml = "<importexportxml><entities><entity>$EntityLogicalName</entity></entities></importexportxml>";
-            $publishRequest | Add-XrmRequestParameter -Name "ParameterXml" -Value $publishXml | Out-Null;
-            Invoke-XrmRequest -XrmClient $XrmClient -Request $publishRequest | Out-Null;
+            Publish-XrmComponent -XrmClient $XrmClient -ComponentName "entity" -ComponentId $EntityLogicalName | Out-Null;
         };
     }
     end {

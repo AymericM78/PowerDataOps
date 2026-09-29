@@ -10,7 +10,7 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|named|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 Name|String|named|true||Display name for the app.
-Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). Example: @{ 1033 = "My App"; 1036 = "Mon application" }
+Labels|Hashtable|named|true||Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and each language is set as a translation (SetLocLabels). Example: @{ 1033 = "My App"; 1036 = "Mon application" }
 LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name' from -Labels. Default: 1033.
 UniqueName|String|named|true||Unique name for the app (auto-prefixed with publisher prefix).
 Description|String|named|false||App description. Optional.
@@ -22,6 +22,7 @@ NavigationType|Int32|named|false|0|Navigation type for the app. Optional. 0 = Si
 IsDefault|Boolean|named|false|False|Whether this is the default app for the organization. Optional. Defaults to false.
 IsFeatured|Boolean|named|false|False|Whether the app is featured in the app picker. Optional. Defaults to false.
 SolutionUniqueName|String|named|false||Solution unique name to add the app to. Optional.
+Id|Guid|named|false||Id of the new app, to keep the same Id across environments. (Default: generated)
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
@@ -31,9 +32,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created appmodule record.
 ## Usage
 
 ```Powershell 
-Add-XrmAppModule [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId <Guid>] [-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured <Boolean>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-XrmAppModule [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId <Guid>] [-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured <Boolean>] [-SolutionUniqueName <String>] [-Id <Guid>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Add-XrmAppModule [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId <Guid>] [-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured <Boolean>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-XrmAppModule [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId <Guid>] [-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured <Boolean>] [-SolutionUniqueName <String>] [-Id <Guid>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -55,6 +56,6 @@ $appRef = Add-XrmAppModule -Labels @{ 1033 = "My App"; 1036 = "Mon application" 
 
 ## More informations
 
-https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModule.md
 
 

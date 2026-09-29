@@ -19,6 +19,12 @@
     When specified, uses RetrieveUnpublishedMultiple to include views in draft (unpublished) state.
     Without this switch only published views are returned.
 
+    .PARAMETER QueryType
+    View types to keep (savedquery.querytype, see the SavedQueryQueryType values): 0 public view, 1 advanced find, 2 associated (subgrid), 4 quick find, 64 lookup... (Default: all)
+
+    .PARAMETER IsDefault
+    Keep the default views only (isdefault true): with QueryType 0, the default public view of the table.
+
     .OUTPUTS
     PSCustomObject[]. Array of savedquery records (XrmObject).
 
@@ -28,6 +34,14 @@
     .EXAMPLE
     # Include unpublished drafts
     $allViews = Get-XrmViews -EntityLogicalName "account" -Unpublished;
+
+    .EXAMPLE
+    # Default public view and quick find view
+    $defaultView = Get-XrmViews -XrmClient $xrmClient -EntityLogicalName "account" -QueryType 0 -IsDefault -Columns "name", "fetchxml";
+    $quickFind = Get-XrmViews -XrmClient $xrmClient -EntityLogicalName "account" -QueryType 4 -Columns "name";
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmViews.md
 #>
 function Get-XrmViews {
     [CmdletBinding()]
@@ -50,7 +64,16 @@ function Get-XrmViews {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Unpublished
+        $Unpublished,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [int[]]
+        $QueryType,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $IsDefault
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -60,6 +83,12 @@ function Get-XrmViews {
         $queryViews = New-XrmQueryExpression -LogicalName "savedquery" -Columns $Columns;
         if ($PSBoundParameters.ContainsKey('EntityLogicalName')) {
             $queryViews = $queryViews | Add-XrmQueryCondition -Field "returnedtypecode" -Condition Equal -Values $EntityLogicalName;
+        }
+        if ($PSBoundParameters.ContainsKey('QueryType')) {
+            $queryViews = $queryViews | Add-XrmQueryCondition -Field "querytype" -Condition In -Values $QueryType;
+        }
+        if ($IsDefault) {
+            $queryViews = $queryViews | Add-XrmQueryCondition -Field "isdefault" -Condition Equal -Values $true;
         }
 
         $XrmClient | Get-XrmMultipleComponents -Query $queryViews -Unpublished:$Unpublished;

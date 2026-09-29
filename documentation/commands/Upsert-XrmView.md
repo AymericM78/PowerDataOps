@@ -19,6 +19,7 @@ LayoutXml|String|named|true||Layout XML defining column widths and order.
 QueryType|Int32|named|false|0|View query type. Default: 0 (public view).
 Description|String|named|false||View description.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the view is added to this solution.
+IsDefault|Boolean|named|false|False|Make the view the default one of its type for the table. With $true, the flag is cleared on the previous default views of the same table and type (the platform keeps it otherwise).
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
@@ -28,9 +29,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted savedquery record.
 ## Usage
 
 ```Powershell 
-Upsert-XrmView [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Name <String> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> [-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Upsert-XrmView [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Name <String> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> [-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [-IsDefault <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Upsert-XrmView [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Labels <Hashtable> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> [-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Upsert-XrmView [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Labels <Hashtable> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> [-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [-IsDefault <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -38,5 +39,14 @@ Upsert-XrmView [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <Strin
 ```Powershell 
 $ref = Upsert-XrmView -Id $viewId -EntityLogicalName "account" -Name "Active Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml -SolutionUniqueName "MySolution";
 ``` 
+
+
+```Powershell 
+$ref = Upsert-XrmView -XrmClient $xrmClient -Id $viewId -EntityLogicalName "account" -Name "My Accounts" -FetchXml $fetchXml -LayoutXml $layoutXml -IsDefault $true;
+``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmView.md
 
 

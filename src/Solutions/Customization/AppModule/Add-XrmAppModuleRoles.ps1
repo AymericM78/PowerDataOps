@@ -6,6 +6,7 @@
     Grant one or more security roles access to a model-driven app via the
     appmoduleroles_association N:N relationship. Users must belong to one of the
     assigned roles to see the app in the app picker.
+    Idempotent: the roles already assigned to the app are skipped.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -29,7 +30,7 @@
     Add-XrmAppModuleRoles -AppModuleReference $appRef -RoleReferences $roleRefs;
 
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModuleRoles.md
 #>
 function Add-XrmAppModuleRoles {
     [CmdletBinding(SupportsShouldProcess)]
@@ -53,7 +54,13 @@ function Add-XrmAppModuleRoles {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
-        $XrmClient | Join-XrmRecords -RecordReference $AppModuleReference -RecordReferences $RoleReferences -RelationShipName "appmoduleroles_association";
+        # Idempotent: the roles already assigned are skipped (associating them again is an error)
+        $assignedRoleIds = @(Get-XrmAppModuleRoles -XrmClient $XrmClient -AppModuleReference $AppModuleReference -Columns "roleid" | ForEach-Object { $_.Id });
+        $missingRoles = @($RoleReferences | Where-Object { $assignedRoleIds -notcontains $_.Id });
+        if ($missingRoles.Count -eq 0) {
+            return;
+        }
+        $XrmClient | Join-XrmRecords -RecordReference $AppModuleReference -RecordReferences $missingRoles -RelationShipName "appmoduleroles_association";
     }
     end {
         $StopWatch.Stop();

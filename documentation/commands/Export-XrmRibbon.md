@@ -6,6 +6,7 @@
 exporting the solution, extracting the customizations.xml, and parsing the RibbonDiffXml node.
 This allows reading and modifying classic ribbon customizations programmatically.
 The temporary solution uses the publisher given by PublisherUniqueName, or the organization default publisher (publisher of the Default solution). It is removed at the end, even on failure.
+For several tables, Get-XrmRibbon reads them all with one export.
 
 ## Inputs
 
@@ -40,6 +41,6 @@ $ribbonXml = Export-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "account"
 
 ## More informations
 
-https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/customize-commands-ribbon
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Export-XrmRibbon.md
 
 

@@ -15,7 +15,7 @@
     New display name. Optional.
 
     .PARAMETER Labels
-    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code). -Name takes precedence if both are provided.
+    Hashtable of language code to display name. Alternative to -Name. The stored 'name' is resolved from -LanguageCode (fallback: lowest language code), and each language is set as a translation (SetLocLabels). -Name takes precedence for the stored name if both are provided.
 
     .PARAMETER LanguageCode
     Language code used to pick the stored 'name' from -Labels. Default: 1033.
@@ -37,7 +37,7 @@
     Set-XrmAppModule -AppModuleReference $appRef -Name "Renamed App" -SolutionUniqueName "MySolution";
 
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/create-manage-model-driven-apps-using-code
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmAppModule.md
 #>
 function Set-XrmAppModule {
     [CmdletBinding(SupportsShouldProcess)]
@@ -100,6 +100,11 @@ function Set-XrmAppModule {
         }
 
         $XrmClient | Update-XrmRecord -Record $record;
+
+        # The translations are set even when -Name gives the stored name
+        if ($PSBoundParameters.ContainsKey('Labels')) {
+            Set-XrmLocalizedLabel -XrmClient $XrmClient -EntityMoniker $AppModuleReference -AttributeName "name" -Labels $Labels | Out-Null;
+        }
 
         if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
             Add-XrmSolutionComponent -XrmClient $XrmClient -SolutionUniqueName $SolutionUniqueName -ComponentId $AppModuleReference.Id -ComponentType 80 -DoNotIncludeSubcomponents $false | Out-Null;

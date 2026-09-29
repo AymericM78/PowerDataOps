@@ -19,6 +19,12 @@
     When specified, uses RetrieveUnpublishedMultiple to include apps that are in draft
     (unpublished) state. Without this switch only published apps are returned.
 
+    .PARAMETER UniqueName
+    App unique name filter. Optional.
+
+    .PARAMETER Id
+    App unique identifier filter (appmoduleid). Optional.
+
     .OUTPUTS
     PSCustomObject[]. Array of appmodule records (XrmObject).
 
@@ -30,8 +36,11 @@
     # Include unpublished drafts
     $allApps = Get-XrmAppModules -Unpublished;
 
+    .EXAMPLE
+    $app = Get-XrmAppModules -XrmClient $xrmClient -UniqueName "contoso_sales" -Unpublished -Columns "name";
+
     .LINK
-    https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest#operations
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAppModules.md
 #>
 function Get-XrmAppModules {
     [CmdletBinding()]
@@ -54,7 +63,17 @@ function Get-XrmAppModules {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Unpublished
+        $Unpublished,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $UniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [Guid]
+        $Id
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -65,6 +84,12 @@ function Get-XrmAppModules {
 
         if ($PSBoundParameters.ContainsKey('Name')) {
             $query = $query | Add-XrmQueryCondition -Field "name" -Condition Equal -Values $Name;
+        }
+        if ($PSBoundParameters.ContainsKey('UniqueName')) {
+            $query = $query | Add-XrmQueryCondition -Field "uniquename" -Condition Equal -Values $UniqueName;
+        }
+        if ($PSBoundParameters.ContainsKey('Id')) {
+            $query = $query | Add-XrmQueryCondition -Field "appmoduleid" -Condition Equal -Values $Id;
         }
 
         $XrmClient | Get-XrmMultipleComponents -Query $query -Unpublished:$Unpublished;

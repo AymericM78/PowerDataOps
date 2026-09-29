@@ -5,6 +5,7 @@
 **Assign security roles to a model-driven app.** : Grant one or more security roles access to a model-driven app via the
 appmoduleroles_association N:N relationship. Users must belong to one of the
 assigned roles to see the app in the app picker.
+Idempotent: the roles already assigned to the app are skipped.
 
 ## Inputs
 
@@ -41,6 +42,6 @@ Add-XrmAppModuleRoles -AppModuleReference $appRef -RoleReferences $roleRefs;
 
 ## More informations
 
-https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmAppModuleRoles.md
 
 

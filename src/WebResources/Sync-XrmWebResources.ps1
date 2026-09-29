@@ -106,10 +106,7 @@ function Sync-XrmWebResources {
             }            
         }
         if ($changedWebResourceIds.Count -gt 0) {
-            $publishXmlRequest = "<importexportxml><webresources>";
-            $changedWebResourceIds | ForEach-Object { $publishXmlRequest += "<webresource>$_</webresource>"; };
-            $publishXmlRequest += "</webresources></importexportxml>";
-            Publish-XrmCustomizations -XrmClient $XrmClient -ParameterXml $publishXmlRequest;
+            Publish-XrmComponent -XrmClient $XrmClient -ComponentName "webresource" -ComponentId @($changedWebResourceIds | ForEach-Object { "$_" }) | Out-Null;
         }
     }
     end {
