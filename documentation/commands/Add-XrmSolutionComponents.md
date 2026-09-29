@@ -17,6 +17,8 @@ Components|Object[]|3|true||Collection of component descriptors. Supported input
 DoNotIncludeSubcomponents|Boolean|4|false|False|Indicates whether subcomponents should be excluded, for every component. The platform accepts true only for tables (ComponentType 1). Default: true for tables, false for any other component type.
 AddRequiredComponents|Boolean|5|false|False|Indicates whether required components should be included. Default: false.
 ContinueOnError|Boolean|6|false|True|Continue processing remaining components when one component fails. Default: true.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 PSCustomObject array.
@@ -24,7 +26,7 @@ PSCustomObject array.
 ## Usage
 
 ```Powershell 
-Add-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-Components] <Object[]> [[-DoNotIncludeSubcomponents] <Boolean>] [[-AddRequiredComponents] <Boolean>] [[-ContinueOnError] <Boolean>] [<CommonParameters>]
+Add-XrmSolutionComponents [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-Components] <Object[]> [[-DoNotIncludeSubcomponents] <Boolean>] [[-AddRequiredComponents] <Boolean>] [[-ContinueOnError] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

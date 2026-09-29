@@ -19,7 +19,7 @@
     Enable-XrmPluginStep -PluginStepReference $stepRef;
 #>
 function Enable-XrmPluginStep {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (        

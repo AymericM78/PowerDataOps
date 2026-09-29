@@ -45,7 +45,7 @@
     $sitemapRef = Upsert-XrmSiteMap -Id $sitemapId -Name "Custom SiteMap" -SiteMapXml $xml -ShowHome $true -ShowPinned $true -ShowRecents $true -EnableCollapsibleGroups $false;
 #>
 function Upsert-XrmSiteMap {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

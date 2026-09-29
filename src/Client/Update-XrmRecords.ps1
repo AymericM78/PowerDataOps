@@ -61,7 +61,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmRecords.md
 #>
 function Update-XrmRecords {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([PSCustomObject])]
     param
     (

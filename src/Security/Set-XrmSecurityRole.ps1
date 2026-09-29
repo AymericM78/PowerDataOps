@@ -25,7 +25,7 @@
     Set-XrmSecurityRole -RoleReference $roleRef -Name "Updated Role Name";
 #>
 function Set-XrmSecurityRole {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

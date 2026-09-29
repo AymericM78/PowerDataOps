@@ -12,7 +12,7 @@
     Theme name to update.
 #>
 function Set-XrmThemeColor {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

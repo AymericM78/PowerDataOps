@@ -28,7 +28,7 @@
     Add-XrmManyToManyRelationship -ManyToManyRelationship $rel -IntersectEntityName "new_account_contact";
 #>
 function Add-XrmManyToManyRelationship {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

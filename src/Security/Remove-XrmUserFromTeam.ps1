@@ -22,7 +22,7 @@
     Remove-XrmUserFromTeam -XrmClient $xrmClient -TeamReference $teamRef -UserReferences @($userRef1, $userRef2);
 #>
 function Remove-XrmUserFromTeam {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (        

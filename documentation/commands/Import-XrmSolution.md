@@ -19,6 +19,8 @@ SkipProductUpdateDependencies|Boolean|8|false|True|Gets or sets whether enforcem
 StartUpgrade|Boolean|9|false|False|Start Upgrade operation immediatly after solution import. (Default : false)
 StageAndUpgrade|Boolean|10|false|False|Import solution, stage it for upgrade, and apply the upgrade in one action. (Default : false)
 PassThru|SwitchParameter|named|false|False|Return the status of the import system job (see Watch-XrmAsynchOperation). (Default: nothing is returned)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMessage of the import system job.
@@ -26,7 +28,7 @@ PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMes
 ## Usage
 
 ```Powershell 
-Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [[-StageAndUpgrade] <Boolean>] [-PassThru] [<CommonParameters>]
+Import-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-SolutionFilePath] <String> [[-PublishWorkflows] <Boolean>] [[-OverwriteUnmanagedCustomizations] <Boolean>] [[-ConvertToManaged] <Boolean>] [[-Upgrade] <Boolean>] [[-SkipProductUpdateDependencies] <Boolean>] [[-StartUpgrade] <Boolean>] [[-StageAndUpgrade] <Boolean>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

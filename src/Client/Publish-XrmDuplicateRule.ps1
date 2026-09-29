@@ -22,7 +22,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/publishduplicaterule
 #>
 function Publish-XrmDuplicateRule {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

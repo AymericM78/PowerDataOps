@@ -15,7 +15,7 @@
     Version number to set.
 #>
 function Set-XrmSolutionVersion {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

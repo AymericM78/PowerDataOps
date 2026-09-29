@@ -10,6 +10,8 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 RoleReference|EntityReference|2|true||Entity reference of the security role to delete.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -17,7 +19,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Remove-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [<CommonParameters>]
+Remove-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

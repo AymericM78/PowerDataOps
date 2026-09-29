@@ -38,7 +38,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/reference/entities/solution
 #>
 function Add-XrmSolution {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

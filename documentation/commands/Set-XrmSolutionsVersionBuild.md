@@ -14,12 +14,14 @@ BuildId|String|2|false|$env:BUILD_BUILDID|Unique ID for current build. (Default 
 Version|String|3|false|$env:VERSION|Version number format. Use variable 'Version' from associated variable group. 
 And replace 'X' by BuildId or DateTime format (like 'yyyy.MM.dd.hh' by '2021.02.28.17').
 Solutions|String|4|false|$env:SOLUTIONS|Solution uniquenames to update, use variable 'Solutions' from associated variable group.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Set-XrmSolutionsVersionBuild [[-ConnectionString] <String>] [[-BuildId] <String>] [[-Version] <String>] [[-Solutions] <String>] [<CommonParameters>]
+Set-XrmSolutionsVersionBuild [[-ConnectionString] <String>] [[-BuildId] <String>] [[-Version] <String>] [[-Solutions] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

@@ -37,7 +37,7 @@
     Set-XrmDashboard -DashboardReference $dashRef -FormXml $newXml -SolutionUniqueName "MySolution";
 #>
 function Set-XrmDashboard {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

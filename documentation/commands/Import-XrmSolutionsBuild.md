@@ -17,14 +17,14 @@ SolutionsImportUpgrade|String|5|false|$($env:SOLUTIONS_IMPORTUPGRADE)|
 ClearPluginStepsAndTypes|Boolean|6|false|True|Indicates if plugins need to be unregistered prior solution import. (Default: true)
 PluginAssemblyName|String|7|false|Plugins|Specify plugin assembly name for plugin removal operation. (Default: Plugins)
 Upgrade|Boolean|8|false|False|
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-SolutionsImportIgnore] 
-<String>] [[-SolutionsImportUpgrade] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] [[-PluginAssemblyName] <String>] [[-Upgrade] <Boolean>] 
-[<CommonParameters>]
+Import-XrmSolutionsBuild [[-ConnectionString] <String>] [[-ArtifactsPath] <String>] [[-SolutionsImportOrder] <String>] [[-SolutionsImportIgnore] <String>] [[-SolutionsImportUpgrade] <String>] [[-ClearPluginStepsAndTypes] <Boolean>] [[-PluginAssemblyName] <String>] [[-Upgrade] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

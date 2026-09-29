@@ -21,7 +21,7 @@
     Name of the backup
 #>
 function Restore-XrmInstance {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Medium")]
     param
     (
         [Parameter(Mandatory, ValueFromPipeline)]
@@ -99,6 +99,7 @@ function Restore-XrmInstance {
             $restoreRequest | Add-Member -MemberType NoteProperty -Name "TargetSecurityGroupId" -Value $TargetInstanceSecurityGroupId;
         }
 
+        if (-not $PSCmdlet.ShouldProcess($targetInstance.Id, "Overwrite environment with a backup")) { return; }
         $response = Restore-PowerAppEnvironment -EnvironmentName $targetInstance.Id -RestoreToRequestDefinition $restoreRequest -WaitUntilFinished $false;
         if ($response.Code) {
             throw "$($response.Error.code) : $($response.Error.message)";

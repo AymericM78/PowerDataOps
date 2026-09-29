@@ -16,6 +16,8 @@ ControlName|String|4|true||Full unique name of the PCF control (e.g. "MscrmContr
 Parameters|Hashtable|5|false||Hashtable of control parameters with their static values. Optional.
 Example: @{ "min" = "0"; "max" = "1000"; "step" = "1" }
 Publish|Boolean|6|false|True|Publish customizations after update. Default: true.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -23,8 +25,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Add-XrmFormControl [[-XrmClient] <ServiceClient>] [-FormReference] <EntityReference> [-FieldName] <String> [-ControlName] <String> [[-Parameters] 
-<Hashtable>] [[-Publish] <Boolean>] [<CommonParameters>]
+Add-XrmFormControl [[-XrmClient] <ServiceClient>] [-FormReference] <EntityReference> [-FieldName] <String> [-ControlName] <String> [[-Parameters] <Hashtable>] [[-Publish] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

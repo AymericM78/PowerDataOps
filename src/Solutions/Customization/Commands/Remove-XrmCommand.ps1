@@ -18,7 +18,7 @@
     Remove-XrmCommand -CommandReference $cmdRef;
 #>
 function Remove-XrmCommand {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

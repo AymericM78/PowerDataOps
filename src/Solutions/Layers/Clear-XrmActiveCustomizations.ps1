@@ -15,7 +15,7 @@
     Solution components types number to clean. (Default = 26, 59, 60, 61, 62, 300 = SavedQuery, SavedQueryVisualization, SystemForm, WebResource, SiteMap, Canvas App)
 #>
 function Clear-XrmActiveCustomizations {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

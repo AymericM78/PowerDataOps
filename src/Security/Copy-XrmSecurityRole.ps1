@@ -32,7 +32,7 @@
     $newRoleRef = Copy-XrmSecurityRole -SourceRoleReference $sourceRef -Name "Cloned Role" -BusinessUnitReference $buRef;
 #>
 function Copy-XrmSecurityRole {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

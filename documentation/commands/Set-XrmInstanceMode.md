@@ -10,12 +10,14 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 InstanceDomainName|String|1|true||Instance domain name (myinstance => myinstance.crm.dynamics1.com)
 Mode|String|2|true||Admin mode (Normal : users can access / AdminOnly : Only admins can access)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Set-XrmInstanceMode [-InstanceDomainName] <String> [-Mode] <String> [<CommonParameters>]
+Set-XrmInstanceMode [-InstanceDomainName] <String> [-Mode] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

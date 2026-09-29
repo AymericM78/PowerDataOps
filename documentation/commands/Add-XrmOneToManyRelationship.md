@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 OneToManyRelationship|OneToManyRelationshipMetadata|2|true||The OneToManyRelationshipMetadata object defining the relationship.
 Lookup|LookupAttributeMetadata|3|true||The LookupAttributeMetadata for the lookup column created on the many side.
 SolutionUniqueName|String|4|false||Solution unique name to add the relationship to.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateOneToMany response.
@@ -19,8 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateOneToMany response.
 ## Usage
 
 ```Powershell 
-Add-XrmOneToManyRelationship [[-XrmClient] <ServiceClient>] [-OneToManyRelationship] <OneToManyRelationshipMetadata> [-Lookup] <LookupAttributeMetadata> 
-[[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmOneToManyRelationship [[-XrmClient] <ServiceClient>] [-OneToManyRelationship] <OneToManyRelationshipMetadata> [-Lookup] <LookupAttributeMetadata> [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

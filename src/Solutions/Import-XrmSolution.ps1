@@ -48,7 +48,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmSolution.md
 #>
 function Import-XrmSolution {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([PSCustomObject])]
     param
     (
@@ -137,6 +137,7 @@ function Import-XrmSolution {
 
         try {            
             $importSolutionResponse = $XrmClient | Invoke-XrmRequest -Request $importSolutionRequest -Async;
+            if ($WhatIfPreference -and $null -eq $importSolutionResponse) { return; }
             $asyncOperationId = $importSolutionResponse.AsyncJobId;
 
             $importJob = $null;

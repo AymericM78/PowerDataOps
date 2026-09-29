@@ -10,6 +10,8 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 DuplicateRuleReference|EntityReference|2|true||EntityReference of the duplicaterule record to publish.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The PublishDuplicateRule response containing AsyncOperationId.
@@ -17,7 +19,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The PublishDuplicateRule response contai
 ## Usage
 
 ```Powershell 
-Publish-XrmDuplicateRule [[-XrmClient] <ServiceClient>] [-DuplicateRuleReference] <EntityReference> [<CommonParameters>]
+Publish-XrmDuplicateRule [[-XrmClient] <ServiceClient>] [-DuplicateRuleReference] <EntityReference> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -16,13 +16,14 @@ Full will update all webresources.
 Delta will only update changed webresource based on SynchronizationDeltaHours parameter.
 SynchronizationDeltaHours|Int32|5|false|4|Use this parameter with SynchronizationMode = Delta, take local files modified during last x hours. (Default : 4 hours)
 SupportedExtensions|String[]|6|false|@("*.htm", "*.html", "*.css", "*.js", "*.xml", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.xap", "*.xsl", "*.ico", "*.svg", "*.resx")|Specify file extensions to handle in synchronization process. (Default : htm, html, css, js, xml, png, jpg, jpeg, gif, xap, xsl, ico, svg, resx)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Sync-XrmWebResources [[-XrmClient] <ServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> [[-SynchronizationMode] <String>] 
-[[-SynchronizationDeltaHours] <Int32>] [[-SupportedExtensions] <String[]>] [<CommonParameters>]
+Sync-XrmWebResources [[-XrmClient] <ServiceClient>] [-FolderPath] <String> [-SolutionUniqueName] <String> [[-SynchronizationMode] <String>] [[-SynchronizationDeltaHours] <Int32>] [[-SupportedExtensions] <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

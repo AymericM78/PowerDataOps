@@ -17,6 +17,8 @@ WebResourceName|String|4|true||Name of the Dataverse SVG webresource to assign a
 SolutionUniqueName|String|5|false||Solution unique name context for the metadata update.
 PublishChanges|Boolean|6|false|True|Whether to publish the table customization after updating the icon. Default: true.
 SkipSystemTables|SwitchParameter|named|false|False|Skip a table that is not customizable (warning, nothing returned) instead of raising an error.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.Metadata.EntityMetadata. The table metadata read after the update.
@@ -24,7 +26,7 @@ Microsoft.Xrm.Sdk.Metadata.EntityMetadata. The table metadata read after the upd
 ## Usage
 
 ```Powershell 
-Set-XrmTableIcon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-EntityMetadataId] <Guid>] [-WebResourceName] <String> [[-SolutionUniqueName] <String>] [[-PublishChanges] <Boolean>] [-SkipSystemTables] [<CommonParameters>]
+Set-XrmTableIcon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-EntityMetadataId] <Guid>] [-WebResourceName] <String> [[-SolutionUniqueName] <String>] [[-PublishChanges] <Boolean>] [-SkipSystemTables] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

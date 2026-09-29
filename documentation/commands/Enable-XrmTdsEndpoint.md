@@ -9,12 +9,14 @@
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Enable-XrmTdsEndpoint [[-XrmClient] <ServiceClient>] [<CommonParameters>]
+Enable-XrmTdsEndpoint [[-XrmClient] <ServiceClient>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

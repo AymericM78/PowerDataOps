@@ -14,6 +14,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 SolutionUniqueName|String|2|true||Solution unique name to uninstall.
 PassThru|SwitchParameter|named|false|False|Return the status of the uninstall system job (see Watch-XrmAsynchOperation). (Default: nothing is returned)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMessage of the uninstall system job.
@@ -21,7 +23,7 @@ PSCustomObject. With PassThru only: Id, StatusCode, Status, Message, FriendlyMes
 ## Usage
 
 ```Powershell 
-Uninstall-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-PassThru] [<CommonParameters>]
+Uninstall-XrmSolution [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

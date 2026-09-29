@@ -43,7 +43,7 @@
     $ref = Add-XrmChart -EntityLogicalName "account" -Labels @{ 1033 = "Revenue"; 1036 = "Chiffre d'affaires" } -LanguageCode 1036 -DataDescription $dataXml -PresentationDescription $presXml;
 #>
 function Add-XrmChart {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

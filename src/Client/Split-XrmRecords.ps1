@@ -29,7 +29,7 @@
     Split-XrmRecords -Record $record -RecordReferences $contactRefs -RelationShipName "contact_customer_accounts";
 #>
 function Split-XrmRecords {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (    
@@ -64,7 +64,11 @@ function Split-XrmRecords {
         
         $recordReferenceCollection = New-XrmEntityReferenceCollection -EntityReferences @($RecordReferences);
         
-        $XrmClient.Disassociate($RecordReference.LogicalName, $RecordReference.Id, $relationShip, $recordReferenceCollection);        
+        $disassociateRequest = [Microsoft.Xrm.Sdk.Messages.DisassociateRequest]::new();
+        $disassociateRequest.Target = $RecordReference;
+        $disassociateRequest.Relationship = $relationShip;
+        $disassociateRequest.RelatedEntities = $recordReferenceCollection;
+        $XrmClient | Invoke-XrmRequest -Request $disassociateRequest | Out-Null;
     }
     end {
         $StopWatch.Stop();

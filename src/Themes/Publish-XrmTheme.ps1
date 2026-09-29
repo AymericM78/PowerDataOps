@@ -12,7 +12,7 @@
     Theme name to publish.
 #>
 function Publish-XrmTheme {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

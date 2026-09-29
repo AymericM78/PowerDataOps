@@ -48,6 +48,8 @@ IntroducedVersion|String|named|false||Solution-introduced version stamp.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the workflow is registered as a solution component (type 29).
 Roles|String[]|named|false||Array of security role unique names (currently not assigned - see TODO above).
 Activate|Boolean|named|false|True|Activate the workflow after upsert. Default: $true.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted workflow record.
@@ -55,22 +57,16 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted workflow record.
 ## Usage
 
 ```Powershell 
-Upsert-XrmBusinessProcessFlow [-XrmClient <ServiceClient>] -Id <Guid> -UniqueName <String> -PrimaryEntity <String> -Name <String> [-LanguageCode <Int32>] 
-[-Description <String>] -Xaml <String> [-Category <Int32>] [-Type <Int32>] [-Mode <Int32>] [-Scope <Int32>] [-BusinessProcessType <Int32>] [-ProcessOrder 
-<Int32>] [-RunAs <Int32>] [-IsTransacted <Boolean>] [-TriggerOnCreate <Boolean>] [-IntroducedVersion <String>] [-SolutionUniqueName <String>] [-Roles 
-<String[]>] [-Activate <Boolean>] [<CommonParameters>]
+Upsert-XrmBusinessProcessFlow [-XrmClient <ServiceClient>] -Id <Guid> -UniqueName <String> -PrimaryEntity <String> -Name <String> [-LanguageCode <Int32>] [-Description <String>] -Xaml <String> [-Category <Int32>] [-Type <Int32>] [-Mode <Int32>] [-Scope <Int32>] [-BusinessProcessType <Int32>] [-ProcessOrder <Int32>] [-RunAs <Int32>] [-IsTransacted <Boolean>] [-TriggerOnCreate <Boolean>] [-IntroducedVersion <String>] [-SolutionUniqueName <String>] [-Roles <String[]>] [-Activate <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Upsert-XrmBusinessProcessFlow [-XrmClient <ServiceClient>] -Id <Guid> -UniqueName <String> -PrimaryEntity <String> -Labels <Hashtable> [-LanguageCode 
-<Int32>] [-Description <String>] -Xaml <String> [-Category <Int32>] [-Type <Int32>] [-Mode <Int32>] [-Scope <Int32>] [-BusinessProcessType <Int32>] 
-[-ProcessOrder <Int32>] [-RunAs <Int32>] [-IsTransacted <Boolean>] [-TriggerOnCreate <Boolean>] [-IntroducedVersion <String>] [-SolutionUniqueName 
-<String>] [-Roles <String[]>] [-Activate <Boolean>] [<CommonParameters>]
+Upsert-XrmBusinessProcessFlow [-XrmClient <ServiceClient>] -Id <Guid> -UniqueName <String> -PrimaryEntity <String> -Labels <Hashtable> [-LanguageCode <Int32>] [-Description <String>] -Xaml <String> [-Category <Int32>] [-Type <Int32>] [-Mode <Int32>] [-Scope <Int32>] [-BusinessProcessType <Int32>] [-ProcessOrder <Int32>] [-RunAs <Int32>] [-IsTransacted <Boolean>] [-TriggerOnCreate <Boolean>] [-IntroducedVersion <String>] [-SolutionUniqueName <String>] [-Roles <String[]>] [-Activate <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $ref = Upsert-XrmBusinessProcessFlow -Id $processId -UniqueName "aaa_opportunitytocontractprocess" `
--PrimaryEntity "aaa_opportunity" -Labels @{ 1033 = "Opportunity to Contract"; 1036 = "Opportunite vers Contrat" } `
+    -PrimaryEntity "aaa_opportunity" -Labels @{ 1033 = "Opportunity to Contract"; 1036 = "Opportunite vers Contrat" } `
     -Description "Opportunity BPF" -Xaml $xaml -SolutionUniqueName "svcmgr_workflows";
 ``` 
 

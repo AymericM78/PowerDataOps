@@ -13,6 +13,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 SolutionUniqueName|String|2|true||Unmanaged solution unique name from which to remove the component.
 ComponentId|Guid|3|true||Component unique identifier.
 ComponentType|Int32|4|true|0|Component type number (see Get-XrmSolutionComponentName to get name from type number).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. SDK response.
@@ -20,8 +22,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. SDK response.
 ## Usage
 
 ```Powershell 
-Remove-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> 
-[<CommonParameters>]
+Remove-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

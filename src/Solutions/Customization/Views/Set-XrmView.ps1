@@ -40,7 +40,7 @@
     Set-XrmView -ViewReference $viewRef -FetchXml $newFetchXml -SolutionUniqueName "MySolution";
 #>
 function Set-XrmView {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

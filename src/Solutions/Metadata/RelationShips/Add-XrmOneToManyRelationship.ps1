@@ -32,7 +32,7 @@
     Add-XrmOneToManyRelationship -OneToManyRelationship $rel -Lookup $lookup;
 #>
 function Add-XrmOneToManyRelationship {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

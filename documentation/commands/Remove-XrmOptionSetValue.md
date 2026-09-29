@@ -14,6 +14,8 @@ EntityLogicalName|String|3|false||Table / Entity logical name. Required for loca
 AttributeLogicalName|String|4|false||Attribute logical name. Required for local option sets.
 Value|Int32|5|true|0|Integer value of the option to delete.
 SolutionUniqueName|String|6|false||Solution unique name associated with this option value.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The DeleteOptionValue response.
@@ -21,8 +23,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The DeleteOptionValue response.
 ## Usage
 
 ```Powershell 
-Remove-XrmOptionSetValue [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] 
-[-Value] <Int32> [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Remove-XrmOptionSetValue [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] [-Value] <Int32> [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

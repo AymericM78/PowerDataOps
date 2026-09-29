@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 EmailReference|EntityReference|2|true||Entity reference of the email activity record to send.
 IssueSend|Boolean|3|false|True|Whether to issue the send operation. (Default: true)
 TrackingToken|String|4|false||Optional tracking token for the email.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The SendEmail response.
@@ -19,7 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The SendEmail response.
 ## Usage
 
 ```Powershell 
-Send-XrmEmail [[-XrmClient] <ServiceClient>] [-EmailReference] <EntityReference> [[-IssueSend] <Boolean>] [[-TrackingToken] <String>] [<CommonParameters>]
+Send-XrmEmail [[-XrmClient] <ServiceClient>] [-EmailReference] <EntityReference> [[-IssueSend] <Boolean>] [[-TrackingToken] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

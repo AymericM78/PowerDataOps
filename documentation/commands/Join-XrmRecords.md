@@ -14,6 +14,8 @@ RecordReferences|EntityReference[]|3|true||Rows / Records references to link to 
 RelationShipName|String|4|true||RelationShip Logical name involve between these records.
 RelationShipRole|EntityRole|5|false|Referencing|
 IgnoreExistings|Boolean|6|false|True|Prevent exceptions if record associations already exist (error => Cannot insert duplicate key).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -21,8 +23,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Join-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> 
-[[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] <Boolean>] [<CommonParameters>]
+Join-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [[-IgnoreExistings] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

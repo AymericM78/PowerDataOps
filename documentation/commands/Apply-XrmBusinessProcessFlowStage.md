@@ -15,13 +15,14 @@ TargetStageName|String|3|true||Name of the BPF stage to apply.
 BpfEntityLogicalName|String|4|true||Logical name of the BPF entity (e.g., "leadtoopportunitysalesprocess").
 BpfLookupAttributeName|String|5|true||Logical name of the BPF lookup attribute that references the target record.
 ProcessId|Guid|6|true||Business process flow unique identifier (workflow id).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Apply-XrmBusinessProcessFlowStage [[-XrmClient] <ServiceClient>] [-TargetRecordReference] <EntityReference> [-TargetStageName] <String> 
-[-BpfEntityLogicalName] <String> [-BpfLookupAttributeName] <String> [-ProcessId] <Guid> [<CommonParameters>]
+Apply-XrmBusinessProcessFlowStage [[-XrmClient] <ServiceClient>] [-TargetRecordReference] <EntityReference> [-TargetStageName] <String> [-BpfEntityLogicalName] <String> [-BpfLookupAttributeName] <String> [-ProcessId] <Guid> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -35,7 +35,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmSettingValue.md
 #>
 function Set-XrmSettingValue {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

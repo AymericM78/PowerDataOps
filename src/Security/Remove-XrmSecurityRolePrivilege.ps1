@@ -25,7 +25,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/removeprivilegerole
 #>
 function Remove-XrmSecurityRolePrivilege {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

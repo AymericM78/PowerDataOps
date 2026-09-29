@@ -22,6 +22,8 @@ NavigationType|Int32|named|false|0|Navigation type for the app. Optional. 0 = Si
 IsDefault|Boolean|named|false|False|Whether this is the default app for the organization. Optional. Defaults to false.
 IsFeatured|Boolean|named|false|False|Whether the app is featured in the app picker. Optional. Defaults to false.
 SolutionUniqueName|String|named|false||Solution unique name to add the app to. Optional.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created appmodule record.
@@ -29,13 +31,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created appmodule record.
 ## Usage
 
 ```Powershell 
-Add-XrmAppModule [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId <Guid>] 
-[-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured 
-<Boolean>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmAppModule [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId <Guid>] [-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured <Boolean>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Add-XrmAppModule [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId 
-<Guid>] [-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured 
-<Boolean>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmAppModule [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -UniqueName <String> [-Description <String>] [-WebResourceId <Guid>] [-PublisherReference <EntityReference>] [-ClientType <Int32>] [-FormFactor <Int32>] [-NavigationType <Int32>] [-IsDefault <Boolean>] [-IsFeatured <Boolean>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

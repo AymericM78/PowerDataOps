@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 RoleReference|EntityReference|2|true||Entity reference of the security role to update.
 Name|String|3|false||New display name for the security role.
 Description|String|4|false||New description for the security role.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the updated role record.
@@ -19,7 +21,7 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the updated role record.
 ## Usage
 
 ```Powershell 
-Set-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [[-Name] <String>] [[-Description] <String>] [<CommonParameters>]
+Set-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [[-Name] <String>] [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

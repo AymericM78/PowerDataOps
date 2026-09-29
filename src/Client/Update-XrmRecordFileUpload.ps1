@@ -28,7 +28,7 @@
 #>
 function Update-XrmRecordFileUpload
 {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [Microsoft.PowerPlatform.Dataverse.Client.ServiceClient]
@@ -87,7 +87,7 @@ function Update-XrmRecordFileUpload
         $initFileBlocksUploadRequest.FileName = $fileName
         $initFileBlocksUploadRequest.Target = $Record.ToEntityReference()
 
-        $initResponse = $XrmClient.Execute($initFileBlocksUploadRequest)
+        $initResponse = $XrmClient | Invoke-XrmRequest -Request $initFileBlocksUploadRequest
         $fileContinuationToken = $initResponse.FileContinuationToken
 
         # Read file blocks until there is no more data
@@ -121,7 +121,7 @@ function Update-XrmRecordFileUpload
             }
 
             # Upload a block
-            $uploadBlockResponse = [Microsoft.Crm.Sdk.Messages.UploadBlockResponse]$XrmClient.Execute($uploadBlockRequest)
+            $uploadBlockResponse = [Microsoft.Crm.Sdk.Messages.UploadBlockResponse]($XrmClient | Invoke-XrmRequest -Request $uploadBlockRequest)
 
             $fileBlockCounter = $fileBlockCounter + 1
         }
@@ -136,7 +136,7 @@ function Update-XrmRecordFileUpload
             FileName = $fileName
             MimeType = $contentType
         }
-        $commitBlocksUploadResponse = [Microsoft.Crm.Sdk.Messages.CommitFileBlocksUploadResponse]$XrmClient.Execute($commitBlocksUploadRequest)
+        $commitBlocksUploadResponse = [Microsoft.Crm.Sdk.Messages.CommitFileBlocksUploadResponse]($XrmClient | Invoke-XrmRequest -Request $commitBlocksUploadRequest)
 
         #Write-Output "Xrm File upload complete. File name: $fileName, File size: $($fileInfo.Length), Blocks uploaded: $fileBlockCounter, FileId: $($commitBlocksUploadResponse.FileId)"
     }

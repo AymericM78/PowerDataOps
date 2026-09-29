@@ -25,7 +25,7 @@
     Share-XrmRecord -XrmClient $xrmClient -TargetReference $accountRef -PrincipalAccess $principalAccess;
 #>
 function Share-XrmRecord {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        

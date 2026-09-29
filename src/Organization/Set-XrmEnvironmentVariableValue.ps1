@@ -22,7 +22,7 @@
     Set-XrmEnvironmentVariableValue -XrmClient $xrmClient -Name "df_SynchTrackingFunctionUrl" -Value "https://myfunc.azurewebsites.net/api/execute";
 #>
 function Set-XrmEnvironmentVariableValue {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (        

@@ -18,7 +18,7 @@
     Remove-XrmChart -ChartReference $chartRef;
 #>
 function Remove-XrmChart {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

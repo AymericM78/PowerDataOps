@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 EntityLogicalName|String|2|true||Table / Entity logical name.
 EntityKeyMetadata|EntityKeyMetadata|3|true||The EntityKeyMetadata object defining the alternate key.
 SolutionUniqueName|String|4|false||Solution unique name to add the alternate key to.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntityKey response.
@@ -19,8 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntityKey response.
 ## Usage
 
 ```Powershell 
-Add-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-EntityKeyMetadata] <EntityKeyMetadata> [[-SolutionUniqueName] 
-<String>] [<CommonParameters>]
+Add-XrmAlternateKey [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-EntityKeyMetadata] <EntityKeyMetadata> [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

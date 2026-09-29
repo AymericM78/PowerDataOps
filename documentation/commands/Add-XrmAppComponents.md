@@ -15,6 +15,8 @@ Components|Object[]|3|true||Collection of components to add. Supported input sha
 - [Microsoft.Xrm.Sdk.EntityReference]
 - @{ ComponentId = <Guid>; ComponentEntityLogicalName = <string> }
 - PSCustomObject with ComponentId / ComponentEntityLogicalName (or Id / LogicalName) properties
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The AddAppComponents response.
@@ -22,14 +24,14 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The AddAppComponents response.
 ## Usage
 
 ```Powershell 
-Add-XrmAppComponents [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-Components] <Object[]> [<CommonParameters>]
+Add-XrmAppComponents [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-Components] <Object[]> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $refs = @(
-(New-XrmEntityReference -LogicalName "savedquery" -Id $viewId),
+    (New-XrmEntityReference -LogicalName "savedquery" -Id $viewId),
     (New-XrmEntityReference -LogicalName "systemform" -Id $formId)
 );
 Add-XrmAppComponents -AppModuleId $appId -Components $refs;
@@ -38,7 +40,7 @@ Add-XrmAppComponents -AppModuleId $appId -Components $refs;
 
 ```Powershell 
 $components = @(
-[pscustomobject]@{ ComponentId = $viewId; ComponentEntityLogicalName = "savedquery" },
+    [pscustomobject]@{ ComponentId = $viewId; ComponentEntityLogicalName = "savedquery" },
     [pscustomobject]@{ ComponentId = $formId; ComponentEntityLogicalName = "systemform" }
 );
 Add-XrmAppComponents -AppModuleId $appId -Components $components;

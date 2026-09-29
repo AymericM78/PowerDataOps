@@ -22,7 +22,7 @@
     Specify plugin assembly name for plugin removal operation. (Default: Plugins)
 #>
 function Import-XrmSolutionsBuild {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false)]

@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Name|String|2|true||Connection role display name.
 Category|Int32|3|false|0|Connection role category value. Optional. (e.g. 1=Business, 2=Family, 3=Social, 4=Sales, 5=Other, 1000=Stakeholder, 1001=Sales Team, 1002=Service)
 Description|String|4|false||Connection role description. Optional.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created connectionrole record.
@@ -19,7 +21,7 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created connectionrole recor
 ## Usage
 
 ```Powershell 
-Add-XrmConnectionRole [[-XrmClient] <ServiceClient>] [-Name] <String> [[-Category] <Int32>] [[-Description] <String>] [<CommonParameters>]
+Add-XrmConnectionRole [[-XrmClient] <ServiceClient>] [-Name] <String> [[-Category] <Int32>] [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

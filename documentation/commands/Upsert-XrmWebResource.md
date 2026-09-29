@@ -17,6 +17,8 @@ SolutionUniqueName|String|3|true||Microsoft Dataverse solution unique name where
 Prefix|String|4|false||Publisher customization prefix for newly created webresource. (Default: prefix of the solution publisher)
 DisplayName|String|5|false||Webresource display name. (Default: file name)
 PassThru|SwitchParameter|named|false|False|Always return an object: Id, Name, Changed (created or updated), Skipped (name without the prefix, nothing done).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Guid. The webresource id, when created or updated. With PassThru: PSCustomObject (Id, Name, Changed, Skipped).
@@ -24,7 +26,7 @@ Guid. The webresource id, when created or updated. With PassThru: PSCustomObject
 ## Usage
 
 ```Powershell 
-Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [[-DisplayName] <String>] [-PassThru] [<CommonParameters>]
+Upsert-XrmWebResource [[-XrmClient] <ServiceClient>] [-FilePath] <String> [-SolutionUniqueName] <String> [[-Prefix] <String>] [[-DisplayName] <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

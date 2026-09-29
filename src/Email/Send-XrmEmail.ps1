@@ -26,7 +26,7 @@
     Send-XrmEmail -XrmClient $xrmClient -EmailReference $emailRef;
 #>
 function Send-XrmEmail {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        

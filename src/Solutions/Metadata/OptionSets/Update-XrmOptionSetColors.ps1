@@ -26,7 +26,7 @@
     Update-XrmOptionSetColors -XrmClient $xrmClient -EntityLogicalName "account" -AttributeLogicalName "statuscode" -Colors $colors;
 #>
 function Update-XrmOptionSetColors {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

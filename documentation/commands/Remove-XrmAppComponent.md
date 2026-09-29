@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 AppModuleId|Guid|2|true||Guid of the appmodule to remove components from.
 ComponentId|Guid|3|true||Guid of the component to remove.
 ComponentEntityLogicalName|String|4|true||Entity type name of the component (e.g. savedquery, systemform, sitemap, workflow, entity).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The RemoveAppComponents response.
@@ -19,8 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The RemoveAppComponents response.
 ## Usage
 
 ```Powershell 
-Remove-XrmAppComponent [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-ComponentId] <Guid> [-ComponentEntityLogicalName] <String> 
-[<CommonParameters>]
+Remove-XrmAppComponent [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-ComponentId] <Guid> [-ComponentEntityLogicalName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

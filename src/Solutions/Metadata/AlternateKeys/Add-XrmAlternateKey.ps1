@@ -28,7 +28,7 @@
     Add-XrmAlternateKey -EntityLogicalName "account" -EntityKeyMetadata $key;
 #>
 function Add-XrmAlternateKey {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

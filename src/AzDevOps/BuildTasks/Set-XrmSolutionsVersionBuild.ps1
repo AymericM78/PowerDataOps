@@ -20,7 +20,7 @@
     Solution uniquenames to update, use variable 'Solutions' from associated variable group.
 #>
 function Set-XrmSolutionsVersionBuild {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (        
         [Parameter(Mandatory = $false)]

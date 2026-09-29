@@ -59,7 +59,7 @@
     Sync-XrmRecords -SourceXrmClient $source -TargetXrmClient $target -LogicalNames @("account") -Columns @("name");
 #>
 function Sync-XrmRecords {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([PSCustomObject[]])]
     param
     (

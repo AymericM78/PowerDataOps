@@ -39,7 +39,7 @@
     Set-XrmLocalOptionSet -EntityLogicalName "account" -AttributeLogicalName "new_priority" -Options $options -RemoveAbsentOptions;
 #>
 function Set-XrmLocalOptionSet {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.Metadata.AttributeMetadata])]
     param
     (

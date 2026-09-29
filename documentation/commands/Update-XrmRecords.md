@@ -25,6 +25,8 @@ BypassBusinessLogicExecutionStepIds|Guid[]|7|false||Ids of the plug-in steps to 
 SuppressCallbackRegistrationExpanderJob|SwitchParameter|named|false|False|Do not trigger the Power Automate flows.
 SuppressDuplicateDetection|SwitchParameter|named|false|False|Do not run the duplicate detection rules.
 Tag|String|8|false||Value shared with the plug-ins.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 PSCustomObject. One object per fault: Index, Count, RequestName, Message.
@@ -32,7 +34,7 @@ PSCustomObject. One object per fault: Index, Count, RequestName, Message.
 ## Usage
 
 ```Powershell 
-Update-XrmRecords [[-XrmClient] <ServiceClient>] [-Records] <Entity[]> [-Parallel] [[-BatchSize] <Int32>] [[-ThreadCount] <Int32>] [-ContinueOnError] [[-Label] <String>] [-Quiet] [-BypassCustomPluginExecution] [[-BypassBusinessLogicExecution] <String[]>] [[-BypassBusinessLogicExecutionStepIds] <Guid[]>] [-SuppressCallbackRegistrationExpanderJob] [-SuppressDuplicateDetection] [[-Tag] <String>] [<CommonParameters>]
+Update-XrmRecords [[-XrmClient] <ServiceClient>] [-Records] <Entity[]> [-Parallel] [[-BatchSize] <Int32>] [[-ThreadCount] <Int32>] [-ContinueOnError] [[-Label] <String>] [-Quiet] [-BypassCustomPluginExecution] [[-BypassBusinessLogicExecution] <String[]>] [[-BypassBusinessLogicExecutionStepIds] <Guid[]>] [-SuppressCallbackRegistrationExpanderJob] [-SuppressDuplicateDetection] [[-Tag] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

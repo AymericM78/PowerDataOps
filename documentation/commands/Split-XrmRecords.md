@@ -13,6 +13,8 @@ RecordReference|EntityReference|2|true||
 RecordReferences|EntityReference[]|3|true||Rows / Records references to split to Record. (EntityReference array)
 RelationShipName|String|4|true||RelationShip Logical name involve between these records.
 RelationShipRole|EntityRole|5|false|Referencing|
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -20,8 +22,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Split-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> 
-[[-RelationShipRole] {Referencing | Referenced}] [<CommonParameters>]
+Split-XrmRecords [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-RecordReferences] <EntityReference[]> [-RelationShipName] <String> [[-RelationShipRole] {Referencing | Referenced}] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

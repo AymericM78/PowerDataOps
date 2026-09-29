@@ -40,7 +40,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/insertstatusvalue
 #>
 function Add-XrmStatusValue {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

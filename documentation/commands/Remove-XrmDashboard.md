@@ -10,6 +10,8 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 DashboardReference|EntityReference|2|true||EntityReference of the systemform (dashboard) to delete.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -17,7 +19,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Remove-XrmDashboard [[-XrmClient] <ServiceClient>] [-DashboardReference] <EntityReference> [<CommonParameters>]
+Remove-XrmDashboard [[-XrmClient] <ServiceClient>] [-DashboardReference] <EntityReference> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -13,6 +13,8 @@ SourceRoleReference|EntityReference|2|true||Entity reference of the source secur
 Name|String|3|true||Display name for the new security role.
 BusinessUnitReference|EntityReference|4|false||Business unit entity reference for the new role. Defaults to root business unit if not provided.
 Description|String|5|false||Description for the new security role.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the newly created role record.
@@ -20,8 +22,7 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the newly created role record.
 ## Usage
 
 ```Powershell 
-Copy-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-SourceRoleReference] <EntityReference> [-Name] <String> [[-BusinessUnitReference] 
-<EntityReference>] [[-Description] <String>] [<CommonParameters>]
+Copy-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-SourceRoleReference] <EntityReference> [-Name] <String> [[-BusinessUnitReference] <EntityReference>] [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

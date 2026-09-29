@@ -64,7 +64,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/appmodule?view=dataverse-latest
 #>
 function Add-XrmAppModule {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

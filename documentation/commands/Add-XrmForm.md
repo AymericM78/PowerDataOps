@@ -19,6 +19,8 @@ Description|String|named|false||Form description.
 SourceReference|EntityReference|named|false||EntityReference of an existing systemform to initialize from using the InitializeFrom SDK message.
 When provided, the new form is pre-populated with values from the source form, then overridden by provided parameters.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the created form is automatically added to this solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
@@ -26,11 +28,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
 ## Usage
 
 ```Powershell 
-Add-XrmForm [-XrmClient <ServiceClient>] [-EntityLogicalName <String>] -Name <String> [-LanguageCode <Int32>] -FormXml <String> -FormType <Int32> 
-[-Description <String>] [-SourceReference <EntityReference>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmForm [-XrmClient <ServiceClient>] [-EntityLogicalName <String>] -Name <String> [-LanguageCode <Int32>] -FormXml <String> -FormType <Int32> [-Description <String>] [-SourceReference <EntityReference>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Add-XrmForm [-XrmClient <ServiceClient>] [-EntityLogicalName <String>] -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> -FormType <Int32> 
-[-Description <String>] [-SourceReference <EntityReference>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmForm [-XrmClient <ServiceClient>] [-EntityLogicalName <String>] -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> -FormType <Int32> [-Description <String>] [-SourceReference <EntityReference>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

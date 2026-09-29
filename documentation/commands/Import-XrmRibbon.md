@@ -17,6 +17,8 @@ RibbonDiffXml|Object|3|true||The RibbonDiffXml content, as a string or as an Xml
 SolutionUniqueName|String|4|false||Existing solution unique name to use for import. If provided, uses this solution instead of creating a temporary one.
 Publish|Boolean|5|false|True|Publish customizations after import. Default: true.
 PublisherUniqueName|String|6|false||Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -24,7 +26,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-Publish] <Boolean>] [[-PublisherUniqueName] <String>] [<CommonParameters>]
+Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-Publish] <Boolean>] [[-PublisherUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

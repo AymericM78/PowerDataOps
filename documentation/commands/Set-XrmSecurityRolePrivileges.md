@@ -12,6 +12,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 RoleReference|EntityReference|2|true||Entity reference of the security role.
 Privileges|RolePrivilege[]|3|true||Array of RolePrivilege objects that will replace all existing privileges. Use New-XrmRolePrivilege to create them.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The ReplacePrivilegesRole response.
@@ -19,7 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The ReplacePrivilegesRole response.
 ## Usage
 
 ```Powershell 
-Set-XrmSecurityRolePrivileges [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [-Privileges] <RolePrivilege[]> [<CommonParameters>]
+Set-XrmSecurityRolePrivileges [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [-Privileges] <RolePrivilege[]> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

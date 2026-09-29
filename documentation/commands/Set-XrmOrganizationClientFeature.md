@@ -11,12 +11,14 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|
 Name|String|2|true||Client feature name to set.
 Value|String|3|true||Client feature value to set.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Set-XrmOrganizationClientFeature [[-XrmClient] <ServiceClient>] [-Name] <String> [-Value] <String> [<CommonParameters>]
+Set-XrmOrganizationClientFeature [[-XrmClient] <ServiceClient>] [-Name] <String> [-Value] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

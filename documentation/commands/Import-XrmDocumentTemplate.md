@@ -13,6 +13,8 @@ TemplateReference|EntityReference|named|true||EntityReference of the Dataverse d
 TemplateName|String|named|true||Name of the Dataverse document template.
 AssociatedEntityLogicalName|String|named|false||Optional logical name of the entity associated with the document template. Use it to disambiguate templates with the same name.
 FilePath|String|named|true||Full path of the local file to import into the template.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. The updated document template reference.
@@ -20,10 +22,9 @@ Microsoft.Xrm.Sdk.EntityReference. The updated document template reference.
 ## Usage
 
 ```Powershell 
-Import-XrmDocumentTemplate [-XrmClient <ServiceClient>] -TemplateReference <EntityReference> -FilePath <String> [<CommonParameters>]
+Import-XrmDocumentTemplate [-XrmClient <ServiceClient>] -TemplateReference <EntityReference> -FilePath <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Import-XrmDocumentTemplate [-XrmClient <ServiceClient>] -TemplateName <String> [-AssociatedEntityLogicalName <String>] -FilePath <String> 
-[<CommonParameters>]
+Import-XrmDocumentTemplate [-XrmClient <ServiceClient>] -TemplateName <String> [-AssociatedEntityLogicalName <String>] -FilePath <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

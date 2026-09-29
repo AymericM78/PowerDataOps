@@ -14,6 +14,8 @@ FormReference|EntityReference|2|true||EntityReference of the systemform record t
 FieldName|String|3|true||Logical name of the field to remove the control from.
 ControlName|String|4|false||Full unique name of the PCF control to remove. Optional. If not specified, removes all custom controls from the field.
 Publish|Boolean|5|false|True|Publish customizations after update. Default: true.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -21,8 +23,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Remove-XrmFormControl [[-XrmClient] <ServiceClient>] [-FormReference] <EntityReference> [-FieldName] <String> [[-ControlName] <String>] [[-Publish] 
-<Boolean>] [<CommonParameters>]
+Remove-XrmFormControl [[-XrmClient] <ServiceClient>] [-FormReference] <EntityReference> [-FieldName] <String> [[-ControlName] <String>] [[-Publish] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

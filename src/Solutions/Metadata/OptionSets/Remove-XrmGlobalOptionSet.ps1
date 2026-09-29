@@ -18,7 +18,7 @@
     Remove-XrmGlobalOptionSet -Name "new_priority";
 #>
 function Remove-XrmGlobalOptionSet {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

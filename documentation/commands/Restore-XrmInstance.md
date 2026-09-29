@@ -14,13 +14,14 @@ TargetInstanceNewDisplayName|String|3|false||
 TargetInstanceSecurityGroupId|Guid|4|false||AAD Security Group ID to define on target instance to restrict users access
 RestoreTimeUtc|DateTime|5|false||Date time in UTC of restore point
 BackupLabel|String|6|false||Name of the backup
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Restore-XrmInstance [-SourceInstanceDomainName] <String> [[-TargetInstanceDomainName] <String>] [[-TargetInstanceNewDisplayName] <String>] 
-[[-TargetInstanceSecurityGroupId] <Guid>] [[-RestoreTimeUtc] <DateTime>] [[-BackupLabel] <String>] [<CommonParameters>]
+Restore-XrmInstance [-SourceInstanceDomainName] <String> [[-TargetInstanceDomainName] <String>] [[-TargetInstanceNewDisplayName] <String>] [[-TargetInstanceSecurityGroupId] <Guid>] [[-RestoreTimeUtc] <DateTime>] [[-BackupLabel] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

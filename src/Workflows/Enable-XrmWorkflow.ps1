@@ -19,7 +19,7 @@
     Enable-XrmWorkflow -WorkflowReference $wfRef;
 #>
 function Enable-XrmWorkflow {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (        

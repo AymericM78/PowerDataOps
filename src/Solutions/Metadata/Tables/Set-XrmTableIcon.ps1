@@ -41,7 +41,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmTableIcon.md
 #>
 function Set-XrmTableIcon {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.Metadata.EntityMetadata])]
     param
     (

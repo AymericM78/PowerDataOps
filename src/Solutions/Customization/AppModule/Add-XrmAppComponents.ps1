@@ -39,7 +39,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/addappcomponents
 #>
 function Add-XrmAppComponents {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

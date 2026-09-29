@@ -18,7 +18,7 @@
     Indicates if response are collected for each request execution. (Default: false = No response)
 #>
 function Invoke-XrmBulkRequest {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        

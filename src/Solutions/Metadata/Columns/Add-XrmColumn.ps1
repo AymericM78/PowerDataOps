@@ -59,7 +59,7 @@
     https://learn.microsoft.com/power-apps/developer/data-platform/define-custom-columns
 #>
 function Add-XrmColumn {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

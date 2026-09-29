@@ -44,7 +44,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Update-XrmRecord.md
 #>
 function Update-XrmRecord {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void], [Microsoft.Xrm.Sdk.Messages.UpdateRequest])]
     param
     (

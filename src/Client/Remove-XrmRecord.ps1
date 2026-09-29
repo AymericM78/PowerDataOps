@@ -49,7 +49,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Remove-XrmRecord.md
 #>
 function Remove-XrmRecord {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void], [Microsoft.Xrm.Sdk.Messages.DeleteRequest])]
     param
     (

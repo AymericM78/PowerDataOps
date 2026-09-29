@@ -53,7 +53,7 @@
     Write-Host "Bulk delete: $($status.Status)";
 #>
 function Add-XrmBulkDelete {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse], [PSCustomObject])]
     param
     (
@@ -121,6 +121,9 @@ function Add-XrmBulkDelete {
             $request | Add-XrmRequestParameter -Name "SourceImportId" -Value $SourceImportId | Out-Null;
         };
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+        if ($WhatIfPreference -and $null -eq $response) {
+            return;
+        }
         if ($Wait) {
             return ($XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $response.Results["JobId"] -TimeoutInMinutes $TimeoutInMinutes -ThrowOnFailure);
         }

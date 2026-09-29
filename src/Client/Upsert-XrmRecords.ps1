@@ -61,7 +61,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmRecords.md
 #>
 function Upsert-XrmRecords {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([PSCustomObject])]
     param
     (

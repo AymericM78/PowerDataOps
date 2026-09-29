@@ -15,7 +15,7 @@
     Copy type : MinimalCopy (schema only) / FullCopy (All)
 #>
 function Copy-XrmInstance {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Medium")]
     param
     (
         [Parameter(Mandatory, ValueFromPipeline)]
@@ -46,6 +46,7 @@ function Copy-XrmInstance {
             CopyType              = $CopyType
         }
 
+        if (-not $PSCmdlet.ShouldProcess($targetInstance.Id, "Overwrite environment with a copy")) { return; }
         $response = Copy-PowerAppEnvironment -EnvironmentName $targetInstance.Id -CopyToRequestDefinition $copyToRequest;
         if ($response.Code -eq 202) {
             $operationStatusUrl = $response.Headers["Operation-Location"];

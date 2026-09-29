@@ -12,6 +12,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 AppModuleReference|EntityReference|2|true||Reference to the appmodule record.
 RoleReferences|EntityReference[]|3|true||Array of EntityReference objects pointing to the security roles to remove.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -19,7 +21,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Remove-XrmAppModuleRoles [[-XrmClient] <ServiceClient>] [-AppModuleReference] <EntityReference> [-RoleReferences] <EntityReference[]> [<CommonParameters>]
+Remove-XrmAppModuleRoles [[-XrmClient] <ServiceClient>] [-AppModuleReference] <EntityReference> [-RoleReferences] <EntityReference[]> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

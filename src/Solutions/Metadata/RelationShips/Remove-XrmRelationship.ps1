@@ -18,7 +18,7 @@
     Remove-XrmRelationship -Name "new_account_contact";
 #>
 function Remove-XrmRelationship {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

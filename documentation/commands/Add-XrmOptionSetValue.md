@@ -19,6 +19,8 @@ Color|String|8|false||Hexadecimal color assigned to the option (e.g. "#FF0000").
 ExternalValue|String|9|false||External source value associated with the option.
 ParentValues|Int32[]|10|false||Parent values associated with the option.
 SolutionUniqueName|String|11|false||Solution unique name to associate this option value with.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The InsertOptionValue response.
@@ -26,9 +28,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The InsertOptionValue response.
 ## Usage
 
 ```Powershell 
-Add-XrmOptionSetValue [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] 
-[[-Value] <Int32>] [-Label] <Label> [[-Description] <Label>] [[-Color] <String>] [[-ExternalValue] <String>] [[-ParentValues] <Int32[]>] 
-[[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmOptionSetValue [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] [[-Value] <Int32>] [-Label] <Label> [[-Description] <Label>] [[-Color] <String>] [[-ExternalValue] <String>] [[-ParentValues] <Int32[]>] [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

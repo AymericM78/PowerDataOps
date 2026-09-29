@@ -25,7 +25,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/calculaterollupfield
 #>
 function Update-XrmRollupField {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.Entity])]
     param
     (

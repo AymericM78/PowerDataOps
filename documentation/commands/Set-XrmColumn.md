@@ -17,6 +17,8 @@ IsAuditEnabled|Boolean|6|false|False|Whether auditing is enabled on the column. 
 EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the column for interactive dashboards (sets IsGlobalFilterEnabled and IsSortableEnabled).
 DisplayNameLabels|Hashtable|7|false||Hashtable of language code to display name for multilingual labels. When provided, overrides the DisplayName set on the AttributeMetadata. Example: @{ 1033 = "Project Code"; 1036 = "Code projet" }
 DescriptionLabels|Hashtable|8|false||Hashtable of language code to description for multilingual labels. When provided, overrides the Description set on the AttributeMetadata.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
@@ -24,9 +26,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateAttribute response.
 ## Usage
 
 ```Powershell 
-Set-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] 
-[[-MergeLabels] <Boolean>] [[-IsAuditEnabled] <Boolean>] [-EnableForInteractiveExperience] [[-DisplayNameLabels] <Hashtable>] [[-DescriptionLabels] 
-<Hashtable>] [<CommonParameters>]
+Set-XrmColumn [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-Attribute] <AttributeMetadata> [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [[-IsAuditEnabled] <Boolean>] [-EnableForInteractiveExperience] [[-DisplayNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

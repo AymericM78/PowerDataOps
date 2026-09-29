@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 EntityLogicalName|String|2|true||Logical name of the entity containing the auto-number column.
 AttributeLogicalName|String|3|true||Logical name of the auto-number column.
 Value|Int64|4|true|0|The new seed value (next number to be assigned).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The SetAutoNumberSeed response.
@@ -19,7 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The SetAutoNumberSeed response.
 ## Usage
 
 ```Powershell 
-Set-XrmAutoNumberSeed [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Value] <Int64> [<CommonParameters>]
+Set-XrmAutoNumberSeed [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Value] <Int64> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

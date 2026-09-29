@@ -12,7 +12,7 @@
     Name of assembly where plugin will be removed. (Default : Plugins)
 #>
 function Remove-XrmPluginsFromAssembly {
-    [CmdletBinding()]    
+    [CmdletBinding(SupportsShouldProcess)]    
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

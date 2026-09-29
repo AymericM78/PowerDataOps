@@ -12,7 +12,7 @@
     Admin mode (Normal : users can access / AdminOnly : Only admins can access)
 #>
 function Set-XrmInstanceMode {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Low")]
     param
     (
         [Parameter(Mandatory, ValueFromPipeline)]
@@ -38,6 +38,7 @@ function Set-XrmInstanceMode {
             "AdminOnly" { $runtimeState = "AdminMode" }
         }
 
+        if (-not $PSCmdlet.ShouldProcess($instance.Id, "Set environment mode")) { return; }
         $response = Set-AdminPowerAppEnvironmentRuntimeState -EnvironmentName $instance.Id -RuntimeState $runtimeState -WaitUntilFinished $true;
     }
     end {

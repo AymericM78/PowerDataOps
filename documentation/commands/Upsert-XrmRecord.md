@@ -18,6 +18,8 @@ SuppressCallbackRegistrationExpanderJob|SwitchParameter|named|false|False|Do not
 SuppressDuplicateDetection|SwitchParameter|named|false|False|Do not run the duplicate detection rules.
 Tag|String|5|false||Value shared with the plug-ins (SharedVariables["tag"]).
 AsRequest|SwitchParameter|named|false|False|Return the UpsertRequest without sending it.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The Upsert response. With AsRequest: Microsoft.Xrm.Sdk.Messages.UpsertRequest.
@@ -25,7 +27,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The Upsert response. With AsRequest: Mic
 ## Usage
 
 ```Powershell 
-Upsert-XrmRecord [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] [[-BypassBusinessLogicExecution] <String[]>] [[-BypassBusinessLogicExecutionStepIds] <Guid[]>] [-SuppressCallbackRegistrationExpanderJob] [-SuppressDuplicateDetection] [[-Tag] <String>] [-AsRequest] [<CommonParameters>]
+Upsert-XrmRecord [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-BypassCustomPluginExecution] [[-BypassBusinessLogicExecution] <String[]>] [[-BypassBusinessLogicExecutionStepIds] <Guid[]>] [-SuppressCallbackRegistrationExpanderJob] [-SuppressDuplicateDetection] [[-Tag] <String>] [-AsRequest] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

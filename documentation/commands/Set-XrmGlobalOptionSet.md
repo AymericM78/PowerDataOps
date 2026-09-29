@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 OptionSetMetadata|OptionSetMetadataBase|2|true||The OptionSetMetadata object with updated properties.
 SolutionUniqueName|String|3|false||Solution unique name context for the update.
 MergeLabels|Boolean|4|false|True|Whether to merge labels. Default: true.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateOptionSet response.
@@ -19,8 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateOptionSet response.
 ## Usage
 
 ```Powershell 
-Set-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-OptionSetMetadata] <OptionSetMetadataBase> [[-SolutionUniqueName] <String>] [[-MergeLabels] 
-<Boolean>] [<CommonParameters>]
+Set-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-OptionSetMetadata] <OptionSetMetadataBase> [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

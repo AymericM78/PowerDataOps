@@ -13,9 +13,11 @@ EntityLogicalName|String|2|true||Logical name of the entity.
 AttributeLogicalName|String|3|false|statuscode|Logical name of the status attribute (typically "statuscode").
 Label|String|4|true||Display label for the new status value.
 StateCode|Int32|5|true|0|The state code (statecode value) this status reason belongs to (e.g. 0 = Active, 1 = Inactive).
-Value|Int32|6|false|0|Specific integer value for the new status. Optional â€” auto-assigned by the platform if not specified.
+Value|Int32|6|false|0|Specific integer value for the new status. Optional — auto-assigned by the platform if not specified.
 LanguageCode|Int32|7|false|1033|Language code for the label. Default: 1033 (English).
 SolutionUniqueName|String|8|false||Solution unique name for tracking the change. Optional.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The InsertStatusValue response containing the new value.
@@ -23,8 +25,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The InsertStatusValue response containin
 ## Usage
 
 ```Powershell 
-Add-XrmStatusValue [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-AttributeLogicalName] <String>] [-Label] <String> [-StateCode] <Int32> 
-[[-Value] <Int32>] [[-LanguageCode] <Int32>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmStatusValue [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [[-AttributeLogicalName] <String>] [-Label] <String> [-StateCode] <Int32> [[-Value] <Int32>] [[-LanguageCode] <Int32>] [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

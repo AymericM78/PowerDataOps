@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Name|String|2|true||Security role display name.
 BusinessUnitReference|EntityReference|3|false||Business unit entity reference. Defaults to root business unit if not provided.
 Description|String|4|false||Security role description.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created role record.
@@ -19,8 +21,7 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created role record.
 ## Usage
 
 ```Powershell 
-Add-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-Name] <String> [[-BusinessUnitReference] <EntityReference>] [[-Description] <String>] 
-[<CommonParameters>]
+Add-XrmSecurityRole [[-XrmClient] <ServiceClient>] [-Name] <String> [[-BusinessUnitReference] <EntityReference>] [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

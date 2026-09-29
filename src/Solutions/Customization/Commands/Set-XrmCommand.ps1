@@ -40,7 +40,7 @@
     Set-XrmCommand -CommandReference $cmdRef -ButtonLabelText "Approve Request" -SolutionUniqueName "MySolution";
 #>
 function Set-XrmCommand {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

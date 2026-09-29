@@ -18,6 +18,8 @@ ComponentName|String|2|true||XML element name of the component type to publish.
 Common values: appmodule, entity, optionset, webresource, ribbon, sitemap, workflow.
 ComponentId|String|3|true||Identifier of the component: GUID string for record-based components (appmodule,
 webresource), logical name for schema-based components (entity, optionset, ribbon).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. Response from the PublishXml request.
@@ -25,7 +27,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. Response from the PublishXml request.
 ## Usage
 
 ```Powershell 
-Publish-XrmComponent [[-XrmClient] <ServiceClient>] [-ComponentName] <String> [-ComponentId] <String> [<CommonParameters>]
+Publish-XrmComponent [[-XrmClient] <ServiceClient>] [-ComponentName] <String> [-ComponentId] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -13,6 +13,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 ParameterXml|String|2|false||Publish only the components described by this importexportxml (PublishXml message). (Default: publish all)
 TimeOutInMinutes|Int32|3|false|5|Specify timeout duration in minute. (Default : 5 min)
 Async|Boolean|4|false|True|Publish all with PublishAllXmlAsync and wait for the system job. Ignored when ParameterXml is given. (Default: true)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -20,7 +22,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Publish-XrmCustomizations [[-XrmClient] <ServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] [[-Async] <Boolean>] [<CommonParameters>]
+Publish-XrmCustomizations [[-XrmClient] <ServiceClient>] [[-ParameterXml] <String>] [[-TimeOutInMinutes] <Int32>] [[-Async] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -42,7 +42,7 @@
     $ref = Upsert-XrmChart -Id $chartId -EntityLogicalName "account" -Name "Revenue Chart" -DataDescription $dataXml -PresentationDescription $presXml -SolutionUniqueName "MySolution";
 #>
 function Upsert-XrmChart {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

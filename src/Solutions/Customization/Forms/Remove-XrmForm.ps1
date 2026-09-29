@@ -18,7 +18,7 @@
     Remove-XrmForm -FormReference $formRef;
 #>
 function Remove-XrmForm {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

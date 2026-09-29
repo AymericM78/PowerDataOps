@@ -12,12 +12,14 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Name|String|2|true||
 LabelAndLinkColor|String|3|true||
 BackgroundColor|String|4|true||
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Set-XrmThemeColor [[-XrmClient] <ServiceClient>] [-Name] <String> [-LabelAndLinkColor] <String> [-BackgroundColor] <String> [<CommonParameters>]
+Set-XrmThemeColor [[-XrmClient] <ServiceClient>] [-Name] <String> [-LabelAndLinkColor] <String> [-BackgroundColor] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

@@ -19,7 +19,7 @@
     Remove-XrmSecurityRole -RoleReference $roleRef;
 #>
 function Remove-XrmSecurityRole {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

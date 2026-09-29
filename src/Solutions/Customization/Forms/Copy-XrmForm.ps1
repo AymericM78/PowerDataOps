@@ -24,7 +24,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/copysystemform
 #>
 function Copy-XrmForm {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

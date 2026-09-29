@@ -15,7 +15,7 @@
     Unmanaged solution unique name where to get components.
 #>
 function Copy-XrmSolutionComponents {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

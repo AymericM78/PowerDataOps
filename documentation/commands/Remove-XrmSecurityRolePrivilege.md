@@ -11,6 +11,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 RoleReference|EntityReference|2|true||Entity reference of the security role.
 PrivilegeId|Guid|3|true||Unique identifier of the privilege to remove.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The RemovePrivilegeRole response.
@@ -18,7 +20,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The RemovePrivilegeRole response.
 ## Usage
 
 ```Powershell 
-Remove-XrmSecurityRolePrivilege [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [-PrivilegeId] <Guid> [<CommonParameters>]
+Remove-XrmSecurityRolePrivilege [[-XrmClient] <ServiceClient>] [-RoleReference] <EntityReference> [-PrivilegeId] <Guid> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

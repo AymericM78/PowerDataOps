@@ -10,12 +10,14 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 AssemblyName|String|2|false|Plugins|Name of assembly where plugin will be removed. (Default : Plugins)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Remove-XrmPluginsFromAssembly [[-XrmClient] <ServiceClient>] [[-AssemblyName] <String>] [<CommonParameters>]
+Remove-XrmPluginsFromAssembly [[-XrmClient] <ServiceClient>] [[-AssemblyName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

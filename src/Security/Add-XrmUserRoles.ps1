@@ -18,7 +18,7 @@
     Add-XrmUserRoles -UserId $userId -Roles @($roleId1, $roleId2);
 #>
 function Add-XrmUserRoles {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (        

@@ -53,7 +53,7 @@
     Samples: https://github.com/AymericM78/PowerDataOps/blob/main/documentation/samples/Working%20with%20data.md
 #>
 function Add-XrmRecord {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Guid], [Microsoft.Xrm.Sdk.Messages.CreateRequest])]
     param
     (

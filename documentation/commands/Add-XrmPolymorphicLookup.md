@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Lookup|LookupAttributeMetadata|2|true||The LookupAttributeMetadata defining the polymorphic lookup column.
 OneToManyRelationships|OneToManyRelationshipMetadata[]|3|true||Array of OneToManyRelationshipMetadata objects defining each target entity relationship.
 SolutionUniqueName|String|4|false||Solution unique name to add the polymorphic lookup to.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreatePolymorphicLookupAttribute response.
@@ -19,8 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreatePolymorphicLookupAttribute res
 ## Usage
 
 ```Powershell 
-Add-XrmPolymorphicLookup [[-XrmClient] <ServiceClient>] [-Lookup] <LookupAttributeMetadata> [-OneToManyRelationships] <OneToManyRelationshipMetadata[]> 
-[[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmPolymorphicLookup [[-XrmClient] <ServiceClient>] [-Lookup] <LookupAttributeMetadata> [-OneToManyRelationships] <OneToManyRelationshipMetadata[]> [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -29,7 +30,6 @@ Add-XrmPolymorphicLookup [[-XrmClient] <ServiceClient>] [-Lookup] <LookupAttribu
 $lookup = [Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata]::new();
 $lookup.SchemaName = "new_RegardingId";
 $lookup.DisplayName = New-XrmLabel -Text "Regarding";
-
 $rel1 = [Microsoft.Xrm.Sdk.Metadata.OneToManyRelationshipMetadata]::new();
 $rel1.SchemaName = "new_account_regarding";
 $rel1.ReferencedEntity = "account";

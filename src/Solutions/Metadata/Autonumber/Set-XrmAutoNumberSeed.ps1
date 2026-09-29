@@ -27,7 +27,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/create-auto-number-attributes
 #>
 function Set-XrmAutoNumberSeed {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

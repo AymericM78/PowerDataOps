@@ -51,7 +51,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Set-XrmRecordState.md
 #>
 function Set-XrmRecordState {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference], [Microsoft.Xrm.Sdk.Messages.UpdateRequest])]
     param
     (

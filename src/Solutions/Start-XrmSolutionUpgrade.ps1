@@ -12,7 +12,7 @@
     Solution unique name to upgrade.
 #>
 function Start-XrmSolutionUpgrade {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -35,6 +35,7 @@ function Start-XrmSolutionUpgrade {
         
         try {            
             $deleteAndPromoteResponse = $XrmClient | Invoke-XrmRequest -Request $deleteAndPromoteRequest -Async;
+            if ($WhatIfPreference -and $null -eq $deleteAndPromoteResponse) { return; }
             $asyncOperationId = $deleteAndPromoteResponse.AsyncJobId;
             $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -ThrowOnFailure | Out-Null;
         }

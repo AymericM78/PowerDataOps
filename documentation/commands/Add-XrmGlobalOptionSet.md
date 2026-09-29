@@ -15,6 +15,8 @@ DisplayName|Label|named|true||Global option set display label when creating from
 Options|OptionMetadata[]|named|true||Global option set options when creating from a typed option definition list.
 Description|Label|named|false||Optional global option set description label when creating from a typed option definition list.
 SolutionUniqueName|String|named|false||Solution unique name to add the global option set to.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateOptionSet response.
@@ -22,10 +24,9 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateOptionSet response.
 ## Usage
 
 ```Powershell 
-Add-XrmGlobalOptionSet [-XrmClient <ServiceClient>] -OptionSetMetadata <OptionSetMetadataBase> [-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmGlobalOptionSet [-XrmClient <ServiceClient>] -OptionSetMetadata <OptionSetMetadataBase> [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Add-XrmGlobalOptionSet [-XrmClient <ServiceClient>] -Name <String> -DisplayName <Label> -Options <OptionMetadata[]> [-Description <Label>] 
-[-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmGlobalOptionSet [-XrmClient <ServiceClient>] -Name <String> -DisplayName <Label> -Options <OptionMetadata[]> [-Description <Label>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -42,7 +43,7 @@ Add-XrmGlobalOptionSet -OptionSetMetadata $os;
 
 ```Powershell 
 $options = @(
-(New-XrmOption -Value 100000000 -Label (New-XrmLabel -Text "Low") -Color "#CDDAFD"),
+    (New-XrmOption -Value 100000000 -Label (New-XrmLabel -Text "Low") -Color "#CDDAFD"),
     (New-XrmOption -Value 100000001 -Label (New-XrmLabel -Text "High") -Color "#FCE1E4")
 );
 Add-XrmGlobalOptionSet -Name "new_priority" -DisplayName (New-XrmLabel -Text "Priority") -Options $options;

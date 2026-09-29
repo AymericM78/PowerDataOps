@@ -11,6 +11,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 RecordReference|EntityReference|2|true||EntityReference of the record to recalculate.
 FieldName|String|3|true||Logical name of the rollup field.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.Entity. The entity with the recalculated rollup field value.
@@ -18,7 +20,7 @@ Microsoft.Xrm.Sdk.Entity. The entity with the recalculated rollup field value.
 ## Usage
 
 ```Powershell 
-Update-XrmRollupField [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-FieldName] <String> [<CommonParameters>]
+Update-XrmRollupField [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-FieldName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -41,6 +41,8 @@ ContinueOnError|Boolean|10|false|True|Continue processing records when one recor
 TopCount|Int32|11|false|0|Limit source record retrieval.
 OrderByField|String|12|false||Optional order field applied to source query.
 OrderType|OrderType|13|false|Descending|Query order direction when OrderByField is provided.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 PSCustomObject array.
@@ -48,10 +50,7 @@ PSCustomObject array.
 ## Usage
 
 ```Powershell 
-Sync-XrmRecords [-SourceXrmClient] <ServiceClient> [-TargetXrmClient] <ServiceClient> [-LogicalNames] <String[]> [[-Columns] <String[]>] 
-[[-ExcludedAttributes] <String[]>] [[-IncludeEntityReferences] <Boolean>] [[-TwoPassDependencies] <Boolean>] [[-PreserveCreatedOn] <Boolean>] 
-[[-StateHandling] <String>] [-BypassCustomPluginExecution] [[-ContinueOnError] <Boolean>] [[-TopCount] <Int32>] [[-OrderByField] <String>] [[-OrderType] 
-{Ascending | Descending}] [<CommonParameters>]
+Sync-XrmRecords [-SourceXrmClient] <ServiceClient> [-TargetXrmClient] <ServiceClient> [-LogicalNames] <String[]> [[-Columns] <String[]>] [[-ExcludedAttributes] <String[]>] [[-IncludeEntityReferences] <Boolean>] [[-TwoPassDependencies] <Boolean>] [[-PreserveCreatedOn] <Boolean>] [[-StateHandling] <String>] [-BypassCustomPluginExecution] [[-ContinueOnError] <Boolean>] [[-TopCount] <Int32>] [[-OrderByField] <String>] [[-OrderType] {Ascending | Descending}] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

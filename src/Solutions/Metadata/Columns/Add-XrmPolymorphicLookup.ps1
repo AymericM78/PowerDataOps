@@ -41,7 +41,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/define-alternate-keys-entity#create-polymorphic-lookup
 #>
 function Add-XrmPolymorphicLookup {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

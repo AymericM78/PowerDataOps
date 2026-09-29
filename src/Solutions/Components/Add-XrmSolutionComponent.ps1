@@ -31,7 +31,7 @@
     Add-XrmSolutionComponent -SolutionUniqueName "MySolution" -ComponentId $tableId -ComponentType 1;
 #>
 function Add-XrmSolutionComponent {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

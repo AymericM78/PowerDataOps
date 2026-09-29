@@ -21,7 +21,7 @@
     Remove-XrmAlternateKey -EntityLogicalName "account" -LogicalName "new_accountcode";
 #>
 function Remove-XrmAlternateKey {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

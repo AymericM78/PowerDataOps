@@ -30,7 +30,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/usage.md
 #>
 function Import-XrmDocumentTemplate {
-    [CmdletBinding(DefaultParameterSetName = 'ByReference')]
+    [CmdletBinding(DefaultParameterSetName = 'ByReference', SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

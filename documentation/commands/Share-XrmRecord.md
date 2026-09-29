@@ -11,6 +11,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 TargetReference|EntityReference|2|true||Target record entity reference to share.
 PrincipalAccess|PrincipalAccess|3|true||PrincipalAccess object created via New-XrmPrincipalAccess.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The GrantAccess response.
@@ -18,7 +20,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The GrantAccess response.
 ## Usage
 
 ```Powershell 
-Share-XrmRecord [[-XrmClient] <ServiceClient>] [-TargetReference] <EntityReference> [-PrincipalAccess] <PrincipalAccess> [<CommonParameters>]
+Share-XrmRecord [[-XrmClient] <ServiceClient>] [-TargetReference] <EntityReference> [-PrincipalAccess] <PrincipalAccess> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

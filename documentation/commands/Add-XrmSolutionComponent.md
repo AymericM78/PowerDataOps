@@ -15,6 +15,8 @@ ComponentId|Guid|3|true||Component unique identifier.
 ComponentType|Int32|4|true|0|Component type number (see Get-XrmSolutionComponentName to get name from type number).
 DoNotIncludeSubcomponents|Boolean|5|false|False|Indicates whether the subcomponents should be excluded. The platform accepts true only for tables (ComponentType 1). (Default : true for a table, false for any other component type)
 AddRequiredComponents|Boolean|6|false|False|Gets or sets a value that indicates whether other solution components that are required by the solution component that you are adding should also be added to the unmanaged solution. Required. (Default : false = do not add required components)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The AddSolutionComponent response.
@@ -22,7 +24,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The AddSolutionComponent response.
 ## Usage
 
 ```Powershell 
-Add-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> [[-DoNotIncludeSubcomponents] <Boolean>] [[-AddRequiredComponents] <Boolean>] [<CommonParameters>]
+Add-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> [[-DoNotIncludeSubcomponents] <Boolean>] [[-AddRequiredComponents] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

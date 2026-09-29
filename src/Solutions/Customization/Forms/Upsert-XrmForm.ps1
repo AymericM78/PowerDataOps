@@ -42,7 +42,7 @@
     $ref = Upsert-XrmForm -Id $formId -EntityLogicalName "account" -Name "Custom Main Form" -FormXml $xml -FormType 2 -SolutionUniqueName "MySolution";
 #>
 function Upsert-XrmForm {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

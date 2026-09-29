@@ -18,7 +18,7 @@
     Remove-XrmDashboard -DashboardReference $dashRef;
 #>
 function Remove-XrmDashboard {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

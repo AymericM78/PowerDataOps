@@ -20,6 +20,8 @@ SuppressCallbackRegistrationExpanderJob|SwitchParameter|named|false|False|Do not
 SuppressDuplicateDetection|SwitchParameter|named|false|False|Do not run the duplicate detection rules.
 Tag|String|7|false||Value shared with the plug-ins (SharedVariables["tag"]).
 AsRequest|SwitchParameter|named|false|False|Return the UpdateRequest without sending it.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. The record reference. With AsRequest: Microsoft.Xrm.Sdk.Messages.UpdateRequest.
@@ -27,7 +29,7 @@ Microsoft.Xrm.Sdk.EntityReference. The record reference. With AsRequest: Microso
 ## Usage
 
 ```Powershell 
-Set-XrmRecordState [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-StateCode] <Int32> [-StatusCode] <Int32> [-BypassCustomPluginExecution] [[-BypassBusinessLogicExecution] <String[]>] [[-BypassBusinessLogicExecutionStepIds] <Guid[]>] [-SuppressCallbackRegistrationExpanderJob] [-SuppressDuplicateDetection] [[-Tag] <String>] [-AsRequest] [<CommonParameters>]
+Set-XrmRecordState [[-XrmClient] <ServiceClient>] [-RecordReference] <EntityReference> [-StateCode] <Int32> [-StatusCode] <Int32> [-BypassCustomPluginExecution] [[-BypassBusinessLogicExecution] <String[]>] [[-BypassBusinessLogicExecutionStepIds] <Guid[]>] [-SuppressCallbackRegistrationExpanderJob] [-SuppressDuplicateDetection] [[-Tag] <String>] [-AsRequest] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

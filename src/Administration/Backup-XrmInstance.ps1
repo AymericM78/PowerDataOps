@@ -15,7 +15,7 @@
     Backup description
 #>
 function Backup-XrmInstance {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Low")]
     param
     (
         [Parameter(Mandatory, ValueFromPipeline)]
@@ -42,6 +42,7 @@ function Backup-XrmInstance {
             Notes = $BackupDescription
         }
 
+        if (-not $PSCmdlet.ShouldProcess($instance.Id, "Back up environment")) { return; }
         Backup-PowerAppEnvironment -EnvironmentName $instance.Id -BackupRequestDefinition $backupRequest;
     }
     end {

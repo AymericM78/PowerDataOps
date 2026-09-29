@@ -46,7 +46,7 @@
     $ref = Add-XrmView -EntityLogicalName "account" -Labels @{ 1033 = "Active accounts"; 1036 = "Comptes actifs" } -LanguageCode 1036 -FetchXml $fetchXml -LayoutXml $layoutXml;
 #>
 function Add-XrmView {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

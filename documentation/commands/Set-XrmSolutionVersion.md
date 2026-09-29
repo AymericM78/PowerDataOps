@@ -11,12 +11,14 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 SolutionUniqueName|String|2|true||Solution unique name to update.
 Version|String|3|true||Version number to set.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Set-XrmSolutionVersion [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-Version] <String> [<CommonParameters>]
+Set-XrmSolutionVersion [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-Version] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

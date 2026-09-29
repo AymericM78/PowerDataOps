@@ -13,6 +13,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 SolutionComponentName|String|2|true||Solution component type name, as returned by Get-XrmSolutionComponentName (e.g. "SavedQuery", "SystemForm", "WebResource").
 ComponentId|Guid|3|true||Solution component unique identifier to clean.
 IgnoreMissing|SwitchParameter|named|false|False|Do not raise an error when the component or its active layer cannot be found.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The RemoveActiveCustomizations response ($null when ignored).
@@ -20,7 +22,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The RemoveActiveCustomizations response 
 ## Usage
 
 ```Powershell 
-Remove-XrmActiveCustomizations [[-XrmClient] <ServiceClient>] [-SolutionComponentName] <String> [-ComponentId] <Guid> [-IgnoreMissing] [<CommonParameters>]
+Remove-XrmActiveCustomizations [[-XrmClient] <ServiceClient>] [-SolutionComponentName] <String> [-ComponentId] <Guid> [-IgnoreMissing] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

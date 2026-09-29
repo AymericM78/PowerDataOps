@@ -15,7 +15,7 @@
     Setting value to define.
 #>
 function Set-XrmOrganizationDbSetting {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

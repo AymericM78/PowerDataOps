@@ -30,7 +30,7 @@
     Apply-XrmBusinessProcessFlowStage -XrmClient $xrmClient -TargetRecordReference $caseRef -TargetStageName "Qualify" -BpfEntityLogicalName "df_casebpf" -BpfLookupAttributeName "bpf_df_caseid" -ProcessId $processId;
 #>
 function Apply-XrmBusinessProcessFlowStage {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

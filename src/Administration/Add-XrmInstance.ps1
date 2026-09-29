@@ -24,7 +24,7 @@
     Language name LCID (English = 1033, French = 1036, ...)
 #>
 function Add-XrmInstance {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Low")]
     param
     (
         [Parameter(Mandatory)]
@@ -61,6 +61,7 @@ function Add-XrmInstance {
         Assert-XrmAdminConnected;
     }    
     process {    
+        if (-not $PSCmdlet.ShouldProcess($InstanceDisplayName, "Create environment")) { return; }
         $response = New-AdminPowerAppEnvironment -DisplayName $InstanceDisplayName -DomainName $InstanceDomainName -Location $Location -EnvironmentSku $Sku -CurrencyName $CurrencyCodeName -LanguageName $LanguageName -ProvisionDatabase -WaitUntilFinished $true;
         if ($response.Code) {
             throw "$($response.Error.code) : $($response.Error.message)";

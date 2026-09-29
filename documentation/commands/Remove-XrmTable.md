@@ -10,6 +10,8 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 LogicalName|String|2|true||Table / Entity logical name to delete.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The DeleteEntity response.
@@ -17,7 +19,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The DeleteEntity response.
 ## Usage
 
 ```Powershell 
-Remove-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [<CommonParameters>]
+Remove-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

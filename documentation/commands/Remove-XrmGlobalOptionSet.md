@@ -10,6 +10,8 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 Name|String|2|true||Global option set name to delete.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The DeleteOptionSet response.
@@ -17,7 +19,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The DeleteOptionSet response.
 ## Usage
 
 ```Powershell 
-Remove-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-Name] <String> [<CommonParameters>]
+Remove-XrmGlobalOptionSet [[-XrmClient] <ServiceClient>] [-Name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

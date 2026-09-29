@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 AppModuleId|Guid|2|true||Guid of the appmodule to add components to.
 ComponentId|Guid|3|true||Guid of the component to add.
 ComponentEntityLogicalName|String|4|true||Entity type name of the component (e.g. savedquery, systemform, sitemap, workflow, entity).
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The AddAppComponents response.
@@ -19,7 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The AddAppComponents response.
 ## Usage
 
 ```Powershell 
-Add-XrmAppComponent [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-ComponentId] <Guid> [-ComponentEntityLogicalName] <String> [<CommonParameters>]
+Add-XrmAppComponent [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-ComponentId] <Guid> [-ComponentEntityLogicalName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

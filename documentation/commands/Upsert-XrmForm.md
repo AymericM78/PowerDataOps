@@ -18,6 +18,8 @@ FormXml|String|named|true||Form XML definition.
 FormType|Int32|named|true|0|Form type (0=Dashboard, 2=Main, 5=Mobile, 6=QuickCreate, 7=QuickView).
 Description|String|named|false||Form description.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the form is added to this solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted systemform record.
@@ -25,11 +27,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted systemform record.
 ## Usage
 
 ```Powershell 
-Upsert-XrmForm [-XrmClient <ServiceClient>] -Id <Guid> [-EntityLogicalName <String>] -Name <String> [-LanguageCode <Int32>] -FormXml <String> -FormType 
-<Int32> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Upsert-XrmForm [-XrmClient <ServiceClient>] -Id <Guid> [-EntityLogicalName <String>] -Name <String> [-LanguageCode <Int32>] -FormXml <String> -FormType <Int32> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Upsert-XrmForm [-XrmClient <ServiceClient>] -Id <Guid> [-EntityLogicalName <String>] -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> 
--FormType <Int32> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Upsert-XrmForm [-XrmClient <ServiceClient>] -Id <Guid> [-EntityLogicalName <String>] -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> -FormType <Int32> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -18,7 +18,7 @@
     Remove-XrmTable -LogicalName "new_project";
 #>
 function Remove-XrmTable {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

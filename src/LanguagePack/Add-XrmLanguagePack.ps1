@@ -12,7 +12,7 @@
     Language name LCID (English = 1033, French = 1036, ...)
 #>
 function Add-XrmLanguagePack {
-    [CmdletBinding()]    
+    [CmdletBinding(SupportsShouldProcess)]    
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

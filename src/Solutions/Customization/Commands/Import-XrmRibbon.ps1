@@ -38,7 +38,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/customize-commands-ribbon
 #>
 function Import-XrmRibbon {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

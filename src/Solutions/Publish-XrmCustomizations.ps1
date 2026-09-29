@@ -31,7 +31,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Publish-XrmCustomizations.md
 #>
 function Publish-XrmCustomizations {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (
@@ -70,6 +70,7 @@ function Publish-XrmCustomizations {
         }
         
         $response = $XrmClient | Invoke-XrmRequest -Request $publishRequest;
+        if ($WhatIfPreference -and $null -eq $response) { return; }
 
         if ($Async -and -not $ParameterXml) {
             $asyncOperationId = $response.Results["AsyncOperationId"];

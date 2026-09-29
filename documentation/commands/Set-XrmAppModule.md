@@ -16,6 +16,8 @@ LanguageCode|Int32|5|false|1033|Language code used to pick the stored 'name' fro
 Description|String|6|false||New description. Optional.
 WebResourceId|Guid|7|false||New web resource icon Id. Optional.
 SolutionUniqueName|String|8|false||Unmanaged solution unique name. When provided, the updated app is automatically added to this solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -23,8 +25,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Set-XrmAppModule [[-XrmClient] <ServiceClient>] [-AppModuleReference] <EntityReference> [[-Name] <String>] [[-Labels] <Hashtable>] [[-LanguageCode] 
-<Int32>] [[-Description] <String>] [[-WebResourceId] <Guid>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Set-XrmAppModule [[-XrmClient] <ServiceClient>] [-AppModuleReference] <EntityReference> [[-Name] <String>] [[-Labels] <Hashtable>] [[-LanguageCode] <Int32>] [[-Description] <String>] [[-WebResourceId] <Guid>] [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

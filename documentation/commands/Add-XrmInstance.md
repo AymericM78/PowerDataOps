@@ -14,13 +14,14 @@ Location|String|3|true||DataCenter region (France, EMEA, UK, ...)
 Sku|String|4|true||Instance type (sandbox or production)
 CurrencyCodeName|String|5|true||Name of currency (EUR, ...)
 LanguageName|String|6|true||Language name LCID (English = 1033, French = 1036, ...)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Add-XrmInstance [-InstanceDisplayName] <String> [-InstanceDomainName] <String> [-Location] <String> [-Sku] <String> [-CurrencyCodeName] <String> 
-[-LanguageName] <String> [<CommonParameters>]
+Add-XrmInstance [-InstanceDisplayName] <String> [-InstanceDomainName] <String> [-Location] <String> [-Sku] <String> [-CurrencyCodeName] <String> [-LanguageName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

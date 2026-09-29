@@ -19,7 +19,7 @@
     Disable-XrmPluginStep -PluginStepReference $stepRef;
 #>
 function Disable-XrmPluginStep {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (        

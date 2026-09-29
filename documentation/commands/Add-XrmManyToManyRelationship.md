@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 ManyToManyRelationship|ManyToManyRelationshipMetadata|2|true||The ManyToManyRelationshipMetadata object defining the relationship.
 IntersectEntityName|String|3|true||Schema name of the intersect entity (sent as CreateManyToManyRequest.IntersectEntitySchemaName). Alias: IntersectEntitySchemaName.
 SolutionUniqueName|String|4|false||Solution unique name to add the relationship to.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateManyToMany response.
@@ -19,7 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateManyToMany response.
 ## Usage
 
 ```Powershell 
-Add-XrmManyToManyRelationship [[-XrmClient] <ServiceClient>] [-ManyToManyRelationship] <ManyToManyRelationshipMetadata> [-IntersectEntityName] <String> [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Add-XrmManyToManyRelationship [[-XrmClient] <ServiceClient>] [-ManyToManyRelationship] <ManyToManyRelationshipMetadata> [-IntersectEntityName] <String> [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

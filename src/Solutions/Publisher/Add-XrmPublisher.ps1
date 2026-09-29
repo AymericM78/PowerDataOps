@@ -33,7 +33,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/reference/entities/publisher
 #>
 function Add-XrmPublisher {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

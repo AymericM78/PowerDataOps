@@ -29,7 +29,7 @@
     Join-XrmRecords -Record $record -RecordReferences $contactRefs -RelationShipName "contact_customer_accounts";
 #>
 function Join-XrmRecords {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (    
@@ -69,7 +69,11 @@ function Join-XrmRecords {
         $recordReferenceCollection = New-XrmEntityReferenceCollection -EntityReferences @($RecordReferences);
 
         try {
-            $XrmClient.Associate($RecordReference.LogicalName, $RecordReference.Id, $relationShip, $recordReferenceCollection);
+            $associateRequest = [Microsoft.Xrm.Sdk.Messages.AssociateRequest]::new();
+            $associateRequest.Target = $RecordReference;
+            $associateRequest.Relationship = $relationShip;
+            $associateRequest.RelatedEntities = $recordReferenceCollection;
+            $XrmClient | Invoke-XrmRequest -Request $associateRequest | Out-Null;
         }
         catch {
             if ($IgnoreExistings -and $_.Exception.Message.Contains("Cannot insert duplicate key")) {

@@ -20,6 +20,8 @@ ExternalValue|String|9|false||New external source value associated with the opti
 ParentValues|Int32[]|10|false||New parent values associated with the option.
 MergeLabels|Boolean|11|false|True|Whether to keep text defined for languages not included in the Label. Default: true.
 SolutionUniqueName|String|12|false||Solution unique name to associate this update with.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateOptionValue response.
@@ -27,9 +29,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateOptionValue response.
 ## Usage
 
 ```Powershell 
-Set-XrmOptionSetValue [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] 
-[-Value] <Int32> [[-Label] <Label>] [[-Description] <Label>] [[-Color] <String>] [[-ExternalValue] <String>] [[-ParentValues] <Int32[]>] [[-MergeLabels] 
-<Boolean>] [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Set-XrmOptionSetValue [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] [-Value] <Int32> [[-Label] <Label>] [[-Description] <Label>] [[-Color] <String>] [[-ExternalValue] <String>] [[-ParentValues] <Int32[]>] [[-MergeLabels] <Boolean>] [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

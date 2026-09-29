@@ -42,7 +42,7 @@
     Set-XrmGlobalOptionSetOptions -Name "new_priority" -Options $options -RemoveAbsentOptions;
 #>
 function Set-XrmGlobalOptionSetOptions {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.Metadata.OptionSetMetadataBase])]
     param
     (

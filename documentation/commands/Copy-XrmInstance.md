@@ -11,12 +11,14 @@ Name|Type|Position|Required|Default|Description
 SourceInstanceDomainName|String|1|true||Instance domain name (myinstance => myinstance.crm.dynamics1.com) that you want to copy
 TargetInstanceDomainName|String|2|true||Instance domain name (myinstance => myinstance.crm.dynamics1.com) that you want to overwrite
 CopyType|String|3|true||Copy type : MinimalCopy (schema only) / FullCopy (All)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Copy-XrmInstance [-SourceInstanceDomainName] <String> [-TargetInstanceDomainName] <String> [-CopyType] <String> [<CommonParameters>]
+Copy-XrmInstance [-SourceInstanceDomainName] <String> [-TargetInstanceDomainName] <String> [-CopyType] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 

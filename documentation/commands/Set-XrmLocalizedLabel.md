@@ -12,6 +12,8 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 EntityMoniker|EntityReference|2|true||EntityReference identifying the metadata component (e.g. EntityReference to an AttributeMetadata, EntityMetadata, etc.).
 AttributeName|String|3|true||The attribute within the metadata component to set the label for (e.g. "DisplayName", "Description").
 Labels|Hashtable|4|true||Hashtable of language code to label text. Example: @{ 1033 = "Account"; 1036 = "Compte" }
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The SetLocLabels response.
@@ -19,8 +21,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The SetLocLabels response.
 ## Usage
 
 ```Powershell 
-Set-XrmLocalizedLabel [[-XrmClient] <ServiceClient>] [-EntityMoniker] <EntityReference> [-AttributeName] <String> [-Labels] <Hashtable> 
-[<CommonParameters>]
+Set-XrmLocalizedLabel [[-XrmClient] <ServiceClient>] [-EntityMoniker] <EntityReference> [-AttributeName] <String> [-Labels] <Hashtable> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

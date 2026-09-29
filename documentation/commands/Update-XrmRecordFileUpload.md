@@ -12,13 +12,14 @@ XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to t
 Record|Entity|2|true||Record (row) to update.
 FileAttributeLogicalName|String|3|true||Entity file attribute name.
 FilePath|String|4|true||Path to file on the OS file system.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Update-XrmRecordFileUpload [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-FileAttributeLogicalName] <String> [-FilePath] <String> 
-[<CommonParameters>]
+Update-XrmRecordFileUpload [[-XrmClient] <ServiceClient>] [-Record] <Entity> [-FileAttributeLogicalName] <String> [-FilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

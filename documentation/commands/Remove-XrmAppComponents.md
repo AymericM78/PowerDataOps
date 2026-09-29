@@ -15,6 +15,8 @@ Components|Object[]|3|true||Collection of components to remove. Supported input 
 - [Microsoft.Xrm.Sdk.EntityReference]
 - @{ ComponentId = <Guid>; ComponentEntityLogicalName = <string> }
 - PSCustomObject with ComponentId / ComponentEntityLogicalName (or Id / LogicalName) properties
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The RemoveAppComponents response.
@@ -22,14 +24,14 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The RemoveAppComponents response.
 ## Usage
 
 ```Powershell 
-Remove-XrmAppComponents [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-Components] <Object[]> [<CommonParameters>]
+Remove-XrmAppComponents [[-XrmClient] <ServiceClient>] [-AppModuleId] <Guid> [-Components] <Object[]> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
 
 ```Powershell 
 $refs = @(
-(New-XrmEntityReference -LogicalName "savedquery" -Id $viewId),
+    (New-XrmEntityReference -LogicalName "savedquery" -Id $viewId),
     (New-XrmEntityReference -LogicalName "systemform" -Id $formId)
 );
 Remove-XrmAppComponents -AppModuleId $appId -Components $refs;

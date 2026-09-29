@@ -18,6 +18,8 @@ ShowHome|Boolean|7|false|False|Whether the Home button is shown in the navigatio
 ShowPinned|Boolean|8|false|False|Whether the Pinned items section is shown in the navigation bar. Maps to the showpinned attribute.
 ShowRecents|Boolean|9|false|False|Whether the Recent items section is shown in the navigation bar. Maps to the showrecents attribute.
 UniqueName|String|10|false||Unique name (sitemapnameunique): letters and digits only, 40 characters at most. (Default: Name without accents and without any other character than letters and digits, cut to 40)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted sitemap record.
@@ -25,7 +27,7 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted sitemap record.
 ## Usage
 
 ```Powershell 
-Upsert-XrmSiteMap [[-XrmClient] <ServiceClient>] [-Id] <Guid> [-Name] <String> [-SiteMapXml] <String> [[-SolutionUniqueName] <String>] [[-EnableCollapsibleGroups] <Boolean>] [[-ShowHome] <Boolean>] [[-ShowPinned] <Boolean>] [[-ShowRecents] <Boolean>] [[-UniqueName] <String>] [<CommonParameters>]
+Upsert-XrmSiteMap [[-XrmClient] <ServiceClient>] [-Id] <Guid> [-Name] <String> [-SiteMapXml] <String> [[-SolutionUniqueName] <String>] [[-EnableCollapsibleGroups] <Boolean>] [[-ShowHome] <Boolean>] [[-ShowPinned] <Boolean>] [[-ShowRecents] <Boolean>] [[-UniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

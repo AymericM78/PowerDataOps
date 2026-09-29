@@ -11,6 +11,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 WorkflowReference|EntityReference|2|true||EntityReference of the workflow to execute.
 RecordReference|EntityReference|3|true||EntityReference of the target record to run the workflow against.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The ExecuteWorkflow response containing AsyncOperationId.
@@ -18,7 +20,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The ExecuteWorkflow response containing 
 ## Usage
 
 ```Powershell 
-Invoke-XrmWorkflow [[-XrmClient] <ServiceClient>] [-WorkflowReference] <EntityReference> [-RecordReference] <EntityReference> [<CommonParameters>]
+Invoke-XrmWorkflow [[-XrmClient] <ServiceClient>] [-WorkflowReference] <EntityReference> [-RecordReference] <EntityReference> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

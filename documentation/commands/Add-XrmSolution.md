@@ -14,6 +14,8 @@ DisplayName|String|3|true||Solution display name (friendly name).
 PublisherReference|EntityReference|4|true||EntityReference to the publisher record that owns this solution.
 Version|String|5|false|1.0.0.0|Solution version string (e.g., "1.0.0.0"). Default: "1.0.0.0".
 Description|String|6|false||Optional description for the solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Created solution reference.
@@ -21,8 +23,7 @@ Microsoft.Xrm.Sdk.EntityReference. Created solution reference.
 ## Usage
 
 ```Powershell 
-Add-XrmSolution [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-PublisherReference] <EntityReference> [[-Version] 
-<String>] [[-Description] <String>] [<CommonParameters>]
+Add-XrmSolution [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-PublisherReference] <EntityReference> [[-Version] <String>] [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

@@ -37,7 +37,7 @@
     Add-XrmSolutionComponents -SolutionUniqueName "MySolution" -Components $components;
 #>
 function Add-XrmSolutionComponents {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([PSCustomObject[]])]
     param
     (

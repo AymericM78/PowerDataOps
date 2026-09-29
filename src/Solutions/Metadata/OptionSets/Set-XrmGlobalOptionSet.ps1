@@ -26,7 +26,7 @@
     Set-XrmGlobalOptionSet -OptionSetMetadata $os;
 #>
 function Set-XrmGlobalOptionSet {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

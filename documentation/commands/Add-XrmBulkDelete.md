@@ -19,6 +19,8 @@ StartDateTime|DateTime|8|false|[datetime]::UtcNow|UTC date/time at which the bul
 SourceImportId|Guid|9|false|[Guid]::Empty|Optional source import unique identifier to scope the deletion.
 Wait|SwitchParameter|named|false|False|Wait for the bulk delete system job and return its status (see Watch-XrmAsynchOperation); a failed or canceled job raises an error.
 TimeoutInMinutes|Int32|10|false|60|Maximum time to wait with Wait. (Default: 60)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. BulkDelete response containing JobId. With Wait: PSCustomObject (Id, StatusCode, Status, Message, FriendlyMessage) of the job.
@@ -26,7 +28,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. BulkDelete response containing JobId. Wi
 ## Usage
 
 ```Powershell 
-Add-XrmBulkDelete [[-XrmClient] <ServiceClient>] [-Query] <QueryExpression[]> [[-JobName] <String>] [[-SendEmailNotification] <Boolean>] [[-ToRecipients] <Guid[]>] [[-CCRecipients] <Guid[]>] [[-RecurrencePattern] <String>] [[-StartDateTime] <DateTime>] [[-SourceImportId] <Guid>] [-Wait] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
+Add-XrmBulkDelete [[-XrmClient] <ServiceClient>] [-Query] <QueryExpression[]> [[-JobName] <String>] [[-SendEmailNotification] <Boolean>] [[-ToRecipients] <Guid[]>] [[-CCRecipients] <Guid[]>] [[-RecurrencePattern] <String>] [[-StartDateTime] <DateTime>] [[-SourceImportId] <Guid>] [-Wait] [[-TimeoutInMinutes] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

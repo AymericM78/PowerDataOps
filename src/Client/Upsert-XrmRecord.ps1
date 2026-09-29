@@ -47,7 +47,7 @@
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmRecord.md
 #>
 function Upsert-XrmRecord {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse], [Microsoft.Xrm.Sdk.Messages.UpsertRequest])]
     param
     (

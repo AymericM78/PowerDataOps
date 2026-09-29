@@ -12,7 +12,7 @@
     Client feature value to set.
 #>
 function Set-XrmOrganizationClientFeature {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

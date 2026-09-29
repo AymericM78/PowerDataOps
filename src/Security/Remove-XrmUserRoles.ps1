@@ -18,7 +18,7 @@
     Remove-XrmUserRoles -UserId $userId -Roles @($roleId1, $roleId2);
 #>
 function Remove-XrmUserRoles {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (        

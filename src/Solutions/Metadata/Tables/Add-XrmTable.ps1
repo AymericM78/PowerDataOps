@@ -75,7 +75,7 @@
     $response = Add-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" } -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayNameLabels @{ 1033 = "Name"; 1036 = "Nom" };
 #>
 function Add-XrmTable {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

@@ -28,7 +28,7 @@
     $roleRef = Add-XrmSecurityRole -Name "Custom Role" -BusinessUnitReference $buRef -Description "Custom role for testing";
 #>
 function Add-XrmSecurityRole {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

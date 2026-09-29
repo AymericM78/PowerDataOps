@@ -61,7 +61,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/send-parallel-requests
 #>
 function Invoke-XrmParallelRequests {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([PSCustomObject])]
     param
     (
@@ -130,6 +130,12 @@ function Invoke-XrmParallelRequests {
     }
     process {
         if (-not $Requests -or $Requests.Count -eq 0) {
+            return;
+        }
+
+        # The workers call the SDK directly (not Invoke-XrmRequest): ShouldProcess is asked once for the whole set
+        $hasWrites = @($Requests | Where-Object { -not (Test-XrmReadOnlyRequestInternal -Request $_) }).Count -gt 0;
+        if ($hasWrites -and -not $PSCmdlet.ShouldProcess("$($Requests.Count) requests", "Execute in parallel")) {
             return;
         }
 

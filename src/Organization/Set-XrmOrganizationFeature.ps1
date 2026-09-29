@@ -12,7 +12,7 @@
     Feature value to set.
 #>
 function Set-XrmOrganizationFeature {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]

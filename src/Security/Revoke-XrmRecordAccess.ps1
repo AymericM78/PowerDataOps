@@ -24,7 +24,7 @@
     Revoke-XrmRecordAccess -XrmClient $xrmClient -PrincipalReference $userRef -TargetReference $accountRef;
 #>
 function Revoke-XrmRecordAccess {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (        

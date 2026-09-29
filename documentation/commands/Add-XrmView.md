@@ -18,6 +18,8 @@ LayoutXml|String|named|true||Layout XML defining column widths and order.
 QueryType|Int32|named|false|0|View query type. Default: 0 (public view).
 Description|String|named|false||View description.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the created view is automatically added to this solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedquery record.
@@ -25,11 +27,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created savedquery record.
 ## Usage
 
 ```Powershell 
-Add-XrmView [-XrmClient <ServiceClient>] -EntityLogicalName <String> -Name <String> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> 
-[-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmView [-XrmClient <ServiceClient>] -EntityLogicalName <String> -Name <String> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> [-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Add-XrmView [-XrmClient <ServiceClient>] -EntityLogicalName <String> -Labels <Hashtable> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> 
-[-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Add-XrmView [-XrmClient <ServiceClient>] -EntityLogicalName <String> -Labels <Hashtable> [-LanguageCode <Int32>] -FetchXml <String> -LayoutXml <String> [-QueryType <Int32>] [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

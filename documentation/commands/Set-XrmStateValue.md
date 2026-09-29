@@ -16,6 +16,8 @@ Label|Label|5|false||New display label for the statecode option (Label object fr
 Description|Label|6|false||New description label for the statecode option (Label object from New-XrmLabel).
 DefaultStatusCode|Int32|7|false|0|Default value for the statuscode (status reason) when this statecode is set.
 MergeLabels|Boolean|8|false|True|Whether to merge the current label with existing labels. Default: true.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateStateValue response.
@@ -23,8 +25,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateStateValue response.
 ## Usage
 
 ```Powershell 
-Set-XrmStateValue [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Value] <Int32> [[-Label] <Label>] 
-[[-Description] <Label>] [[-DefaultStatusCode] <Int32>] [[-MergeLabels] <Boolean>] [<CommonParameters>]
+Set-XrmStateValue [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Value] <Int32> [[-Label] <Label>] [[-Description] <Label>] [[-DefaultStatusCode] <Int32>] [[-MergeLabels] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

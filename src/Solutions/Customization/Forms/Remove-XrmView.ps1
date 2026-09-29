@@ -18,7 +18,7 @@
     Remove-XrmView -ViewReference $viewRef;
 #>
 function Remove-XrmView {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

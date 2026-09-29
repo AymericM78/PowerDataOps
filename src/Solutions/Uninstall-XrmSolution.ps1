@@ -30,7 +30,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/uninstall-delete-solution
 #>
 function Uninstall-XrmSolution {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([PSCustomObject])]
     param
     (
@@ -62,6 +62,7 @@ function Uninstall-XrmSolution {
 
         try {
             $response = $XrmClient | Invoke-XrmRequest -Request $uninstallRequest;
+            if ($WhatIfPreference -and $null -eq $response) { return; }
             $asyncOperationId = $response.Results["AsyncOperationId"];
             $uninstallStatus = $XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $asyncOperationId -MissingMeansSucceeded -ThrowOnFailure -ScriptBlock {
                 param($asyncOperation)

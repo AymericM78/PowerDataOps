@@ -21,7 +21,7 @@
     Remove-XrmColumn -EntityLogicalName "account" -LogicalName "new_code";
 #>
 function Remove-XrmColumn {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

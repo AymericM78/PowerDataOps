@@ -13,6 +13,8 @@ SolutionUniqueName|String|2|true||Unique name of the solution where the componen
 ComponentId|Guid|3|true||Unique identifier of the component to update.
 ComponentType|Int32|4|true|0|Component type number (see Get-XrmSolutionComponentName to get name from type number).
 IncludedComponentSettingsValues|String[]|5|false||Array of settings to include in the component update.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateSolutionComponent response.
@@ -20,8 +22,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateSolutionComponent response.
 ## Usage
 
 ```Powershell 
-Update-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> 
-[[-IncludedComponentSettingsValues] <String[]>] [<CommonParameters>]
+Update-XrmSolutionComponent [[-XrmClient] <ServiceClient>] [-SolutionUniqueName] <String> [-ComponentId] <Guid> [-ComponentType] <Int32> [[-IncludedComponentSettingsValues] <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

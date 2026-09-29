@@ -27,7 +27,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/executeworkflow
 #>
 function Invoke-XrmWorkflow {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

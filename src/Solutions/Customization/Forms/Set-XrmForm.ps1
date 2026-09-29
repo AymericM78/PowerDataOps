@@ -37,7 +37,7 @@
     Set-XrmForm -FormReference $formRef -FormXml $newXml -SolutionUniqueName "MySolution";
 #>
 function Set-XrmForm {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

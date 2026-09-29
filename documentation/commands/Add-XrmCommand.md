@@ -22,6 +22,8 @@ ButtonLabelText|String|named|false||Button label text.
 TooltipTitle|String|named|false||Tooltip title text.
 Hidden|Boolean|named|false|False|Whether the command is hidden. Default: false.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the created command is automatically added to this solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created appaction record.
@@ -29,13 +31,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created appaction record.
 ## Usage
 
 ```Powershell 
-Add-XrmCommand [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -UniqueName <String> -Type <Int32> -Context <Int32> -Location <Int32> 
-[-ContextEntity <String>] [-ContextValue <String>] [-ButtonLabelText <String>] [-TooltipTitle <String>] [-Hidden <Boolean>] [-SolutionUniqueName 
-<String>] [<CommonParameters>]
+Add-XrmCommand [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -UniqueName <String> -Type <Int32> -Context <Int32> -Location <Int32> [-ContextEntity <String>] [-ContextValue <String>] [-ButtonLabelText <String>] [-TooltipTitle <String>] [-Hidden <Boolean>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Add-XrmCommand [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -UniqueName <String> -Type <Int32> -Context <Int32> -Location 
-<Int32> [-ContextEntity <String>] [-ContextValue <String>] [-ButtonLabelText <String>] [-TooltipTitle <String>] [-Hidden <Boolean>] [-SolutionUniqueName 
-<String>] [<CommonParameters>]
+Add-XrmCommand [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -UniqueName <String> -Type <Int32> -Context <Int32> -Location <Int32> [-ContextEntity <String>] [-ContextValue <String>] [-ButtonLabelText <String>] [-TooltipTitle <String>] [-Hidden <Boolean>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

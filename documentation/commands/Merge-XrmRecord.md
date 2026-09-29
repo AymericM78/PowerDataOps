@@ -14,6 +14,8 @@ TargetReference|EntityReference|2|true||EntityReference of the target (surviving
 SubordinateId|Guid|3|true||Guid of the subordinate (merged/deactivated) record.
 UpdateContent|Entity|4|false||Entity object containing attribute values to update on the target record during merge. Optional.
 PerformParentingChecks|Boolean|5|false|False|Whether to check if the parent information is different for the two records. Default: false.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The Merge response.
@@ -21,8 +23,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The Merge response.
 ## Usage
 
 ```Powershell 
-Merge-XrmRecord [[-XrmClient] <ServiceClient>] [-TargetReference] <EntityReference> [-SubordinateId] <Guid> [[-UpdateContent] <Entity>] 
-[[-PerformParentingChecks] <Boolean>] [<CommonParameters>]
+Merge-XrmRecord [[-XrmClient] <ServiceClient>] [-TargetReference] <EntityReference> [-SubordinateId] <Guid> [[-UpdateContent] <Entity>] [[-PerformParentingChecks] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

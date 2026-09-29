@@ -37,7 +37,7 @@
     $ref = Add-XrmDashboard -Labels @{ 1033 = "Sales Dashboard"; 1036 = "Tableau de bord des ventes" } -LanguageCode 1036 -FormXml $xml;
 #>
 function Add-XrmDashboard {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

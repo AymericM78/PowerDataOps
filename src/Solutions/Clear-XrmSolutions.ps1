@@ -15,7 +15,7 @@
     Specify timeout duration in minute for each solution deletion. (Default : 45 min)
 #>
 function Clear-XrmSolutions {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

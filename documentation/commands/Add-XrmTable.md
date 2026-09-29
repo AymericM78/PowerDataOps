@@ -28,6 +28,8 @@ PluralNameLabels|Hashtable|17|false||Hashtable of language code to plural displa
 DescriptionLabels|Hashtable|18|false||Hashtable of language code to description for multilingual labels. Takes precedence over -Description.
 PrimaryAttributeDisplayNameLabels|Hashtable|19|false||Hashtable of language code to primary attribute display name for multilingual labels. Takes precedence over -PrimaryAttributeDisplayName.
 IconVectorName|String|20|false||Name of the vector icon to use for the table.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
@@ -35,12 +37,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 ## Usage
 
 ```Powershell 
-Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] 
-[[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] 
-[[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [-PrimaryAttributeDisplayName] <String> 
-[[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] 
-<Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-PrimaryAttributeDisplayNameLabels] <Hashtable>] [[-IconVectorName] 
-<String>] [<CommonParameters>]
+Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [-DisplayName] <String> [-PluralName] <String> [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [-PrimaryAttributeDisplayName] <String> [[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-PrimaryAttributeDisplayNameLabels] <Hashtable>] [[-IconVectorName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

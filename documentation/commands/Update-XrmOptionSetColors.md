@@ -13,12 +13,14 @@ EntityLogicalName|String|2|true||Logical name of the entity that contains the at
 AttributeLogicalName|String|3|true||Logical name of the picklist attribute.
 Colors|Hashtable|4|true||Hashtable mapping option set integer values to hex color strings (e.g., @{ 1 = "#FF0000"; 2 = "#00FF00" }).
 PublishChanges|Boolean|5|false|True|Whether to publish customizations after updating. (Default: true)
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 
 ## Usage
 
 ```Powershell 
-Update-XrmOptionSetColors [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Colors] <Hashtable> [[-PublishChanges] <Boolean>] [<CommonParameters>]
+Update-XrmOptionSetColors [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-AttributeLogicalName] <String> [-Colors] <Hashtable> [[-PublishChanges] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

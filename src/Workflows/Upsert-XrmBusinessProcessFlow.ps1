@@ -98,7 +98,7 @@
         -Description "Opportunity BPF" -Xaml $xaml -SolutionUniqueName "svcmgr_workflows";
 #>
 function Upsert-XrmBusinessProcessFlow {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

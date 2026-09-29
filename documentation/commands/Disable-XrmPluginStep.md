@@ -10,6 +10,8 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 PluginStepReference|EntityReference|2|true||Entity reference of the SDK message processing step to disable.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -17,7 +19,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Disable-XrmPluginStep [[-XrmClient] <ServiceClient>] [-PluginStepReference] <EntityReference> [<CommonParameters>]
+Disable-XrmPluginStep [[-XrmClient] <ServiceClient>] [-PluginStepReference] <EntityReference> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

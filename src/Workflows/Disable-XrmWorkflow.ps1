@@ -19,7 +19,7 @@
     Disable-XrmWorkflow -WorkflowReference $wfRef;
 #>
 function Disable-XrmWorkflow {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (        

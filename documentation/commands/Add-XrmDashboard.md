@@ -15,6 +15,8 @@ LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name'
 FormXml|String|named|true||Dashboard form XML definition.
 Description|String|named|false||Dashboard description.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the created dashboard is automatically added to this solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
@@ -22,11 +24,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
 ## Usage
 
 ```Powershell 
-Add-XrmDashboard [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName 
-<String>] [<CommonParameters>]
+Add-XrmDashboard [-XrmClient <ServiceClient>] -Name <String> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Add-XrmDashboard [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName 
-<String>] [<CommonParameters>]
+Add-XrmDashboard [-XrmClient <ServiceClient>] -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

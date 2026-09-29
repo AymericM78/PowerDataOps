@@ -13,6 +13,8 @@ AppUniqueName|String|2|true||Unique name of the model-driven app (mandatory).
 SettingName|String|3|true||Unique name of the setting to set (e.g. "OverrideAppHeaderColor").
 Value|String|4|true||Value to assign to the setting.
 SolutionUniqueName|String|5|false||Unique name of the solution to associate the change with. Optional.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 [System.Void]
@@ -20,8 +22,7 @@ SolutionUniqueName|String|5|false||Unique name of the solution to associate the 
 ## Usage
 
 ```Powershell 
-Set-XrmAppSettingValue [[-XrmClient] <ServiceClient>] [-AppUniqueName] <String> [-SettingName] <String> [-Value] <String> [[-SolutionUniqueName] 
-<String>] [<CommonParameters>]
+Set-XrmAppSettingValue [[-XrmClient] <ServiceClient>] [-AppUniqueName] <String> [-SettingName] <String> [-Value] <String> [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

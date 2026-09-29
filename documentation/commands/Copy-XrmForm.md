@@ -11,6 +11,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 SourceFormId|Guid|2|true||Guid of the systemform record to copy.
 NewName|String|3|false||Display name for the copied form. Optional. If not provided, Dataverse generates a default name.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the newly created systemform record.
@@ -18,7 +20,7 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the newly created systemform rec
 ## Usage
 
 ```Powershell 
-Copy-XrmForm [[-XrmClient] <ServiceClient>] [-SourceFormId] <Guid> [[-NewName] <String>] [<CommonParameters>]
+Copy-XrmForm [[-XrmClient] <ServiceClient>] [-SourceFormId] <Guid> [[-NewName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

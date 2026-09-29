@@ -45,7 +45,7 @@
     Add-XrmGlobalOptionSet -Name "new_priority" -DisplayName (New-XrmLabel -Text "Priority") -Options $options;
 #>
 function Add-XrmGlobalOptionSet {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
     param
     (

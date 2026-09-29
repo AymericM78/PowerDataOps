@@ -17,6 +17,8 @@ EnableCollapsibleGroups|Boolean|5|false|False|Whether navigation groups can be c
 ShowHome|Boolean|6|false|False|Whether the Home button is shown in the navigation bar. Maps to the showhome attribute.
 ShowPinned|Boolean|7|false|False|Whether the Pinned items section is shown in the navigation bar. Maps to the showpinned attribute.
 ShowRecents|Boolean|8|false|False|Whether the Recent items section is shown in the navigation bar. Maps to the showrecents attribute.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void.
@@ -24,8 +26,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Set-XrmSiteMap [[-XrmClient] <ServiceClient>] [-SiteMapReference] <EntityReference> [[-SiteMapXml] <String>] [[-SolutionUniqueName] <String>] 
-[[-EnableCollapsibleGroups] <Boolean>] [[-ShowHome] <Boolean>] [[-ShowPinned] <Boolean>] [[-ShowRecents] <Boolean>] [<CommonParameters>]
+Set-XrmSiteMap [[-XrmClient] <ServiceClient>] [-SiteMapReference] <EntityReference> [[-SiteMapXml] <String>] [[-SolutionUniqueName] <String>] [[-EnableCollapsibleGroups] <Boolean>] [[-ShowHome] <Boolean>] [[-ShowPinned] <Boolean>] [[-ShowRecents] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

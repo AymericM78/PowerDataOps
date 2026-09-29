@@ -22,7 +22,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/describe-relationship-entities-connection-roles
 #>
 function Remove-XrmConnectionRole {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.Void])]
     param
     (

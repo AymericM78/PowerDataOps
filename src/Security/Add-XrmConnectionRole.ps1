@@ -27,7 +27,7 @@
     https://learn.microsoft.com/en-us/power-apps/developer/data-platform/describe-relationship-entities-connection-roles
 #>
 function Add-XrmConnectionRole {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

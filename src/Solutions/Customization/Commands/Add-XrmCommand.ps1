@@ -58,7 +58,7 @@
     $ref = Add-XrmCommand -Labels @{ 1033 = "Approve"; 1036 = "Approuver" } -LanguageCode 1036 -UniqueName "new_approve" -Type 0 -Context 1 -Location 0 -ButtonLabelText "Approuver";
 #>
 function Add-XrmCommand {
-    [CmdletBinding(DefaultParameterSetName = "ByName")]
+    [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
     [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (

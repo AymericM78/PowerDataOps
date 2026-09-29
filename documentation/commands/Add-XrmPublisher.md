@@ -14,6 +14,8 @@ DisplayName|String|3|true||Publisher display name (friendly name).
 Prefix|String|4|true||Customization prefix for the publisher (e.g., "contoso"). Must be 2-8 lowercase letters.
 OptionValuePrefix|Int32|5|true|0|Option value prefix number for the publisher. Must be between 10000 and 99999.
 Description|String|6|false||Optional description for the publisher.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Created publisher reference.
@@ -21,8 +23,7 @@ Microsoft.Xrm.Sdk.EntityReference. Created publisher reference.
 ## Usage
 
 ```Powershell 
-Add-XrmPublisher [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-Prefix] <String> [-OptionValuePrefix] <Int32> 
-[[-Description] <String>] [<CommonParameters>]
+Add-XrmPublisher [[-XrmClient] <ServiceClient>] [-UniqueName] <String> [-DisplayName] <String> [-Prefix] <String> [-OptionValuePrefix] <Int32> [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

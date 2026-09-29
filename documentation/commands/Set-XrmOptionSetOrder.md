@@ -14,6 +14,8 @@ EntityLogicalName|String|3|false||Entity logical name for local option sets.
 AttributeLogicalName|String|4|false||Attribute logical name for local option sets.
 Values|Int32[]|5|true||Array of option set integer values in the desired display order.
 SolutionUniqueName|String|6|false||Solution unique name for tracking the change. Optional.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. The OrderOption response.
@@ -21,8 +23,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The OrderOption response.
 ## Usage
 
 ```Powershell 
-Set-XrmOptionSetOrder [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] 
-[-Values] <Int32[]> [[-SolutionUniqueName] <String>] [<CommonParameters>]
+Set-XrmOptionSetOrder [[-XrmClient] <ServiceClient>] [[-OptionSetName] <String>] [[-EntityLogicalName] <String>] [[-AttributeLogicalName] <String>] [-Values] <Int32[]> [[-SolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

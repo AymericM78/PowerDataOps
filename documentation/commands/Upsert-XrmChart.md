@@ -18,6 +18,8 @@ DataDescription|String|named|true||Data description XML defining the chart data 
 PresentationDescription|String|named|true||Presentation description XML defining the chart visual.
 Description|String|named|false||Chart description.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the chart is added to this solution.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted savedqueryvisualization record.
@@ -25,11 +27,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted savedqueryvisualiza
 ## Usage
 
 ```Powershell 
-Upsert-XrmChart [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Name <String> [-LanguageCode <Int32>] -DataDescription <String> 
--PresentationDescription <String> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Upsert-XrmChart [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Name <String> [-LanguageCode <Int32>] -DataDescription <String> -PresentationDescription <String> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Upsert-XrmChart [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Labels <Hashtable> [-LanguageCode <Int32>] -DataDescription <String> 
--PresentationDescription <String> [-Description <String>] [-SolutionUniqueName <String>] [<CommonParameters>]
+Upsert-XrmChart [-XrmClient <ServiceClient>] -Id <Guid> -EntityLogicalName <String> -Labels <Hashtable> [-LanguageCode <Int32>] -DataDescription <String> -PresentationDescription <String> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

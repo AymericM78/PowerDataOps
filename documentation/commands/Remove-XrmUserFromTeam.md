@@ -11,6 +11,8 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 TeamReference|EntityReference|2|true||Team entity reference.
 UserReferences|EntityReference[]|3|true||Array of system user entity references to remove from the team.
+WhatIf|SwitchParameter|named|false||
+Confirm|SwitchParameter|named|false||
 
 ## Outputs
 System.Void
@@ -18,7 +20,7 @@ System.Void
 ## Usage
 
 ```Powershell 
-Remove-XrmUserFromTeam [[-XrmClient] <ServiceClient>] [-TeamReference] <EntityReference> [-UserReferences] <EntityReference[]> [<CommonParameters>]
+Remove-XrmUserFromTeam [[-XrmClient] <ServiceClient>] [-TeamReference] <EntityReference> [-UserReferences] <EntityReference[]> [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

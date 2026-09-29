@@ -41,7 +41,7 @@
 #>
 
 function Upsert-XrmWebResource {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     [OutputType([Guid], [PSCustomObject])]
     param
     (

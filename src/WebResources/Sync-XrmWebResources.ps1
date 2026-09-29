@@ -27,7 +27,7 @@
 #>
 
 function Sync-XrmWebResources {
-    [CmdletBinding()]    
+    [CmdletBinding(SupportsShouldProcess)]    
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

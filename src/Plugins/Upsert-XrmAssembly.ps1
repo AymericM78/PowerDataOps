@@ -21,7 +21,7 @@
     Specify where assembly will be stored. (Default = 0 | 0 = Database, 1 = Disk, 2 = Normal (OnPremise), 3 = AzureWebApp)
 #>
 function Upsert-XrmAssembly {
-    [CmdletBinding()]    
+    [CmdletBinding(SupportsShouldProcess)]    
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]
