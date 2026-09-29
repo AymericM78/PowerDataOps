@@ -27,6 +27,8 @@ $allTests = @(
     @{ Category = "Client";        File = "Client\Watch-XrmAsynchOperation.Tests.ps1" },
     @{ Category = "Client";        File = "Client\ReadingRows.Tests.ps1" },
     @{ Category = "Client";        File = "Client\ScriptBlockScope.Tests.ps1" },
+    @{ Category = "Client";        File = "Client\RequestOptions.Tests.ps1" },
+    @{ Category = "Client";        File = "Client\ParallelRequests.Tests.ps1" },
     @{ Category = "Client";        File = "Client\AccountCrud.Tests.ps1" },
     @{ Category = "Client";        File = "Client\Associations.Tests.ps1" },
     @{ Category = "Client";        File = "Client\DocumentTemplateContent.Tests.ps1" },

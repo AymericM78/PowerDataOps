@@ -32,8 +32,14 @@
     .PARAMETER SourceImportId
     Optional source import unique identifier to scope the deletion.
 
+    .PARAMETER Wait
+    Wait for the bulk delete system job and return its status (see Watch-XrmAsynchOperation); a failed or canceled job raises an error.
+
+    .PARAMETER TimeoutInMinutes
+    Maximum time to wait with Wait. (Default: 60)
+
     .OUTPUTS
-    Microsoft.Xrm.Sdk.OrganizationResponse. BulkDelete response containing JobId.
+    Microsoft.Xrm.Sdk.OrganizationResponse. BulkDelete response containing JobId. With Wait: PSCustomObject (Id, StatusCode, Status, Message, FriendlyMessage) of the job.
 
     .EXAMPLE
     $xrmClient = New-XrmClient -ConnectionString $connectionString;
@@ -41,10 +47,14 @@
     $query | Add-XrmQueryCondition -Field "statecode" -Condition Equal -Values @(1);
     $response = Add-XrmBulkDelete -XrmClient $xrmClient -Query $query -JobName "Clean inactive accounts";
     $jobId = $response.Results["JobId"];
+
+    .EXAMPLE
+    $status = Add-XrmBulkDelete -XrmClient $xrmClient -Query $query -JobName "Clean inactive accounts" -Wait -TimeoutInMinutes 30;
+    Write-Host "Bulk delete: $($status.Status)";
 #>
 function Add-XrmBulkDelete {
     [CmdletBinding()]
-    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse])]
+    [OutputType([Microsoft.Xrm.Sdk.OrganizationResponse], [PSCustomObject])]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline)]
@@ -83,7 +93,16 @@ function Add-XrmBulkDelete {
 
         [Parameter(Mandatory = $false)]
         [Guid]
-        $SourceImportId = [Guid]::Empty
+        $SourceImportId = [Guid]::Empty,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Wait,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateRange(1, 1440)]
+        [int]
+        $TimeoutInMinutes = 60
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -102,6 +121,9 @@ function Add-XrmBulkDelete {
             $request | Add-XrmRequestParameter -Name "SourceImportId" -Value $SourceImportId | Out-Null;
         };
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
+        if ($Wait) {
+            return ($XrmClient | Watch-XrmAsynchOperation -AsyncOperationId $response.Results["JobId"] -TimeoutInMinutes $TimeoutInMinutes -ThrowOnFailure);
+        }
         $response;
     }
     end {

@@ -17,14 +17,16 @@ CCRecipients|Guid[]|6|false|@()|Array of system user ids to receive email notifi
 RecurrencePattern|String|7|false||Recurrence pattern for the bulk delete job. Empty string for one-time execution. (Default: "")
 StartDateTime|DateTime|8|false|[datetime]::UtcNow|UTC date/time at which the bulk delete job should start. (Default: now)
 SourceImportId|Guid|9|false|[Guid]::Empty|Optional source import unique identifier to scope the deletion.
+Wait|SwitchParameter|named|false|False|Wait for the bulk delete system job and return its status (see Watch-XrmAsynchOperation); a failed or canceled job raises an error.
+TimeoutInMinutes|Int32|10|false|60|Maximum time to wait with Wait. (Default: 60)
 
 ## Outputs
-Microsoft.Xrm.Sdk.OrganizationResponse. BulkDelete response containing JobId.
+Microsoft.Xrm.Sdk.OrganizationResponse. BulkDelete response containing JobId. With Wait: PSCustomObject (Id, StatusCode, Status, Message, FriendlyMessage) of the job.
 
 ## Usage
 
 ```Powershell 
-Add-XrmBulkDelete [[-XrmClient] <ServiceClient>] [-Query] <QueryExpression[]> [[-JobName] <String>] [[-SendEmailNotification] <Boolean>] [[-ToRecipients] <Guid[]>] [[-CCRecipients] <Guid[]>] [[-RecurrencePattern] <String>] [[-StartDateTime] <DateTime>] [[-SourceImportId] <Guid>] [<CommonParameters>]
+Add-XrmBulkDelete [[-XrmClient] <ServiceClient>] [-Query] <QueryExpression[]> [[-JobName] <String>] [[-SendEmailNotification] <Boolean>] [[-ToRecipients] <Guid[]>] [[-CCRecipients] <Guid[]>] [[-RecurrencePattern] <String>] [[-StartDateTime] <DateTime>] [[-SourceImportId] <Guid>] [-Wait] [[-TimeoutInMinutes] <Int32>] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -35,6 +37,12 @@ $query = New-XrmQueryExpression -LogicalName "account" -Columns "accountid";
 $query | Add-XrmQueryCondition -Field "statecode" -Condition Equal -Values @(1);
 $response = Add-XrmBulkDelete -XrmClient $xrmClient -Query $query -JobName "Clean inactive accounts";
 $jobId = $response.Results["JobId"];
+``` 
+
+
+```Powershell 
+$status = Add-XrmBulkDelete -XrmClient $xrmClient -Query $query -JobName "Clean inactive accounts" -Wait -TimeoutInMinutes 30;
+Write-Host "Bulk delete: $($status.Status)";
 ``` 
 
 

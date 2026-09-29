@@ -25,6 +25,24 @@
     .PARAMETER Quiet
     Do not log a line for each batch.
 
+    .PARAMETER BypassCustomPluginExecution
+    Added to every request: legacy bypass of synchronous custom plug-ins.
+
+    .PARAMETER BypassBusinessLogicExecution
+    Added to every request: custom business logic to bypass (CustomSync, CustomAsync).
+
+    .PARAMETER BypassBusinessLogicExecutionStepIds
+    Added to every request: ids of the plug-in steps to bypass.
+
+    .PARAMETER SuppressCallbackRegistrationExpanderJob
+    Added to every request: do not trigger Power Automate flows.
+
+    .PARAMETER SuppressDuplicateDetection
+    Added to every request: do not run duplicate detection.
+
+    .PARAMETER Tag
+    Added to every request: value shared with the plug-ins.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. With ReturnResponses, one response per request, in request order ($null for a faulted request).
 
@@ -68,7 +86,34 @@ function Invoke-XrmBulkRequests {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Quiet = $false
+        $Quiet = $false,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $BypassCustomPluginExecution,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("CustomSync", "CustomAsync")]
+        [string[]]
+        $BypassBusinessLogicExecution,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [Guid[]]
+        $BypassBusinessLogicExecutionStepIds,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $SuppressCallbackRegistrationExpanderJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $SuppressDuplicateDetection,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Tag
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -79,6 +124,13 @@ function Invoke-XrmBulkRequests {
         [System.Collections.ArrayList] $responses = @();
         if (-Not $Requests) {
             return $responses;
+        }
+
+        $options = Get-XrmRequestOptionsInternal -BoundParameters $PSBoundParameters;
+        if ($options.Count -gt 0) {
+            foreach ($request in $Requests) {
+                $request | Set-XrmRequestOptions @options | Out-Null;
+            }
         }
 
         $faults = [System.Collections.Generic.List[PSCustomObject]]::new();

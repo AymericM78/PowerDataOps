@@ -16,6 +16,12 @@ BatchSize|Int32|3|false|500|Number of requests sent in each ExecuteMultiple call
 ContinueOnError|Boolean|4|false|False|Indicates whether to continue with the next requests when a request fails. (Default: false = stop at the first fault)
 ReturnResponses|Boolean|5|false|False|Indicates if a response is returned for each request. (Default: false = No response)
 Quiet|SwitchParameter|named|false|False|Do not log a line for each batch.
+BypassCustomPluginExecution|SwitchParameter|named|false|False|Added to every request: legacy bypass of synchronous custom plug-ins.
+BypassBusinessLogicExecution|String[]|6|false||Added to every request: custom business logic to bypass (CustomSync, CustomAsync).
+BypassBusinessLogicExecutionStepIds|Guid[]|7|false||Added to every request: ids of the plug-in steps to bypass.
+SuppressCallbackRegistrationExpanderJob|SwitchParameter|named|false|False|Added to every request: do not trigger Power Automate flows.
+SuppressDuplicateDetection|SwitchParameter|named|false|False|Added to every request: do not run duplicate detection.
+Tag|String|8|false||Added to every request: value shared with the plug-ins.
 
 ## Outputs
 Microsoft.Xrm.Sdk.OrganizationResponse. With ReturnResponses, one response per request, in request order ($null for a faulted request).
@@ -23,7 +29,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. With ReturnResponses, one response per r
 ## Usage
 
 ```Powershell 
-Invoke-XrmBulkRequests [[-XrmClient] <ServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] [[-ContinueOnError] <Boolean>] [[-ReturnResponses] <Boolean>] [-Quiet] [<CommonParameters>]
+Invoke-XrmBulkRequests [[-XrmClient] <ServiceClient>] [-Requests] <OrganizationRequest[]> [[-BatchSize] <Int32>] [[-ContinueOnError] <Boolean>] [[-ReturnResponses] <Boolean>] [-Quiet] [-BypassCustomPluginExecution] [[-BypassBusinessLogicExecution] <String[]>] [[-BypassBusinessLogicExecutionStepIds] <Guid[]>] [-SuppressCallbackRegistrationExpanderJob] [-SuppressDuplicateDetection] [[-Tag] <String>] [<CommonParameters>]
 ``` 
 
 ## Examples
