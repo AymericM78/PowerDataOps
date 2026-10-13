@@ -17,7 +17,8 @@ function Get-XrmInstances {
     process {
         
         $xrmInstances = @();
-      
+
+        Import-XrmPowerAppsAdminModuleInternal;
         if (-not $Global:XrmContext.IsAdminConnected) {
             throw "You are not connected! Please use Connect-XrmAdmin command before."
         }

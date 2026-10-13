@@ -46,12 +46,12 @@ function Add-XrmInstance {
         $Sku,
 
         [Parameter(Mandatory = $true)]
-        [ArgumentCompleter( { Get-AdminPowerAppCdsDatabaseCurrencies })]
+        [ArgumentCompleter( { Import-XrmPowerAppsAdminModuleInternal; Get-AdminPowerAppCdsDatabaseCurrencies })]
         [String]
         $CurrencyCodeName,
 
         [Parameter(Mandatory = $true)]
-        [ArgumentCompleter( { Get-AdminPowerAppCdsDatabaseLanguages  })]
+        [ArgumentCompleter( { Import-XrmPowerAppsAdminModuleInternal; Get-AdminPowerAppCdsDatabaseLanguages })]
         [String]
         $LanguageName
     )

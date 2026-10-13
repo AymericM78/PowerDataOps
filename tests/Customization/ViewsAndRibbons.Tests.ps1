@@ -1,6 +1,6 @@
 <#
     Integration Test: views and ribbons (brief lot 6: A07, A08)
-    Get-XrmViews -QueryType -IsDefault, Upsert-XrmView -IsDefault, Get-XrmRibbon (several tables), Export-XrmRibbon, Import-XrmRibbon -TargetSolutionUniqueName.
+    Get-XrmViews -QueryType -IsDefault, Upsert-XrmView -IsDefault, Get-XrmRibbon (several tables), Export-XrmRibbon, Import-XrmRibbon -TargetSolutionUniqueName [-DoNotIncludeSubcomponents] (K08).
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -45,7 +45,17 @@ Assert-Test "Export-XrmRibbon (now through Get-XrmRibbon): same XML" { $exported
 Write-Section "Import-XrmRibbon -TargetSolutionUniqueName";
 $publisherRef = $Global:XrmClient | Add-XrmPublisher -UniqueName "pdoribbon$suffix" -DisplayName "PDO Ribbon $suffix" -Prefix "pdr" -OptionValuePrefix (10000 + ($suffix % 89999)) -Description "Integration test publisher";
 $targetName = "pdoribbonsol$suffix";
-$Global:XrmClient | Add-XrmSolution -UniqueName $targetName -DisplayName "PDO Ribbon $suffix" -PublisherReference $publisherRef -Version "1.0.0.0" | Out-Null;
+$targetRef = $Global:XrmClient | Add-XrmSolution -UniqueName $targetName -DisplayName "PDO Ribbon $suffix" -PublisherReference $publisherRef -Version "1.0.0.0";
+
+# rootcomponentbehavior of a table in the target solution: 0 = with its subcomponents, 1 = shell
+function Get-TargetRootBehavior([Guid]$MetadataId) {
+    $query = New-XrmQueryExpression -LogicalName "solutioncomponent" -Columns "rootcomponentbehavior" |
+        Add-XrmQueryCondition -Field "objectid" -Condition Equal -Values $MetadataId |
+        Add-XrmQueryCondition -Field "solutionid" -Condition Equal -Values $targetRef.Id;
+    $rows = Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query $query -AsEntity -AsArray;
+    if ($rows.Count -eq 0) { return $null; }
+    return $rows[0] | Get-XrmRowValue -Name "rootcomponentbehavior" -Raw;
+}
 # The contact ribbon is imported back unchanged
 Import-XrmRibbon -XrmClient $Global:XrmClient -EntityLogicalName "contact" -RibbonDiffXml $ribbons[1].RibbonDiffXml -PublisherUniqueName "pdoribbon$suffix" -TargetSolutionUniqueName $targetName -Publish $false;
 $contact = Get-XrmEntityMetadata -XrmClient $Global:XrmClient -LogicalName "contact" -Filter Entity;
@@ -53,6 +63,12 @@ Assert-Test "The table (and its ribbon) is in the target solution" { Test-XrmSol
 $after = @(Get-XrmRibbon -XrmClient $Global:XrmClient -EntityLogicalName "contact");
 Assert-Test "Ribbon unchanged after the round trip" { $after[0].RibbonDiffXml.OuterXml -eq $ribbons[1].RibbonDiffXml.OuterXml };
 Assert-Test "No temporary ribbon solution left" { @(Get-XrmSolutions -XrmClient $Global:XrmClient -Columns "uniquename" | Where-Object { $_.uniquename -like "Ribbon*_*" }).Count -eq 0 };
+Assert-Test "Default: the table is added as a shell (rootcomponentbehavior 1)" { (Get-TargetRootBehavior -MetadataId $contact.MetadataId) -eq 1 };
+
+# K08: -DoNotIncludeSubcomponents $false, for a table that must travel with its subcomponents (the account ribbon is imported back unchanged)
+Import-XrmRibbon -XrmClient $Global:XrmClient -EntityLogicalName "account" -RibbonDiffXml $ribbons[0].RibbonDiffXml -PublisherUniqueName "pdoribbon$suffix" -TargetSolutionUniqueName $targetName -DoNotIncludeSubcomponents $false -Publish $false;
+$account = Get-XrmEntityMetadata -XrmClient $Global:XrmClient -LogicalName "account" -Filter Entity;
+Assert-Test "-DoNotIncludeSubcomponents `$false: the table comes with its subcomponents (rootcomponentbehavior 0)" { (Get-TargetRootBehavior -MetadataId $account.MetadataId) -eq 0 };
 
 # ============================================================
 # Cleanup

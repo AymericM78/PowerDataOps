@@ -3,6 +3,7 @@
     Get-XrmMultipleRecords -AsArray / -AsEntity, Get-XrmRecord -AsEntity / -IfExists / -Unique / -Attributes,
     Get-XrmAttributeValue (Get-XrmRowValue) on converted rows, Get-XrmMetadataValue, Resolve-XrmEntityReference,
     Get-XrmRecordCount, Get-XrmTotalRecordCount -SkipRefused -AsHashtable, Get-XrmRecordIds.
+    Known issues 2.0.0.65: @(... -AsArray) message (K04), FetchExpression paging (K13), aggregate limit detection (K01), Remove-XrmRecord -IfExists (K14).
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -52,6 +53,30 @@ Assert-Test "Default output unchanged: one row gives a single object" { $oneDefa
 
 $entities = Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query (New-PrefixQuery) -AsEntity -AsArray;
 Assert-Test "-AsEntity -AsArray: 3 SDK entities" { $entities.Count -eq 3 -and @($entities | Where-Object { $_ -isnot [Microsoft.Xrm.Sdk.Entity] }).Count -eq 0 };
+
+# @() around -AsArray nests the whole result in a one-element array: Get-XrmRowValue names the probable cause
+$wrapped = @(Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query (New-PrefixQuery) -AsArray);
+$wrapError = $null;
+try { foreach ($row in $wrapped) { Get-XrmRowValue -Record $row -Name "name" | Out-Null; } } catch { $wrapError = $_.Exception.Message; }
+Assert-Test "@(... -AsArray): one element, and Get-XrmRowValue points to -AsArray" { $wrapped.Count -eq 1 -and $wrapError -like "*-AsArray*@()*" };
+
+# ============================================================
+# K13 Get-XrmMultipleRecords with a FetchExpression
+# ============================================================
+Write-Section "Get-XrmMultipleRecords with a FetchExpression";
+
+$fetchXml = "<fetch><entity name='account'><attribute name='name' /><filter><condition attribute='name' operator='begins-with' value='$prefix' /></filter><order attribute='name' /></entity></fetch>";
+$fetchExpression = New-XrmFetchExpression -FetchXml $fetchXml;
+$fetchRows = Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query $fetchExpression -PageSize 2 -AsArray;
+Assert-Test "FetchExpression: the 3 rows, read in pages of 2" { $fetchRows.Count -eq 3 -and $fetchRows[0].name -eq "$prefix-1" -and $fetchRows[2].name -eq "$prefix-3" };
+Assert-Test "Caller's FetchExpression unchanged" { $fetchExpression.Query -eq $fetchXml };
+
+$topFetch = New-XrmFetchExpression -FetchXml $fetchXml.Replace("<fetch>", "<fetch top='2'>");
+Assert-Test "Fetch with top: one call, top rows only" { (Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query $topFetch -PageSize 1 -AsArray).Count -eq 2 };
+
+$aggregateFetch = New-XrmFetchExpression -FetchXml "<fetch aggregate='true'><entity name='account'><attribute name='accountid' alias='total' aggregate='count' /><filter><condition attribute='name' operator='begins-with' value='$prefix' /></filter></entity></fetch>";
+$aggregateRows = Get-XrmMultipleRecords -XrmClient $Global:XrmClient -Query $aggregateFetch -AsEntity -AsArray;
+Assert-Test "Aggregate fetch: one row, read in one call" { $aggregateRows.Count -eq 1 -and $aggregateRows[0]["total"].Value -eq 3 };
 
 # ============================================================
 # L03 Get-XrmAttributeValue / Get-XrmRowValue
@@ -182,6 +207,21 @@ Assert-Test "-FetchXml: 2 contacts" { (Get-XrmRecordCount -XrmClient $Global:Xrm
 $topQuery = New-XrmQueryExpression -LogicalName "account" -TopCount 2 | Add-XrmQueryCondition -Field "name" -Condition BeginsWith -Values $prefix;
 Assert-Test "TopCount caps the count" { (Get-XrmRecordCount -XrmClient $Global:XrmClient -Query $topQuery) -eq 2 };
 
+# K01: the refusal above 50,000 rows comes with two wordings and a fault code; the test instance has no such table, so the detection is checked on built exceptions
+$moduleScope = Get-Module PowerDataOps;
+Assert-Test "Aggregate limit recognized: 'AggregateQueryRecordLimit' wording" { & $moduleScope { Test-XrmAggregateLimitErrorInternal -Exception ([System.Exception]::new("AggregateQueryRecordLimit exceeded. Cannot perform this operation.")) } };
+Assert-Test "Aggregate limit recognized: 'maximum record limit of 50000' wording, as an inner exception" {
+    & $moduleScope { Test-XrmAggregateLimitErrorInternal -Exception ([System.Exception]::new("Request failed", [System.Exception]::new("The maximum record limit of 50000 is exceeded. Reduce the number of records."))) };
+};
+Assert-Test "Aggregate limit recognized: fault code 0x8004E023 whatever the text" {
+    & $moduleScope {
+        $fault = [Microsoft.Xrm.Sdk.OrganizationServiceFault]::new();
+        $fault.ErrorCode = -2147164125;
+        Test-XrmAggregateLimitErrorInternal -Exception ([System.ServiceModel.FaultException[Microsoft.Xrm.Sdk.OrganizationServiceFault]]::new($fault, "Some other text"));
+    };
+};
+Assert-Test "Another error is not taken for the limit" { -not (& $moduleScope { Test-XrmAggregateLimitErrorInternal -Exception ([System.Exception]::new("Principal user is missing prvReadAccount privilege")) }) };
+
 $totals = Get-XrmTotalRecordCount -XrmClient $Global:XrmClient -LogicalNames "account", "contact" -AsHashtable;
 Assert-Test "Get-XrmTotalRecordCount -AsHashtable" { $totals -is [hashtable] -and $totals.ContainsKey("account") -and $totals.ContainsKey("contact") };
 
@@ -203,6 +243,21 @@ Assert-Test "No row: empty HashSet, not `$null" { $emptyIds -is [System.Collecti
 
 $businessUnitIds = Get-XrmRecordIds -XrmClient $Global:XrmClient -LogicalName "businessunit";
 Assert-Test "-LogicalName: all rows of the table" { $businessUnitIds.Count -ge 1 };
+
+# ============================================================
+# K14 Remove-XrmRecord -IfExists
+# ============================================================
+Write-Section "Remove-XrmRecord -IfExists";
+
+$ifExistsError = $null;
+try { $Global:XrmClient | Remove-XrmRecord -LogicalName "account" -Id ([Guid]::NewGuid()) -IfExists -ErrorAction Stop; } catch { $ifExistsError = $_.Exception.Message; }
+Assert-Test "-IfExists: missing row, no error" { $null -eq $ifExistsError };
+
+# Without -ErrorAction Stop: any error other than "not found" must stop the caller, like the other -IfExists switches
+$otherError = $null;
+$reached = $false;
+try { $Global:XrmClient | Remove-XrmRecord -LogicalName "organization" -Id ([Guid]::NewGuid()) -IfExists; $reached = $true; } catch { $otherError = $_.Exception.Message; }
+Assert-Test "-IfExists: another error is raised ($otherError)" { $null -ne $otherError -and -not $reached };
 
 # ============================================================
 # CLEANUP

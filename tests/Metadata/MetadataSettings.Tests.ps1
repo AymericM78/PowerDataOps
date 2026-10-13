@@ -3,6 +3,7 @@
     Add-XrmTable / Set-XrmTable flags and -LogicalName, activity table creation, Set-XrmColumn -LogicalName -RequiredLevel -MinValue -MaxValue,
     New-XrmBooleanColumn -TrueLabels -FalseLabels, New-XrmCascadeConfiguration, New-XrmAssociatedMenuConfiguration, Set-XrmRelationship,
     Get-XrmRelationship -IfExists, Get-XrmAlternateKey -IfExists, New-XrmLabel (empty text), ConvertFrom-XrmLabel.
+    Known issues 2.0.0.65: Add-XrmTable -SchemaName (K15), Set-XrmTable -IsBusinessProcessEnabled (K09), Set-XrmColumnVisualization (K11), menu properties kept (K16).
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -31,9 +32,15 @@ Assert-Test "`$null label: empty hashtable" { (ConvertFrom-XrmLabel -Label $null
 Write-Section "Add-XrmTable / Set-XrmTable flags";
 
 $Global:XrmClient | Add-XrmTable -LogicalName $tableName -DisplayNameLabels @{ 1033 = "PDO settings $suffix"; 1036 = "Reglages PDO $suffix" } -PluralName "PDO settings" `
-    -PrimaryAttributeSchemaName "${prefix}_name" -PrimaryAttributeDisplayName "Name" -IsQuickCreateEnabled $true -ChangeTrackingEnabled $true | Out-Null;
+    -PrimaryAttributeSchemaName "${prefix}_name" -PrimaryAttributeDisplayName "Name" -IsQuickCreateEnabled $true -ChangeTrackingEnabled $true -SchemaName "${prefix}_PdoSet$suffix" | Out-Null;
 $table = Get-XrmEntityMetadata -XrmClient $Global:XrmClient -LogicalName $tableName -Filter Entity;
 Assert-Test "Created with IsQuickCreateEnabled and ChangeTrackingEnabled" { $table.IsQuickCreateEnabled -eq $true -and $table.ChangeTrackingEnabled -eq $true };
+Assert-Test "-SchemaName: schema name kept with its casing (K15)" { $table.SchemaName -ceq "${prefix}_PdoSet$suffix" -and $table.LogicalName -ceq $tableName };
+
+$schemaNameError = $null;
+try { New-XrmTable -LogicalName $tableName -SchemaName "${prefix}_Other$suffix" | Out-Null; } catch { $schemaNameError = $_.Exception.Message; }
+Assert-Test "SchemaName that is not LogicalName in another casing: error" { $schemaNameError -like "*does not match LogicalName*" };
+Assert-Test "SchemaName alone: logical name derived in lower case" { (New-XrmTable -SchemaName "${prefix}_BankAccount").LogicalName -ceq "${prefix}_bankaccount" };
 Assert-Test "ConvertFrom-XrmLabel on table metadata" { (ConvertFrom-XrmLabel -Label $table.DisplayName)[1036] -eq "Reglages PDO $suffix" };
 
 $Global:XrmClient | Set-XrmTable -LogicalName $tableName -IsConnectionsEnabled $true -IsDocumentManagementEnabled $true -SyncToExternalSearchIndex $true -IsQuickCreateEnabled $false | Out-Null;
@@ -50,6 +57,11 @@ Assert-Test "Set-XrmTable -MetadataId -IsMailMergeEnabled `$false" { $table.IsMa
 $missingIdError = $null;
 try { $Global:XrmClient | Set-XrmTable -IsQuickCreateEnabled $true | Out-Null; } catch { $missingIdError = $_.Exception.Message; }
 Assert-Test "Neither MetadataId nor LogicalName: error" { $missingIdError -like "*MetadataId or LogicalName*" };
+
+# K09: IsBPFEntity is ignored by UpdateEntity (it marks the tables generated for a business process flow); IsBusinessProcessEnabled is the table setting
+$Global:XrmClient | Set-XrmTable -LogicalName $tableName -IsBusinessProcessEnabled $true | Out-Null;
+$table = Get-XrmEntityMetadata -XrmClient $Global:XrmClient -LogicalName $tableName -Filter Entity;
+Assert-Test "Set-XrmTable -IsBusinessProcessEnabled `$true: applied" { $table.IsBusinessProcessEnabled -eq $true };
 
 Write-Section "Activity table";
 $rulesError = $null;
@@ -112,6 +124,40 @@ if ($locked) {
     Assert-Test "RequiredLevel.CanBeChanged false ('account.$($locked.LogicalName)'): error before sending" { $lockedError -like "*cannot be changed*" };
 }
 
+Write-Section "Set-XrmColumnVisualization";
+
+# Renderer ids read from the maker portal by the consumer repository (heat map, radial dial)
+$heatMapId = [Guid]"e7f8a9b0-c1d2-4e3f-5a6b-7c8d9e0f1a2b";
+$radialDialId = [Guid]"c3d4e5f6-a7b8-9012-cdef-345678901234";
+$visualizationPublisherRef = $Global:XrmClient | Add-XrmPublisher -UniqueName "pdoviz$suffix" -DisplayName "PDO Viz $suffix" -Prefix "pdz" -OptionValuePrefix (10000 + ($suffix % 89999)) -Description "Integration test publisher";
+$visualizationSolution = "pdovizsol$suffix";
+$visualizationSolutionRef = $Global:XrmClient | Add-XrmSolution -UniqueName $visualizationSolution -DisplayName "PDO Viz $suffix" -PublisherReference $visualizationPublisherRef -Version "1.0.0.0";
+$componentTypeCache = @{};
+$visualizationRef = $null;
+if (-not (Get-XrmEntityMetadata -XrmClient $Global:XrmClient -LogicalName "controlconfiguration" -Filter Entity -IfExists)) {
+    Write-Host "  [SKIP] No controlconfiguration table on this instance" -ForegroundColor Yellow;
+}
+else {
+    $visualizationRef = Set-XrmColumnVisualization -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score" -RendererId $heatMapId -SolutionUniqueName $visualizationSolution -Cache $componentTypeCache;
+    $configuration = $Global:XrmClient | Get-XrmRecord -LogicalName "controlconfiguration" -Id $visualizationRef.Id -Columns "uniquename", "name", "entitylogicalname", "attribute", "metadatajson" -AsEntity;
+    Assert-Test "Created: controlconfiguration as the maker portal writes it" {
+        $configuration["uniquename"] -eq "msdyn_$($tableName)_${prefix}_score_customrenderers" -and $configuration["name"] -eq "CustomRenderersConfiguration" -and
+        $configuration["entitylogicalname"] -eq $tableName -and $configuration["attribute"].Id -eq $score.MetadataId -and $configuration["metadatajson"] -eq "{`"type`":`"$heatMapId`"}";
+    };
+    $componentType = Get-XrmSolutionComponentType -XrmClient $Global:XrmClient -LogicalName "controlconfiguration" -Cache $componentTypeCache;
+    Assert-Test "Added to the solution under the organization's component type ($componentType)" { Test-XrmSolutionComponent -XrmClient $Global:XrmClient -SolutionUniqueName $visualizationSolution -ComponentId $visualizationRef.Id -ComponentType $componentType };
+
+    $updatedRef = Set-XrmColumnVisualization -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score" -RendererId $radialDialId;
+    $configuration = $Global:XrmClient | Get-XrmRecord -LogicalName "controlconfiguration" -Id $visualizationRef.Id -Columns "metadatajson" -AsEntity;
+    Assert-Test "Second call: same row, renderer updated" { $updatedRef.Id -eq $visualizationRef.Id -and $configuration["metadatajson"] -eq "{`"type`":`"$radialDialId`"}" };
+
+    $removed = Set-XrmColumnVisualization -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score" -Remove;
+    Assert-Test "-Remove: row deleted, nothing returned" { $null -eq $removed -and $null -eq ($Global:XrmClient | Get-XrmRecord -LogicalName "controlconfiguration" -Id $visualizationRef.Id -IfExists) };
+    $removeAgainError = $null;
+    try { Set-XrmColumnVisualization -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score" -Remove -ErrorAction Stop; } catch { $removeAgainError = $_.Exception.Message; }
+    Assert-Test "-Remove without visualization: nothing, no error" { $null -eq $removeAgainError };
+}
+
 Write-Section "New-XrmBooleanColumn -TrueLabels -FalseLabels";
 $boolean = New-XrmBooleanColumn -LogicalName "${prefix}_enabled" -SchemaName "${prefix}_Enabled" -DisplayName "Enabled" -TrueLabels @{ 1033 = "On"; 1036 = "Marche" } -FalseLabels @{ 1033 = "Off"; 1036 = "Arret" };
 $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $boolean | Out-Null;
@@ -139,9 +185,15 @@ $lookup.DisplayName = New-XrmLabel -Text "Account";
 $lookup.RequiredLevel = New-Object Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevelManagedProperty([Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::None);
 $Global:XrmClient | Add-XrmOneToManyRelationship -OneToManyRelationship $oneToMany -Lookup $lookup | Out-Null;
 
+$menuBefore = (Get-XrmRelationship -XrmClient $Global:XrmClient -Name $relationshipName).AssociatedMenuConfiguration;
 $menu = New-XrmAssociatedMenuConfiguration -Behavior UseLabel -Group Details -Labels @{ 1033 = "PDO rows"; 1036 = "Lignes PDO" } -Order 10500;
 $Global:XrmClient | Set-XrmRelationship -Name $relationshipName -CascadeConfiguration (New-XrmCascadeConfiguration -Delete Restrict) -AssociatedMenuConfiguration $menu | Out-Null;
 $relationship = Get-XrmRelationship -XrmClient $Global:XrmClient -Name $relationshipName;
+# K16: the value-type properties of a new menu object (false, empty Guid) are not copied
+Assert-Test "Menu: IsCustomizable, AvailableOffline and ViewId kept" {
+    $relationship.AssociatedMenuConfiguration.IsCustomizable -eq $menuBefore.IsCustomizable -and $relationship.AssociatedMenuConfiguration.AvailableOffline -eq $menuBefore.AvailableOffline -and
+    $relationship.AssociatedMenuConfiguration.ViewId -eq $menuBefore.ViewId;
+};
 Assert-Test "Cascade: Delete Restrict applied, Assign kept (NoCascade)" {
     $relationship.CascadeConfiguration.Delete -eq [Microsoft.Xrm.Sdk.Metadata.CascadeType]::Restrict -and $relationship.CascadeConfiguration.Assign -eq [Microsoft.Xrm.Sdk.Metadata.CascadeType]::NoCascade;
 };
@@ -164,6 +216,9 @@ Assert-Test "Get-XrmAlternateKey -IfExists on a missing key: `$null" { $null -eq
 # Cleanup
 # ============================================================
 Write-Section "Cleanup";
+if ($visualizationRef) { $Global:XrmClient | Remove-XrmRecord -LogicalName "controlconfiguration" -Id $visualizationRef.Id -IfExists; }
+try { $Global:XrmClient | Remove-XrmRecord -LogicalName "solution" -Id $visualizationSolutionRef.Id -IfExists; } catch { Write-Host "  Cleanup failed: $($_.Exception.Message)" -ForegroundColor Red; }
+try { $Global:XrmClient | Remove-XrmRecord -LogicalName "publisher" -Id $visualizationPublisherRef.Id -IfExists; } catch { Write-Host "  Cleanup failed: $($_.Exception.Message)" -ForegroundColor Red; }
 try { $Global:XrmClient | Remove-XrmRelationship -Name $relationshipName | Out-Null; } catch { }
 try { $Global:XrmClient | Remove-XrmTable -LogicalName $tableName | Out-Null; } catch { Write-Host "  Cleanup failed: $($_.Exception.Message)" -ForegroundColor Red; }
 if ($activity) {

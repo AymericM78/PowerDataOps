@@ -1,6 +1,8 @@
 <#
-    Run a query (QueryExpression or QueryByAttribute) page by page and pass each page (EntityCollection) to OnPage.
+    Run a query (QueryExpression, QueryByAttribute or FetchExpression) page by page and pass each page (EntityCollection) to OnPage.
     Paging is enabled when the query has no TopCount. The query PageInfo is overwritten, as Get-XrmMultipleRecords always did.
+    A FetchExpression is paged through its page, count and paging-cookie attributes, on a copy of its XML (count becomes PageSize);
+    a fetch with top, or an aggregate fetch, is read in one call.
     A failed page stops the loop (the error is written as before, with what was read so far).
     OnPage runs in a child scope: accumulate into a reference type (list, hashset, hashtable).
 #>
@@ -27,9 +29,18 @@ function Invoke-XrmQueryPagesInternal {
         $OnPage
     )
 
-    $enablePaging = ($null -eq $Query.TopCount);
+    $isFetch = $Query -is [Microsoft.Xrm.Sdk.Query.FetchExpression];
+    if ($isFetch) {
+        [xml]$fetchDocument = $Query.Query;
+        $fetchNode = $fetchDocument.DocumentElement;
+        $enablePaging = -not ($fetchNode.HasAttribute("top") -or $fetchNode.GetAttribute("aggregate") -eq "true");
+    }
+    else {
+        $enablePaging = ($null -eq $Query.TopCount);
+    }
     $pageNumber = 1;
-    if ($enablePaging) {
+    $pagingCookie = $null;
+    if ($enablePaging -and -not $isFetch) {
         $Query.PageInfo = [Microsoft.Xrm.Sdk.Query.PagingInfo]::new();
         $Query.PageInfo.PageNumber = $pageNumber;
         $Query.PageInfo.Count = $PageSize;
@@ -37,7 +48,19 @@ function Invoke-XrmQueryPagesInternal {
     }
 
     while ($true) {
-        $results = Protect-XrmCommand -ScriptBlock { $XrmClient.RetrieveMultiple($Query) };
+        $pageQuery = $Query;
+        if ($enablePaging -and $isFetch) {
+            $fetchNode.SetAttribute("page", [string]$pageNumber);
+            $fetchNode.SetAttribute("count", [string]$PageSize);
+            if ($pagingCookie) {
+                $fetchNode.SetAttribute("paging-cookie", $pagingCookie);
+            }
+            else {
+                $fetchNode.RemoveAttribute("paging-cookie");
+            }
+            $pageQuery = [Microsoft.Xrm.Sdk.Query.FetchExpression]::new($fetchDocument.OuterXml);
+        }
+        $results = Protect-XrmCommand -ScriptBlock { $XrmClient.RetrieveMultiple($pageQuery) };
         if ($null -eq $results) {
             break;
         }
@@ -49,8 +72,13 @@ function Invoke-XrmQueryPagesInternal {
 
         if ($enablePaging -and $results.MoreRecords) {
             $pageNumber++;
-            $Query.PageInfo.PageNumber = $pageNumber;
-            $Query.PageInfo.PagingCookie = $results.PagingCookie;
+            if ($isFetch) {
+                $pagingCookie = $results.PagingCookie;
+            }
+            else {
+                $Query.PageInfo.PageNumber = $pageNumber;
+                $Query.PageInfo.PagingCookie = $results.PagingCookie;
+            }
         }
         else {
             break;

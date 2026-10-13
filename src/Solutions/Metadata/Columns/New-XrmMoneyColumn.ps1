@@ -126,5 +126,5 @@ function New-XrmMoneyColumn {
     }
 }
 
-Set-Alias -Name New-MoneyColumn -Value New-XrmMoneyColumn;
+Set-Alias -Name New-MoneyColumn -Value New-XrmMoneyColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmMoneyColumn -Alias *;

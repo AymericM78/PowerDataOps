@@ -3,7 +3,7 @@
 ## Description
 
 **Retrieve an environment variable: definition, value and effective value.** : Read an environment variable definition and its value record (override) in one query, and return a summary:
-SchemaName, DisplayName, Type (String, Number, Boolean, JSON, DataSource, Secret), DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
+SchemaName, DisplayName, Description, Type (String, Number, Boolean, JSON, DataSource, Secret), DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
 EffectiveValue is the override when a value record exists (even empty), else the default value.
 
 ## Inputs
@@ -15,7 +15,7 @@ Name|String|2|true||Environment variable definition schema name.
 IfExists|SwitchParameter|named|false|False|Return $null when the definition does not exist, instead of raising an error.
 
 ## Outputs
-PSCustomObject. SchemaName, DisplayName, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
+PSCustomObject. SchemaName, DisplayName, Description, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
 
 ## Usage
 

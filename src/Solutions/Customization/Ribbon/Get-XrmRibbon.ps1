@@ -96,7 +96,7 @@ function Get-XrmRibbon {
 
             $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $exportedSolution -Managed $false -ExportPath $OutputPath;
             $extractPath = Join-Path $OutputPath "RibbonExtract_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
-            Expand-Archive -Path $solutionFilePath -DestinationPath $extractPath -Force;
+            Expand-Archive -Path $solutionFilePath -DestinationPath $extractPath -Force -WhatIf:$false;
             $customizationsPath = Join-Path $extractPath "customizations.xml";
             if (-not (Test-Path $customizationsPath)) {
                 throw "customizations.xml not found in exported solution.";
@@ -125,10 +125,10 @@ function Get-XrmRibbon {
                 }
             }
             if ($extractPath -and (Test-Path $extractPath)) {
-                Remove-Item -Path $extractPath -Recurse -Force -ErrorAction SilentlyContinue;
+                Remove-Item -Path $extractPath -Recurse -Force -ErrorAction SilentlyContinue -WhatIf:$false;
             }
             if ($useTempSolution -and $solutionFilePath -and (Test-Path $solutionFilePath)) {
-                Remove-Item -Path $solutionFilePath -Force -ErrorAction SilentlyContinue;
+                Remove-Item -Path $solutionFilePath -Force -ErrorAction SilentlyContinue -WhatIf:$false;
             }
         }
     }

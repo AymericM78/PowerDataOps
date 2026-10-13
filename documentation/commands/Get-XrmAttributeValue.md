@@ -16,6 +16,7 @@ Name|String|2|true||Attribute (Column) name. Alias: Column.
 FormattedValue|SwitchParameter|named|false|False|Specify if expected value should be provided from FormattedValues <> raw value.
 RaiseErrorIfMissing|Boolean|3|false|False|If true, throws an exception if attribute/column is not present in row / record. Else, ignore.
 Raw|SwitchParameter|named|false|False|Return a plain .NET value: OptionSetValue => int, OptionSetValueCollection => int[], Money => decimal, AliasedValue => inner value, BooleanManagedProperty => bool. Lookups stay EntityReference (see AsId).
+A multiple choice column gives ONE int[] object, never unrolled, and $null when empty: assign it to a variable first. Wrapping the call in @() or piping it to Where-Object gives an array of one element holding the int[] (Count = 1, -contains is false).
 AsId|SwitchParameter|named|false|False|Return the Guid of a lookup (EntityReference) column, $null when empty.
 
 ## Outputs
@@ -39,6 +40,15 @@ $account = Get-XrmRecord -LogicalName "account" -Id $accountId -Columns "industr
 $industryCode = $account | Get-XrmRowValue -Name "industrycode" -Raw;     # int, not the label
 $doNotEmail = $account | Get-XrmRowValue -Name "donotemail";               # bool, not "Do Not Allow"
 $parentId = $account | Get-XrmRowValue -Name "parentaccountid" -AsId;      # Guid or $null
+``` 
+
+
+```Powershell 
+# Multiple choice column: assign, then cast (an empty column gives $null)
+$values = $row | Get-XrmRowValue -Name "new_channels" -Raw;
+$channels = [int[]]@();
+if ($null -ne $values) { $channels = [int[]]$values; }
+if ($channels -contains 2) { Write-Host "Email channel"; }
 ``` 
 
 ## More informations

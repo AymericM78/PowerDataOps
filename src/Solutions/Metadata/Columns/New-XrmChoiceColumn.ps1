@@ -176,5 +176,5 @@ function New-XrmChoiceColumn {
     }
 }
 
-Set-Alias -Name New-ChoiceColumn -Value New-XrmChoiceColumn;
+Set-Alias -Name New-ChoiceColumn -Value New-XrmChoiceColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmChoiceColumn -Alias *;

@@ -93,7 +93,8 @@ function Write-HostAndLog {
         }
     
         $targetLogFilePath = $(if ($PSBoundParameters.ContainsKey('LogFilePath')) { $LogFilePath } else { $Global:LogFilePath });
-        $logMessage | Out-File -FilePath $targetLogFilePath -Encoding utf8 -Append -Force;
+        # -WhatIf:$false: the log of a dry run is written too ($WhatIfPreference may be set globally by "pwsh script.ps1 -WhatIf")
+        $logMessage | Out-File -FilePath $targetLogFilePath -Encoding utf8 -Append -Force -WhatIf:$false;
         
         if ($level -eq "VERB") {
             Write-Verbose $Message;

@@ -110,5 +110,5 @@ function New-XrmFileColumn {
     }
 }
 
-Set-Alias -Name New-FileColumn -Value New-XrmFileColumn;
+Set-Alias -Name New-FileColumn -Value New-XrmFileColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmFileColumn -Alias *;

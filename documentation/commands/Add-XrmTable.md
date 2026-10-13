@@ -35,6 +35,8 @@ IsDocumentManagementEnabled|Boolean|24|false|False|Whether SharePoint document m
 IsMailMergeEnabled|Boolean|25|false|False|Whether mail merge is enabled.
 ChangeTrackingEnabled|Boolean|26|false|False|Whether change tracking is enabled.
 SyncToExternalSearchIndex|Boolean|27|false|False|Whether the table is indexed by Dataverse search.
+SchemaName|String|28|false||Table schema name, with its casing (e.g. "new_BankAccount"). It must be LogicalName with another casing. (Default: LogicalName)
+IsBusinessProcessEnabled|Boolean|29|false|False|Whether business process flows can be created on the table (the platform then adds the process columns; it cannot be turned off afterwards).
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
@@ -44,7 +46,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 ## Usage
 
 ```Powershell 
-Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-DisplayName] <String>] [[-PluralName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [[-PrimaryAttributeDisplayName] <String>] [[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-PrimaryAttributeDisplayNameLabels] <Hashtable>] [[-IconVectorName] <String>] [[-IsAvailableOffline] <Boolean>] [[-IsQuickCreateEnabled] <Boolean>] [[-IsConnectionsEnabled] <Boolean>] [[-IsDocumentManagementEnabled] <Boolean>] [[-IsMailMergeEnabled] <Boolean>] [[-ChangeTrackingEnabled] <Boolean>] [[-SyncToExternalSearchIndex] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-XrmTable [[-XrmClient] <ServiceClient>] [-LogicalName] <String> [[-DisplayName] <String>] [[-PluralName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [-PrimaryAttributeSchemaName] <String> [[-PrimaryAttributeDisplayName] <String>] [[-PrimaryAttributeMaxLength] <Int32>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-PrimaryAttributeDisplayNameLabels] <Hashtable>] [[-IconVectorName] <String>] [[-IsAvailableOffline] <Boolean>] [[-IsQuickCreateEnabled] <Boolean>] [[-IsConnectionsEnabled] <Boolean>] [[-IsDocumentManagementEnabled] <Boolean>] [[-IsMailMergeEnabled] <Boolean>] [[-ChangeTrackingEnabled] <Boolean>] [[-SyncToExternalSearchIndex] <Boolean>] [[-SchemaName] <String>] [[-IsBusinessProcessEnabled] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -56,6 +58,12 @@ $response = Add-XrmTable -LogicalName "new_project" -DisplayName "Project" -Plur
 
 ```Powershell 
 $response = Add-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" } -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayNameLabels @{ 1033 = "Name"; 1036 = "Nom" };
+``` 
+
+
+```Powershell 
+# Schema name with its casing: the table is created as new_BankAccount (logical name new_bankaccount)
+$response = Add-XrmTable -LogicalName "new_bankaccount" -SchemaName "new_BankAccount" -DisplayName "Bank account" -PluralName "Bank accounts" -PrimaryAttributeSchemaName "new_Name" -PrimaryAttributeDisplayName "Name";
 ``` 
 
 

@@ -12,15 +12,18 @@
     Entity reference of the SDK message processing step to enable.
 
     .OUTPUTS
-    System.Void.
+    Microsoft.Xrm.Sdk.EntityReference. The plugin step reference, as returned by Set-XrmRecordState.
 
     .EXAMPLE
     $stepRef = New-XrmEntityReference -LogicalName "sdkmessageprocessingstep" -Id $stepId;
     Enable-XrmPluginStep -PluginStepReference $stepRef;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmPluginStep.md
 #>
 function Enable-XrmPluginStep {
     [CmdletBinding(SupportsShouldProcess)]
-    [OutputType([System.Void])]
+    [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

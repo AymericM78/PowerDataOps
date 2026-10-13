@@ -232,6 +232,65 @@ function Resolve-XrmClientConnectionStringInternal {
 }
 
 
+# True when a (resolved) connection string may show an OAuth sign-in prompt: OAuth without password, secret or certificate, and LoginPrompt other than Never
+function Test-XrmConnectionStringPromptInternal {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]
+        $ConnectionString
+    );
+
+    $connectionStringParameters = ConvertTo-XrmConnectionStringMapInternal -RawConnectionString $ConnectionString;
+    $authType = Get-XrmConnectionStringValueInternal -Parameters $connectionStringParameters -Names @('AuthType', 'AuthenticationType');
+    if ($authType -ne 'OAuth') {
+        return $false;
+    }
+    foreach ($credentialNames in @('Password'), @('ClientSecret', 'Secret'), @('Thumbprint', 'CertThumbprint')) {
+        if (-not [string]::IsNullOrWhiteSpace((Get-XrmConnectionStringValueInternal -Parameters $connectionStringParameters -Names $credentialNames))) {
+            return $false;
+        }
+    }
+    $loginPrompt = Get-XrmConnectionStringValueInternal -Parameters $connectionStringParameters -Names @('LoginPrompt');
+    return ($loginPrompt -ne 'Never');
+}
+
+
+# Why the session cannot answer an interactive sign-in, or $null when it can: no user desktop (service, pipeline agent),
+# a remote session, or a host started with -NonInteractive. The parameters exist for the tests.
+function Get-XrmNonInteractiveReasonInternal {
+    param(
+        [Parameter(Mandatory = $false)]
+        [string[]]
+        $CommandLineArgs = [Environment]::GetCommandLineArgs(),
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $UserInteractive = [Environment]::UserInteractive,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $HostName = $Host.Name
+    );
+
+    if (-not $UserInteractive) {
+        return 'the process has no interactive desktop';
+    }
+    if ($HostName -eq 'ServerRemoteHost') {
+        return 'it is a remote session';
+    }
+    # Host options come first; the script (-File, or a .ps1 path) or the command ends them, and what follows belongs to it
+    foreach ($argument in @($CommandLineArgs | Select-Object -Skip 1)) {
+        if ($argument -match '^(-|--|/)(f|file|c|command|e|ec|encodedcommand|cwa|commandwithargs)$' -or $argument -like '*.ps1') {
+            break;
+        }
+        if ($argument -match '^(-|--|/)noni') {
+            return 'PowerShell was started with -NonInteractive';
+        }
+    }
+    return $null;
+}
+
+
 function New-XrmClientConnectionStringInternal {
     param(
         [Parameter(Mandatory = $true)]

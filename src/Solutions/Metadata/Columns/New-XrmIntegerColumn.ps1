@@ -117,5 +117,5 @@ function New-XrmIntegerColumn {
     }
 }
 
-Set-Alias -Name New-IntegerColumn -Value New-XrmIntegerColumn;
+Set-Alias -Name New-IntegerColumn -Value New-XrmIntegerColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmIntegerColumn -Alias *;

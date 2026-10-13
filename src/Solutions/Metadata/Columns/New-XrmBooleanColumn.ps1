@@ -159,5 +159,5 @@ function New-XrmBooleanColumn {
     }
 }
 
-Set-Alias -Name New-BooleanColumn -Value New-XrmBooleanColumn;
+Set-Alias -Name New-BooleanColumn -Value New-XrmBooleanColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmBooleanColumn -Alias *;

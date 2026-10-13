@@ -29,6 +29,10 @@
     .PARAMETER TargetSolutionUniqueName
     Unmanaged solution to add the table to after the import (the ribbon belongs to the table component), distinct from the temporary or exported solution.
 
+    .PARAMETER DoNotIncludeSubcomponents
+    With TargetSolutionUniqueName: add the table without its columns, forms, views... (Default: true, the table travels as a shell, which suits a standard table).
+    Pass $false for a custom table that must travel with its subcomponents. A table already in the target solution with its subcomponents keeps them either way.
+
     .OUTPUTS
     System.Void.
 
@@ -40,6 +44,10 @@
     .EXAMPLE
     # Temporary solution with the publisher of the target solution, table added to the target afterwards
     Import-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "account" -RibbonDiffXml $ribbonXml -PublisherUniqueName "contoso" -TargetSolutionUniqueName "ContosoCore";
+
+    .EXAMPLE
+    # Custom table: added to the target solution with its subcomponents
+    Import-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "new_project" -RibbonDiffXml $ribbonXml -TargetSolutionUniqueName "ContosoCore" -DoNotIncludeSubcomponents $false;
 
     .LINK
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Import-XrmRibbon.md
@@ -79,7 +87,11 @@ function Import-XrmRibbon {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $TargetSolutionUniqueName
+        $TargetSolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $DoNotIncludeSubcomponents = $true
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -122,7 +134,7 @@ function Import-XrmRibbon {
             $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $SolutionUniqueName -Managed $false -ExportPath $env:TEMP;
 
             # Extract zip
-            Expand-Archive -Path $solutionFilePath -DestinationPath $workPath -Force;
+            Expand-Archive -Path $solutionFilePath -DestinationPath $workPath -Force -WhatIf:$false;
 
             # Modify customizations.xml
             $customizationsPath = Join-Path $workPath "customizations.xml";
@@ -162,7 +174,7 @@ function Import-XrmRibbon {
             # Re-zip
             $importZipPath = Join-Path $env:TEMP "$($SolutionUniqueName)_ribbon.zip";
             if (Test-Path $importZipPath) {
-                Remove-Item -Path $importZipPath -Force;
+                Remove-Item -Path $importZipPath -Force -WhatIf:$false;
             }
             [System.IO.Compression.ZipFile]::CreateFromDirectory($workPath, $importZipPath);
 
@@ -170,7 +182,7 @@ function Import-XrmRibbon {
             $XrmClient | Import-XrmSolution -SolutionUniqueName $SolutionUniqueName -SolutionFilePath $importZipPath -OverwriteUnmanagedCustomizations $true;
             if ($PSBoundParameters.ContainsKey('TargetSolutionUniqueName')) {
                 $tableMetadata = $XrmClient | Get-XrmEntityMetadata -LogicalName $EntityLogicalName -Filter Entity;
-                $XrmClient | Add-XrmSolutionComponent -SolutionUniqueName $TargetSolutionUniqueName -ComponentId $tableMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $true | Out-Null;
+                $XrmClient | Add-XrmSolutionComponent -SolutionUniqueName $TargetSolutionUniqueName -ComponentId $tableMetadata.MetadataId -ComponentType 1 -DoNotIncludeSubcomponents $DoNotIncludeSubcomponents | Out-Null;
             }
 
             # Publish
@@ -191,13 +203,13 @@ function Import-XrmRibbon {
 
             # Cleanup work files
             if (Test-Path $workPath) {
-                Remove-Item -Path $workPath -Recurse -Force -ErrorAction SilentlyContinue;
+                Remove-Item -Path $workPath -Recurse -Force -ErrorAction SilentlyContinue -WhatIf:$false;
             }
             if ($importZipPath -and (Test-Path $importZipPath)) {
-                Remove-Item -Path $importZipPath -Force -ErrorAction SilentlyContinue;
+                Remove-Item -Path $importZipPath -Force -ErrorAction SilentlyContinue -WhatIf:$false;
             }
             if ($solutionFilePath -and (Test-Path $solutionFilePath)) {
-                Remove-Item -Path $solutionFilePath -Force -ErrorAction SilentlyContinue;
+                Remove-Item -Path $solutionFilePath -Force -ErrorAction SilentlyContinue -WhatIf:$false;
             }
         }
     }

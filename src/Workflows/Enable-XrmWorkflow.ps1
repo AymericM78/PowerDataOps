@@ -12,15 +12,18 @@
     Entity reference of the workflow to enable.
 
     .OUTPUTS
-    System.Void.
+    Microsoft.Xrm.Sdk.EntityReference. The workflow reference, as returned by Set-XrmRecordState.
 
     .EXAMPLE
     $wfRef = New-XrmEntityReference -LogicalName "workflow" -Id $workflowId;
     Enable-XrmWorkflow -WorkflowReference $wfRef;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmWorkflow.md
 #>
 function Enable-XrmWorkflow {
     [CmdletBinding(SupportsShouldProcess)]
-    [OutputType([System.Void])]
+    [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

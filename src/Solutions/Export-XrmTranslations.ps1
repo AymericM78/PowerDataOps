@@ -69,7 +69,7 @@ function Export-XrmTranslations {
         [System.IO.File]::WriteAllBytes($filePath, $response.Results["ExportTranslationFile"]);
         if ($Unpack) {
             $folderPath = [System.IO.Path]::ChangeExtension($filePath, $null);
-            Expand-Archive -Path $filePath -DestinationPath $folderPath -Force;
+            Expand-Archive -Path $filePath -DestinationPath $folderPath -Force -WhatIf:$false;
             return $folderPath;
         }
         $filePath;

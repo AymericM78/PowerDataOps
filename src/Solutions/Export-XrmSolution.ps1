@@ -232,7 +232,7 @@ function Export-XrmSolution {
 
         if ($Unpack) {
             $folderPath = $(if ($PSBoundParameters.ContainsKey('UnpackPath')) { $UnpackPath } else { [System.IO.Path]::ChangeExtension($solutionFilePath, $null) });
-            Expand-Archive -Path $solutionFilePath -DestinationPath $folderPath -Force;
+            Expand-Archive -Path $solutionFilePath -DestinationPath $folderPath -Force -WhatIf:$false;
             return $folderPath;
         }
 

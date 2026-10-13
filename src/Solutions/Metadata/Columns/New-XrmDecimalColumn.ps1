@@ -126,5 +126,5 @@ function New-XrmDecimalColumn {
     }
 }
 
-Set-Alias -Name New-DecimalColumn -Value New-XrmDecimalColumn;
+Set-Alias -Name New-DecimalColumn -Value New-XrmDecimalColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmDecimalColumn -Alias *;

@@ -4,6 +4,7 @@
 
 **Create an AssociatedMenuConfiguration object for a relationship.** : Build how the related rows appear in the navigation of the parent form (classic "Related" menu): behavior, group, label and order.
 Only the given properties are set: with Set-XrmRelationship, the others keep their current value.
+IsCustomizable, AvailableOffline and ViewId are not offered: their setters are internal to the SDK and UpdateRelationship ignores them.
 
 ## Inputs
 

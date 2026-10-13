@@ -86,6 +86,12 @@
     .PARAMETER SyncToExternalSearchIndex
     Whether the table is indexed by Dataverse search.
 
+    .PARAMETER SchemaName
+    Table schema name, with its casing (e.g. "new_BankAccount"). It must be LogicalName with another casing. (Default: LogicalName)
+
+    .PARAMETER IsBusinessProcessEnabled
+    Whether business process flows can be created on the table (the platform then adds the process columns; it cannot be turned off afterwards).
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The CreateEntity response.
 
@@ -94,6 +100,10 @@
 
     .EXAMPLE
     $response = Add-XrmTable -LogicalName "new_project" -DisplayNameLabels @{ 1033 = "Project"; 1036 = "Projet" } -PluralNameLabels @{ 1033 = "Projects"; 1036 = "Projets" } -PrimaryAttributeSchemaName "new_name" -PrimaryAttributeDisplayNameLabels @{ 1033 = "Name"; 1036 = "Nom" };
+
+    .EXAMPLE
+    # Schema name with its casing: the table is created as new_BankAccount (logical name new_bankaccount)
+    $response = Add-XrmTable -LogicalName "new_bankaccount" -SchemaName "new_BankAccount" -DisplayName "Bank account" -PluralName "Bank accounts" -PrimaryAttributeSchemaName "new_Name" -PrimaryAttributeDisplayName "Name";
 
     .EXAMPLE
     # Activity table: the primary column of an activity is its subject
@@ -218,7 +228,16 @@ function Add-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $SyncToExternalSearchIndex
+        $SyncToExternalSearchIndex,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $SchemaName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsBusinessProcessEnabled
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -251,7 +270,7 @@ function Add-XrmTable {
         if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) { $tableParams['DisplayNameLabels'] = $DisplayNameLabels; }
         if ($PSBoundParameters.ContainsKey('PluralNameLabels')) { $tableParams['PluralNameLabels'] = $PluralNameLabels; }
         if ($PSBoundParameters.ContainsKey('DescriptionLabels')) { $tableParams['DescriptionLabels'] = $DescriptionLabels; }
-        foreach ($flag in "IsAvailableOffline", "IsQuickCreateEnabled", "IsConnectionsEnabled", "IsDocumentManagementEnabled", "IsMailMergeEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex") {
+        foreach ($flag in "IsAvailableOffline", "IsQuickCreateEnabled", "IsConnectionsEnabled", "IsDocumentManagementEnabled", "IsMailMergeEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex", "IsBusinessProcessEnabled", "SchemaName") {
             if ($PSBoundParameters.ContainsKey($flag)) { $tableParams[$flag] = $PSBoundParameters[$flag]; }
         }
 

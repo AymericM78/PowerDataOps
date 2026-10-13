@@ -6,7 +6,7 @@
     Performs custom action on given collection with progress information.
 
     .PARAMETER Collection
-    Object collection to process.
+    Object collection to process, or one element when piped: piped elements are collected first, so the progress shows the real total.
 
     .PARAMETER OperationName
     Name of operation to display in progress bar.
@@ -31,13 +31,17 @@
         Start-Sleep -Seconds 1;
         Write-Host "Element : $item";
     }
+
+    .EXAMPLE
+    # Piped elements are collected first: the progress shows "item n of 5"
+    $items | ForEach-ObjectWithProgress -OperationName "Simply count items" -ScriptBlock { param($item) Write-Host "Element : $item"; }
 #>
 function ForEach-ObjectWithProgress {
     [CmdletBinding()]
     param
     (
         [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
-        [array]
+        [object]
         $Collection,
 
         [Parameter(Mandatory = $false)]
@@ -63,21 +67,23 @@ function ForEach-ObjectWithProgress {
     begin {  
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
+        $items = [System.Collections.Generic.List[object]]::new();
     }    
     process {
-
-        if (-not $Collection) {
-            return;
+        # From the pipeline, each call brings one element (which may itself be an array): it is kept whole
+        if ($MyInvocation.ExpectingInput) {
+            $items.Add($Collection);
         }
-
+        elseif ($null -ne $Collection) {
+            foreach ($item in $Collection) {
+                $items.Add($item);
+            }
+        }
+    }
+    end {
         $current = 0;
-        $total = $Collection.Count;
-
-        if ($total -eq 0) {
-            return;
-        }
-
-        foreach ($item in $Collection) {
+        $total = $items.Count;
+        foreach ($item in $items) {
             $current++;
             $percent = ($current / $total) * 100;
 
@@ -91,8 +97,6 @@ function ForEach-ObjectWithProgress {
                 Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $item;
             }
         } 
-    }
-    end {
         $StopWatch.Stop();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Stop -StopWatch $StopWatch;
         Write-Progress -Activity $OperationName -Id $Id -Completed;

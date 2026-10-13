@@ -27,6 +27,8 @@ Interactive sign-in with a login hint:
 Connect-XrmClient -Url "https://contoso.crm.dynamics.com" -UserName "user@contoso.com";
 ```
 
+Interactive sign-in needs someone to answer the prompt: in a session started with `-NonInteractive`, without user desktop (service, pipeline agent) or remote, it fails at once with an explicit message instead of waiting for the timeout. Use a client secret or a certificate there.
+
 Application authentication with client secret:
 
 ```powershell
@@ -64,11 +66,17 @@ Explicit client-secret connection string:
 New-XrmClient -ConnectionString "AuthType=ClientSecret;Url=https://contosotest.crm.dynamics.com;ClientId={AppId};ClientSecret={ClientSecret}";
 ```
 
-New-XrmClient command will try to run Connect-XrmAdmin automatically.
+When an admin connection was opened with Connect-XrmAdmin, New-XrmClient refreshes it if the new connection targets another tenant.
 
 ### Connect-XrmAdmin
 
 This cmdlet authenticate admin user in order to manage environments with  Microsoft.PowerApps.Administration.PowerShell module.
+PowerDataOps loads that module on first use (since 2.0.0.65 it is neither loaded at import nor installed automatically). Install it once:
+
+```powershell
+Install-Module -Name Microsoft.PowerApps.Administration.PowerShell -Scope CurrentUser
+```
+
 Parameters are the same as [`Add-PowerAppsAccount`](https://docs.microsoft.com/en-us/powershell/module/microsoft.powerapps.administration.powershell/add-powerappsaccount?view=pa-ps-latest)
 
 ```powershell

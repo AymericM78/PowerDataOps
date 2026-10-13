@@ -14,7 +14,7 @@ WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
 ## Outputs
-System.Void.
+Microsoft.Xrm.Sdk.EntityReference. The workflow reference, as returned by Set-XrmRecordState.
 
 ## Usage
 
@@ -28,5 +28,9 @@ Disable-XrmWorkflow [[-XrmClient] <ServiceClient>] [-WorkflowReference] <EntityR
 $wfRef = New-XrmEntityReference -LogicalName "workflow" -Id $workflowId;
 Disable-XrmWorkflow -WorkflowReference $wfRef;
 ``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmWorkflow.md
 
 

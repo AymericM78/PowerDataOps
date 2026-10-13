@@ -22,6 +22,7 @@
 
     .PARAMETER Raw
     Return a plain .NET value: OptionSetValue => int, OptionSetValueCollection => int[], Money => decimal, AliasedValue => inner value, BooleanManagedProperty => bool. Lookups stay EntityReference (see AsId).
+    A multiple choice column gives ONE int[] object, never unrolled, and $null when empty: assign it to a variable first. Wrapping the call in @() or piping it to Where-Object gives an array of one element holding the int[] (Count = 1, -contains is false).
 
     .PARAMETER AsId
     Return the Guid of a lookup (EntityReference) column, $null when empty.
@@ -37,6 +38,13 @@
     $industryCode = $account | Get-XrmRowValue -Name "industrycode" -Raw;     # int, not the label
     $doNotEmail = $account | Get-XrmRowValue -Name "donotemail";               # bool, not "Do Not Allow"
     $parentId = $account | Get-XrmRowValue -Name "parentaccountid" -AsId;      # Guid or $null
+
+    .EXAMPLE
+    # Multiple choice column: assign, then cast (an empty column gives $null)
+    $values = $row | Get-XrmRowValue -Name "new_channels" -Raw;
+    $channels = [int[]]@();
+    if ($null -ne $values) { $channels = [int[]]$values; }
+    if ($channels -contains 2) { Write-Host "Email channel"; }
 
     .LINK
     https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Get-XrmAttributeValue.md
@@ -84,6 +92,10 @@ function Get-XrmAttributeValue {
         if ($null -ne $entity -and $entity -isnot [Microsoft.Xrm.Sdk.Entity]) {
             if ($entity.PSObject.Properties["Record"] -and $entity.Record -is [Microsoft.Xrm.Sdk.Entity]) {
                 $entity = $entity.Record;
+            }
+            elseif ($entity -is [System.Array]) {
+                # Typical cause: @(Get-XrmMultipleRecords ... -AsArray) is an array holding the whole result
+                throw "Record must be one row, not an array of $($entity.Count) item(s). A whole -AsArray result was probably passed as one row: assign Get-XrmMultipleRecords ... -AsArray to a variable and loop on it, instead of wrapping the call in @().";
             }
             else {
                 throw "Record must be an Entity or a row returned by Get-XrmRecord / Get-XrmMultipleRecords (type: $($entity.GetType().Name)).";
@@ -143,9 +155,10 @@ function Get-XrmAttributeValue {
     }
 }
 
-Set-Alias GetAttributeValue Get-XrmAttributeValue;
+Set-Alias GetAttributeValue Get-XrmAttributeValue -WhatIf:$false;
 # Module-qualified: an alias wins over a function of the same name, and its target is resolved from the caller's scope
-Set-Alias Get-XrmRowValue PowerDataOps\Get-XrmAttributeValue;
+# -WhatIf:$false: a script run as "pwsh script.ps1 -WhatIf" sets $WhatIfPreference globally, which would skip the alias
+Set-Alias Get-XrmRowValue PowerDataOps\Get-XrmAttributeValue -WhatIf:$false;
 Export-ModuleMember -Function Get-XrmAttributeValue -Alias *;
 
 Register-ArgumentCompleter -CommandName Get-XrmAttributeValue -ParameterName "Name" -ScriptBlock {

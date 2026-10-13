@@ -37,7 +37,7 @@
     Return the DeleteRequest without sending it.
 
     .PARAMETER IfExists
-    Do nothing, without error, when the row does not exist (idempotent cleanup). Other errors are written as usual.
+    Do nothing, without error, when the row does not exist (idempotent cleanup). Any other error (privileges, transport...) is raised as a terminating error, like the other -IfExists switches of the module.
 
     .OUTPUTS
     System.Void. With AsRequest: Microsoft.Xrm.Sdk.Messages.DeleteRequest.
@@ -128,7 +128,7 @@ function Remove-XrmRecord {
             }
             catch {
                 if (-not (Test-XrmNotFoundError -ErrorRecord $_)) {
-                    $PSCmdlet.WriteError($_);
+                    throw;
                 }
             }
             return;

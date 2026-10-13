@@ -19,7 +19,7 @@ BypassBusinessLogicExecutionStepIds|Guid[]|6|false||Ids of the plug-in steps to 
 SuppressCallbackRegistrationExpanderJob|SwitchParameter|named|false|False|Do not trigger the Power Automate flows registered on the operation.
 Tag|String|7|false||Value shared with the plug-ins (SharedVariables["tag"]).
 AsRequest|SwitchParameter|named|false|False|Return the DeleteRequest without sending it.
-IfExists|SwitchParameter|named|false|False|Do nothing, without error, when the row does not exist (idempotent cleanup). Other errors are written as usual.
+IfExists|SwitchParameter|named|false|False|Do nothing, without error, when the row does not exist (idempotent cleanup). Any other error (privileges, transport...) is raised as a terminating error, like the other -IfExists switches of the module.
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 

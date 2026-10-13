@@ -118,5 +118,5 @@ function New-XrmLookupColumn {
     }
 }
 
-Set-Alias -Name New-LookupColumn -Value New-XrmLookupColumn;
+Set-Alias -Name New-LookupColumn -Value New-XrmLookupColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmLookupColumn -Alias *;

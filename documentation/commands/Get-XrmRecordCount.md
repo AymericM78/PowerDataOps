@@ -3,7 +3,7 @@
 ## Description
 
 **Count the rows matching a query.** : Return the exact number of rows matching a QueryExpression or a FetchXml query, filters and links included.
-The count is first asked as an aggregate (countcolumn, distinct on the primary key, so a one-to-many link does not count a row twice). When the platform refuses the aggregate (more than 50,000 rows: AggregateQueryRecordLimit), the rows are paged, reading only their ids.
+The count is first asked as an aggregate (countcolumn, distinct on the primary key, so a one-to-many link does not count a row twice). When the platform refuses the aggregate (more than 50,000 rows: AggregateQueryRecordLimit, also worded "The maximum record limit of 50000 is exceeded"), the rows are paged, reading only their ids.
 Columns and orders of the query are ignored; a top / TopCount caps the result. The caller's query is not modified.
 For approximate counts of whole tables, see Get-XrmTotalRecordCount.
 

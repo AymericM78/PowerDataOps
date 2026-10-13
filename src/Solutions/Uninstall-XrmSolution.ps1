@@ -114,7 +114,7 @@ function Uninstall-XrmSolution {
     }
 }
 
-Set-Alias -Name Remove-XrmSolution -Value Uninstall-XrmSolution;
+Set-Alias -Name Remove-XrmSolution -Value Uninstall-XrmSolution -WhatIf:$false;
 Export-ModuleMember -Function Uninstall-XrmSolution -Alias *;
 
 Register-ArgumentCompleter -CommandName Uninstall-XrmSolution -ParameterName "SolutionUniqueName" -ScriptBlock {

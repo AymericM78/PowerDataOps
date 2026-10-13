@@ -73,7 +73,7 @@ function Export-XrmWebResource {
         $filePath = [System.IO.Path]::Combine($OutputPath, $relativePath);
         $folder = [System.IO.Path]::GetDirectoryName($filePath);
         if (-not (Test-Path $folder)) {
-            New-Item -ItemType Directory -Path $folder -Force | Out-Null;
+            New-Item -ItemType Directory -Path $folder -Force -WhatIf:$false | Out-Null;
         }
         $content = [string]$webResource["content"];
         $bytes = $(if ([string]::IsNullOrEmpty($content)) { [byte[]]@() } else { [Convert]::FromBase64String($content) });

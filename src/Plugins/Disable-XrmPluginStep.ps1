@@ -12,15 +12,18 @@
     Entity reference of the SDK message processing step to disable.
 
     .OUTPUTS
-    System.Void.
+    Microsoft.Xrm.Sdk.EntityReference. The plugin step reference, as returned by Set-XrmRecordState.
 
     .EXAMPLE
     $stepRef = New-XrmEntityReference -LogicalName "sdkmessageprocessingstep" -Id $stepId;
     Disable-XrmPluginStep -PluginStepReference $stepRef;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Disable-XrmPluginStep.md
 #>
 function Disable-XrmPluginStep {
     [CmdletBinding(SupportsShouldProcess)]
-    [OutputType([System.Void])]
+    [OutputType([Microsoft.Xrm.Sdk.EntityReference])]
     param
     (        
         [Parameter(Mandatory = $false, ValueFromPipeline)]

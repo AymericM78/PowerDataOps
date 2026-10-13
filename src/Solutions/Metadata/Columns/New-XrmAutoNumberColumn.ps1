@@ -119,5 +119,5 @@ function New-XrmAutoNumberColumn {
     }
 }
 
-Set-Alias -Name New-AutoNumberColumn -Value New-XrmAutoNumberColumn;
+Set-Alias -Name New-AutoNumberColumn -Value New-XrmAutoNumberColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmAutoNumberColumn -Alias *;

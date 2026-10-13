@@ -3,6 +3,7 @@
 ## Description
 
 **Initialize CrmServiceClient instance.** : Create a new connection to Microsoft Dataverse with a connectionstring.
+An OAuth connection without password, secret or certificate signs in interactively. In a session that cannot show a sign-in prompt (started with -NonInteractive, no user desktop, remote session), it fails at once instead of waiting until the timeout, unless the connection string holds LoginPrompt=Never (silent sign-in only).
 
 ## Inputs
 

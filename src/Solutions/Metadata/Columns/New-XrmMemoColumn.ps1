@@ -110,5 +110,5 @@ function New-XrmMemoColumn {
     }
 }
 
-Set-Alias -Name New-MemoColumn -Value New-XrmMemoColumn;
+Set-Alias -Name New-MemoColumn -Value New-XrmMemoColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmMemoColumn -Alias *;

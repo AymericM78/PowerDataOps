@@ -2,7 +2,7 @@
 
 ## Description
 
-**List the environment variables of the organization.** : Return one summary per environment variable definition (see Get-XrmEnvironmentVariable): SchemaName, DisplayName, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
+**List the environment variables of the organization.** : Return one summary per environment variable definition (see Get-XrmEnvironmentVariable): SchemaName, DisplayName, Description, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
 
 ## Inputs
 

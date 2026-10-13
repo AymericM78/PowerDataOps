@@ -6,6 +6,7 @@
     
     .DESCRIPTION
     Use this command to embed Power Apps Admin cmdlets
+    The module Microsoft.PowerApps.Administration.PowerShell is loaded here, on first use, not when PowerDataOps is imported. It is not installed automatically: install it with Install-Module -Name Microsoft.PowerApps.Administration.PowerShell -Scope CurrentUser.
 
     .PARAMETER UserName
     User login
@@ -67,8 +68,9 @@ function Connect-XrmAdmin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);        
     }    
-    process {    
+    process {
 
+        Import-XrmPowerAppsAdminModuleInternal;
         if($Global:XrmContext -and $Global:XrmContext.CurrentConnection){
             $xrmConnection = $Global:XrmContext.CurrentConnection;
         }

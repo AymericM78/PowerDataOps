@@ -100,11 +100,13 @@ function Set-XrmRelationship {
             throw "Relationship '$Name' is many-to-many: use Entity1AssociatedMenuConfiguration or Entity2AssociatedMenuConfiguration.";
         }
 
-        # Copy the properties set on the given configuration onto the current one
+        # Copy the properties set on the given configuration onto the current one.
+        # Only the ones with a public setter: IsCustomizable, AvailableOffline and ViewId (menu) are value types with an internal
+        # setter, never "unset" on a new object, so copying them would send false / an empty Guid (the platform ignores them).
         $copySetProperties = {
             param($source, $target)
             foreach ($property in $source.GetType().GetProperties()) {
-                if (-not $property.CanWrite -or $property.Name -eq "ExtensionData") {
+                if ($null -eq $property.GetSetMethod($false) -or $property.Name -eq "ExtensionData") {
                     continue;
                 }
                 $value = $property.GetValue($source);

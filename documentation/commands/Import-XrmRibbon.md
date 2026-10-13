@@ -18,6 +18,8 @@ SolutionUniqueName|String|4|false||Existing solution unique name to use for impo
 Publish|Boolean|5|false|True|Publish customizations after import. Default: true.
 PublisherUniqueName|String|6|false||Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
 TargetSolutionUniqueName|String|7|false||Unmanaged solution to add the table to after the import (the ribbon belongs to the table component), distinct from the temporary or exported solution.
+DoNotIncludeSubcomponents|Boolean|8|false|True|With TargetSolutionUniqueName: add the table without its columns, forms, views... (Default: true, the table travels as a shell, which suits a standard table).
+Pass $false for a custom table that must travel with its subcomponents. A table already in the target solution with its subcomponents keeps them either way.
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
@@ -27,7 +29,7 @@ System.Void.
 ## Usage
 
 ```Powershell 
-Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-Publish] <Boolean>] [[-PublisherUniqueName] <String>] [[-TargetSolutionUniqueName] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Import-XrmRibbon [[-XrmClient] <ServiceClient>] [-EntityLogicalName] <String> [-RibbonDiffXml] <Object> [[-SolutionUniqueName] <String>] [[-Publish] <Boolean>] [[-PublisherUniqueName] <String>] [[-TargetSolutionUniqueName] <String>] [[-DoNotIncludeSubcomponents] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -42,6 +44,12 @@ Import-XrmRibbon -EntityLogicalName "account" -RibbonDiffXml $ribbonXml;
 ```Powershell 
 # Temporary solution with the publisher of the target solution, table added to the target afterwards
 Import-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "account" -RibbonDiffXml $ribbonXml -PublisherUniqueName "contoso" -TargetSolutionUniqueName "ContosoCore";
+``` 
+
+
+```Powershell 
+# Custom table: added to the target solution with its subcomponents
+Import-XrmRibbon -XrmClient $xrmClient -EntityLogicalName "new_project" -RibbonDiffXml $ribbonXml -TargetSolutionUniqueName "ContosoCore" -DoNotIncludeSubcomponents $false;
 ``` 
 
 ## More informations

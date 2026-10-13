@@ -104,7 +104,7 @@ $solutionUniqueName = "pdoenvvarsol$suffix";
 $solutionRef = $Global:XrmClient | Add-XrmSolution -UniqueName $solutionUniqueName -DisplayName "PDO EnvVar $suffix" -PublisherReference $publisherRef -Version "1.0.0.0" -Description "Integration test solution";
 
 $schemaName = "pdv_testvar$suffix";
-$definitionRef = $Global:XrmClient | Upsert-XrmEnvironmentVariableDefinition -SchemaName $schemaName -DisplayName "PDO Test Var" -DefaultValue "default-1" -SolutionUniqueName $solutionUniqueName;
+$definitionRef = $Global:XrmClient | Upsert-XrmEnvironmentVariableDefinition -SchemaName $schemaName -DisplayName "PDO Test Var" -DefaultValue "default-1" -Description "PDO test description" -SolutionUniqueName $solutionUniqueName;
 Assert-Test "Created: definition reference" { $null -ne $definitionRef -and $definitionRef.LogicalName -eq "environmentvariabledefinition" };
 
 $sameRef = $Global:XrmClient | Upsert-XrmEnvironmentVariableDefinition -SchemaName $schemaName -DefaultValue "default-2";
@@ -118,6 +118,7 @@ $variable = $Global:XrmClient | Get-XrmEnvironmentVariable -Name $schemaName;
 Assert-Test "No override: EffectiveValue = default value" {
     $variable.SchemaName -eq $schemaName -and $variable.Type -eq "String" -and $variable.DefaultValue -eq "default-2" -and -not $variable.HasOverride -and $null -eq $variable.ValueId -and $variable.EffectiveValue -eq "default-2";
 };
+Assert-Test "Description returned (K07)" { $variable.Description -eq "PDO test description" };
 
 $valueRef = $Global:XrmClient | Set-XrmEnvironmentVariableValue -Name $schemaName -Value "override-1";
 $variable = $Global:XrmClient | Get-XrmEnvironmentVariable -Name $schemaName;

@@ -125,5 +125,5 @@ function New-XrmDoubleColumn {
     }
 }
 
-Set-Alias -Name New-DoubleColumn -Value New-XrmDoubleColumn;
+Set-Alias -Name New-DoubleColumn -Value New-XrmDoubleColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmDoubleColumn -Alias *;

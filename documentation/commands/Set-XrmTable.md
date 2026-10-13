@@ -34,6 +34,8 @@ IsMailMergeEnabled|Boolean|22|false|False|Whether mail merge is enabled.
 ChangeTrackingEnabled|Boolean|23|false|False|Whether change tracking is enabled.
 SyncToExternalSearchIndex|Boolean|24|false|False|Whether the table is indexed by Dataverse search.
 IsAvailableOffline|Boolean|25|false|False|Whether the table is available offline.
+IsBusinessProcessEnabled|Boolean|26|false|False|Whether business process flows can be created on the table (the platform then adds the process columns; it cannot be turned off afterwards).
+IsBPFEntity is not offered: it marks the tables the platform generates for a business process flow, and UpdateEntity ignores it.
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
@@ -43,7 +45,7 @@ Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
 ## Usage
 
 ```Powershell 
-Set-XrmTable [[-XrmClient] <ServiceClient>] [[-MetadataId] <Guid>] [[-DisplayName] <String>] [[-DisplayCollectionName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-IsActivity] <Boolean>] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-IconVectorName] <String>] [[-LogicalName] <String>] [[-IsQuickCreateEnabled] <Boolean>] [[-IsConnectionsEnabled] <Boolean>] [[-IsDocumentManagementEnabled] <Boolean>] [[-IsMailMergeEnabled] <Boolean>] [[-ChangeTrackingEnabled] <Boolean>] [[-SyncToExternalSearchIndex] <Boolean>] [[-IsAvailableOffline] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-XrmTable [[-XrmClient] <ServiceClient>] [[-MetadataId] <Guid>] [[-DisplayName] <String>] [[-DisplayCollectionName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-IsActivity] <Boolean>] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-SolutionUniqueName] <String>] [[-MergeLabels] <Boolean>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-IconVectorName] <String>] [[-LogicalName] <String>] [[-IsQuickCreateEnabled] <Boolean>] [[-IsConnectionsEnabled] <Boolean>] [[-IsDocumentManagementEnabled] <Boolean>] [[-IsMailMergeEnabled] <Boolean>] [[-ChangeTrackingEnabled] <Boolean>] [[-SyncToExternalSearchIndex] <Boolean>] [[-IsAvailableOffline] <Boolean>] [[-IsBusinessProcessEnabled] <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples

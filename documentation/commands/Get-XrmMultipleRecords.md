@@ -11,10 +11,12 @@ By default the rows are converted to custom objects and written to the pipeline 
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
-Query|QueryBase|2|true||Query that select and filter data from Microsoft Dataverse table. (QueryBase)
+Query|QueryBase|2|true||Query that select and filter data from Microsoft Dataverse table: QueryExpression, QueryByAttribute or FetchExpression (QueryBase).
+A FetchExpression (e.g. New-XrmFetchExpression) is paged through its page, count and paging-cookie attributes; a fetch with top, or an aggregate fetch, is read in one call.
 PageSize|Int32|3|false|1000|Specify row count per page to pull. (Default: 1000)
 ShowProgress|SwitchParameter|named|false|False|Display a progress bar while pages are retrieved.
 AsArray|SwitchParameter|named|false|False|Return the rows as one array, never unrolled: an empty array when nothing matches, an array of one row for a single match.
+The array is written as ONE object: assign it to a variable ($rows = Get-XrmMultipleRecords ... -AsArray), do not wrap the call in @(). @(... -AsArray) is an array of one element holding the whole result: a foreach on it runs once, with every row at once.
 AsEntity|SwitchParameter|named|false|False|Return the SDK Entity objects instead of converted custom objects (no formatted value columns).
 
 ## Outputs
@@ -38,8 +40,16 @@ $accounts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $queryAccounts;
 
 
 ```Powershell 
+# Assign, then loop on the variable. Never @(Get-XrmMultipleRecords ... -AsArray): that nests the result in a one-element array
 $accounts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $queryAccounts -AsArray;
 Write-Host "$($accounts.Count) account(s)";
+foreach ($account in $accounts) { $account | Get-XrmRowValue -Name "name"; }
+``` 
+
+
+```Powershell 
+<entity name="contact"><attribute name="fullname" /></entity></fetch>';
+$contacts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $fetch -AsArray;
 ``` 
 
 

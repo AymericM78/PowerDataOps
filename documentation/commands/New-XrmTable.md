@@ -30,6 +30,8 @@ IsDocumentManagementEnabled|Boolean|18|false|False|Whether SharePoint document m
 IsMailMergeEnabled|Boolean|19|false|False|Whether mail merge is enabled (BooleanManagedProperty).
 ChangeTrackingEnabled|Boolean|20|false|False|Whether change tracking is enabled (required by some synchronizations).
 SyncToExternalSearchIndex|Boolean|21|false|False|Whether the table is indexed by Dataverse search.
+SchemaName|String|22|false||Table schema name, with its casing (e.g. "new_BankAccount"). The logical name is the schema name in lower case: when both are given, they must match. (Default: the logical name)
+IsBusinessProcessEnabled|Boolean|23|false|False|Whether business process flows can be created on the table (the platform then adds the process columns; it cannot be turned off afterwards).
 
 ## Outputs
 Microsoft.Xrm.Sdk.Metadata.EntityMetadata. Only the given properties are set, so the object can serve a minimal update.
@@ -37,7 +39,7 @@ Microsoft.Xrm.Sdk.Metadata.EntityMetadata. Only the given properties are set, so
 ## Usage
 
 ```Powershell 
-New-XrmTable [[-LogicalName] <String>] [[-DisplayName] <String>] [[-PluralName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-IconVectorName] <String>] [[-IsAvailableOffline] <Boolean>] [[-IsQuickCreateEnabled] <Boolean>] [[-IsConnectionsEnabled] <Boolean>] [[-IsDocumentManagementEnabled] <Boolean>] [[-IsMailMergeEnabled] <Boolean>] [[-ChangeTrackingEnabled] <Boolean>] [[-SyncToExternalSearchIndex] <Boolean>] [<CommonParameters>]
+New-XrmTable [[-LogicalName] <String>] [[-DisplayName] <String>] [[-PluralName] <String>] [[-Description] <String>] [[-OwnershipType] {None | UserOwned | TeamOwned | BusinessOwned | OrganizationOwned | BusinessParented | Filtered}] [[-HasNotes] <Boolean>] [[-HasActivities] <Boolean>] [[-IsActivity] <Boolean>] [[-IsAuditEnabled] <Boolean>] [[-LanguageCode] <Int32>] [[-DisplayNameLabels] <Hashtable>] [[-PluralNameLabels] <Hashtable>] [[-DescriptionLabels] <Hashtable>] [[-IconVectorName] <String>] [[-IsAvailableOffline] <Boolean>] [[-IsQuickCreateEnabled] <Boolean>] [[-IsConnectionsEnabled] <Boolean>] [[-IsDocumentManagementEnabled] <Boolean>] [[-IsMailMergeEnabled] <Boolean>] [[-ChangeTrackingEnabled] <Boolean>] [[-SyncToExternalSearchIndex] <Boolean>] [[-SchemaName] <String>] [[-IsBusinessProcessEnabled] <Boolean>] [<CommonParameters>]
 ``` 
 
 ## Examples

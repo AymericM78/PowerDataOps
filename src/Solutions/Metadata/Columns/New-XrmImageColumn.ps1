@@ -131,5 +131,5 @@ function New-XrmImageColumn {
     }
 }
 
-Set-Alias -Name New-ImageColumn -Value New-XrmImageColumn;
+Set-Alias -Name New-ImageColumn -Value New-XrmImageColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmImageColumn -Alias *;

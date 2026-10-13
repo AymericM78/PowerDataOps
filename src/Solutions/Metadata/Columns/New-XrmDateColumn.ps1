@@ -128,5 +128,5 @@ function New-XrmDateColumn {
     }
 }
 
-Set-Alias -Name New-DateColumn -Value New-XrmDateColumn;
+Set-Alias -Name New-DateColumn -Value New-XrmDateColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmDateColumn -Alias *;

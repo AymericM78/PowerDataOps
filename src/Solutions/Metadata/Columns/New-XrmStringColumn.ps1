@@ -119,5 +119,5 @@ function New-XrmStringColumn {
     }
 }
 
-Set-Alias -Name New-StringColumn -Value New-XrmStringColumn;
+Set-Alias -Name New-StringColumn -Value New-XrmStringColumn -WhatIf:$false;
 Export-ModuleMember -Function New-XrmStringColumn -Alias *;

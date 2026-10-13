@@ -78,6 +78,10 @@
     .PARAMETER IsAvailableOffline
     Whether the table is available offline.
 
+    .PARAMETER IsBusinessProcessEnabled
+    Whether business process flows can be created on the table (the platform then adds the process columns; it cannot be turned off afterwards).
+    IsBPFEntity is not offered: it marks the tables the platform generates for a business process flow, and UpdateEntity ignores it.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.OrganizationResponse. The UpdateEntity response.
 
@@ -198,7 +202,11 @@ function Set-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $IsAvailableOffline
+        $IsAvailableOffline,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsBusinessProcessEnabled
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -209,7 +217,7 @@ function Set-XrmTable {
             throw "MetadataId or LogicalName is required.";
         }
         $tableParams = @{ LanguageCode = $LanguageCode };
-        foreach ($flag in "IsQuickCreateEnabled", "IsConnectionsEnabled", "IsDocumentManagementEnabled", "IsMailMergeEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex", "IsAvailableOffline") {
+        foreach ($flag in "IsQuickCreateEnabled", "IsConnectionsEnabled", "IsDocumentManagementEnabled", "IsMailMergeEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex", "IsAvailableOffline", "IsBusinessProcessEnabled") {
             if ($PSBoundParameters.ContainsKey($flag)) { $tableParams[$flag] = $PSBoundParameters[$flag]; }
         }
         if ($PSBoundParameters.ContainsKey('DisplayName')) { $tableParams['DisplayName'] = $DisplayName; }

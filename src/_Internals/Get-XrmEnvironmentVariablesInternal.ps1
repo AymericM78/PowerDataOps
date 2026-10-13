@@ -1,6 +1,6 @@
 <#
     Read environment variable definitions with their value (override), in one query (left outer join), as summary objects:
-    SchemaName, DisplayName, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
+    SchemaName, DisplayName, Description, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
     EffectiveValue is the override when a value record exists (even empty), else the default value.
     Used by Get-XrmEnvironmentVariable, Get-XrmEnvironmentVariableDefinitions and Get-XrmEnvironmentVariableValue.
 #>
@@ -17,7 +17,7 @@ function Get-XrmEnvironmentVariablesInternal {
 
     $typeNames = @{ 100000000 = "String"; 100000001 = "Number"; 100000002 = "Boolean"; 100000003 = "JSON"; 100000004 = "DataSource"; 100000005 = "Secret" };
 
-    $query = New-XrmQueryExpression -LogicalName "environmentvariabledefinition" -Columns "schemaname", "displayname", "type", "defaultvalue";
+    $query = New-XrmQueryExpression -LogicalName "environmentvariabledefinition" -Columns "schemaname", "displayname", "description", "type", "defaultvalue";
     if ($Name) {
         $query = $query | Add-XrmQueryCondition -Field "schemaname" -Condition Equal -Values $Name;
     }
@@ -41,6 +41,7 @@ function Get-XrmEnvironmentVariablesInternal {
         [PSCustomObject]@{
             SchemaName     = $row | Get-XrmAttributeValue -Name "schemaname";
             DisplayName    = $row | Get-XrmAttributeValue -Name "displayname";
+            Description    = $row | Get-XrmAttributeValue -Name "description";
             Type           = $(if ($null -ne $typeCode -and $typeNames.ContainsKey([int]$typeCode)) { $typeNames[[int]$typeCode] } else { $typeCode });
             DefinitionId   = $row.Id;
             DefaultValue   = $defaultValue;

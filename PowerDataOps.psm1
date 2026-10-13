@@ -16,27 +16,18 @@ foreach ($scriptFile in $scriptFiles) {
     }
 }
 
-# Install and Import required modules
-Write-Verbose "----- LOAD MODULES -----";
-$requiredModules = @("Microsoft.PowerApps.Administration.PowerShell")
-foreach ($module in $requiredModules) {
-    if (-not(Get-Module -ListAvailable -Name $module)) {
-        Write-Verbose "$module does not exist";
-        Install-Module -Name $module -Scope CurrentUser -SkipPublisherCheck -Force -Confirm:$false -AllowClobber;
-    }
-    Import-Module -Name $module -DisableNameChecking;
-    Write-Verbose " > Loading module : '$module' => OK !";
-}
+# Microsoft.PowerApps.Administration.PowerShell is loaded on demand by the admin commands (Import-XrmPowerAppsAdminModuleInternal)
 
 # Provision dedicate appdata folder
+# -WhatIf:$false: a script run as "pwsh script.ps1 -WhatIf" sets $WhatIfPreference globally, which would skip the folders
 Write-Verbose "----- LOAD APPDATA FOLDER -----";
 $Global:PowerDataOpsModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
-New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Force | Out-Null;
+New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Force -WhatIf:$false | Out-Null;
 Write-Verbose " > Initialize module folder '$($Global:PowerDataOpsModuleFolderPath)' => OK !";
 
 # Initialize tracing file
 $timestamp = Get-date -format "yyyy-MM-dd -- HH-mm-ss";
-New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Name "Logs" -Force | Out-Null;
+New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Name "Logs" -Force -WhatIf:$false | Out-Null;
 $Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFolderPath, "Logs");
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
 

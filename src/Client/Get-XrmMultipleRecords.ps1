@@ -11,7 +11,8 @@
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 
     .PARAMETER Query
-    Query that select and filter data from Microsoft Dataverse table. (QueryBase)
+    Query that select and filter data from Microsoft Dataverse table: QueryExpression, QueryByAttribute or FetchExpression (QueryBase).
+    A FetchExpression (e.g. New-XrmFetchExpression) is paged through its page, count and paging-cookie attributes; a fetch with top, or an aggregate fetch, is read in one call.
 
     .PARAMETER PageSize
     Specify row count per page to pull. (Default: 1000)
@@ -21,6 +22,7 @@
 
     .PARAMETER AsArray
     Return the rows as one array, never unrolled: an empty array when nothing matches, an array of one row for a single match.
+    The array is written as ONE object: assign it to a variable ($rows = Get-XrmMultipleRecords ... -AsArray), do not wrap the call in @(). @(... -AsArray) is an array of one element holding the whole result: a foreach on it runs once, with every row at once.
 
     .PARAMETER AsEntity
     Return the SDK Entity objects instead of converted custom objects (no formatted value columns).
@@ -36,8 +38,14 @@
     $accounts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $queryAccounts;
 
     .EXAMPLE
+    # Assign, then loop on the variable. Never @(Get-XrmMultipleRecords ... -AsArray): that nests the result in a one-element array
     $accounts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $queryAccounts -AsArray;
     Write-Host "$($accounts.Count) account(s)";
+    foreach ($account in $accounts) { $account | Get-XrmRowValue -Name "name"; }
+
+    .EXAMPLE
+    $fetch = New-XrmFetchExpression -FetchXml '<fetch><entity name="contact"><attribute name="fullname" /></entity></fetch>';
+    $contacts = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $fetch -AsArray;
 
     .EXAMPLE
     $entities = Get-XrmMultipleRecords -XrmClient $xrmClient -Query $queryAccounts -AsEntity -AsArray;

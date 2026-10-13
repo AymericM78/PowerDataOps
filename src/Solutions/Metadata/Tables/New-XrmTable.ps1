@@ -69,6 +69,12 @@
     .PARAMETER SyncToExternalSearchIndex
     Whether the table is indexed by Dataverse search.
 
+    .PARAMETER SchemaName
+    Table schema name, with its casing (e.g. "new_BankAccount"). The logical name is the schema name in lower case: when both are given, they must match. (Default: the logical name)
+
+    .PARAMETER IsBusinessProcessEnabled
+    Whether business process flows can be created on the table (the platform then adds the process columns; it cannot be turned off afterwards).
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.Metadata.EntityMetadata. Only the given properties are set, so the object can serve a minimal update.
 
@@ -169,7 +175,16 @@ function New-XrmTable {
 
         [Parameter(Mandatory = $false)]
         [bool]
-        $SyncToExternalSearchIndex
+        $SyncToExternalSearchIndex,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $SchemaName,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsBusinessProcessEnabled
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -181,6 +196,14 @@ function New-XrmTable {
         if ($PSBoundParameters.ContainsKey('LogicalName')) {
             $entityMetadata.LogicalName = $LogicalName;
             $entityMetadata.SchemaName = $LogicalName;
+        }
+        if ($PSBoundParameters.ContainsKey('SchemaName')) {
+            # The platform derives the logical name from the schema name, in lower case
+            if ($PSBoundParameters.ContainsKey('LogicalName') -and $SchemaName -ne $LogicalName) {
+                throw "SchemaName '$SchemaName' does not match LogicalName '$LogicalName': the logical name is the schema name in lower case.";
+            }
+            $entityMetadata.SchemaName = $SchemaName;
+            $entityMetadata.LogicalName = $SchemaName.ToLowerInvariant();
         }
 
         if ($PSBoundParameters.ContainsKey('DisplayNameLabels')) {
@@ -227,7 +250,7 @@ function New-XrmTable {
         if ($PSBoundParameters.ContainsKey('IconVectorName')) {
             $entityMetadata.IconVectorName = $IconVectorName;
         }
-        foreach ($flag in "IsAvailableOffline", "IsQuickCreateEnabled", "IsDocumentManagementEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex") {
+        foreach ($flag in "IsAvailableOffline", "IsQuickCreateEnabled", "IsDocumentManagementEnabled", "ChangeTrackingEnabled", "SyncToExternalSearchIndex", "IsBusinessProcessEnabled") {
             if ($PSBoundParameters.ContainsKey($flag)) {
                 $entityMetadata.$flag = $PSBoundParameters[$flag];
             }

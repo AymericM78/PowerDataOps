@@ -14,7 +14,7 @@ WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
 ## Outputs
-System.Void.
+Microsoft.Xrm.Sdk.EntityReference. The plugin step reference, as returned by Set-XrmRecordState.
 
 ## Usage
 
@@ -28,5 +28,9 @@ Enable-XrmPluginStep [[-XrmClient] <ServiceClient>] [-PluginStepReference] <Enti
 $stepRef = New-XrmEntityReference -LogicalName "sdkmessageprocessingstep" -Id $stepId;
 Enable-XrmPluginStep -PluginStepReference $stepRef;
 ``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Enable-XrmPluginStep.md
 
 

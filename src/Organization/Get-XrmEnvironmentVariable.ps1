@@ -4,7 +4,7 @@
 
     .DESCRIPTION
     Read an environment variable definition and its value record (override) in one query, and return a summary:
-    SchemaName, DisplayName, Type (String, Number, Boolean, JSON, DataSource, Secret), DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
+    SchemaName, DisplayName, Description, Type (String, Number, Boolean, JSON, DataSource, Secret), DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
     EffectiveValue is the override when a value record exists (even empty), else the default value.
 
     .PARAMETER XrmClient
@@ -17,7 +17,7 @@
     Return $null when the definition does not exist, instead of raising an error.
 
     .OUTPUTS
-    PSCustomObject. SchemaName, DisplayName, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
+    PSCustomObject. SchemaName, DisplayName, Description, Type, DefinitionId, DefaultValue, ValueId, Value, EffectiveValue, HasOverride.
 
     .EXAMPLE
     $variable = Get-XrmEnvironmentVariable -XrmClient $xrmClient -Name "new_ApiUrl";
