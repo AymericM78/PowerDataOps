@@ -7,7 +7,7 @@
     .Description
     Create a new connection to Microsoft Dataverse with a connectionstring.
     An OAuth connection without password, secret or certificate signs in interactively. In a session that cannot show a sign-in prompt (started with -NonInteractive, no user desktop, remote session), it fails at once instead of waiting until the timeout, unless the connection string holds LoginPrompt=Never (silent sign-in only).
-    With Url and AccessToken or AccessTokenProvider, the connection uses an access token obtained elsewhere (Azure PowerShell, Azure CLI, MSAL, managed identity...): the module does not sign in.
+    With Url and AccessToken or AccessTokenProvider, the connection uses an access token obtained elsewhere (Azure PowerShell, Azure CLI, MSAL, managed identity...): the module does not sign in. A token the environment refuses (issued for another resource or tenant, revoked, account without access) fails the connection with the service's reason.
 
     .PARAMETER ConnectionString
     Connection String to Microsoft Dataverse instance (https://docs.microsoft.com/fr-fr/powerapps/developer/common-data-service/xrm-tooling/use-connection-strings-xrm-tooling-connect)
@@ -211,6 +211,31 @@ function New-XrmClient {
                 throw [System.Exception]::new($clientFailure.Message, $clientFailure.Exception);
             }
             throw $clientFailure.Message;
+        }
+
+        # A token the environment refuses still gives a ready client, without the organization details read at connection:
+        # one request gets the service's reason (New-XrmContext failed on the missing details with "Cannot index into a null array")
+        if ($byAccessToken -and $null -eq $XrmClient.OrganizationDetail) {
+            try {
+                $null = Get-XrmWhoAmI -XrmClient $XrmClient -ErrorAction Stop;
+            }
+            catch {
+                if ($Global:XrmContext) {
+                    $Global:XrmContext.IsUserConnected = $false;
+                }
+                $refusal = $_.Exception;
+                if ($refusal -is [System.Management.Automation.MethodInvocationException] -and $null -ne $refusal.InnerException) {
+                    $refusal = $refusal.InnerException;
+                }
+                $hint = "";
+                if ($refusal.Message -match "unauthorized") {
+                    $hint = " Check that the token was issued for this environment (resource $($instanceUri.GetLeftPart([UriPartial]::Authority))), in its tenant, and has not been revoked.";
+                }
+                elseif ($refusal.Message -match "forbidden") {
+                    $hint = " The token is valid but its account has no access to this environment: it must be a user (or application user) of it, with a security role.";
+                }
+                throw [System.Exception]::new("Dataverse refused the access token for '$($instanceUri.AbsoluteUri)': $($refusal.Message)$hint", $refusal);
+            }
         }
 
         # Store new context

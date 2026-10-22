@@ -103,6 +103,19 @@ else {
 # Connections (restored at the end)
 # ============================================================
 try {
+    # Until 2.0.0.67 the connection failed in New-XrmContext with "Cannot index into a null array"
+    Write-Section "Token refused by Dataverse";
+
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew();
+    $message = Get-ErrorMessage { Connect-XrmClient -Url $url -AccessToken "not-a-token" -Quiet };
+    $stopWatch.Stop();
+    Assert-Test "Invalid token: the service's refusal with a hint ($($stopWatch.ElapsedMilliseconds) ms)" { $message -like "Dataverse refused the access token for '$url/'*unauthorized*issued for this environment*" -and $stopWatch.Elapsed.TotalSeconds -lt 30 };
+    $message = Get-ErrorMessage { New-XrmClient -Url $url -AccessToken (New-TestJwt -ExpiresOn ([DateTimeOffset]::UtcNow.AddHours(1))) -Quiet };
+    Assert-Test "Unsigned token, not expired: refused at connection" { $message -like "Dataverse refused the access token*" };
+    $message = Get-ErrorMessage { Connect-XrmClient -Url $url -AccessTokenProvider { "not-a-token" } -Quiet };
+    Assert-Test "Provider returning an invalid token: refused at connection" { $message -like "Dataverse refused the access token*" };
+    Assert-Test "Global client untouched by the refusals" { [object]::ReferenceEquals($Global:XrmClient, $sourceClient) };
+
     Write-Section "Connect-XrmClient -AccessToken";
 
     $token = $sourceClient.CurrentAccessToken;

@@ -3,7 +3,7 @@
 ## Description
 
 **Connect to Microsoft Dataverse without manually composing a connection string.** : Build a Dataverse connection string from explicit authentication parameters or from a URL-only interactive login scenario, then delegate the connection to New-XrmClient.
-With AccessToken or AccessTokenProvider, connect with an access token obtained elsewhere (Azure PowerShell, Azure CLI, MSAL, managed identity...), without connection string.
+With AccessToken or AccessTokenProvider, connect with an access token obtained elsewhere (Azure PowerShell, Azure CLI, MSAL, managed identity...), without connection string. A token the environment refuses (issued for another resource or tenant, revoked, account without access) fails the connection with the service's reason.
 
 ## Inputs
 
