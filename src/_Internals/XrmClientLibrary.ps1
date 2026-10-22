@@ -256,7 +256,7 @@ function Test-XrmConnectionStringPromptInternal {
 
 
 # Why the session cannot answer an interactive sign-in, or $null when it can: no user desktop (service, pipeline agent),
-# a remote session, or a host started with -NonInteractive. The parameters exist for the tests.
+# no graphical display on Linux, a remote session, or a host started with -NonInteractive. The parameters exist for the tests.
 function Get-XrmNonInteractiveReasonInternal {
     param(
         [Parameter(Mandatory = $false)]
@@ -269,11 +269,23 @@ function Get-XrmNonInteractiveReasonInternal {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $HostName = $Host.Name
+        $HostName = $Host.Name,
+
+        # Linux and other X11 / Wayland systems, where UserInteractive is always true: the sign-in opens a browser, which needs a graphical session
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $NeedsDisplay = ([Environment]::OSVersion.Platform -eq [PlatformID]::Unix -and -not [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::OSX)),
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $Display = "$env:DISPLAY$env:WAYLAND_DISPLAY"
     );
 
     if (-not $UserInteractive) {
         return 'the process has no interactive desktop';
+    }
+    if ($NeedsDisplay -and [string]::IsNullOrWhiteSpace($Display)) {
+        return 'there is no graphical display for the sign-in browser (DISPLAY and WAYLAND_DISPLAY are not set)';
     }
     if ($HostName -eq 'ServerRemoteHost') {
         return 'it is a remote session';

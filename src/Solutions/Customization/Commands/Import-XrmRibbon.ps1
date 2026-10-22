@@ -101,7 +101,7 @@ function Import-XrmRibbon {
         # An XmlElement converted to [string] gives its type name, not its XML
         $ribbonXmlText = if ($RibbonDiffXml -is [System.Xml.XmlNode]) { $RibbonDiffXml.OuterXml } else { [string]$RibbonDiffXml };
 
-        $workPath = Join-Path $env:TEMP "RibbonImport_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
+        $workPath = Join-Path ([System.IO.Path]::GetTempPath()) "RibbonImport_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
         $useTempSolution = (-not $PSBoundParameters.ContainsKey('SolutionUniqueName'));
         $tempSolutionName = "RibbonImport_$([Guid]::NewGuid().ToString('N').Substring(0, 8))";
         $tempSolutionCreated = $false;
@@ -131,7 +131,7 @@ function Import-XrmRibbon {
             }
 
             # Export solution
-            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $SolutionUniqueName -Managed $false -ExportPath $env:TEMP;
+            $solutionFilePath = $XrmClient | Export-XrmSolution -SolutionUniqueName $SolutionUniqueName -Managed $false -ExportPath ([System.IO.Path]::GetTempPath());
 
             # Extract zip
             Expand-Archive -Path $solutionFilePath -DestinationPath $workPath -Force -WhatIf:$false;
@@ -172,7 +172,7 @@ function Import-XrmRibbon {
             $customizationsXml.Save($customizationsPath);
 
             # Re-zip
-            $importZipPath = Join-Path $env:TEMP "$($SolutionUniqueName)_ribbon.zip";
+            $importZipPath = Join-Path ([System.IO.Path]::GetTempPath()) "$($SolutionUniqueName)_ribbon.zip";
             if (Test-Path $importZipPath) {
                 Remove-Item -Path $importZipPath -Force -WhatIf:$false;
             }

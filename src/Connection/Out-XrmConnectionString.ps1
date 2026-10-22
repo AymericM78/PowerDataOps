@@ -1,4 +1,4 @@
-. "$PsScriptRoot\..\_Internals\CryptoManager.ps1"
+. ([System.IO.Path]::Combine($PSScriptRoot, "..", "_Internals", "CryptoManager.ps1"))
 <#
     .SYNOPSIS
     Build Connection String from instance object.

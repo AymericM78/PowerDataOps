@@ -36,6 +36,9 @@ Assert-Test "-NonInteractive after -File belongs to the script" { $null -eq (& $
 Assert-Test "No user desktop detected" { (& $moduleScope { Get-XrmNonInteractiveReasonInternal -CommandLineArgs @("pwsh") -UserInteractive $false -HostName "ConsoleHost" }) -like "*desktop*" };
 Assert-Test "Remote session detected" { (& $moduleScope { Get-XrmNonInteractiveReasonInternal -CommandLineArgs @("pwsh") -UserInteractive $true -HostName "ServerRemoteHost" }) -like "*remote*" };
 Assert-Test "Interactive console: no reason" { $null -eq (& $moduleScope { Get-XrmNonInteractiveReasonInternal -CommandLineArgs @("pwsh", "-NoProfile") -UserInteractive $true -HostName "ConsoleHost" }) };
+Assert-Test "Linux without graphical display detected (UserInteractive is always true there)" { (& $moduleScope { Get-XrmNonInteractiveReasonInternal -CommandLineArgs @("pwsh") -UserInteractive $true -HostName "ConsoleHost" -NeedsDisplay $true -Display "" }) -like "*graphical display*" };
+Assert-Test "Linux with DISPLAY or WAYLAND_DISPLAY: no reason" { $null -eq (& $moduleScope { Get-XrmNonInteractiveReasonInternal -CommandLineArgs @("pwsh") -UserInteractive $true -HostName "ConsoleHost" -NeedsDisplay $true -Display ":0" }) };
+Assert-Test "Windows: no display needed (default of NeedsDisplay)" { $null -eq (& $moduleScope { Get-XrmNonInteractiveReasonInternal -CommandLineArgs @("pwsh") -UserInteractive $true -HostName "ConsoleHost" -Display "" }) };
 Assert-Test "Prompt expected: OAuth without password, secret or certificate" { & $moduleScope { Test-XrmConnectionStringPromptInternal -ConnectionString (Resolve-XrmClientConnectionStringInternal -ConnectionString "Url=https://contoso.crm.dynamics.com") } };
 Assert-Test "No prompt: LoginPrompt=Never, client secret, password" {
     & $moduleScope {

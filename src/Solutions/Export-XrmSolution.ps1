@@ -93,7 +93,7 @@ function Export-XrmSolution {
         [Parameter(Mandatory = $false)]
         [ValidateScript( { Test-Path $_ })]
         [String]
-        $ExportPath = $env:TEMP,
+        $ExportPath = [System.IO.Path]::GetTempPath(),
 
         [Parameter(Mandatory = $false)]
         [Boolean]

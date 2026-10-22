@@ -43,7 +43,7 @@ function Backup-XrmSolutionsBuild {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $DefaultExportPath = $env:TEMP,
+        $DefaultExportPath = [System.IO.Path]::GetTempPath(),
 
         [Parameter(Mandatory = $false)]
         [int]
@@ -63,7 +63,7 @@ function Backup-XrmSolutionsBuild {
             Write-HostAndLog -Message "Solution $($_) successfully exported to '$solutionFilePath' !" -Level SUCCESS;
 
             Write-HostAndLog -Message "Unpacking solution $($_)" -Level INFO;   
-            $solutionUnpackPath = "$UnpackPath\$_";
+            $solutionUnpackPath = [System.IO.Path]::Combine("$UnpackPath", $_);
             Invoke-XrmSolutionPackager -Action Extract -SolutionFilePath $solutionFilePath -FolderPath $solutionUnpackPath;
             Write-HostAndLog -Message "Solution $($_) successfully unpacked to '$solutionUnpackPath' !" -Level SUCCESS;
         }

@@ -1,4 +1,4 @@
-. "$PsScriptRoot\..\_Internals\BrowserManager.ps1"
+. ([System.IO.Path]::Combine($PSScriptRoot, "..", "_Internals", "BrowserManager.ps1"))
 <#
     .SYNOPSIS
     Configure browser according to Dataverse environnements.
@@ -96,6 +96,7 @@ function Export-XrmConnectionToBrowser {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
+        Assert-XrmWindowsInternal -Feature "Export-XrmConnectionToBrowser (Windows browser profiles, shortcuts and registry)";
 
         if ($isChrome) {
             $browserProfilesPath = $ChromeDefaultProfilesPath;

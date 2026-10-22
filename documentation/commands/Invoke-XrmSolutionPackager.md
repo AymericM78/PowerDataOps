@@ -9,7 +9,7 @@
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 SolutionFilePath|String|1|true||Full path to solution file (.zip).
-SolutionPackagerExeFilePath|String|2|false|"$PSScriptRoot\..\Assemblies\CoreTools\SolutionPackager.exe"|Full path to solution packager executable. (Default : $PSScriptRoot\bin\SolutionPackager.exe)
+SolutionPackagerExeFilePath|String|2|false|[System.IO.Path]::Combine($PSScriptRoot, "..", "Assemblies", "CoreTools", "SolutionPackager.exe")|Full path to solution packager executable. (Default: Assemblies\CoreTools\SolutionPackager.exe in the module)
 Action|String|3|true||The action to perform.
 The action can be either to extract a solution .zip file to a folder, or to pack a folder into a .zip file.
 PackageType|String|4|false|Both|The type of package to process. (Default: Both)
@@ -20,7 +20,7 @@ FolderPath|String|5|false||Full path to a folder where solution will be extracte
 When extracting, this folder is created and populated with component files. 
 When packing, this folder must already exist and contain previously extracted component files.
 ErrorLevel|String|6|false|Error|Indicates the level of logging information to output. (Default: Error)
-LogFilePath|String|7|false|"$($env:TEMP)\SolutionPackager.log"|Full path to log file. If the file already exists, new logging information is appended to the file.
+LogFilePath|String|7|false|[System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), "SolutionPackager.log")|Full path to log file. If the file already exists, new logging information is appended to the file.
 
 
 ## Usage

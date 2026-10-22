@@ -1,9 +1,10 @@
-$assemblyLoaderPath = "$PSScriptRoot\src\_Internals\AssemblyLoader.ps1";
+# Paths are combined, not written with "\": .NET does not read it as a separator on Linux and macOS (FullName would never match)
+$assemblyLoaderPath = [System.IO.Path]::Combine($PSScriptRoot, "src", "_Internals", "AssemblyLoader.ps1");
 . $assemblyLoaderPath;
 
 # Discover and load function scripts (the assembly loader already ran)
 Write-Verbose "----- LOAD FUNCTIONS -----";
-$scriptFiles = @(Get-ChildItem -Path "$PSScriptRoot\src\" -Include "*.ps1" -Recurse | Where-Object { $_.FullName -ne $assemblyLoaderPath });
+$scriptFiles = @(Get-ChildItem -Path ([System.IO.Path]::Combine($PSScriptRoot, "src")) -Include "*.ps1" -Recurse | Where-Object { $_.FullName -ne $assemblyLoaderPath });
 foreach ($scriptFile in $scriptFiles) {
     $scriptPath = $scriptFile.FullName;
     Write-Verbose " > Loading function file '$scriptPath'";
@@ -22,7 +23,7 @@ foreach ($scriptFile in $scriptFiles) {
 # Provision dedicate appdata folder
 # -WhatIf:$false: a script run as "pwsh script.ps1 -WhatIf" sets $WhatIfPreference globally, which would skip the folders
 Write-Verbose "----- LOAD APPDATA FOLDER -----";
-$Global:PowerDataOpsModuleFolderPath = [System.IO.Path]::Combine($env:APPDATA, "PowerDataOps");
+$Global:PowerDataOpsModuleFolderPath = [System.IO.Path]::Combine((Get-XrmAppDataPathInternal), "PowerDataOps");
 New-Item -ItemType Directory -Path $Global:PowerDataOpsModuleFolderPath -Force -WhatIf:$false | Out-Null;
 Write-Verbose " > Initialize module folder '$($Global:PowerDataOpsModuleFolderPath)' => OK !";
 
@@ -33,7 +34,7 @@ $Global:LogFolderPath = [System.IO.Path]::Combine($Global:PowerDataOpsModuleFold
 $Global:LogFilePath = [System.IO.Path]::Combine($Global:LogFolderPath, "$timestamp.log");
 
 # Show the version being loaded (read from the manifest next to this file), then the other installed versions
-$loadedVersion = (Import-PowerShellDataFile -Path "$PSScriptRoot\PowerDataOps.psd1").ModuleVersion;
+$loadedVersion = (Import-PowerShellDataFile -Path ([System.IO.Path]::Combine($PSScriptRoot, "PowerDataOps.psd1"))).ModuleVersion;
 Write-Host "PowerDataOps version = $loadedVersion";
 $otherVersions = @(Get-Module -Name PowerDataOps -ListAvailable | Where-Object { $_.Version.ToString() -ne $loadedVersion } | ForEach-Object { $_.Version.ToString() } | Select-Object -Unique);
 if ($otherVersions.Count -gt 0) {

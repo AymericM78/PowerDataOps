@@ -67,7 +67,7 @@ function Get-XrmRecordFileDownload {
         $fileSizeInBytes = $initResponse.Results["FileSizeInBytes"];
 
         if (-not $PSBoundParameters.ContainsKey('OutputPath')) {
-            $OutputPath = Join-Path $env:TEMP $fileName;
+            $OutputPath = Join-Path ([System.IO.Path]::GetTempPath()) $fileName;
         }
 
         # Download blocks

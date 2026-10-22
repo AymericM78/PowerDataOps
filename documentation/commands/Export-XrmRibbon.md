@@ -15,7 +15,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 EntityLogicalName|String|2|true||Logical name of the table whose ribbon to export.
 SolutionUniqueName|String|3|false||Existing solution unique name containing the table. If provided, exports from this solution instead of creating a temporary one.
-OutputPath|String|4|false|$env:TEMP|Folder path where extracted files will be stored. Optional. Defaults to temp folder.
+OutputPath|String|4|false|[System.IO.Path]::GetTempPath()|Folder path where extracted files will be stored. Optional. Defaults to temp folder.
 PublisherUniqueName|String|5|false||Publisher of the temporary solution. Ignored when SolutionUniqueName is given. (Default: organization default publisher)
 
 ## Outputs

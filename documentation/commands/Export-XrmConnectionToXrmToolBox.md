@@ -11,7 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmConnection|Object|1|false|$Global:XrmContext.CurrentConnection|
 Name|String|2|true||XTB connection name.
 OverrideConnectionStringFormat|String|3|false||Provide the ConnectionString template in order to access to instances with different credentials.
-XtbConnectionPath|String|4|false|"$env:APPDATA\MscrmTools\XrmToolBox\Connections"|XTB connections folder path. (Default: $env:APPDATA\MscrmTools\XrmToolBox\Connections)
+XtbConnectionPath|String|4|false|[System.IO.Path]::Combine((Get-XrmAppDataPathInternal), "MscrmTools", "XrmToolBox", "Connections")|XTB connections folder path. (Default: MscrmTools\XrmToolBox\Connections in APPDATA)
 
 
 ## Usage

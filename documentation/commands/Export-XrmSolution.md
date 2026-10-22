@@ -11,7 +11,7 @@ Name|Type|Position|Required|Default|Description
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 SolutionUniqueName|String|2|true||Solution unique name to export.
 Managed|Boolean|3|false|False|Specify if solution should be export as managed or unmanaged. (Default: false = unmanaged)
-ExportPath|String|4|false|$env:TEMP|Folder where the solution file is written. (Default: TEMP folder)
+ExportPath|String|4|false|[System.IO.Path]::GetTempPath()|Folder where the solution file is written. (Default: TEMP folder)
 ExportCalendarSettings|Boolean|5|false|False|Specify if exported solution should include Calendar settings (Default: false)
 ExportCustomizationSettings|Boolean|6|false|False|Specify if exported solution should include Customization settings (Default: false)
 ExportEmailTrackingSettings|Boolean|7|false|False|Specify if exported solution should include Email Tracking settings (Default: false)

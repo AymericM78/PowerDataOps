@@ -31,7 +31,7 @@ function Import-XrmSolutionsBuild {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $ArtifactsPath = "$($Env:SYSTEM_DEFAULTWORKINGDIRECTORY)\Solutions\drop\",
+        $ArtifactsPath = [System.IO.Path]::Combine("$($Env:SYSTEM_DEFAULTWORKINGDIRECTORY)", "Solutions", "drop"),
 
         [Parameter(Mandatory = $false)]
         [String]
@@ -72,7 +72,7 @@ function Import-XrmSolutionsBuild {
         Write-HostAndLog -Message " - Param : SolutionsImportIgnore = $SolutionsImportIgnore" -Level INFO;
 
         $solutionsToImport = $SolutionsImportOrder.Split(",");
-        $solutionFilePaths = Get-ChildItem -Path "$ArtifactsPath\*.zip" -recurse;
+        $solutionFilePaths = Get-ChildItem -Path ([System.IO.Path]::Combine($ArtifactsPath, "*.zip")) -Recurse;
 
         $solutionsToIgnore = $SolutionsImportIgnore.Split(",");
         $solutionsToUpgrade = $SolutionsImportUpgrade.Split(",");

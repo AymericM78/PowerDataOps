@@ -9,7 +9,7 @@
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 ListAvailable|SwitchParameter|named|false|False|Specify if you want to see all connections or all instances.
-XtbConnectionPath|String|1|false|"$env:APPDATA\MscrmTools\XrmToolBox\Connections"|XTB connections folder path. (Default: $env:APPDATA\MscrmTools\XrmToolBox\Connections)
+XtbConnectionPath|String|1|false|[System.IO.Path]::Combine((Get-XrmAppDataPathInternal), "MscrmTools", "XrmToolBox", "Connections")|XTB connections folder path. (Default: MscrmTools\XrmToolBox\Connections in APPDATA)
 
 
 ## Usage

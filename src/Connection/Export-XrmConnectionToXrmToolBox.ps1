@@ -1,5 +1,5 @@
 
-. "$PsScriptRoot\..\_Internals\CryptoManager.ps1"
+. ([System.IO.Path]::Combine($PSScriptRoot, "..", "_Internals", "CryptoManager.ps1"))
 
 <#
     .SYNOPSIS
@@ -15,7 +15,7 @@
     Provide the ConnectionString template in order to access to instances with different credentials.
 
     .PARAMETER XtbConnectionPath
-    XTB connections folder path. (Default: $env:APPDATA\MscrmTools\XrmToolBox\Connections)
+    XTB connections folder path. (Default: MscrmTools\XrmToolBox\Connections in APPDATA)
 
     .EXAMPLE
     Connect-XrmUser -AuthType Office365 -UserName "user@contoso.fake" -Password "MyPass123"
@@ -42,7 +42,7 @@ function Export-XrmConnectionToXrmToolBox {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $XtbConnectionPath = "$env:APPDATA\MscrmTools\XrmToolBox\Connections"
+        $XtbConnectionPath = [System.IO.Path]::Combine((Get-XrmAppDataPathInternal), "MscrmTools", "XrmToolBox", "Connections")
     )
     begin {   
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
@@ -50,7 +50,7 @@ function Export-XrmConnectionToXrmToolBox {
     }    
     process {
         
-        $filePath = "$XtbConnectionPath\$($Name).xml";
+        $filePath = [System.IO.Path]::Combine($XtbConnectionPath, "$($Name).xml");
         $instances = Get-XrmInstances;        
         if($instances.Count -gt 10){
             $instances = $instances | Out-GridView -OutputMode Multiple;
@@ -122,7 +122,7 @@ function Export-XrmConnectionToXrmToolBox {
         $fileContent.ToString() | Out-File -FilePath $filePath -Encoding utf8 -Force;
         
         # Add new connection file to XrmToolBox
-        $xtbConnectionFilePath = "$XtbConnectionPath\MscrmTools.ConnectionsList.xml"
+        $xtbConnectionFilePath = [System.IO.Path]::Combine($XtbConnectionPath, "MscrmTools.ConnectionsList.xml");
 
         $xtbContent = [xml] [IO.File]::ReadAllText($xtbConnectionFilePath);
 

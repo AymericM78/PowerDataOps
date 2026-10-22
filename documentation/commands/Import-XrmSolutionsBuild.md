@@ -10,7 +10,7 @@ This cmdlet import given solutions from artifacts.
 Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 ConnectionString|String|1|false|$env:CONNECTIONSTRING|Target instance connection string, use variable 'ConnectionString' from associated variable group.
-ArtifactsPath|String|2|false|"$($Env:SYSTEM_DEFAULTWORKINGDIRECTORY)\Solutions\drop\"|Folder path where solutions will be imported. (Default: Agent default working directory)
+ArtifactsPath|String|2|false|[System.IO.Path]::Combine("$($Env:SYSTEM_DEFAULTWORKINGDIRECTORY)", "Solutions", "drop")|Folder path where solutions will be imported. (Default: Agent default working directory)
 SolutionsImportOrder|String|3|false|$($env:SOLUTIONS_IMPORTORDER)|Solution uniquenames that will be imported in given order, use variable 'Solutions.ImportOrder' from associated variable group.
 SolutionsImportIgnore|String|4|false|$($env:SOLUTIONS_IMPORTIGNORE)|
 SolutionsImportUpgrade|String|5|false|$($env:SOLUTIONS_IMPORTUPGRADE)|

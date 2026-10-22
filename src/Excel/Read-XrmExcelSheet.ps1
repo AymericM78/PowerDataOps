@@ -48,6 +48,7 @@ function Read-XrmExcelSheet {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
+        Assert-XrmWindowsInternal -Feature "Excel automation (COM)";
         $workbook = $null;
         $sheet = $null;
         $sheetContentRange = $null;

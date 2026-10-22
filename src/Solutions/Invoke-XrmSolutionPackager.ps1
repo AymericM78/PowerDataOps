@@ -9,7 +9,7 @@
     Full path to solution file (.zip).
 
     .PARAMETER SolutionPackagerExeFilePath
-    Full path to solution packager executable. (Default : $PSScriptRoot\bin\SolutionPackager.exe)
+    Full path to solution packager executable. (Default: Assemblies\CoreTools\SolutionPackager.exe in the module)
 
     .PARAMETER Action
     The action to perform.
@@ -45,7 +45,7 @@ function Invoke-XrmSolutionPackager {
         [ValidateNotNullOrEmpty()]
         [ValidateScript( { Test-Path $_ })]
         [String]
-        $SolutionPackagerExeFilePath = "$PSScriptRoot\..\Assemblies\CoreTools\SolutionPackager.exe",
+        $SolutionPackagerExeFilePath = [System.IO.Path]::Combine($PSScriptRoot, "..", "Assemblies", "CoreTools", "SolutionPackager.exe"),
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("Extract", "Pack")]
@@ -70,15 +70,16 @@ function Invoke-XrmSolutionPackager {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [String]
-        $LogFilePath = "$($env:TEMP)\SolutionPackager.log"
+        $LogFilePath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), "SolutionPackager.log")
 
     )
-    begin {   
-        $StopWatch = [System.Diagnostics.Stopwatch]::StartNew(); 
-        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
-    }    
+    begin {
+        $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
+        Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
+    }
     process {
-        
+        Assert-XrmWindowsInternal -Feature "SolutionPackager.exe (.NET Framework)" -Alternative "Use the Power Platform CLI instead: pac solution unpack / pac solution pack.";
+
         $solutionPackagerOuput = "";
         if ($Action -eq "Extract") {
             $solutionPackagerOuput = & "$SolutionPackagerExeFilePath" /action:$Action /zipfile:"$SolutionFilePath" /folder:"$FolderPath" /clobber /allowWrite:Yes /allowDelete:Yes /errorlevel:$ErrorLevel /nologo;

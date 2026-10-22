@@ -57,7 +57,7 @@ function Export-XrmRibbon {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $OutputPath = $env:TEMP,
+        $OutputPath = [System.IO.Path]::GetTempPath(),
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]

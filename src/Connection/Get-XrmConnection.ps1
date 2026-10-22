@@ -9,7 +9,7 @@
     Specify if you want to see all connections or all instances.
 
     .PARAMETER XtbConnectionPath
-    XTB connections folder path. (Default: $env:APPDATA\MscrmTools\XrmToolBox\Connections)
+    XTB connections folder path. (Default: MscrmTools\XrmToolBox\Connections in APPDATA)
 #>
 function Get-XrmConnection {
     [CmdletBinding()]
@@ -21,7 +21,7 @@ function Get-XrmConnection {
 
         [Parameter(Mandatory = $false)]
         [String]
-        $XtbConnectionPath = "$env:APPDATA\MscrmTools\XrmToolBox\Connections"
+        $XtbConnectionPath = [System.IO.Path]::Combine((Get-XrmAppDataPathInternal), "MscrmTools", "XrmToolBox", "Connections")
     )
     dynamicparam {
         $dynamicParameters = New-Object -TypeName System.Management.Automation.RuntimeDefinedParameterDictionary;
@@ -53,7 +53,7 @@ function Get-XrmConnection {
         $instanceName = $PSBoundParameters.InstanceName;
                
         if ($PSBoundParameters.ContainsKey('Name')) {  
-            $targetFilePath = "$XtbConnectionPath\$($Name).xml";
+            $targetFilePath = [System.IO.Path]::Combine($XtbConnectionPath, "$($Name).xml");
             
             $connection = Import-XrmConnection -FilePath $targetFilePath;
             if (-not $Global:XrmContext) {
@@ -74,7 +74,7 @@ function Get-XrmConnection {
             }
         }
         else {            
-            $xtbConnectionFilePath = "$XtbConnectionPath\MscrmTools.ConnectionsList.xml"
+            $xtbConnectionFilePath = [System.IO.Path]::Combine($XtbConnectionPath, "MscrmTools.ConnectionsList.xml");
             $xtbContent = [xml] [IO.File]::ReadAllText($xtbConnectionFilePath);
 
             $connections = @();
@@ -97,7 +97,7 @@ Register-ArgumentCompleter -CommandName Get-XrmConnection -ParameterName "Name" 
 
     param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
 
-    $fileNames = @(Get-ChildItem -Path "$env:APPDATA\MscrmTools\XrmToolBox\Connections" -Include "*.xml" -Recurse | Select-Object -Property BaseName);
+    $fileNames = @(Get-ChildItem -Path ([System.IO.Path]::Combine((Get-XrmAppDataPathInternal), "MscrmTools", "XrmToolBox", "Connections")) -Include "*.xml" -Recurse | Select-Object -Property BaseName);
     $validNames = @();
     $fileNames | Sort-Object -Property BaseName  | ForEach-Object {
         $validNames += $_.BaseName;
@@ -113,7 +113,7 @@ Register-ArgumentCompleter -CommandName Get-XrmConnection -ParameterName "Instan
         return @();
     }
     $fileName = "$($fakeBoundParameters.Name).xml"; 
-    $targetFilePath = [IO.Path]::Combine("$env:APPDATA\MscrmTools\XrmToolBox\Connections", $fileName);
+    $targetFilePath = [IO.Path]::Combine((Get-XrmAppDataPathInternal), "MscrmTools", "XrmToolBox", "Connections", $fileName);
     $connection = Import-XrmConnection -FilePath $targetFilePath;
 
     $validInstanceNames = @();

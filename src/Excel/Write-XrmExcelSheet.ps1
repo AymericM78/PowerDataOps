@@ -60,7 +60,8 @@ function Write-XrmExcelSheet {
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters); 
     }    
     process {
-                    
+        Assert-XrmWindowsInternal -Feature "Excel automation (COM)";
+
         $excelApplication = New-Object -ComObject Excel.Application;
         try {    
             $excelApplication.Visible = $false;

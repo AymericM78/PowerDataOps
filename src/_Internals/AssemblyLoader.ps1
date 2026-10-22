@@ -1,11 +1,23 @@
-# SDK assemblies of the running edition: Assemblies\Core (PowerShell 7+) or Assemblies\Desktop (Windows PowerShell 5.1).
+# SDK assemblies of the running edition: Assemblies\Core (PowerShell 7.4+) or Assemblies\Desktop (Windows PowerShell 5.1).
 # Dot-sourced once by PowerDataOps.psm1, before the function files.
-$Global:PowerDataOpsAssemblyPath = [System.IO.Path]::GetFullPath("$PSScriptRoot\..\Assemblies\$($PSVersionTable.PSEdition)");
+# Paths are combined, not written with "\": .NET does not read it as a separator on Linux and macOS.
+$Global:PowerDataOpsAssemblyPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, "..", "Assemblies", $PSVersionTable.PSEdition));
+
+# Core is a portable build: a DLL that has a platform build also has it in runtimes\win or runtimes\unix, which replaces the one of the folder
+# (the runtime would choose it from a .deps.json, which a module cannot use).
+$assemblyFiles = [ordered]@{};
+$assemblyPlatform = if ([System.Environment]::OSVersion.Platform -eq [System.PlatformID]::Win32NT) { "win" } else { "unix" };
+foreach ($assemblyFolder in $Global:PowerDataOpsAssemblyPath, [System.IO.Path]::Combine($Global:PowerDataOpsAssemblyPath, "runtimes", $assemblyPlatform)) {
+    if (Test-Path -LiteralPath $assemblyFolder) {
+        foreach ($assemblyFile in @(Get-ChildItem -LiteralPath $assemblyFolder -File | Where-Object { $_.Extension -eq ".dll" })) {
+            $assemblyFiles[$assemblyFile.Name] = $assemblyFile;
+        }
+    }
+}
 
 # Every DLL is loaded up front: PowerShell only finds a type literal ([Microsoft.Xrm.Sdk.Entity]) in an assembly already loaded.
 $loadedAssemblies = [System.Collections.Generic.List[System.Reflection.Assembly]]::new();
-$assemblyFiles = @(Get-ChildItem -LiteralPath $Global:PowerDataOpsAssemblyPath -File | Where-Object { $_.Extension -eq ".dll" });
-foreach ($assemblyFile in $assemblyFiles) {
+foreach ($assemblyFile in $assemblyFiles.Values) {
     try {
         $loadedAssemblies.Add([System.Reflection.Assembly]::LoadFile($assemblyFile.FullName));
     }

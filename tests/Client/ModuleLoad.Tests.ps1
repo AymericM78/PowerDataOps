@@ -37,6 +37,7 @@ $result = [ordered]@{
     LogFolder         = (Test-Path -Path $Global:LogFolderPath);
     AdminModuleLoaded = [bool](Get-Module -Name Microsoft.PowerApps.Administration.PowerShell);
     ImportWarnings    = @($importOutput | Where-Object { $_ -is [System.Management.Automation.WarningRecord] } | ForEach-Object { $_.Message });
+    LoadedFrom        = @([System.AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { -not $_.IsDynamic -and $_.Location -like "$($Global:PowerDataOpsAssemblyPath)*" } | ForEach-Object { $_.Location });
 };
 Write-HostAndLog -Message "pdo-probe-marker" 6>$null;
 $result.LogWritten = (Test-Path -Path $Global:LogFilePath) -and ((Get-Content -Path $Global:LogFilePath -Raw) -match "pdo-probe-marker");
@@ -143,6 +144,18 @@ foreach ($shell in $shells) {
     Assert-Test "$($edition): every DLL loads, no warning" { $null -ne $loader -and @($loader.ImportWarnings).Count -eq 0 };
     Assert-Test "$($edition): a module DLL asked in another version resolves to the shipped one" { $null -ne $loader -and $loader.OwnResolvedFrom -like "$($loader.AssemblyFolder)\*" };
     Assert-Test "$($edition): an assembly the module does not ship is left to the runtime" { $null -ne $loader -and -not $loader.ForeignResolved };
+    # Core is a portable build (2.0.0.69): the Windows build of a DLL (runtimes\win) replaces the portable one of the folder
+    if ($null -ne $loader) {
+        $platformBuilds = @(Get-ChildItem -LiteralPath ([System.IO.Path]::Combine($loader.AssemblyFolder, "runtimes", "win")) -Filter "*.dll" -ErrorAction SilentlyContinue);
+        if ($edition -eq "Core") {
+            Assert-Test "Core: the Windows builds of runtimes\win are loaded ($($platformBuilds.Count) DLLs), not the portable ones of the folder" {
+                $platformBuilds.Count -gt 0 -and @($platformBuilds | Where-Object { $loader.LoadedFrom -contains $_.FullName -and $loader.LoadedFrom -notcontains (Join-Path $loader.AssemblyFolder $_.Name) }).Count -eq $platformBuilds.Count;
+            };
+        }
+        else {
+            Assert-Test "Desktop: a .NET Framework build, without runtimes folder" { $platformBuilds.Count -eq 0 -and @($loader.LoadedFrom).Count -gt 0 };
+        }
+    }
 
     if ($null -ne $loader) {
         $copyPath = Join-Path $workFolder "preload-$edition.dll";
