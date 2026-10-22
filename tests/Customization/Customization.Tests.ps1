@@ -3,6 +3,7 @@
     Tests views, forms, charts, dashboards, commands cmdlets.
     Cmdlets: Add-XrmView, Get-XrmViews, Remove-XrmView,
              Get-XrmForms, Get-XrmCharts, Get-XrmDashboards,
+             Add-XrmDashboard, Upsert-XrmDashboard, Remove-XrmDashboard (dashboard type, known issue K18),
              Add-XrmCommand, Get-XrmCommands, Remove-XrmCommand
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
@@ -117,6 +118,58 @@ Assert-Test "Get-XrmDashboards -Type 10 - only interactive experience dashboards
 Assert-Test "Get-XrmDashboards - returns dashboards (actual: $($dashboards.Count))" {
     $dashboards.Count -ge 0;
 };
+
+# ============================================================
+# Add-XrmDashboard / Upsert-XrmDashboard -FormType (K18)
+# ============================================================
+Write-Section "Dashboard type: Add-XrmDashboard / Upsert-XrmDashboard -FormType";
+
+# FormXml copied from the dashboards of the instance, one of each type
+$sourceDashboards = @($Global:XrmClient | Get-XrmDashboards -Columns "name", "type", "formxml");
+$classicXml = ($sourceDashboards | Where-Object { ($_ | Get-XrmAttributeValue -Name "type" -Raw) -eq 0 } | Sort-Object { $_.formxml.Length } | Select-Object -First 1).formxml;
+$interactiveXml = ($sourceDashboards | Where-Object { ($_ | Get-XrmAttributeValue -Name "type" -Raw) -eq 10 } | Sort-Object { $_.formxml.Length } | Select-Object -First 1).formxml;
+if (-not $classicXml -or -not $interactiveXml) {
+    Write-Host "  [SKIP] A classic and an interactive dashboard are needed to copy their FormXml" -ForegroundColor Yellow;
+}
+else {
+    function Get-TestDashboard {
+        param([Guid]$Id)
+        # The update of a form stays unpublished: Retrieve answers the previous name
+        $dashboard = @($Global:XrmClient | Get-XrmDashboards -Columns "name", "type", "formid" -Unpublished) | Where-Object { $_.formid -eq $Id } | Select-Object -First 1;
+        if ($dashboard) {
+            [PSCustomObject]@{ Name = $dashboard.name; Type = ($dashboard | Get-XrmAttributeValue -Name "type" -Raw) };
+        }
+    }
+
+    $dashboardId = [Guid]::NewGuid();
+    $dashboardName = Get-TestName -Prefix "Dashboard";
+    $Global:XrmClient | Upsert-XrmDashboard -Id $dashboardId -Name $dashboardName -FormXml $interactiveXml -FormType 10 | Out-Null;
+    Assert-Test "Upsert-XrmDashboard -FormType 10: created interactive" { (Get-TestDashboard -Id $dashboardId).Type -eq 10 };
+
+    $Global:XrmClient | Upsert-XrmDashboard -Id $dashboardId -Name "$dashboardName v2" -FormXml $interactiveXml -FormType 10 | Out-Null;
+    Assert-Test "Upsert-XrmDashboard -FormType 10 on an interactive dashboard: updated" { (Get-TestDashboard -Id $dashboardId).Name -eq "$dashboardName v2" };
+
+    $typeError = $null;
+    try { $Global:XrmClient | Upsert-XrmDashboard -Id $dashboardId -Name "$dashboardName v3" -FormXml $classicXml -FormType 0 | Out-Null; } catch { $typeError = $_.Exception.Message; }
+    $afterError = Get-TestDashboard -Id $dashboardId;
+    Assert-Test "Upsert-XrmDashboard -FormType 0 on an interactive dashboard: error, nothing written" { $typeError -like "*exists with form type 10, not 0*" -and $afterError.Name -eq "$dashboardName v2" -and $afterError.Type -eq 10 };
+
+    $Global:XrmClient | Upsert-XrmDashboard -Id $dashboardId -Name "$dashboardName v4" -FormXml $interactiveXml | Out-Null;
+    $withoutType = Get-TestDashboard -Id $dashboardId;
+    Assert-Test "Upsert-XrmDashboard without -FormType: existing dashboard updated, type kept (as before)" { $withoutType.Name -eq "$dashboardName v4" -and $withoutType.Type -eq 10 };
+    $Global:XrmClient | Remove-XrmDashboard -DashboardReference (New-XrmEntityReference -LogicalName "systemform" -Id $dashboardId);
+
+    $classicId = [Guid]::NewGuid();
+    $Global:XrmClient | Upsert-XrmDashboard -Id $classicId -Name (Get-TestName -Prefix "Dashboard") -FormXml $classicXml | Out-Null;
+    Assert-Test "Upsert-XrmDashboard without -FormType: created classic (as before)" { (Get-TestDashboard -Id $classicId).Type -eq 0 };
+    $Global:XrmClient | Remove-XrmDashboard -DashboardReference (New-XrmEntityReference -LogicalName "systemform" -Id $classicId);
+
+    $addedRef = $Global:XrmClient | Add-XrmDashboard -Name (Get-TestName -Prefix "Dashboard") -FormXml $interactiveXml -FormType 10;
+    Assert-Test "Add-XrmDashboard -FormType 10: created interactive" { (Get-TestDashboard -Id $addedRef.Id).Type -eq 10 };
+    $Global:XrmClient | Remove-XrmDashboard -DashboardReference $addedRef;
+
+    Assert-Test "Test dashboards removed" { $null -eq (Get-TestDashboard -Id $dashboardId) -and $null -eq (Get-TestDashboard -Id $classicId) -and $null -eq (Get-TestDashboard -Id $addedRef.Id) };
+}
 
 # ============================================================
 # Add-XrmCommand + Get-XrmCommands + Remove-XrmCommand

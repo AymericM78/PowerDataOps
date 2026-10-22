@@ -4,6 +4,7 @@
     New-XrmBooleanColumn -TrueLabels -FalseLabels, New-XrmCascadeConfiguration, New-XrmAssociatedMenuConfiguration, Set-XrmRelationship,
     Get-XrmRelationship -IfExists, Get-XrmAlternateKey -IfExists, New-XrmLabel (empty text), ConvertFrom-XrmLabel.
     Known issues 2.0.0.65: Add-XrmTable -SchemaName (K15), Set-XrmTable -IsBusinessProcessEnabled (K09), Set-XrmColumnVisualization (K11), menu properties kept (K16).
+    Known issues 2.0.0.66: Set-XrmColumn -RequiredLevel applied through the Web API (K17).
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -87,14 +88,25 @@ $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $inte
 $money = New-XrmMoneyColumn -LogicalName "${prefix}_budget" -SchemaName "${prefix}_Budget" -DisplayName "Budget" -Precision 2 -MinValue 0 -MaxValue 1000;
 $Global:XrmClient | Add-XrmColumn -EntityLogicalName $tableName -Attribute $money | Out-Null;
 
-# The test instance accepts UpdateAttribute but keeps the requirement level (SDK .NET and .NET Framework alike):
-# the cmdlet must then say so instead of returning as if it worked
+# UpdateAttribute accepts the requirement level of an existing column and ignores it (K17): Set-XrmColumn sets it with a
+# Web API PUT of the definition, after the other settings of the same call, which the PUT must not undo
 $levelError = $null;
-try { $Global:XrmClient | Set-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_score" -RequiredLevel ApplicationRequired | Out-Null; } catch { $levelError = $_.Exception.Message; }
+try { $Global:XrmClient | Set-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_score" -RequiredLevel ApplicationRequired -MaxValue 150 | Out-Null; } catch { $levelError = $_.Exception.Message; }
 $score = Get-XrmColumn -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score";
-$levelApplied = $score.RequiredLevel.Value -eq [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::ApplicationRequired;
-Assert-Test "RequiredLevel: applied, or an explicit error when the platform kept the old level (applied: $levelApplied)" { ($levelApplied -and $null -eq $levelError) -or (-not $levelApplied -and $levelError -like "*kept its requirement level*") };
-Assert-Test "Range kept by the RequiredLevel update" { $score.MinValue -eq 0 -and $score.MaxValue -eq 100 };
+Assert-Test "RequiredLevel ApplicationRequired: applied $(if ($levelError) { "($levelError)" })" { $null -eq $levelError -and $score.RequiredLevel.Value -eq [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::ApplicationRequired };
+Assert-Test "MaxValue of the same call kept by the PUT, MinValue untouched" { $score.MinValue -eq 0 -and $score.MaxValue -eq 150 };
+
+$Global:XrmClient | Set-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_score" -RequiredLevel Recommended -WhatIf | Out-Null;
+$score = Get-XrmColumn -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score";
+Assert-Test "-WhatIf: requirement level unchanged" { $score.RequiredLevel.Value -eq [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::ApplicationRequired };
+
+$levelError = $null;
+try { $Global:XrmClient | Set-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_score" -RequiredLevel None -DisplayNameLabels @{ 1036 = "Note" } | Out-Null; } catch { $levelError = $_.Exception.Message; }
+$score = Get-XrmColumn -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score";
+$scoreLabels = ConvertFrom-XrmLabel -Label $score.DisplayName;
+Assert-Test "RequiredLevel None with a label of the same call: both applied, other language kept $(if ($levelError) { "($levelError)" })" {
+    $null -eq $levelError -and $score.RequiredLevel.Value -eq [Microsoft.Xrm.Sdk.Metadata.AttributeRequiredLevel]::None -and $scoreLabels[1036] -eq "Note" -and $scoreLabels[1033] -eq "Score";
+};
 
 $Global:XrmClient | Set-XrmColumn -EntityLogicalName $tableName -LogicalName "${prefix}_score" -MinValue 200 -MaxValue 300 | Out-Null;
 $score = Get-XrmColumn -XrmClient $Global:XrmClient -EntityLogicalName $tableName -LogicalName "${prefix}_score";

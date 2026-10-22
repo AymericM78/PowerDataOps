@@ -66,6 +66,10 @@ function Trace-XrmFunction {
             ($Parameters).Keys | ForEach-Object {
                 $value = (Get-Variable -Name $_ -ErrorAction SilentlyContinue).Value;
                 if ($value.length -gt 0) {
+                    # Credentials stay out of the verbose log and its file
+                    if ($_ -match 'Password|Secret|Token|ConnectionString') {
+                        $value = "***";
+                    }
                     Write-HostAndLog -Message  "[$Name]`t>`tParam : $($_) => $($value)" -Level "VERB" -ForegroundColor DarkGray;
                 }
             }

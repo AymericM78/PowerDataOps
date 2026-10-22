@@ -3,7 +3,7 @@
     Update a column in Microsoft Dataverse.
 
     .DESCRIPTION
-    Update an existing attribute / column metadata using UpdateAttributeRequest.
+    Update an existing attribute / column metadata using UpdateAttributeRequest. The requirement level is set through the Web API (see RequiredLevel).
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -12,7 +12,7 @@
     Table / Entity logical name.
 
     .PARAMETER Attribute
-    The AttributeMetadata object with updated properties.
+    The AttributeMetadata object with updated properties. On an existing column, the platform ignores the RequiredLevel carried by the metadata: use RequiredLevel.
 
     .PARAMETER SolutionUniqueName
     Solution unique name context for the update.
@@ -36,7 +36,7 @@
     Column logical name, instead of Attribute: a minimal metadata of the column type is sent, carrying only the given settings (the platform validates every property the request carries).
 
     .PARAMETER RequiredLevel
-    Requirement level: None, Recommended, ApplicationRequired. Raises an error when the column does not allow it to change (RequiredLevel.CanBeChanged), and when the level read back after the update is not the one asked (the platform can accept the request without applying it).
+    Requirement level: None, Recommended, ApplicationRequired. The organization service accepts it on an existing column without applying it: after the update of the other settings, the column definition is read through the Web API (strong consistency, past the metadata cache) and sent back with the new level (PUT), then read again. Raises an error when the column does not allow it to change (RequiredLevel.CanBeChanged), and when the level read back is not the one asked.
 
     .PARAMETER MinValue
     Minimum value of a whole number, decimal, float or currency column. The other bound is kept when not given.
@@ -217,11 +217,26 @@ function Set-XrmColumn {
 
         $response = Invoke-XrmRequest -XrmClient $XrmClient -Request $request;
 
-        # The platform can accept a requirement level change without applying it: read it back
+        # UpdateAttribute accepts the requirement level of an existing column and ignores it (known issue K17): a Web API PUT
+        # of the column definition sets it. Both reads ask for strong consistency: the metadata cache answers the previous
+        # definition for a while, and a PUT built from it would undo the update above.
         if ($null -ne $response -and $PSBoundParameters.ContainsKey('RequiredLevel')) {
-            $updated = Get-XrmColumn -XrmClient $XrmClient -EntityLogicalName $EntityLogicalName -LogicalName $Attribute.LogicalName;
-            if ($updated.RequiredLevel.Value -ne $RequiredLevel) {
-                throw "The platform accepted the update of column '$($Attribute.LogicalName)' but kept its requirement level $($updated.RequiredLevel.Value) (asked: $RequiredLevel).";
+            $definitionPath = "EntityDefinitions(LogicalName='$EntityLogicalName')/Attributes(LogicalName='$($current.LogicalName)')/Microsoft.Dynamics.CRM.$($current.GetType().Name)";
+            $definition = Invoke-XrmWebApiRequestInternal -XrmClient $XrmClient -Method GET -Path $definitionPath -StrongConsistency -AsJson;
+            $level = $definition.SelectToken("RequiredLevel.Value");
+            if ($level.ToString() -ne $RequiredLevel.ToString()) {
+                $level.Value = $RequiredLevel.ToString();
+                $headers = @{ "MSCRM.MergeLabels" = "true" };
+                if ($PSBoundParameters.ContainsKey('SolutionUniqueName')) {
+                    $headers["MSCRM.SolutionUniqueName"] = $SolutionUniqueName;
+                }
+                Invoke-XrmWebApiRequestInternal -XrmClient $XrmClient -Method PUT -Path $definitionPath -Body $definition.ToString([Newtonsoft.Json.Formatting]::None) -Headers $headers | Out-Null;
+
+                $updated = Invoke-XrmWebApiRequestInternal -XrmClient $XrmClient -Method GET -Path $definitionPath -StrongConsistency -AsJson;
+                $heldLevel = $updated.SelectToken("RequiredLevel.Value").ToString();
+                if ($heldLevel -ne $RequiredLevel.ToString()) {
+                    throw "The platform accepted the requirement level of column '$($current.LogicalName)' but kept $heldLevel (asked: $RequiredLevel).";
+                }
             }
         }
         $response;

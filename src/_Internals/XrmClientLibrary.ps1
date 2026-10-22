@@ -390,3 +390,188 @@ function New-XrmClientConnectionStringInternal {
 
     return ConvertFrom-XrmConnectionStringMapInternal -Parameters $connectionStringParameters;
 }
+
+
+# Token source of a connection by access token (New-XrmClient / Connect-XrmClient -AccessToken or -AccessTokenProvider).
+# The ServiceClient asks for a token before every request, and from a thread pool thread in Clone and async calls, where a
+# script block converted to a delegate fails ("There is no Runspace available to run scripts in this thread"). This class
+# keeps the last token and runs the provider only on the thread of the runspace that connected, when the token expires
+# within 5 minutes (exp claim); the other threads get the last token while it is valid. C# 5, for Windows PowerShell 5.1.
+# Compiled on first use, not at module load.
+function New-XrmAccessTokenProviderInternal {
+    param(
+        [Parameter(Mandatory = $false)]
+        [object]
+        $AccessToken,
+
+        [Parameter(Mandatory = $false)]
+        [scriptblock]
+        $AccessTokenProvider
+    );
+
+    $providerType = 'PowerDataOpsAccessTokenProvider' -as [type];
+    if (-not $providerType) {
+        $source = @'
+using System;
+using System.Collections.ObjectModel;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.Net;
+using System.Security;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+public class PowerDataOpsAccessTokenProvider
+{
+    private static readonly TimeSpan RefreshMargin = TimeSpan.FromMinutes(5);
+    private readonly object sync = new object();
+    private ScriptBlock provider;
+    private Runspace runspace;
+    private string token;
+    private DateTimeOffset? expiresOn;
+
+    public static PowerDataOpsAccessTokenProvider FromToken(object accessToken)
+    {
+        PowerDataOpsAccessTokenProvider tokenProvider = new PowerDataOpsAccessTokenProvider();
+        tokenProvider.token = ConvertToToken(accessToken);
+        tokenProvider.expiresOn = GetExpiration(tokenProvider.token);
+        return tokenProvider;
+    }
+
+    public static PowerDataOpsAccessTokenProvider FromScriptBlock(ScriptBlock accessTokenProvider)
+    {
+        PowerDataOpsAccessTokenProvider tokenProvider = new PowerDataOpsAccessTokenProvider();
+        tokenProvider.provider = accessTokenProvider;
+        tokenProvider.runspace = Runspace.DefaultRunspace;
+        return tokenProvider;
+    }
+
+    public DateTimeOffset? ExpiresOn { get { return expiresOn; } }
+
+    public Func<string, Task<string>> ToFunc()
+    {
+        return new Func<string, Task<string>>(GetTokenAsync);
+    }
+
+    public Task<string> GetTokenAsync(string resource)
+    {
+        return Task.FromResult(GetToken(resource));
+    }
+
+    public string GetToken(string resource)
+    {
+        lock (sync)
+        {
+            DateTimeOffset now = DateTimeOffset.UtcNow;
+            if (provider == null)
+            {
+                if (expiresOn.HasValue && expiresOn.Value <= now)
+                {
+                    throw new InvalidOperationException("The access token expired at " + expiresOn.Value.ToLocalTime().ToString("u") + ": connect again with a new token, or with -AccessTokenProvider to renew it during the session.");
+                }
+                return token;
+            }
+            if (token != null && expiresOn.HasValue && expiresOn.Value - now > RefreshMargin)
+            {
+                return token;
+            }
+            if (Runspace.DefaultRunspace == null || Runspace.DefaultRunspace != runspace)
+            {
+                if (token != null && (!expiresOn.HasValue || expiresOn.Value > now))
+                {
+                    return token;
+                }
+                throw new InvalidOperationException("The access token returned by AccessTokenProvider has expired, and the new one is asked from a thread where the script block cannot run (clone of the client, parallel requests). A request sent from PowerShell with the client renews it: split the parallel work that outlasts a token.");
+            }
+
+            string url = resource;
+            Uri uri;
+            if (Uri.TryCreate(resource, UriKind.Absolute, out uri))
+            {
+                url = uri.GetLeftPart(UriPartial.Authority);
+            }
+            Collection<PSObject> results;
+            try
+            {
+                results = provider.Invoke(url);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("AccessTokenProvider failed: " + ex.Message, ex);
+            }
+            object value = null;
+            for (int i = results.Count - 1; i >= 0 && value == null; i--)
+            {
+                value = results[i];
+            }
+            token = ConvertToToken(value);
+            expiresOn = GetExpiration(token);
+            return token;
+        }
+    }
+
+    public static string ConvertToToken(object value)
+    {
+        PSObject wrapper = value as PSObject;
+        object baseObject = wrapper != null ? wrapper.BaseObject : value;
+        string text = baseObject as string;
+        SecureString secure = baseObject as SecureString;
+        if (text != null && text.Trim().Length > 0)
+        {
+            return text.Trim();
+        }
+        if (secure != null && secure.Length > 0)
+        {
+            return new NetworkCredential(string.Empty, secure).Password;
+        }
+        if (baseObject != null && text == null && secure == null)
+        {
+            // Get-AzAccessToken result (Token), MSAL AuthenticationResult (AccessToken)
+            PSObject members = wrapper ?? PSObject.AsPSObject(baseObject);
+            foreach (string name in new string[] { "Token", "AccessToken" })
+            {
+                PSPropertyInfo property = members.Properties[name];
+                if (property != null && property.Value != null)
+                {
+                    return ConvertToToken(property.Value);
+                }
+            }
+        }
+        string received = baseObject == null ? "nothing was given" : (text != null || secure != null ? "it is empty" : "received " + baseObject.GetType().FullName);
+        throw new InvalidOperationException("An access token is a string, a SecureString, or an object with a Token or AccessToken property (Get-AzAccessToken, MSAL AuthenticationResult): " + received + ".");
+    }
+
+    public static DateTimeOffset? GetExpiration(string accessToken)
+    {
+        string[] parts = accessToken == null ? new string[0] : accessToken.Split('.');
+        if (parts.Length != 3)
+        {
+            return null;
+        }
+        try
+        {
+            string payload = parts[1].Replace('-', '+').Replace('_', '/');
+            payload = payload.PadRight(payload.Length + (4 - payload.Length % 4) % 4, '=');
+            Match match = Regex.Match(Encoding.UTF8.GetString(Convert.FromBase64String(payload)), "\"exp\"\\s*:\\s*(\\d+)");
+            if (!match.Success)
+            {
+                return null;
+            }
+            return DateTimeOffset.FromUnixTimeSeconds(long.Parse(match.Groups[1].Value));
+        }
+        catch (FormatException)
+        {
+            return null;
+        }
+    }
+}
+'@;
+        $providerType = Add-Type -TypeDefinition $source -PassThru | Where-Object { $_.Name -eq 'PowerDataOpsAccessTokenProvider' };
+    }
+
+    if ($AccessTokenProvider) {
+        return $providerType::FromScriptBlock($AccessTokenProvider);
+    }
+    return $providerType::FromToken($AccessToken);
+}

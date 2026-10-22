@@ -2,7 +2,8 @@
 
 ## Description
 
-**Create or update a dashboard in Microsoft Dataverse.** : Upsert a systemform record of type dashboard (type = 0) by Id. Delegates to Upsert-XrmForm.
+**Create or update a dashboard in Microsoft Dataverse.** : Upsert a systemform record of type dashboard by Id: classic (type = 0) by default, interactive experience with FormType 10. Delegates to Upsert-XrmForm.
+Dataverse keeps the type of an existing form and ignores the one sent: without FormType, an existing dashboard keeps its type.
 
 ## Inputs
 
@@ -16,6 +17,7 @@ LanguageCode|Int32|named|false|1033|Language code used to pick the stored 'name'
 FormXml|String|named|true||Dashboard form XML definition.
 Description|String|named|false||Dashboard description.
 SolutionUniqueName|String|named|false||Unmanaged solution unique name. When provided, the dashboard is added to this solution.
+FormType|Int32|named|false|0|Dashboard type: 0 = classic (default), 10 = interactive experience. When given, an existing dashboard of another type raises an error before anything is written: its type cannot change (delete it, then upsert it again).
 WhatIf|SwitchParameter|named|false||
 Confirm|SwitchParameter|named|false||
 
@@ -25,9 +27,9 @@ Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted systemform record.
 ## Usage
 
 ```Powershell 
-Upsert-XrmDashboard [-XrmClient <ServiceClient>] -Id <Guid> -Name <String> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Upsert-XrmDashboard [-XrmClient <ServiceClient>] -Id <Guid> -Name <String> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName <String>] [-FormType <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
-Upsert-XrmDashboard [-XrmClient <ServiceClient>] -Id <Guid> -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Upsert-XrmDashboard [-XrmClient <ServiceClient>] -Id <Guid> -Labels <Hashtable> [-LanguageCode <Int32>] -FormXml <String> [-Description <String>] [-SolutionUniqueName <String>] [-FormType <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ``` 
 
 ## Examples
@@ -35,5 +37,14 @@ Upsert-XrmDashboard [-XrmClient <ServiceClient>] -Id <Guid> -Labels <Hashtable> 
 ```Powershell 
 $ref = Upsert-XrmDashboard -Id $dashboardId -Name "Sales Dashboard" -FormXml $xml -SolutionUniqueName "MySolution";
 ``` 
+
+
+```Powershell 
+$ref = Upsert-XrmDashboard -Id $dashboardId -Name "Cash follow-up" -FormXml $interactiveXml -FormType 10;
+``` 
+
+## More informations
+
+https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmDashboard.md
 
 

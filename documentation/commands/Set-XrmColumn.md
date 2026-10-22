@@ -2,7 +2,7 @@
 
 ## Description
 
-**Update a column in Microsoft Dataverse.** : Update an existing attribute / column metadata using UpdateAttributeRequest.
+**Update a column in Microsoft Dataverse.** : Update an existing attribute / column metadata using UpdateAttributeRequest. The requirement level is set through the Web API (see RequiredLevel).
 
 ## Inputs
 
@@ -10,7 +10,7 @@ Name|Type|Position|Required|Default|Description
 ----|----|--------|--------|-------|-----------
 XrmClient|ServiceClient|1|false|$Global:XrmClient|Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
 EntityLogicalName|String|2|true||Table / Entity logical name.
-Attribute|AttributeMetadata|3|false||The AttributeMetadata object with updated properties.
+Attribute|AttributeMetadata|3|false||The AttributeMetadata object with updated properties. On an existing column, the platform ignores the RequiredLevel carried by the metadata: use RequiredLevel.
 SolutionUniqueName|String|4|false||Solution unique name context for the update.
 MergeLabels|Boolean|5|false|True|Whether to merge labels. Default: true. With DisplayNameLabels or DescriptionLabels, the current labels of the other languages are read and sent too: the platform would otherwise copy the given text into the language of the caller when it is missing.
 IsAuditEnabled|Boolean|6|false|False|Whether auditing is enabled on the column. When specified, overrides the value set on the AttributeMetadata.
@@ -18,7 +18,7 @@ EnableForInteractiveExperience|SwitchParameter|named|false|False|Enables the col
 DisplayNameLabels|Hashtable|7|false||Hashtable of language code to display name for multilingual labels. When provided, overrides the DisplayName set on the AttributeMetadata. Example: @{ 1033 = "Project Code"; 1036 = "Code projet" }
 DescriptionLabels|Hashtable|8|false||Hashtable of language code to description for multilingual labels. When provided, overrides the Description set on the AttributeMetadata.
 LogicalName|String|9|false||Column logical name, instead of Attribute: a minimal metadata of the column type is sent, carrying only the given settings (the platform validates every property the request carries).
-RequiredLevel|AttributeRequiredLevel|10|false||Requirement level: None, Recommended, ApplicationRequired. Raises an error when the column does not allow it to change (RequiredLevel.CanBeChanged), and when the level read back after the update is not the one asked (the platform can accept the request without applying it).
+RequiredLevel|AttributeRequiredLevel|10|false||Requirement level: None, Recommended, ApplicationRequired. The organization service accepts it on an existing column without applying it: after the update of the other settings, the column definition is read through the Web API (strong consistency, past the metadata cache) and sent back with the new level (PUT), then read again. Raises an error when the column does not allow it to change (RequiredLevel.CanBeChanged), and when the level read back is not the one asked.
 MinValue|Double|11|false|0|Minimum value of a whole number, decimal, float or currency column. The other bound is kept when not given.
 MaxValue|Double|12|false|0|Maximum value of a whole number, decimal, float or currency column. The other bound is kept when not given.
 WhatIf|SwitchParameter|named|false||

@@ -5,6 +5,7 @@
       so that callers can pass -WhatIf to it (preference variables do not flow from a script into a module).
     - No direct SDK write call (Execute, Create, Update, Delete, Associate, Disassociate) outside Invoke-XrmRequest
       and Invoke-XrmParallelRequests (whose workers run where the module is not loaded).
+    - No direct Web API call (ExecuteWebRequest) outside Invoke-XrmWebApiRequestInternal, which asks ShouldProcess for the writes.
 #>
 . "$PSScriptRoot\..\_TestConfig.ps1";
 
@@ -23,6 +24,7 @@ foreach ($file in Get-ChildItem -Path $srcPath -Recurse -Include "*.ps1") {
 
 Write-Section "Invoke-XrmRequest";
 Assert-Test "Invoke-XrmRequest declares SupportsShouldProcess" { $functions["Invoke-XrmRequest"].Supports };
+Assert-Test "Invoke-XrmWebApiRequestInternal declares SupportsShouldProcess" { $functions["Invoke-XrmWebApiRequestInternal"].Supports };
 
 Write-Section "Write cmdlets pass -WhatIf on";
 $missing = [System.Collections.Generic.List[string]]::new();
@@ -55,5 +57,21 @@ foreach ($function in $functions.Values) {
 }
 $directCalls | ForEach-Object { Write-Host "    direct SDK call: $_" -ForegroundColor Yellow; };
 Assert-Test "No direct SDK write outside Invoke-XrmRequest ($($directCalls.Count) found)" { $directCalls.Count -eq 0 };
+
+$webApiCalls = [System.Collections.Generic.List[string]]::new();
+foreach ($function in $functions.Values) {
+    if ($function.Name -eq "Invoke-XrmWebApiRequestInternal") {
+        continue;
+    }
+    $function.Ast.FindAll({
+            $args[0] -is [System.Management.Automation.Language.InvokeMemberExpressionAst] -and
+            -not $args[0].Static -and
+            $args[0].Member.Value -in @("ExecuteWebRequest", "ExecuteWebRequestAsync")
+        }, $true) | ForEach-Object {
+        $webApiCalls.Add("$($function.File):$($_.Extent.StartLineNumber) $($_.Extent.Text)");
+    };
+}
+$webApiCalls | ForEach-Object { Write-Host "    direct Web API call: $_" -ForegroundColor Yellow; };
+Assert-Test "No direct Web API call outside Invoke-XrmWebApiRequestInternal ($($webApiCalls.Count) found)" { $webApiCalls.Count -eq 0 };
 
 Write-TestSummary;

@@ -47,6 +47,19 @@ Username / password authentication:
 Connect-XrmClient -Url "https://contoso.crm.dynamics.com" -UserName "user@contoso.com" -Password "MyPass123";
 ```
 
+Access token obtained elsewhere (Azure PowerShell, Azure CLI, MSAL, managed identity). A token passed as is expires after about one hour:
+
+```powershell
+$url = "https://contoso.crm.dynamics.com";
+Connect-XrmClient -Url $url -AccessToken (az account get-access-token --resource $url --query accessToken --output tsv);
+```
+
+For a longer session, give a script block instead: it receives the environment URL and is called again when the token is about to expire.
+
+```powershell
+Connect-XrmClient -Url "https://contoso.crm.dynamics.com" -AccessTokenProvider { param($url) Get-AzAccessToken -ResourceUrl $url };
+```
+
 ### New-XrmClient
 
 This cmdlet initialize a CrmServiceClient object to interact with Microsoft Dataverse.

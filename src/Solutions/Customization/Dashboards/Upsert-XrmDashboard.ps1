@@ -3,7 +3,8 @@
     Create or update a dashboard in Microsoft Dataverse.
 
     .DESCRIPTION
-    Upsert a systemform record of type dashboard (type = 0) by Id. Delegates to Upsert-XrmForm.
+    Upsert a systemform record of type dashboard by Id: classic (type = 0) by default, interactive experience with FormType 10. Delegates to Upsert-XrmForm.
+    Dataverse keeps the type of an existing form and ignores the one sent: without FormType, an existing dashboard keeps its type.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -29,11 +30,20 @@
     .PARAMETER SolutionUniqueName
     Unmanaged solution unique name. When provided, the dashboard is added to this solution.
 
+    .PARAMETER FormType
+    Dashboard type: 0 = classic (default), 10 = interactive experience. When given, an existing dashboard of another type raises an error before anything is written: its type cannot change (delete it, then upsert it again).
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the upserted systemform record.
 
     .EXAMPLE
     $ref = Upsert-XrmDashboard -Id $dashboardId -Name "Sales Dashboard" -FormXml $xml -SolutionUniqueName "MySolution";
+
+    .EXAMPLE
+    $ref = Upsert-XrmDashboard -Id $dashboardId -Name "Cash follow-up" -FormXml $interactiveXml -FormType 10;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Upsert-XrmDashboard.md
 #>
 function Upsert-XrmDashboard {
     [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
@@ -74,18 +84,34 @@ function Upsert-XrmDashboard {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet(0, 10)]
+        [int]
+        $FormType = 0
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
         Trace-XrmFunction -Name $MyInvocation.MyCommand.Name -Stage Start -Parameters ($MyInvocation.MyCommand.Parameters);
     }
     process {
+        # The upsert would keep the type of an existing dashboard without a word: an explicit type is checked first
+        if ($PSBoundParameters.ContainsKey('FormType')) {
+            $existing = Get-XrmRecord -XrmClient $XrmClient -LogicalName "systemform" -Id $Id -Columns "type" -IfExists;
+            if ($existing) {
+                $existingType = $existing | Get-XrmAttributeValue -Name "type" -Raw;
+                if ($existingType -ne $FormType) {
+                    throw [System.InvalidOperationException]::new("Dashboard $Id exists with form type $existingType, not $($FormType): Dataverse keeps the type of an existing form. Delete it, then upsert it again to change its type.");
+                }
+            }
+        }
+
         $params = @{
             XrmClient = $XrmClient;
             Id        = $Id;
             FormXml   = $FormXml;
-            FormType  = 0;
+            FormType  = $FormType;
         };
 
         if ($PSCmdlet.ParameterSetName -eq "ByLabels") {

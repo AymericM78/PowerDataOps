@@ -3,7 +3,7 @@
     Create a new dashboard in Microsoft Dataverse.
 
     .DESCRIPTION
-    Create a new systemform record of type dashboard (type = 0). Delegates to Add-XrmForm.
+    Create a new systemform record of type dashboard: classic (type = 0) by default, interactive experience with FormType 10. Delegates to Add-XrmForm.
 
     .PARAMETER XrmClient
     Xrm connector initialized to target instance. Use latest one by default. (Dataverse ServiceClient)
@@ -26,6 +26,9 @@
     .PARAMETER SolutionUniqueName
     Unmanaged solution unique name. When provided, the created dashboard is automatically added to this solution.
 
+    .PARAMETER FormType
+    Dashboard type: 0 = classic (default), 10 = interactive experience. It cannot change once the dashboard exists.
+
     .OUTPUTS
     Microsoft.Xrm.Sdk.EntityReference. Reference to the created systemform record.
 
@@ -35,6 +38,12 @@
 
     .EXAMPLE
     $ref = Add-XrmDashboard -Labels @{ 1033 = "Sales Dashboard"; 1036 = "Tableau de bord des ventes" } -LanguageCode 1036 -FormXml $xml;
+
+    .EXAMPLE
+    $ref = Add-XrmDashboard -Name "Cash follow-up" -FormXml $interactiveXml -FormType 10;
+
+    .LINK
+    https://github.com/AymericM78/PowerDataOps/blob/main/documentation/commands/Add-XrmDashboard.md
 #>
 function Add-XrmDashboard {
     [CmdletBinding(DefaultParameterSetName = "ByName", SupportsShouldProcess)]
@@ -70,7 +79,12 @@ function Add-XrmDashboard {
 
         [Parameter(Mandatory = $false)]
         [string]
-        $SolutionUniqueName
+        $SolutionUniqueName,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet(0, 10)]
+        [int]
+        $FormType = 0
     )
     begin {
         $StopWatch = [System.Diagnostics.Stopwatch]::StartNew();
@@ -80,7 +94,7 @@ function Add-XrmDashboard {
         $params = @{
             XrmClient = $XrmClient;
             FormXml   = $FormXml;
-            FormType  = 0;
+            FormType  = $FormType;
         };
 
         if ($PSCmdlet.ParameterSetName -eq "ByLabels") {
