@@ -1,8 +1,9 @@
-. "$PSScriptRoot\src\_Internals\AssemblyLoader.ps1";
+$assemblyLoaderPath = "$PSScriptRoot\src\_Internals\AssemblyLoader.ps1";
+. $assemblyLoaderPath;
 
-# Discover and load function scripts
+# Discover and load function scripts (the assembly loader already ran)
 Write-Verbose "----- LOAD FUNCTIONS -----";
-$scriptFiles = @(Get-ChildItem -Path "$PSScriptRoot\src\" -Include "*.ps1" -Recurse);
+$scriptFiles = @(Get-ChildItem -Path "$PSScriptRoot\src\" -Include "*.ps1" -Recurse | Where-Object { $_.FullName -ne $assemblyLoaderPath });
 foreach ($scriptFile in $scriptFiles) {
     $scriptPath = $scriptFile.FullName;
     Write-Verbose " > Loading function file '$scriptPath'";
